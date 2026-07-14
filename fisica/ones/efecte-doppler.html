@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Efecte Doppler — Simulador</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="superposicio.html">Superposició</a>
+      <a href="ones-estacionaries.html">Ones estacionàries</a>
+      <a href="interferencia-young.html">Young</a>
+      <a href="efecte-doppler.html" class="active">Doppler</a>
+    </nav>
+    <h1>Efecte Doppler</h1>
+    <p>
+      Quan font o observador es mouen respecte al medi, la freqüència observada canvia.
+      Observa la compressió o l'estirament dels fronts d'ona i calcula f′.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Freqüència observada (1D)</h2>
+      <p class="formula">f′ = f · (v ± v<sub>o</sub>) / (v ∓ v<sub>f</sub>)</p>
+      <p class="formula-note">
+        v = velocitat de l'ona al medi &nbsp;·&nbsp; +v<sub>o</sub>: observador cap a la font &nbsp;·&nbsp;
+        −v<sub>f</sub>: font cap a l'observador (signes segons acostament)
+      </p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Fronts d'ona en moviment</h2>
+        <div class="legend">
+          <label class="legend-item"><input type="checkbox" id="showFronts" checked><span class="legend-dot dot-w1"></span> Fronts d'ona</label>
+        </div>
+      </div>
+      <canvas id="mainCanvas" class="h320"></canvas>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar</button>
+        <div class="slider-group">
+          <label for="speedSlider">Velocitat animació</label>
+          <input type="range" id="speedSlider" min="0.2" max="2" step="0.1" value="1">
+        </div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">f</span> — Freqüència emesa</label><span class="param-value" id="f-val"></span></div>
+          <input type="range" id="f" min="200" max="2000" step="10" value="800">
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">v</span> — Vel. de l'ona</label><span class="param-value" id="vWave-val"></span></div>
+          <input type="range" id="vWave" min="300" max="350" step="1" value="343">
+          <p class="param-desc">343 m/s ≈ so en l'aire (20 °C)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">v<sub>f</sub></span> — Vel. font</label><span class="param-value" id="vSource-val"></span></div>
+          <input type="range" id="vSource" min="-50" max="50" step="1" value="20">
+          <p class="param-desc">Positiu → cap a l'observador (dreta)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">v<sub>o</sub></span> — Vel. observador</label><span class="param-value" id="vObs-val"></span></div>
+          <input type="range" id="vObs" min="-30" max="30" step="1" value="0">
+          <p class="param-desc">Positiu → cap a la font (esquerra)</p>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Resultats</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>Freqüència observada f′ = </span><strong id="fObs">—</strong></div>
+          <div><span>Longitud d'ona observada λ′ = </span><strong id="lambdaObs">—</strong></div>
+          <div><span>Canvi relativ Δf/f = </span><strong id="deltaF">—</strong></div>
+          <div><span>Interpretació: </span><strong id="interpret">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Escenaris</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="approach">Ambulància s'apropa (v<sub>f</sub> = 30 m/s)</button>
+        <button class="btn" data-preset="recede">Ambulància s'allunya (v<sub>f</sub> = −30 m/s)</button>
+        <button class="btn" data-preset="observer">Observador corre cap a la font</button>
+        <button class="btn" data-preset="static">Tots en repòs (f′ = f)</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Acostament:</strong> més fronts per segon → freqüència més alta (so més agut per al so).</li>
+        <li><strong>Allunyament:</strong> menys fronts per segon → freqüència més baixa (so més greu).</li>
+        <li><strong>Fronts compressos:</strong> quan la font es mou, emet fronts no esfèrics simètrics — més densos en la direcció del moviment.</li>
+        <li><strong>Límit clàssic:</strong> v<sub>f</sub> ha de ser &lt; v; si v<sub>f</sub> → v apareix el so bo (mach cone) — fora del model clàssic de batxillerat.</li>
+        <li><strong>Light Doppler:</strong> el mateix principi s'aplica a ones electromagnètiques (desplaçament cap al vermell o al blau).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const state = {
+      f: 800, vWave: 343, vSource: 20, vObs: 0,
+      t: 0, playing: false, speed: 1, showFronts: true,
+      sourceX: 0.35
+    };
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function observedFreq() {
+      const { f, vWave, vSource, vObs } = state;
+      if (Math.abs(vSource) >= vWave) return NaN;
+      return f * (vWave + vObs) / (vWave - vSource);
+    }
+
+    function updateDerived() {
+      const fp = observedFreq();
+      const lam = state.vWave / state.f;
+      const lamP = isFinite(fp) ? state.vWave / fp : NaN;
+      const delta = isFinite(fp) ? (fp - state.f) / state.f * 100 : NaN;
+
+      document.getElementById('fObs').textContent = isFinite(fp) ? formatNum(fp, 1) + ' Hz' : '— (v_f ≥ v)';
+      document.getElementById('lambdaObs').textContent = isFinite(lamP) ? formatNum(lamP, 3) + ' m' : '—';
+      document.getElementById('deltaF').textContent = isFinite(delta) ? (delta >= 0 ? '+' : '') + formatNum(delta, 1) + ' %' : '—';
+
+      let interp = 'Repòs relatiu';
+      if (state.vSource > 2 || state.vObs > 2) interp = 'Acostament → f′ > f (més agut)';
+      else if (state.vSource < -2 || state.vObs < -2) interp = 'Allunyament → f′ < f (més greu)';
+      document.getElementById('interpret').textContent = interp;
+    }
+
+    function draw() {
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const groundY = h * 0.65;
+      const obsX = w * 0.82;
+      const srcBaseX = w * state.sourceX;
+      const srcX = srcBaseX + state.vSource * state.t * 8;
+
+      // Ground
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, groundY); ctx.lineTo(w, groundY); ctx.stroke();
+
+      // Wavefronts from moving source
+      if (state.showFronts && Math.abs(state.vSource) < state.vWave) {
+        const lambda = state.vWave / state.f;
+        const pxPerM = w * 0.08;
+        const emitInterval = 0.35 / state.speed;
+
+        for (let i = 0; i < 12; i++) {
+          const emitT = state.t - i * emitInterval;
+          if (emitT < 0) continue;
+          const emitX = srcBaseX + state.vSource * emitT * 8;
+          const radius = (state.t - emitT) * state.vWave * 0.015 * state.speed;
+          const rPx = radius * pxPerM / 3;
+
+          ctx.strokeStyle = `rgba(37, 99, 235, ${0.5 - i * 0.035})`;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(emitX, groundY - 20, Math.max(rPx, 2), 0, TAU);
+          ctx.stroke();
+        }
+      }
+
+      // Source (speaker/car)
+      ctx.fillStyle = '#ea580c';
+      ctx.fillRect(srcX - 18, groundY - 35, 36, 22);
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px Segoe UI';
+      ctx.textAlign = 'center';
+      ctx.fillText('Font', srcX, groundY - 40);
+      if (state.vSource !== 0) {
+        ctx.fillStyle = '#ea580c';
+        ctx.font = '14px Segoe UI';
+        ctx.fillText(state.vSource > 0 ? '→' : '←', srcX, groundY - 55);
+      }
+
+      // Observer
+      ctx.fillStyle = '#2563eb';
+      ctx.beginPath();
+      ctx.arc(obsX, groundY - 30, 14, 0, TAU);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.fillText('O', obsX, groundY - 26);
+      ctx.fillStyle = '#2563eb';
+      ctx.font = '10px Segoe UI';
+      ctx.fillText('Observador', obsX, groundY - 48);
+      if (state.vObs !== 0) {
+        ctx.font = '14px Segoe UI';
+        ctx.fillText(state.vObs > 0 ? '→' : '←', obsX, groundY - 62);
+      }
+
+      // Info box
+      const fp = observedFreq();
+      ctx.fillStyle = 'rgba(255,255,255,0.92)';
+      ctx.fillRect(12, 12, 200, 72);
+      ctx.strokeStyle = '#dde3ec';
+      ctx.strokeRect(12, 12, 200, 72);
+      ctx.fillStyle = '#1a2332';
+      ctx.font = '12px Consolas, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`f  = ${formatNum(state.f, 0)} Hz`, 22, 32);
+      ctx.fillText(`f′ = ${isFinite(fp) ? formatNum(fp, 1) : '—'} Hz`, 22, 52);
+      ctx.fillText(`λ  = ${formatNum(state.vWave / state.f, 3)} m`, 22, 72);
+    }
+
+    function animate() {
+      if (!state.playing) return;
+      state.t += 0.016 * state.speed;
+      draw();
+      requestAnimationFrame(animate);
+    }
+
+    bindSlider('f', 'f-val', v => { state.f = v; updateDerived(); draw(); }, v => formatNum(v, 0) + ' Hz');
+    bindSlider('vWave', 'vWave-val', v => { state.vWave = v; updateDerived(); draw(); }, v => formatNum(v, 0) + ' m/s');
+    bindSlider('vSource', 'vSource-val', v => { state.vSource = v; updateDerived(); draw(); }, v => formatNum(v, 0) + ' m/s');
+    bindSlider('vObs', 'vObs-val', v => { state.vObs = v; updateDerived(); draw(); }, v => formatNum(v, 0) + ' m/s');
+
+    document.getElementById('showFronts').addEventListener('change', e => { state.showFronts = e.target.checked; draw(); });
+
+    document.getElementById('btnPlay').addEventListener('click', () => {
+      state.playing = !state.playing;
+      document.getElementById('btnPlay').textContent = state.playing ? '⏸ Pausa' : '▶ Reproduir';
+      if (state.playing) requestAnimationFrame(animate);
+    });
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      state.t = 0; state.playing = false;
+      document.getElementById('btnPlay').textContent = '▶ Reproduir';
+      draw();
+    });
+
+    document.getElementById('speedSlider').addEventListener('input', e => { state.speed = parseFloat(e.target.value); });
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.preset;
+        const set = (id, val) => { document.getElementById(id).value = val; };
+        if (p === 'approach') { set('vSource', 30); set('vObs', 0); state.vSource = 30; state.vObs = 0; }
+        if (p === 'recede') { set('vSource', -30); set('vObs', 0); state.vSource = -30; state.vObs = 0; }
+        if (p === 'observer') { set('vSource', 0); set('vObs', 15); state.vSource = 0; state.vObs = 15; }
+        if (p === 'static') { set('vSource', 0); set('vObs', 0); state.vSource = 0; state.vObs = 0; }
+        ['vSource', 'vObs'].forEach(id => {
+          document.getElementById(id + '-val').textContent = formatNum(parseFloat(document.getElementById(id).value), 0) + ' m/s';
+        });
+        updateDerived(); draw();
+      });
+    });
+
+    window.addEventListener('resize', draw);
+    updateDerived();
+    draw();
+  </script>
+</body>
+</html>

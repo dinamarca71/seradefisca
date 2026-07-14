@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Superposició d'Ones — Simulador</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+  <style>
+    .waves-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    @media (max-width: 860px) { .waves-grid { grid-template-columns: 1fr; } }
+    .wave-panel { border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); }
+    .wave-panel.w1 .panel-head { background: var(--wave1-bg); border-bottom: 1px solid #bfdbfe; }
+    .wave-panel.w2 .panel-head { background: var(--wave2-bg); border-bottom: 1px solid #fed7aa; }
+    .panel-head { padding: 0.85rem 1.1rem; border-bottom: 1px solid var(--border); }
+    .panel-head h3 { font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .panel-head h3 .badge { font-size: 0.75rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 999px; }
+    .w1 .badge { background: var(--wave1); color: white; }
+    .w2 .badge { background: var(--wave2); color: white; }
+    .panel-body { padding: 1rem 1.1rem; background: var(--surface); }
+    .direction-toggle { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.85rem; padding: 0.65rem 0.75rem; background: var(--bg); border-radius: 8px; font-size: 0.85rem; cursor: pointer; }
+    .direction-toggle input { accent-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="superposicio.html" class="active">Superposició</a>
+      <a href="ones-estacionaries.html">Ones estacionàries</a>
+      <a href="interferencia-young.html">Young</a>
+      <a href="efecte-doppler.html">Doppler</a>
+    </nav>
+    <h1>Superposició d'Ones Harmòniques</h1>
+    <p>
+      Modifica l'amplitud, la freqüència angular, el nombre d'ona i la fase inicial de dues ones
+      i observa com s'addicionen segons el principi de superposició.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equació d'una ona harmònica</h2>
+      <p class="formula">y(x, t) = A · cos(kx − ωt + φ)</p>
+      <p class="formula-note">
+        y<sub>total</sub> = y<sub>1</sub> + y<sub>2</sub> &nbsp;·&nbsp;
+        Principi de superposició: les ones no s'interfereixen entre elles, només s'addicionen les elongacions.
+      </p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Visualització en funció de x (instant t)</h2>
+        <div class="legend">
+          <label class="legend-item"><input type="checkbox" id="showW1" checked><span class="legend-dot dot-w1"></span> Onda 1</label>
+          <label class="legend-item"><input type="checkbox" id="showW2" checked><span class="legend-dot dot-w2"></span> Onda 2</label>
+          <label class="legend-item"><input type="checkbox" id="showSum" checked><span class="legend-dot dot-sum"></span> Superposició</label>
+        </div>
+      </div>
+      <canvas id="waveCanvas" class="h320"></canvas>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar temps</button>
+        <div class="slider-group"><label for="speedSlider">Velocitat</label><input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1"></div>
+        <div class="slider-group"><label for="timeSlider">t</label><input type="range" id="timeSlider" min="0" max="20" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 s</span></div>
+      </div>
+    </section>
+
+    <div class="waves-grid">
+      <article class="wave-panel w1" id="panelW1"></article>
+      <article class="wave-panel w2" id="panelW2"></article>
+    </div>
+
+    <section class="presets">
+      <h2>Escenaris per experimentar</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="same">Mateixa ona (φ₁ = φ₂)</button>
+        <button class="btn" data-preset="opposite">Desfasament π (destructiva)</button>
+        <button class="btn" data-preset="quarter">Desfasament π/2</button>
+        <button class="btn" data-preset="beats">Batiments (ω lleugerament diferent)</button>
+        <button class="btn" data-preset="standing">Ones contràries (→ ona estacionària)</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>A:</strong> elongació màxima. En superposar, les amplituds no sempre s'addicionen — depèn de la fase.</li>
+        <li><strong>ω:</strong> freqüència angular. Període T = 2π/ω.</li>
+        <li><strong>k:</strong> nombre d'ona. Longitud d'ona λ = 2π/k.</li>
+        <li><strong>φ:</strong> fase inicial. Diferències de fase → interferència constructiva o destructiva.</li>
+        <li><strong>v = ω/k:</strong> velocitat de propagació. Ones contràries → ona estacionària (vegeu el simulador dedicat).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const defaultWave = () => ({ A: 1, omega: 2, k: 1, phi: 0, dir: 1 });
+    const state = {
+      w1: { ...defaultWave(), A: 1, omega: 2, k: 1, phi: 0, dir: 1 },
+      w2: { ...defaultWave(), A: 0.8, omega: 2, k: 1, phi: Math.PI / 2, dir: 1 },
+      t: 0, playing: false, speed: 1, showW1: true, showW2: true, showSum: true
+    };
+
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const PARAMS = [
+      { key: 'A', label: 'Amplitud', symbol: 'A', min: 0, max: 2, step: 0.05, unit: '', desc: 'Elongació màxima (m)' },
+      { key: 'omega', label: 'Freqüència angular', symbol: 'ω', min: 0.5, max: 6, step: 0.1, unit: ' rad/s', desc: 'Velocitat angular' },
+      { key: 'k', label: "Nombre d'ona", symbol: 'k', min: 0.5, max: 4, step: 0.1, unit: ' rad/m', desc: 'Fase espacial per metre' },
+      { key: 'phi', label: 'Fase inicial', symbol: 'φ', min: -Math.PI, max: Math.PI, step: 0.05, unit: ' rad', desc: 'Desfasament en t = 0', isPhase: true }
+    ];
+
+    function waveY(w, x, t) { return w.A * Math.cos(w.dir * w.k * x - w.omega * t + w.phi); }
+
+    function buildPanel(containerId, waveKey, badge) {
+      const panel = document.getElementById(containerId);
+      panel.innerHTML = '';
+      const head = document.createElement('div');
+      head.className = 'panel-head';
+      head.innerHTML = `<h3><span class="badge">${badge}</span> y(x, t) = A · cos(kx − ωt + φ)</h3>`;
+      const body = document.createElement('div');
+      body.className = 'panel-body';
+
+      PARAMS.forEach(p => {
+        const block = document.createElement('div');
+        block.className = 'param';
+        block.innerHTML = `
+          <div class="param-header"><label><span class="symbol">${p.symbol}</span> — ${p.label}</label><span class="param-value" id="${waveKey}-${p.key}-val"></span></div>
+          <input type="range" id="${waveKey}-${p.key}" min="${p.min}" max="${p.max}" step="${p.step}" value="${state[waveKey][p.key]}">
+          <p class="param-desc">${p.desc}</p>`;
+        body.appendChild(block);
+        block.querySelector('input').addEventListener('input', e => {
+          state[waveKey][p.key] = parseFloat(e.target.value);
+          updatePanelValues(waveKey);
+          draw();
+        });
+      });
+
+      const derived = document.createElement('div');
+      derived.className = 'derived';
+      derived.id = `${waveKey}-derived`;
+      body.appendChild(derived);
+
+      const dirLabel = document.createElement('label');
+      dirLabel.className = 'direction-toggle';
+      dirLabel.innerHTML = `<input type="checkbox" id="${waveKey}-dir"> Propagació cap a −x`;
+      dirLabel.querySelector('input').addEventListener('change', e => {
+        state[waveKey].dir = e.target.checked ? -1 : 1;
+        draw();
+      });
+      body.appendChild(dirLabel);
+      panel.appendChild(head);
+      panel.appendChild(body);
+      updatePanelValues(waveKey);
+    }
+
+    function updatePanelValues(waveKey) {
+      const w = state[waveKey];
+      PARAMS.forEach(p => {
+        const el = document.getElementById(`${waveKey}-${p.key}-val`);
+        if (el) el.textContent = p.isPhase ? formatPhase(w[p.key]) : formatNum(w[p.key]) + p.unit;
+        const slider = document.getElementById(`${waveKey}-${p.key}`);
+        if (slider) slider.value = w[p.key];
+      });
+      const dirCheck = document.getElementById(`${waveKey}-dir`);
+      if (dirCheck) dirCheck.checked = w.dir === -1;
+      document.getElementById(`${waveKey}-derived`).innerHTML = `
+        <div><span>T = </span><strong>${formatNum(TAU / w.omega)} s</strong></div>
+        <div><span>λ = </span><strong>${formatNum(TAU / w.k)} m</strong></div>
+        <div><span>v = </span><strong>${formatNum(w.omega / w.k)} m/s</strong></div>
+        <div><span>f = </span><strong>${formatNum(w.omega / TAU)} Hz</strong></div>`;
+    }
+
+    function draw() {
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      const padL = 48, padR = 16, padT = 20, padB = 36;
+      const plotW = w - padL - padR, plotH = h - padT - padB;
+      ctx.clearRect(0, 0, w, h);
+
+      const xMin = 0, xMax = TAU * 2;
+      const maxA = Math.max(state.w1.A + state.w2.A, 0.5);
+      const yMin = -maxA * 1.15, yMax = maxA * 1.15;
+      const toX = x => padL + (x / (xMax - xMin)) * plotW;
+      const toY = y => padT + ((yMax - y) / (yMax - yMin)) * plotH;
+
+      drawGrid(ctx, padL, padT, plotW, plotH);
+      drawAxes(ctx, padL, padT, plotW, plotH, toY(0), { x: 'x (m)', y: 'y (m)' });
+
+      const curves = [];
+      if (state.showW1) curves.push({ fn: x => waveY(state.w1, x, state.t), color: '#2563eb', width: 2 });
+      if (state.showW2) curves.push({ fn: x => waveY(state.w2, x, state.t), color: '#ea580c', width: 2 });
+      if (state.showSum) curves.push({ fn: x => waveY(state.w1, x, state.t) + waveY(state.w2, x, state.t), color: '#059669', width: 3 });
+
+      curves.forEach(c => {
+        ctx.strokeStyle = c.color;
+        ctx.lineWidth = c.width;
+        ctx.beginPath();
+        for (let i = 0; i <= 600; i++) {
+          const x = xMin + (i / 600) * (xMax - xMin);
+          const px = toX(x), py = toY(c.fn(x));
+          if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      });
+
+      ctx.fillStyle = '#1a2332';
+      ctx.font = '13px Consolas, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`t = ${formatNum(state.t)} s`, padL + 8, padT + 16);
+    }
+
+    function applyPreset(name) {
+      const presets = {
+        same: [{ A: 1, omega: 2, k: 1.5, phi: 0, dir: 1 }, { A: 1, omega: 2, k: 1.5, phi: 0, dir: 1 }],
+        opposite: [{ A: 1, omega: 2, k: 1.5, phi: 0, dir: 1 }, { A: 1, omega: 2, k: 1.5, phi: Math.PI, dir: 1 }],
+        quarter: [{ A: 1, omega: 2, k: 1.5, phi: 0, dir: 1 }, { A: 1, omega: 2, k: 1.5, phi: Math.PI / 2, dir: 1 }],
+        beats: [{ A: 1, omega: 2, k: 1.5, phi: 0, dir: 1 }, { A: 1, omega: 2.3, k: 1.5, phi: 0, dir: 1 }],
+        standing: [{ A: 1, omega: 2, k: 1.5, phi: 0, dir: 1 }, { A: 1, omega: 2, k: 1.5, phi: 0, dir: -1 }]
+      };
+      [state.w1, state.w2] = presets[name].map(o => ({ ...defaultWave(), ...o }));
+      updatePanelValues('w1');
+      updatePanelValues('w2');
+      draw();
+    }
+
+    buildPanel('panelW1', 'w1', 'Onda 1');
+    buildPanel('panelW2', 'w2', 'Onda 2');
+
+    document.getElementById('showW1').addEventListener('change', e => { state.showW1 = e.target.checked; draw(); });
+    document.getElementById('showW2').addEventListener('change', e => { state.showW2 = e.target.checked; draw(); });
+    document.getElementById('showSum').addEventListener('change', e => { state.showSum = e.target.checked; draw(); });
+    document.querySelectorAll('[data-preset]').forEach(btn => btn.addEventListener('click', () => applyPreset(btn.dataset.preset)));
+
+    bindPlayControls(state, draw);
+    window.addEventListener('resize', draw);
+    draw();
+  </script>
+</body>
+</html>

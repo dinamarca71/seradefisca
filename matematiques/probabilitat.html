@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probabilitat — Matemàtiques 2n Batxillerat</title>
+  <link rel="stylesheet" href="../css/comunes.css">
+</head>
+<body>
+  <header class="header-mat">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Matemàtiques</a>
+      <a href="index.html">Inici</a>
+      <a href="matrius.html">Matrius</a>
+      <a href="sistemes.html">Sistemes</a>
+      <a href="probabilitat.html" class="active">Probabilitat</a>
+      <a href="derivades.html">Derivades</a>
+      <a href="integrals.html">Integrals</a>
+    </nav>
+    <h1>Probabilitat i Combinatòria</h1>
+    <p>
+      Repàs de combinatòria i, sobretot, el pas entre un <strong>diagrama d'arbre</strong> (probabilitats
+      condicionades) i una <strong>taula de contingència</strong> (probabilitats de la intersecció), amb
+      probabilitat condicional i teorema de Bayes.
+    </p>
+  </header>
+
+  <main>
+    <!-- ============ COMBINATÒRIA ============ -->
+    <section class="controls-panel">
+      <h2>Combinatòria</h2>
+      <p class="param-desc" style="margin-bottom:0.75rem;">
+        Tria <strong>n</strong> (elements disponibles) i <strong>k</strong> (elements que s'agafen).
+      </p>
+      <div class="combi-row">
+        <label>n = <input type="number" id="combi-n" value="5" min="0" max="170"></label>
+        <label>k = <input type="number" id="combi-k" value="3" min="0" max="170"></label>
+        <button class="btn btn-primary" id="btn-combi">Calcula</button>
+      </div>
+      <div id="combi-res"></div>
+    </section>
+
+    <!-- ============ ARBRE ↔ TAULA ============ -->
+    <section class="controls-panel">
+      <h2>Arbre ↔ Taula de contingència</h2>
+      <div class="mode-radios">
+        <label><input type="radio" name="prob-mode" value="arbre" checked> Dades d'arbre (condicionades)</label>
+        <label><input type="radio" name="prob-mode" value="taula"> Dades de taula (interseccions)</label>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="combi-row" style="margin-bottom:0.85rem;">
+            <label>Nom de l'esdeveniment A <input type="text" id="name-a" value="A" maxlength="10" style="width:6rem"></label>
+            <label>Nom de l'esdeveniment B <input type="text" id="name-b" value="B" maxlength="10" style="width:6rem"></label>
+          </div>
+
+          <div id="inputs-arbre" class="prob-inputs">
+            <div class="row"><span>P(A)</span><input type="number" id="pA" value="0.4" min="0" max="1" step="0.01"></div>
+            <div class="row"><span>P(B | A)</span><input type="number" id="pBgA" value="0.75" min="0" max="1" step="0.01"></div>
+            <div class="row"><span>P(B | A′)</span><input type="number" id="pBgAc" value="0.25" min="0" max="1" step="0.01"></div>
+          </div>
+
+          <div id="inputs-taula" class="prob-inputs" style="display:none;">
+            <div class="row"><span>P(A ∩ B)</span><input type="number" id="p11" value="0.30" min="0" max="1" step="0.01"></div>
+            <div class="row"><span>P(A ∩ B′)</span><input type="number" id="p10" value="0.10" min="0" max="1" step="0.01"></div>
+            <div class="row"><span>P(A′ ∩ B)</span><input type="number" id="p01" value="0.15" min="0" max="1" step="0.01"></div>
+            <div class="row"><span>P(A′ ∩ B′)</span><input type="number" id="p00" value="0.45" min="0" max="1" step="0.01"></div>
+          </div>
+
+          <div class="mat-toolbar">
+            <button class="btn btn-primary" id="btn-prob">Converteix i calcula</button>
+          </div>
+        </div>
+
+        <div>
+          <h2 id="preview-title" style="font-size:0.85rem;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">Diagrama d'arbre</h2>
+          <div id="preview-out"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="formula-box result-panel">
+      <h2>Resultat</h2>
+      <div id="prob-res">
+        <p class="formula-note" style="text-align:left;">
+          Introdueix les dades i prem «Converteix i calcula» per obtenir la taula, l'arbre, les
+          probabilitats condicionals i el teorema de Bayes.
+        </p>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Variacions:</strong> V(n,k) = n!/(n−k)! — ordenacions de k elements de n, sense repetir (l'ordre importa).</li>
+        <li><strong>Variacions amb repetició:</strong> VR(n,k) = nᵏ — l'ordre importa i es poden repetir elements.</li>
+        <li><strong>Combinacions:</strong> C(n,k) = n!/(k!·(n−k)!) — tries de k elements de n on l'ordre NO importa.</li>
+        <li><strong>Probabilitat condicional:</strong> P(B|A) = P(A∩B)/P(A). D'aquí: P(A∩B) = P(A)·P(B|A).</li>
+        <li><strong>Arbre → taula:</strong> cada branca completa multiplica les probabilitats i dóna una intersecció (una casella de la taula).</li>
+        <li><strong>Taula → arbre:</strong> es divideix cada intersecció pel marginal de la fila per recuperar la condicionada.</li>
+        <li><strong>Probabilitat total:</strong> P(B) = P(A)·P(B|A) + P(A′)·P(B|A′).</li>
+        <li><strong>Independència:</strong> A i B són independents si P(A∩B) = P(A)·P(B); equival a dir que P(B|A) = P(B).</li>
+        <li><strong>Teorema de Bayes:</strong> P(A|B) = P(A∩B)/P(B) = P(A)·P(B|A) / [P(A)·P(B|A) + P(A′)·P(B|A′)].</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    function fmt(x) {
+      if (!isFinite(x)) return '—';
+      let r = Math.round(x * 1e6) / 1e6;
+      if (Object.is(r, -0)) r = 0;
+      if (Math.abs(r - Math.round(r)) < 1e-9) return String(Math.round(r));
+      return r.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+    }
+
+    // ================= COMBINATÒRIA =================
+    function factBig(n) { let r = 1n; for (let i = 2n; i <= BigInt(n); i++) r *= i; return r; }
+
+    function combiHTML(n, k) {
+      if (!Number.isInteger(n) || !Number.isInteger(k) || n < 0 || k < 0) {
+        return `<div class="step msg-error">n i k han de ser nombres enters no negatius.</div>`;
+      }
+      let html = '';
+
+      // Variacions V(n,k) = n!/(n-k)! = n·(n-1)·…·(n-k+1)
+      html += `<div class="method-title">Variacions — V(${n}, ${k})</div>`;
+      if (k > n) {
+        html += `<div class="step">No està definida per a k &gt; n (no pots ordenar ${k} elements de només ${n}).</div>`;
+      } else {
+        let prod = 1n;
+        const terms = [];
+        for (let i = 0; i < k; i++) { terms.push(n - i); prod *= BigInt(n - i); }
+        const prodStr = terms.length ? terms.join('·') : '1';
+        html += `<div class="step eq">V(n,k) = n!/(n−k)! = ${n}!/${n - k}! = ${prodStr} = <strong class="big-value">${prod}</strong></div>`;
+      }
+
+      // Variacions amb repetició VR(n,k) = n^k
+      html += `<div class="method-title">Variacions amb repetició — VR(${n}, ${k})</div>`;
+      const vr = BigInt(n) ** BigInt(k);
+      const vrTerms = k > 0 ? Array(k).fill(n).join('·') : '1 (cap element)';
+      html += `<div class="step eq">VR(n,k) = nᵏ = ${n}^${k} = ${k > 0 ? vrTerms + ' = ' : ''}<strong class="big-value">${vr}</strong></div>`;
+
+      // Combinacions C(n,k) = n!/(k!(n-k)!) = V(n,k)/k!
+      html += `<div class="method-title">Combinacions — C(${n}, ${k})</div>`;
+      if (k > n) {
+        html += `<div class="step">No està definida per a k &gt; n.</div>`;
+      } else {
+        let prod = 1n;
+        for (let i = 0; i < k; i++) prod *= BigInt(n - i);
+        const kfact = factBig(k);
+        const c = prod / kfact;
+        html += `<div class="step eq">C(n,k) = n!/(k!·(n−k)!) = V(${n},${k})/${k}! = ${prod}/${kfact} = <strong class="big-value">${c}</strong></div>`;
+      }
+      return html;
+    }
+
+    function runCombi() {
+      const n = parseInt(document.getElementById('combi-n').value, 10);
+      const k = parseInt(document.getElementById('combi-k').value, 10);
+      document.getElementById('combi-res').innerHTML = combiHTML(n, k);
+    }
+
+    // ================= ARBRE ↔ TAULA =================
+    function pnum(id) { return parseFloat(document.getElementById(id).value); }
+
+    function computeJoints() {
+      const mode = document.querySelector('input[name="prob-mode"]:checked').value;
+      if (mode === 'arbre') {
+        const pA = pnum('pA'), pBgA = pnum('pBgA'), pBgAc = pnum('pBgAc');
+        for (const [v, nm] of [[pA, 'P(A)'], [pBgA, 'P(B|A)'], [pBgAc, "P(B|A′)"]]) {
+          if (!isFinite(v) || v < 0 || v > 1) throw new Error(`${nm} ha d'estar entre 0 i 1.`);
+        }
+        const pAc = 1 - pA;
+        return {
+          p11: pA * pBgA, p10: pA * (1 - pBgA),
+          p01: pAc * pBgAc, p00: pAc * (1 - pBgAc), source: 'arbre'
+        };
+      } else {
+        const p11 = pnum('p11'), p10 = pnum('p10'), p01 = pnum('p01'), p00 = pnum('p00');
+        for (const [v, nm] of [[p11, 'P(A∩B)'], [p10, 'P(A∩B′)'], [p01, 'P(A′∩B)'], [p00, 'P(A′∩B′)']]) {
+          if (!isFinite(v) || v < 0 || v > 1) throw new Error(`${nm} ha d'estar entre 0 i 1.`);
+        }
+        const sum = p11 + p10 + p01 + p00;
+        if (Math.abs(sum - 1) > 1e-6) throw new Error(`Les quatre interseccions han de sumar 1 (ara sumen ${fmt(sum)}).`);
+        return { p11, p10, p01, p00, source: 'taula' };
+      }
+    }
+
+    function contingencyHTML(j, A, B) {
+      const Ac = A + '′', Bc = B + '′';
+      const PA = j.p11 + j.p10, PAc = j.p01 + j.p00;
+      const PB = j.p11 + j.p01, PBc = j.p10 + j.p00;
+      return `<table class="mass-table cont-table">
+        <tr><th></th><th>${B}</th><th>${Bc}</th><th>Total</th></tr>
+        <tr><th>${A}</th><td class="num hlcell">${fmt(j.p11)}</td><td class="num hlcell">${fmt(j.p10)}</td><td class="num">${fmt(PA)}</td></tr>
+        <tr><th>${Ac}</th><td class="num hlcell">${fmt(j.p01)}</td><td class="num hlcell">${fmt(j.p00)}</td><td class="num">${fmt(PAc)}</td></tr>
+        <tr><th>Total</th><td class="num">${fmt(PB)}</td><td class="num">${fmt(PBc)}</td><td class="num">1</td></tr>
+      </table>`;
+    }
+
+    function treeSVG(j, A, B) {
+      const Ac = A + '′', Bc = B + '′';
+      const PA = j.p11 + j.p10, PAc = j.p01 + j.p00;
+      const pBgA = PA ? j.p11 / PA : 0, pBcgA = PA ? j.p10 / PA : 0;
+      const pBgAc = PAc ? j.p01 / PAc : 0, pBcgAc = PAc ? j.p00 / PAc : 0;
+      const L = (x1, y1, x2, y2) => `<line class="svg-line" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+      const T = (x, y, cls, txt, anchor = 'middle') => `<text class="${cls}" x="${x}" y="${y}" text-anchor="${anchor}">${txt}</text>`;
+      const N = (x, y) => `<circle class="svg-node" cx="${x}" cy="${y}" r="5"/>`;
+      return `<svg class="tree-svg" viewBox="0 0 640 340" role="img" aria-label="Diagrama d'arbre">
+        ${L(40, 170, 250, 90)}${L(40, 170, 250, 250)}
+        ${L(250, 90, 470, 45)}${L(250, 90, 470, 135)}
+        ${L(250, 250, 470, 215)}${L(250, 250, 470, 305)}
+        ${N(40, 170)}${N(250, 90)}${N(250, 250)}${N(470, 45)}${N(470, 135)}${N(470, 215)}${N(470, 305)}
+        ${T(145, 122, 'svg-blabel', 'P(' + A + ') = ' + fmt(PA))}
+        ${T(145, 205, 'svg-blabel', 'P(' + Ac + ') = ' + fmt(PAc))}
+        ${T(365, 58, 'svg-blabel', 'P(' + B + '|' + A + ') = ' + fmt(pBgA))}
+        ${T(365, 108, 'svg-blabel', 'P(' + Bc + '|' + A + ') = ' + fmt(pBcgA))}
+        ${T(365, 228, 'svg-blabel', 'P(' + B + '|' + Ac + ') = ' + fmt(pBgAc))}
+        ${T(365, 278, 'svg-blabel', 'P(' + Bc + '|' + Ac + ') = ' + fmt(pBcgAc))}
+        ${T(258, 84, 'svg-nodetext', A, 'start')}
+        ${T(258, 262, 'svg-nodetext', Ac, 'start')}
+        ${T(482, 45, 'svg-end', A + '∩' + B + ' = ' + fmt(j.p11), 'start')}
+        ${T(482, 135, 'svg-end', A + '∩' + Bc + ' = ' + fmt(j.p10), 'start')}
+        ${T(482, 215, 'svg-end', Ac + '∩' + B + ' = ' + fmt(j.p01), 'start')}
+        ${T(482, 305, 'svg-end', Ac + '∩' + Bc + ' = ' + fmt(j.p00), 'start')}
+      </svg>`;
+    }
+
+    function conditionalsHTML(j, A, B) {
+      const Ac = A + '′', Bc = B + '′';
+      const PA = j.p11 + j.p10, PAc = j.p01 + j.p00;
+      const PB = j.p11 + j.p01, PBc = j.p10 + j.p00;
+      const cond = (num, den) => den ? fmt(num / den) : '—';
+      let html = `<div class="method-title">Probabilitats condicionals</div>`;
+      html += `<div class="step-label">Des de A (dividim per la fila):</div>`;
+      html += `<div class="step eq">P(${B}|${A}) = P(${A}∩${B})/P(${A}) = ${fmt(j.p11)}/${fmt(PA)} = <strong>${cond(j.p11, PA)}</strong> &nbsp;·&nbsp; P(${Bc}|${A}) = <strong>${cond(j.p10, PA)}</strong></div>`;
+      html += `<div class="step eq">P(${B}|${Ac}) = P(${Ac}∩${B})/P(${Ac}) = ${fmt(j.p01)}/${fmt(PAc)} = <strong>${cond(j.p01, PAc)}</strong> &nbsp;·&nbsp; P(${Bc}|${Ac}) = <strong>${cond(j.p00, PAc)}</strong></div>`;
+      html += `<div class="step-label">Des de B (dividim per la columna):</div>`;
+      html += `<div class="step eq">P(${A}|${B}) = P(${A}∩${B})/P(${B}) = ${fmt(j.p11)}/${fmt(PB)} = <strong>${cond(j.p11, PB)}</strong> &nbsp;·&nbsp; P(${Ac}|${B}) = <strong>${cond(j.p01, PB)}</strong></div>`;
+      html += `<div class="step eq">P(${A}|${Bc}) = P(${A}∩${Bc})/P(${Bc}) = ${fmt(j.p10)}/${fmt(PBc)} = <strong>${cond(j.p10, PBc)}</strong> &nbsp;·&nbsp; P(${Ac}|${Bc}) = <strong>${cond(j.p00, PBc)}</strong></div>`;
+      return html;
+    }
+
+    function independenceHTML(j, A, B) {
+      const PA = j.p11 + j.p10, PB = j.p11 + j.p01;
+      const prod = PA * PB;
+      const indep = Math.abs(j.p11 - prod) < 1e-9;
+      let html = `<div class="method-title">Independència de ${A} i ${B}</div>`;
+      html += `<div class="step-label">${A} i ${B} són independents si P(${A}∩${B}) = P(${A})·P(${B}).</div>`;
+      html += `<div class="step eq">P(${A}∩${B}) = ${fmt(j.p11)} &nbsp;·&nbsp; P(${A})·P(${B}) = ${fmt(PA)}·${fmt(PB)} = ${fmt(prod)}</div>`;
+      if (indep) {
+        html += `<div class="step"><span class="rf-badge rf-scd">Independents</span> &nbsp; Els dos valors coincideixen, per tant P(${B}|${A}) = P(${B}).</div>`;
+      } else {
+        html += `<div class="step"><span class="rf-badge rf-si">No independents</span> &nbsp; Els valors són diferents (${fmt(j.p11)} ≠ ${fmt(prod)}), per tant ${A} i ${B} són dependents.</div>`;
+      }
+      return html;
+    }
+
+    function bayesHTML(j, A, B) {
+      const Ac = A + '′';
+      const PA = j.p11 + j.p10, PAc = j.p01 + j.p00, PB = j.p11 + j.p01;
+      const pBgA = PA ? j.p11 / PA : 0, pBgAc = PAc ? j.p01 / PAc : 0;
+      let html = `<div class="method-title">Probabilitat total i Bayes</div>`;
+      html += `<div class="step eq">P(${B}) = P(${A})·P(${B}|${A}) + P(${Ac})·P(${B}|${Ac})</div>`;
+      html += `<div class="step eq">= ${fmt(PA)}·${fmt(pBgA)} + ${fmt(PAc)}·${fmt(pBgAc)} = <strong class="big-value">${fmt(PB)}</strong></div>`;
+      html += `<div class="step-label">Teorema de Bayes:</div>`;
+      html += `<div class="step eq">P(${A}|${B}) = P(${A})·P(${B}|${A}) / P(${B}) = ${fmt(j.p11)} / ${fmt(PB)} = <strong class="big-value">${PB ? fmt(j.p11 / PB) : '—'}</strong></div>`;
+      return html;
+    }
+
+    function runProb() {
+      let j;
+      try { j = computeJoints(); }
+      catch (e) {
+        document.getElementById('prob-res').innerHTML = `<div class="step msg-error">${e.message}</div>`;
+        document.getElementById('preview-out').innerHTML = '';
+        return;
+      }
+      const A = (document.getElementById('name-a').value || 'A').trim();
+      const B = (document.getElementById('name-b').value || 'B').trim();
+
+      const isArbre = j.source === 'arbre';
+      const treeHTML = treeSVG(j, A, B);
+      const tableHTML = `<div class="step">${contingencyHTML(j, A, B)}</div>`;
+
+      // Right preview shows the representation the user is entering
+      document.getElementById('preview-title').textContent =
+        isArbre ? "Diagrama d'arbre (dades introduïdes)" : 'Taula de contingència (dades introduïdes)';
+      document.getElementById('preview-out').innerHTML = isArbre ? treeHTML : tableHTML;
+
+      // Result below shows the converted (other) representation
+      const other = isArbre ? 'taula de contingència' : "diagrama d'arbre";
+      let html = `<div class="step-label">Has introduït les dades en forma de <strong>${isArbre ? 'arbre' : 'taula'}</strong>. Aquesta és la <strong>${other}</strong> equivalent:</div>`;
+      html += isArbre ? tableHTML : `<div class="step">${treeHTML}</div>`;
+      html += conditionalsHTML(j, A, B);
+      html += independenceHTML(j, A, B);
+      html += bayesHTML(j, A, B);
+      document.getElementById('prob-res').innerHTML = html;
+    }
+
+    function switchMode() {
+      const mode = document.querySelector('input[name="prob-mode"]:checked').value;
+      document.getElementById('inputs-arbre').style.display = mode === 'arbre' ? 'grid' : 'none';
+      document.getElementById('inputs-taula').style.display = mode === 'taula' ? 'grid' : 'none';
+      runProb();
+    }
+
+    // ================= Wiring =================
+    document.getElementById('btn-combi').addEventListener('click', runCombi);
+    document.getElementById('combi-n').addEventListener('input', runCombi);
+    document.getElementById('combi-k').addEventListener('input', runCombi);
+    document.getElementById('btn-prob').addEventListener('click', runProb);
+    document.querySelectorAll('input[name="prob-mode"]').forEach(r => r.addEventListener('change', switchMode));
+
+    runCombi();
+    runProb();
+  </script>
+</body>
+</html>

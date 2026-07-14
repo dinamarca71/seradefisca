@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistemes d'Equacions — Matemàtiques 2n Batxillerat</title>
+  <link rel="stylesheet" href="../css/comunes.css">
+</head>
+<body>
+  <header class="header-mat">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Matemàtiques</a>
+      <a href="index.html">Inici</a>
+      <a href="matrius.html">Matrius</a>
+      <a href="sistemes.html" class="active">Sistemes</a>
+      <a href="probabilitat.html">Probabilitat</a>
+      <a href="derivades.html">Derivades</a>
+      <a href="integrals.html">Integrals</a>
+    </nav>
+    <h1>Sistemes d'Equacions Lineals</h1>
+    <p>
+      Resol sistemes quadrats (fins a 4×4) pel mètode de <strong>Cramer</strong> i discuteix-los amb el
+      teorema de <strong>Rouché–Frobenius</strong>. Pots incloure un paràmetre <strong>m</strong> per fer
+      la discussió segons els seus valors.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Fórmules de referència</h2>
+      <p class="formula">xᵢ = det(Aᵢ) / det(A) &nbsp;·&nbsp; rang(A) vs rang(A|b)</p>
+      <p class="formula-note">
+        <strong>Rouché–Frobenius</strong> (n incògnites): si rang(A) = rang(A|b) = n → <strong>SCD</strong> (solució única);
+        si rang(A) = rang(A|b) &lt; n → <strong>SCI</strong> (infinites solucions);
+        si rang(A) ≠ rang(A|b) → <strong>SI</strong> (sense solució).
+      </p>
+    </section>
+
+    <section class="controls-panel">
+      <h2>Sistema</h2>
+      <div class="dim-controls">
+        <span>Incògnites
+          <select id="n-sel">
+            <option>2</option><option selected>3</option><option>4</option>
+          </select>
+        </span>
+        <label class="mode-toggle" style="margin-bottom:0;">
+          <input type="checkbox" id="param-mode"> Usar paràmetre <strong>&nbsp;m</strong>
+        </label>
+      </div>
+      <p class="param-desc" id="param-hint" style="margin-bottom:0.85rem;display:none;">
+        Pots escriure expressions amb <strong>m</strong> a les caselles: p. ex. <code>m</code>, <code>2m</code>,
+        <code>m+1</code>, <code>1-m</code>, <code>m^2</code>. Usa el punt per als decimals i la barra per a fraccions (<code>1/2</code>).
+      </p>
+      <div class="sys-grid" id="sys-grid"></div>
+      <div class="mat-toolbar">
+        <button class="btn btn-primary" id="btn-solve">Resol / Discuteix</button>
+        <button class="btn" id="btn-example">Exemple</button>
+        <button class="btn" id="btn-clear">Neteja</button>
+      </div>
+    </section>
+
+    <section class="formula-box result-panel">
+      <h2>Resultat</h2>
+      <div id="resultat">
+        <p class="formula-note" style="text-align:left;">
+          Introdueix els coeficients i el terme independent de cada equació i prem «Resol / Discuteix».
+        </p>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Regla de Cramer:</strong> per a sistemes quadrats amb det(A) ≠ 0, cada incògnita és xᵢ = det(Aᵢ)/det(A), on Aᵢ és A amb la columna i substituïda pels termes independents.</li>
+        <li><strong>Rang:</strong> nombre de files (o columnes) linealment independents; s'obté per reducció de Gauss.</li>
+        <li><strong>Teorema de Rouché–Frobenius:</strong> compara el rang de la matriu de coeficients amb el de la matriu ampliada per classificar el sistema.</li>
+        <li><strong>Discussió amb paràmetre:</strong> es busquen els valors de m que anul·len det(A); per a la resta, el sistema és SCD. En els valors crítics es tornen a comparar els rangs.</li>
+        <li><strong>SCD / SCI / SI:</strong> compatible determinat (una solució), compatible indeterminat (infinites) o incompatible (cap).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    const U = ['x', 'y', 'z', 't'];
+    const PARAMS = ['λ', 'μ', 'ν', 'ρ'];
+
+    const NUMERIC_EXAMPLE = {
+      n: 3,
+      A: [[2, 1, -1], [-3, -1, 2], [-2, 1, 2]],
+      b: [8, -11, -3]
+    };
+    const PARAM_EXAMPLE = {
+      n: 3,
+      A: [['m', '1', '1'], ['1', 'm', '1'], ['1', '1', 'm']],
+      b: ['1', 'm', 'm^2']
+    };
+
+    // ===== Number formatting =====
+    function fmt(x) {
+      if (!isFinite(x)) return '—';
+      let r = Math.round(x * 1e6) / 1e6;
+      if (Object.is(r, -0)) r = 0;
+      if (Math.abs(r - Math.round(r)) < 1e-9) return String(Math.round(r));
+      return r.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+    }
+    function paren(x) { return x < 0 ? '(' + fmt(x) + ')' : fmt(x); }
+
+    // ===== Polynomials in m (coeffs low -> high) =====
+    function pTrim(p) { const c = p.slice(); while (c.length > 1 && Math.abs(c[c.length - 1]) < 1e-12) c.pop(); return c; }
+    function pAdd(a, b) { const r = []; for (let i = 0; i < Math.max(a.length, b.length); i++) r.push((a[i] || 0) + (b[i] || 0)); return pTrim(r); }
+    function pSub(a, b) { const r = []; for (let i = 0; i < Math.max(a.length, b.length); i++) r.push((a[i] || 0) - (b[i] || 0)); return pTrim(r); }
+    function pMul(a, b) { const r = new Array(a.length + b.length - 1).fill(0); for (let i = 0; i < a.length; i++) for (let j = 0; j < b.length; j++) r[i + j] += a[i] * b[j]; return pTrim(r); }
+    function pPow(a, e) { let r = [1]; for (let k = 0; k < e; k++) r = pMul(r, a); return r; }
+    function pEval(p, m) { let s = 0; for (let i = p.length - 1; i >= 0; i--) s = s * m + p[i]; return s; }
+
+    function polyToString(p) {
+      let s = '', first = true;
+      for (let i = p.length - 1; i >= 0; i--) {
+        const v = p[i];
+        if (Math.abs(v) < 1e-12) continue;
+        const av = Math.abs(v);
+        const coef = (i > 0 && Math.abs(av - 1) < 1e-12) ? '' : fmt(av);
+        const mPart = i === 0 ? '' : (i === 1 ? 'm' : 'm^' + i);
+        const piece = (coef + mPart) || '0';
+        if (first) s += (v < 0 ? '−' : '') + piece;
+        else s += (v < 0 ? ' − ' : ' + ') + piece;
+        first = false;
+      }
+      return s === '' ? '0' : s;
+    }
+
+    // ===== Expression parser (-> polynomial in m) =====
+    function parseExpr(str) {
+      let s = (str || '').toString().toLowerCase().trim();
+      if (s === '') return [0];
+      s = s.replace(/−/g, '-').replace(/·/g, '*').replace(/,/g, '.').replace(/\s+/g, '');
+      s = s.replace(/(\d|\)|m)(\()/g, '$1*$2')
+           .replace(/(\d)(m)/g, '$1*$2')
+           .replace(/(\))(\d|m)/g, '$1*$2')
+           .replace(/(m)(\d)/g, '$1*$2');
+
+      // tokenize
+      const tokens = [];
+      let i = 0;
+      while (i < s.length) {
+        const ch = s[i];
+        if (/[0-9.]/.test(ch)) {
+          let num = '';
+          while (i < s.length && /[0-9.]/.test(s[i])) num += s[i++];
+          tokens.push({ t: 'num', v: parseFloat(num) });
+        } else if (ch === 'm') { tokens.push({ t: 'm' }); i++; }
+        else if ('+-*/^'.includes(ch)) { tokens.push({ t: 'op', v: ch }); i++; }
+        else if (ch === '(') { tokens.push({ t: 'lp' }); i++; }
+        else if (ch === ')') { tokens.push({ t: 'rp' }); i++; }
+        else throw new Error(`Caràcter no vàlid: "${ch}"`);
+      }
+
+      // unary detection
+      for (let k = 0; k < tokens.length; k++) {
+        if (tokens[k].t === 'op' && (tokens[k].v === '-' || tokens[k].v === '+')) {
+          const prev = tokens[k - 1];
+          if (!prev || prev.t === 'op' || prev.t === 'lp') {
+            tokens[k] = { t: 'op', v: tokens[k].v === '-' ? 'u-' : 'u+' };
+          }
+        }
+      }
+
+      const prec = { 'u-': 5, 'u+': 5, '^': 4, '*': 3, '/': 3, '+': 2, '-': 2 };
+      const right = { 'u-': true, 'u+': true, '^': true };
+      const out = [], ops = [];
+      for (const tok of tokens) {
+        if (tok.t === 'num' || tok.t === 'm') out.push(tok);
+        else if (tok.t === 'op') {
+          while (ops.length) {
+            const top = ops[ops.length - 1];
+            if (top.t === 'op' && (prec[top.v] > prec[tok.v] || (prec[top.v] === prec[tok.v] && !right[tok.v]))) out.push(ops.pop());
+            else break;
+          }
+          ops.push(tok);
+        } else if (tok.t === 'lp') ops.push(tok);
+        else if (tok.t === 'rp') {
+          while (ops.length && ops[ops.length - 1].t !== 'lp') out.push(ops.pop());
+          if (!ops.length) throw new Error('Parèntesis desequilibrats');
+          ops.pop();
+        }
+      }
+      while (ops.length) { const o = ops.pop(); if (o.t === 'lp') throw new Error('Parèntesis desequilibrats'); out.push(o); }
+
+      // evaluate RPN with polynomials
+      const st = [];
+      for (const tok of out) {
+        if (tok.t === 'num') st.push([tok.v]);
+        else if (tok.t === 'm') st.push([0, 1]);
+        else if (tok.v === 'u-') { const a = st.pop(); st.push(pMul([-1], a)); }
+        else if (tok.v === 'u+') { /* no-op */ }
+        else {
+          const b = st.pop(), a = st.pop();
+          if (a === undefined || b === undefined) throw new Error('Expressió incompleta');
+          if (tok.v === '+') st.push(pAdd(a, b));
+          else if (tok.v === '-') st.push(pSub(a, b));
+          else if (tok.v === '*') st.push(pMul(a, b));
+          else if (tok.v === '/') {
+            if (b.length > 1) throw new Error('No es pot dividir entre una expressió amb m');
+            if (Math.abs(b[0]) < 1e-12) throw new Error('Divisió per zero');
+            st.push(a.map(v => v / b[0]));
+          } else if (tok.v === '^') {
+            if (b.length > 1) throw new Error("L'exponent ha de ser un nombre");
+            const e = Math.round(b[0]);
+            if (e < 0 || Math.abs(b[0] - e) > 1e-9) throw new Error('Exponent no vàlid');
+            st.push(pPow(a, e));
+          }
+        }
+      }
+      if (st.length !== 1) throw new Error('Expressió no vàlida');
+      return pTrim(st[0]);
+    }
+
+    // ===== Matrix helpers (numeric) =====
+    function minor(M, r, c) { return M.filter((_, i) => i !== r).map(row => row.filter((_, j) => j !== c)); }
+    function det(M) {
+      const n = M.length;
+      if (n === 1) return M[0][0];
+      if (n === 2) return M[0][0] * M[1][1] - M[0][1] * M[1][0];
+      let s = 0;
+      for (let j = 0; j < n; j++) s += (j % 2 ? -1 : 1) * M[0][j] * det(minor(M, 0, j));
+      return s;
+    }
+
+    // ===== Determinant as polynomial in m =====
+    function detPoly(P) {
+      const n = P.length;
+      if (n === 1) return P[0][0];
+      if (n === 2) return pSub(pMul(P[0][0], P[1][1]), pMul(P[0][1], P[1][0]));
+      let acc = [0];
+      for (let j = 0; j < n; j++) {
+        const term = pMul(P[0][j], detPoly(minor(P, 0, j)));
+        acc = j % 2 ? pSub(acc, term) : pAdd(acc, term);
+      }
+      return pTrim(acc);
+    }
+
+    // ===== Rank / RREF (numeric) =====
+    function rref(M) {
+      M = M.map(r => r.slice());
+      const rows = M.length, cols = M[0].length, pivots = [];
+      let r = 0;
+      for (let col = 0; col < cols && r < rows; col++) {
+        let sel = -1, best = 1e-9;
+        for (let i = r; i < rows; i++) if (Math.abs(M[i][col]) > best) { best = Math.abs(M[i][col]); sel = i; }
+        if (sel === -1) continue;
+        [M[r], M[sel]] = [M[sel], M[r]];
+        const pv = M[r][col];
+        for (let j = 0; j < cols; j++) M[r][j] /= pv;
+        for (let i = 0; i < rows; i++) if (i !== r) { const f = M[i][col]; if (Math.abs(f) > 1e-12) for (let j = 0; j < cols; j++) M[i][j] -= f * M[r][j]; }
+        pivots.push(col); r++;
+      }
+      for (const row of M) for (let j = 0; j < cols; j++) if (Math.abs(row[j]) < 1e-10) row[j] = 0;
+      return { R: M, pivots, rank: pivots.length };
+    }
+    function rank(M) { return rref(M).rank; }
+
+    // ===== Polynomial real roots =====
+    function polyRealRoots(coeffs) {
+      let c = pTrim(coeffs);
+      if (c.length === 1) return { roots: [], allZero: Math.abs(c[0]) < 1e-12 };
+      const deg = c.length - 1;
+      if (deg === 1) return { roots: [-c[0] / c[1]] };
+      if (deg === 2) {
+        const [a0, a1, a2] = c, disc = a1 * a1 - 4 * a2 * a0;
+        if (disc < -1e-9) return { roots: [] };
+        const sq = Math.sqrt(Math.max(disc, 0));
+        return { roots: [(-a1 + sq) / (2 * a2), (-a1 - sq) / (2 * a2)] };
+      }
+      // Durand-Kerner
+      const n = deg, a = c.map(v => v / c[n]);
+      let R = [];
+      for (let k = 0; k < n; k++) { const ang = (2 * Math.PI * k) / n + 0.4; R.push({ re: 1.2 * Math.cos(ang), im: 1.2 * Math.sin(ang) }); }
+      const evalP = x => { let re = 1, im = 0; for (let i = n - 1; i >= 0; i--) { const nre = re * x.re - im * x.im + a[i], nim = re * x.im + im * x.re; re = nre; im = nim; } return { re, im }; };
+      for (let it = 0; it < 200; it++) {
+        let maxd = 0;
+        for (let i = 0; i < n; i++) {
+          const p = evalP(R[i]);
+          let dre = 1, dim = 0;
+          for (let j = 0; j < n; j++) if (j !== i) { const rre = R[i].re - R[j].re, rim = R[i].im - R[j].im, nre = dre * rre - dim * rim, nim = dre * rim + dim * rre; dre = nre; dim = nim; }
+          const den = dre * dre + dim * dim;
+          const qre = (p.re * dre + p.im * dim) / den, qim = (p.im * dre - p.re * dim) / den;
+          R[i] = { re: R[i].re - qre, im: R[i].im - qim };
+          maxd = Math.max(maxd, Math.hypot(qre, qim));
+        }
+        if (maxd < 1e-13) break;
+      }
+      const real = [];
+      for (const r of R) if (Math.abs(r.im) < 1e-6) real.push(r.re);
+      return { roots: real };
+    }
+    function cleanRoots(arr) {
+      const out = [];
+      for (let v of arr) {
+        let r = Math.round(v * 1e6) / 1e6;
+        if (Math.abs(r - Math.round(r)) < 1e-4) r = Math.round(r);
+        if (!out.some(o => Math.abs(o - r) < 1e-5)) out.push(r);
+      }
+      return out.sort((a, b) => a - b);
+    }
+
+    // ===== Rendering =====
+    function matHTML(M, extra = '') {
+      const cols = M[0].length;
+      let cells = '';
+      for (const row of M) for (const v of row) cells += `<span class="mat-cell">${fmt(v)}</span>`;
+      return `<span class="matriu ${extra}"><span class="matriu__cells" style="grid-template-columns:repeat(${cols},minmax(1.4rem,auto))">${cells}</span></span>`;
+    }
+    function colHTML(vec, extra = '') { return matHTML(vec.map(v => [v]), extra); }
+
+    // ===== Grid build / read =====
+    function buildGrid(useExample) {
+      const n = +document.getElementById('n-sel').value;
+      const grid = document.getElementById('sys-grid');
+      const old = {};
+      grid.querySelectorAll('input').forEach(inp => { old[inp.dataset.key] = inp.value; });
+      grid.style.gridTemplateColumns = `repeat(${n}, 3.6rem) 1rem 3.6rem`;
+      let html = '';
+      for (let j = 0; j < n; j++) html += `<div class="sys-label">${U[j]}</div>`;
+      html += `<div class="sys-sep"></div><div class="sys-label">t.i.</div>`;
+      const ex = useExample || null;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const key = 'a' + i + '-' + j;
+          let val = old[key] !== undefined ? old[key] : (ex ? ex.A[i][j] : (i === j ? 1 : 0));
+          html += `<input type="text" data-key="${key}" value="${val}" aria-label="coeficient ${U[j]} equació ${i + 1}">`;
+        }
+        html += `<div class="sys-sep">=</div>`;
+        const bkey = 'b' + i;
+        let bval = old[bkey] !== undefined ? old[bkey] : (ex ? ex.b[i] : 0);
+        html += `<input type="text" data-key="${bkey}" value="${bval}" aria-label="terme independent equació ${i + 1}">`;
+      }
+      grid.innerHTML = html;
+    }
+
+    function readSystem() {
+      const n = +document.getElementById('n-sel').value;
+      const grid = document.getElementById('sys-grid');
+      const A = [], b = [];
+      let hasM = false;
+      for (let i = 0; i < n; i++) {
+        const row = [];
+        for (let j = 0; j < n; j++) {
+          const p = parseExpr(grid.querySelector(`[data-key="a${i}-${j}"]`).value);
+          if (p.length > 1) hasM = true;
+          row.push(p);
+        }
+        A.push(row);
+        const pb = parseExpr(grid.querySelector(`[data-key="b${i}"]`).value);
+        if (pb.length > 1) hasM = true;
+        b.push(pb);
+      }
+      return { n, A, b, hasM };
+    }
+
+    function toNum(P) { return P.map(row => row.map(p => p[0] || 0)); }
+    function evalMat(P, m) { return P.map(row => row.map(p => pEval(p, m))); }
+    function evalVec(V, m) { return V.map(p => pEval(p, m)); }
+
+    // ===== Rouché-Frobenius classification =====
+    function classify(A, b, n) {
+      const Aug = A.map((row, i) => [...row, b[i]]);
+      const rA = rank(A), rAb = rank(Aug);
+      let type;
+      if (rA < rAb) type = 'SI';
+      else if (rA === n) type = 'SCD';
+      else type = 'SCI';
+      return { rA, rAb, type };
+    }
+    const badge = { SCD: 'rf-scd', SCI: 'rf-sci', SI: 'rf-si' };
+    const typeName = { SCD: 'Compatible Determinat (SCD)', SCI: 'Compatible Indeterminat (SCI)', SI: 'Incompatible (SI)' };
+
+    function rankInfo(rA, rAb, n) {
+      return `<div class="rank-line">rang(A) = ${rA} &nbsp;·&nbsp; rang(A|b) = ${rAb} &nbsp;·&nbsp; incògnites n = ${n}</div>`;
+    }
+
+    // General solution (SCI) from RREF of augmented matrix
+    function generalSolution(A, b, n) {
+      const Aug = A.map((row, i) => [...row, b[i]]);
+      const { R, pivots } = rref(Aug);
+      const free = [];
+      for (let c = 0; c < n; c++) if (!pivots.includes(c)) free.push(c);
+      const paramOf = {};
+      free.forEach((c, idx) => paramOf[c] = PARAMS[idx] || ('p' + idx));
+      let html = `<div class="step-label">Solució general (variables lliures: ${free.map(c => U[c] + ' = ' + paramOf[c]).join(', ')}):</div>`;
+      // basic vars
+      pivots.forEach((c, ri) => {
+        if (c >= n) return;
+        let expr = fmt(R[ri][n]);
+        for (const f of free) {
+          const coef = R[ri][f];
+          if (Math.abs(coef) > 1e-10) expr += ` ${coef > 0 ? '−' : '+'} ${fmt(Math.abs(coef))}${paramOf[f]}`;
+        }
+        html += `<div class="step eq">${U[c]} = ${expr}</div>`;
+      });
+      free.forEach(c => { html += `<div class="step eq">${U[c]} = ${paramOf[c]}</div>`; });
+      html += `<div class="step-label">amb ${free.map(c => paramOf[c]).join(', ')} ∈ ℝ.</div>`;
+      return html;
+    }
+
+    // Contradiction row for SI
+    function contradictionHTML(A, b, n) {
+      const Aug = A.map((row, i) => [...row, b[i]]);
+      const { R } = rref(Aug);
+      for (const row of R) {
+        const coeffsZero = row.slice(0, n).every(v => Math.abs(v) < 1e-9);
+        if (coeffsZero && Math.abs(row[n]) > 1e-9) {
+          return `<div class="step eq">Apareix la fila <span class="hl">0 = ${fmt(row[n])}</span>, que és impossible.</div>`;
+        }
+      }
+      return '';
+    }
+
+    // ===== Cramer (numeric SCD) =====
+    function cramerHTML(A, b, n) {
+      const d = det(A);
+      let html = `<div class="step eq">det(A) = <strong>${fmt(d)}</strong> &nbsp;(≠ 0 → apliquem Cramer)</div>`;
+      const sol = [];
+      for (let i = 0; i < n; i++) {
+        const Ai = A.map((row, r) => row.map((v, c) => c === i ? b[r] : v));
+        const di = det(Ai);
+        sol.push(di / d);
+        html += `<div class="step-label">Substituïm la columna ${i + 1} pels termes independents (A<sub>${U[i]}</sub>):</div>`;
+        html += `<div class="step eq flow">${U[i]} = det(A<sub>${U[i]}</sub>) / det(A) = det ${matHTML(Ai, 'matriu--inline')} / ${fmt(d)} = ${fmt(di)} / ${fmt(d)} = <strong>${fmt(di / d)}</strong></div>`;
+      }
+      html += `<div class="step-label">Solució:</div>`;
+      html += `<div class="step eq flow">${sol.map((v, i) => `${U[i]} = ${fmt(v)}`).join(' , &nbsp; ')}</div>`;
+      html += `<div class="step">${colHTML(sol, 'matriu--result')}</div>`;
+      return html;
+    }
+
+    // ===== Main output =====
+    function setResult(title, body) {
+      document.getElementById('resultat').innerHTML = `<div class="result-title">${title}</div>${body}`;
+    }
+    function conclusion(type) {
+      return `<div class="step"><span class="rf-badge ${badge[type]}">${typeName[type]}</span></div>`;
+    }
+
+    function solveNumeric(sys) {
+      const A = toNum(sys.A), b = sys.b.map(p => p[0] || 0);
+      const n = sys.n;
+      const { rA, rAb, type } = classify(A, b, n);
+      let html = `<div class="step-label">Discussió (Rouché–Frobenius):</div>`;
+      html += `<div class="step eq">det(A) = <strong>${fmt(det(A))}</strong></div>`;
+      html += rankInfo(rA, rAb, n);
+      html += conclusion(type);
+      if (type === 'SCD') {
+        html += `<div class="method-title">Resolució per Cramer</div>`;
+        html += cramerHTML(A, b, n);
+      } else if (type === 'SCI') {
+        html += `<div class="step">Com que rang(A) = rang(A|b) = ${rA} &lt; ${n}, hi ha ${n - rA} grau(s) de llibertat.</div>`;
+        html += generalSolution(A, b, n);
+      } else {
+        html += `<div class="step">Com que rang(A) = ${rA} ≠ rang(A|b) = ${rAb}, el sistema no té solució.</div>`;
+        html += contradictionHTML(A, b, n);
+      }
+      setResult('Resolució del sistema', html);
+    }
+
+    function discussParam(sys) {
+      const n = sys.n;
+      const dP = pTrim(detPoly(sys.A));
+      let html = `<div class="step-label">Calculem el determinant de la matriu de coeficients en funció de m:</div>`;
+      html += `<div class="step eq">det(A) = <strong>${polyToString(dP)}</strong></div>`;
+
+      const rr = polyRealRoots(dP);
+      if (rr.allZero) {
+        html += `<div class="step">det(A) = 0 per a tot valor de m: el sistema <strong>mai és SCD</strong>. Cal analitzar els rangs.</div>`;
+        const samples = [-2, -1, 0, 1, 2, 3, 0.5];
+        const seen = new Set();
+        for (const m of samples) {
+          const A = evalMat(sys.A, m), b = evalVec(sys.b, m);
+          const { rA, rAb, type } = classify(A, b, n);
+          const key = type + rA + rAb;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          html += `<div class="case-block"><h4>Per exemple m = ${fmt(m)}</h4>${rankInfo(rA, rAb, n)}${conclusion(type)}</div>`;
+        }
+        html += `<div class="step-label">Nota: amb det(A) ≡ 0 pot caldre una anàlisi manual dels valors concrets de m.</div>`;
+        setResult('Discussió segons el paràmetre m', html);
+        return;
+      }
+
+      const roots = cleanRoots(rr.roots);
+      if (roots.length === 0) {
+        html += `<div class="step">det(A) no s'anul·la per a cap valor real de m → sempre rang(A) = rang(A|b) = ${n}.</div>`;
+        html += `<div class="case-block"><h4>Per a tot m ∈ ℝ</h4>${conclusion('SCD')}<div class="step">Sistema compatible determinat: es pot resoldre per Cramer per a cada valor concret de m.</div></div>`;
+        setResult('Discussió segons el paràmetre m', html);
+        return;
+      }
+
+      const rootStr = roots.map(r => 'm = ' + fmt(r)).join(', ');
+      html += `<div class="step">det(A) = 0 &nbsp;⟺&nbsp; <span class="hl">${rootStr}</span>.</div>`;
+
+      html += `<div class="case-block"><h4>Cas general: m ≠ ${roots.map(fmt).join(', ')}</h4>`;
+      html += `<div class="step">det(A) ≠ 0 → rang(A) = rang(A|b) = ${n}.</div>`;
+      html += conclusion('SCD');
+      html += `<div class="step">Sistema compatible determinat (solució única per Cramer per a cada m concret).</div></div>`;
+
+      for (const m0 of roots) {
+        const A = evalMat(sys.A, m0), b = evalVec(sys.b, m0);
+        const { rA, rAb, type } = classify(A, b, n);
+        html += `<div class="case-block"><h4>Cas m = ${fmt(m0)}</h4>`;
+        html += `<div class="step">Substituïm m = ${fmt(m0)} → det(A) = 0.</div>`;
+        html += `<div class="step flow">A = ${matHTML(A, 'matriu--inline')} &nbsp; b = ${colHTML(b, 'matriu--inline')}</div>`;
+        html += rankInfo(rA, rAb, n);
+        html += conclusion(type);
+        if (type === 'SCI') {
+          html += `<div class="step">rang(A) = rang(A|b) = ${rA} &lt; ${n} → ${n - rA} grau(s) de llibertat.</div>`;
+          html += generalSolution(A, b, n);
+        } else if (type === 'SI') {
+          html += contradictionHTML(A, b, n);
+        }
+        html += `</div>`;
+      }
+      setResult('Discussió segons el paràmetre m', html);
+    }
+
+    function onSolve() {
+      let sys;
+      try {
+        sys = readSystem();
+      } catch (e) {
+        setResult('Error', `<div class="step msg-error">${e.message}</div>`);
+        return;
+      }
+      if (sys.hasM) discussParam(sys);
+      else solveNumeric(sys);
+    }
+
+    // ===== Wiring =====
+    buildGrid(NUMERIC_EXAMPLE);
+    document.getElementById('n-sel').addEventListener('change', () => buildGrid(null));
+    document.getElementById('btn-solve').addEventListener('click', onSolve);
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      document.getElementById('sys-grid').querySelectorAll('input').forEach(inp => inp.value = 0);
+    });
+    document.getElementById('param-mode').addEventListener('change', e => {
+      document.getElementById('param-hint').style.display = e.target.checked ? 'block' : 'none';
+    });
+    document.getElementById('btn-example').addEventListener('click', () => {
+      const param = document.getElementById('param-mode').checked;
+      const ex = param ? PARAM_EXAMPLE : NUMERIC_EXAMPLE;
+      document.getElementById('n-sel').value = ex.n;
+      // clear stored values so example is applied
+      document.getElementById('sys-grid').innerHTML = '';
+      buildGrid(ex);
+    });
+  </script>
+</body>
+</html>

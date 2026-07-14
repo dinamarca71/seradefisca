@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Defecte de Massa — Física Moderna</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+</head>
+<body>
+  <header class="header-mod">
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="semivida.html">Semivida</a>
+      <a href="series.html">Sèries</a>
+      <a href="defecte-massa.html" class="active">Defecte de massa</a>
+    </nav>
+    <h1>Defecte de Massa i Energia Nuclear</h1>
+    <p>
+      En les reaccions nuclears, la massa no es conserva exactament: la diferència es converteix
+      en energia segons Einstein: E = Δm · c².
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equacions</h2>
+      <p class="formula">Δm = Σm<sub>reactius</sub> − Σm<sub>productes</sub> &nbsp;·&nbsp; E = Δm · c² &nbsp;·&nbsp; 1 u = 931,49 MeV/c²</p>
+      <p class="formula-note">Si Δm &gt; 0, la reacció allibera energia (exotèrmica). c = 2,998·10⁸ m/s.</p>
+    </section>
+
+    <section class="controls-panel">
+      <h2>Exemples precarregats</h2>
+      <div class="preset-buttons" id="exampleBtns"></div>
+      <p id="exampleDesc" style="margin-top:0.75rem;font-size:0.875rem;color:var(--muted);"></p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header"><h2>Reacció nuclear</h2></div>
+      <div id="reactionDisplay" style="text-align:center;padding:1.5rem;font-family:'Cambria Math',serif;font-size:1.2rem;"></div>
+    </section>
+
+    <section class="controls-panel">
+      <h2>Tablea de masses</h2>
+      <table class="mass-table" id="massTable"></table>
+
+      <div class="result-highlight">
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.35rem;">Defecte de massa i energia alliberada</p>
+        <p class="big" id="deltaM">Δm = —</p>
+        <p class="big" id="energyMeV" style="margin-top:0.35rem;">E = —</p>
+        <p style="font-size:0.85rem;color:var(--muted);margin-top:0.5rem;" id="energyJ"></p>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Defecte de massa:</strong> la massa dels productes és lleugerament menor que la dels reactius; la diferència surt com a energia cinètica i radiació.</li>
+        <li><strong>Energia de enllaç:</strong> cada nuclió està lligat amb energia; per separar-los cal aportar energia (defecte de massa del nuclid).</li>
+        <li><strong>Desintegració α:</strong> allibera ~4–9 MeV. La massa del ⁴He (partícula α) surt del nuclid pare.</li>
+        <li><strong>Fissió:</strong> un nuclid pesat es trenca en fragments més lleugers + neutrons; Δm gran → molta energia (centenars de MeV).</li>
+        <li><strong>Fusió:</strong> nuclis lleugers s'uneixen (ex. D+T); requereix temperatures extremes però allibera molta energia per nuclió.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const C2 = 2.99792458e8 ** 2;
+    const U_TO_MEV = 931.494; // MeV/c² per u
+
+    const EXAMPLES = {
+      alpha: {
+        name: 'Desintegració α (²¹⁰Po)',
+        desc: 'El poloni-210 emet una partícula α (núcle d\'heli) i es transforma en plom-206. Exemple clàssic de la sèrie de l\'urani.',
+        reaction: '²¹⁰₈₄Po  →  ²⁰⁶₈₂Pb  +  ⁴₂He',
+        reactants: [
+          { label: '²¹⁰Po', mass: 209.9828737, note: 'Nucli pare' }
+        ],
+        products: [
+          { label: '²⁰⁶Pb', mass: 205.9744653, note: 'Nucli fill' },
+          { label: '⁴He (α)', mass: 4.002603254, note: 'Partícula α' }
+        ]
+      },
+      beta: {
+        name: 'Desintegració β⁻ (¹⁴C)',
+        desc: 'El carboni-14 es converteix en nitrogen-14 emetent un electró i un antineutrí. Base de la datació per radiocarboni.',
+        reaction: '¹⁴₆C  →  ¹⁴₇N  +  e⁻  +  ν̄',
+        reactants: [
+          { label: '¹⁴C', mass: 14.0032420, note: 'Radioactiu' }
+        ],
+        products: [
+          { label: '¹⁴N', mass: 14.0030740, note: 'Estable' },
+          { label: 'e⁻', mass: 0.000548579, note: 'Electró β' }
+        ]
+      },
+      fission: {
+        name: 'Fissió induïda (²³⁵U + n)',
+        desc: 'Un neutró colpeja un nuclid d\'urani-235 i el divideix en dos fragments + 2 neutrons. Reacció de central nuclear.',
+        reaction: '²³⁵₉₂U + ¹n  →  ⁹⁴₃₈Sr + ¹⁴⁰₅₄Xe + 2·¹n',
+        reactants: [
+          { label: '²³⁵U', mass: 235.0439299, note: 'Combustible' },
+          { label: '¹n', mass: 1.008664916, note: 'Neutró incident' }
+        ],
+        products: [
+          { label: '⁹⁴Sr', mass: 93.915361, note: 'Fragment 1' },
+          { label: '¹⁴⁰Xe', mass: 139.921641, note: 'Fragment 2' },
+          { label: '2·¹n', mass: 2 * 1.008664916, note: '2 neutrons' }
+        ]
+      },
+      fusion: {
+        name: 'Fusió D-T (²H + ³H)',
+        desc: 'Fusió de deuterí i triti formant heli-4 i un neutró. Reacció candidata per a reactors de fusió (ITER).',
+        reaction: '²₁H + ³₁H  →  ⁴₂He + ¹n',
+        reactants: [
+          { label: '²H (deuterí)', mass: 2.014101778, note: 'Hidrogen pesat' },
+          { label: '³H (triti)', mass: 3.016049277, note: 'Hidrogen triple' }
+        ],
+        products: [
+          { label: '⁴He', mass: 4.002603254, note: 'Heli' },
+          { label: '¹n', mass: 1.008664916, note: 'Neutró' }
+        ]
+      },
+      ra226: {
+        name: 'Desintegració α (²²⁶Ra)',
+        desc: 'El radi-226 de la sèrie de l\'urani emet α i es converteix en radó-222 (gas). Exemple de risc ambiental.',
+        reaction: '²²⁶₈₈Ra  →  ²²²₈₆Rn  +  ⁴₂He',
+        reactants: [
+          { label: '²²⁶Ra', mass: 226.025410, note: 'Sèrie ²³⁸U' }
+        ],
+        products: [
+          { label: '²²²Rn', mass: 222.017578, note: 'Gas radon' },
+          { label: '⁴He (α)', mass: 4.002603254, note: 'Partícula α' }
+        ]
+      }
+    };
+
+    let current = 'alpha';
+
+    function sumMass(items) { return items.reduce((s, i) => s + i.mass, 0); }
+
+    function calculate(ex) {
+      const mReact = sumMass(ex.reactants);
+      const mProd = sumMass(ex.products);
+      const deltaM = mReact - mProd;
+      const E_MeV = deltaM * U_TO_MEV;
+      const E_J = deltaM * 1.66053906660e-27 * C2;
+      return { mReact, mProd, deltaM, E_MeV, E_J };
+    }
+
+    function render() {
+      const ex = EXAMPLES[current];
+      document.getElementById('exampleDesc').textContent = ex.desc;
+      document.getElementById('reactionDisplay').textContent = ex.reaction;
+
+      const calc = calculate(ex);
+      let tableHtml = `<thead><tr><th>Component</th><th>Massa (u)</th><th>Nota</th></tr></thead><tbody>`;
+      tableHtml += `<tr><td colspan="3" style="background:#eef2ff;font-weight:600;">Reactius</td></tr>`;
+      ex.reactants.forEach(r => {
+        tableHtml += `<tr><td>${r.label}</td><td class="num">${r.mass.toFixed(7)}</td><td>${r.note}</td></tr>`;
+      });
+      tableHtml += `<tr><td><strong>Σ reactius</strong></td><td class="num"><strong>${calc.mReact.toFixed(7)}</strong></td><td></td></tr>`;
+      tableHtml += `<tr><td colspan="3" style="background:#ecfdf5;font-weight:600;">Productes</td></tr>`;
+      ex.products.forEach(p => {
+        tableHtml += `<tr><td>${p.label}</td><td class="num">${p.mass.toFixed(7)}</td><td>${p.note}</td></tr>`;
+      });
+      tableHtml += `<tr><td><strong>Σ productes</strong></td><td class="num"><strong>${calc.mProd.toFixed(7)}</strong></td><td></td></tr>`;
+      tableHtml += '</tbody>';
+      document.getElementById('massTable').innerHTML = tableHtml;
+
+      document.getElementById('deltaM').textContent = `Δm = ${formatNum(calc.deltaM, 6)} u`;
+      document.getElementById('energyMeV').textContent = `E = ${formatNum(calc.E_MeV, 2)} MeV`;
+      document.getElementById('energyJ').textContent = `= ${formatSci(calc.E_J)} J  (per un nuclí / una reacció)`;
+    }
+
+    const btns = document.getElementById('exampleBtns');
+    Object.entries(EXAMPLES).forEach(([key, ex]) => {
+      const btn = document.createElement('button');
+      btn.className = 'btn' + (key === current ? ' active' : '');
+      btn.textContent = ex.name;
+      btn.addEventListener('click', () => {
+        current = key;
+        btns.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+      });
+      btns.appendChild(btn);
+    });
+
+    render();
+  </script>
+</body>
+</html>

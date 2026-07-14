@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratori de Matrius — Matemàtiques 2n Batxillerat</title>
+  <link rel="stylesheet" href="../css/comunes.css">
+</head>
+<body>
+  <header class="header-mat">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Matemàtiques</a>
+      <a href="index.html">Inici</a>
+      <a href="matrius.html" class="active">Matrius</a>
+      <a href="sistemes.html">Sistemes</a>
+      <a href="probabilitat.html">Probabilitat</a>
+      <a href="derivades.html">Derivades</a>
+      <a href="integrals.html">Integrals</a>
+    </nav>
+    <h1>Laboratori de Matrius</h1>
+    <p>
+      Introdueix dues matrius (fins a 4×4) i calcula determinants, inverses, potències i productes.
+      Cada operació mostra el desenvolupament pas a pas. Pots escriure decimals (amb punt) i fraccions (p. ex. 1/2).
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Fórmules de referència</h2>
+      <p class="formula">det₂ = a·d − b·c &nbsp;·&nbsp; A⁻¹ = (1/det)·adj(A) &nbsp;·&nbsp; (A·B)ᵢⱼ = Σₖ aᵢₖ·bₖⱼ</p>
+      <p class="formula-note">
+        Els determinants 2×2 i 3×3 es poden calcular per la <strong>regla de Sarrus</strong> (diagonals);
+        el d'ordre 4 es desenvolupa pels cofactors d'una fila. Només les matrius quadrades amb
+        determinant ≠ 0 tenen inversa. La potència Aⁿ només té sentit si A és quadrada.
+      </p>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Matriu A</h2>
+        <div class="dim-controls">
+          <span>Files
+            <select id="A-rows">
+              <option>1</option><option>2</option><option selected>3</option><option>4</option>
+            </select>
+          </span>
+          <span>Columnes
+            <select id="A-cols">
+              <option>1</option><option>2</option><option selected>3</option><option>4</option>
+            </select>
+          </span>
+        </div>
+        <div class="matriu-input" id="A-grid"></div>
+        <div class="mat-toolbar">
+          <button class="btn" data-fill="A:ident">Identitat</button>
+          <button class="btn" data-fill="A:zeros">Zeros</button>
+          <button class="btn" data-fill="A:rand">Aleatòria</button>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Matriu B</h2>
+        <div class="dim-controls">
+          <span>Files
+            <select id="B-rows">
+              <option>1</option><option>2</option><option selected>3</option><option>4</option>
+            </select>
+          </span>
+          <span>Columnes
+            <select id="B-cols">
+              <option>1</option><option>2</option><option selected>3</option><option>4</option>
+            </select>
+          </span>
+        </div>
+        <div class="matriu-input" id="B-grid"></div>
+        <div class="mat-toolbar">
+          <button class="btn" data-fill="B:ident">Identitat</button>
+          <button class="btn" data-fill="B:zeros">Zeros</button>
+          <button class="btn" data-fill="B:rand">Aleatòria</button>
+        </div>
+      </section>
+    </div>
+
+    <section class="controls-panel">
+      <h2>Operacions</h2>
+      <div class="op-group">
+        <h3>Determinant (amb desenvolupament)</h3>
+        <div class="op-buttons">
+          <button class="btn btn-primary" data-op="detA">det(A)</button>
+          <button class="btn btn-primary" data-op="detB">det(B)</button>
+        </div>
+      </div>
+      <div class="op-group">
+        <h3>Matriu inversa</h3>
+        <div class="op-buttons">
+          <button class="btn" data-op="invA">A⁻¹</button>
+          <button class="btn" data-op="invB">B⁻¹</button>
+        </div>
+      </div>
+      <div class="op-group">
+        <h3>Potència</h3>
+        <div class="op-buttons">
+          <label class="slider-group">exponent n =
+            <input type="number" id="exp" value="2" min="-3" max="6" step="1" style="width:3.5rem">
+          </label>
+          <button class="btn" data-op="powA">Aⁿ</button>
+          <button class="btn" data-op="powB">Bⁿ</button>
+        </div>
+      </div>
+      <div class="op-group">
+        <h3>Producte i suma</h3>
+        <div class="op-buttons">
+          <button class="btn" data-op="mulAB">A × B</button>
+          <button class="btn" data-op="mulBA">B × A</button>
+          <button class="btn" data-op="addAB">A + B</button>
+          <button class="btn" data-op="subAB">A − B</button>
+        </div>
+      </div>
+      <div class="op-group">
+        <h3>Transposada</h3>
+        <div class="op-buttons">
+          <button class="btn" data-op="transA">Aᵀ</button>
+          <button class="btn" data-op="transB">Bᵀ</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="formula-box result-panel">
+      <h2>Resultat</h2>
+      <div id="resultat">
+        <p class="formula-note" style="text-align:left;">
+          Tria una operació per veure el resultat i el seu desenvolupament pas a pas.
+        </p>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Determinant:</strong> nombre associat a una matriu quadrada. Es desenvolupa pels cofactors d'una fila alternant els signes (+ − + −).</li>
+        <li><strong>Regla de Sarrus:</strong> mètode de les diagonals per calcular determinants 2×2 i 3×3 (suma de diagonals descendents menys ascendents).</li>
+        <li><strong>Menor complementari Mᵢⱼ:</strong> determinant que queda en eliminar la fila i i la columna j.</li>
+        <li><strong>Cofactor:</strong> Cᵢⱼ = (−1)^(i+j)·Mᵢⱼ. La matriu adjunta és la transposada de la matriu de cofactors.</li>
+        <li><strong>Matriu inversa:</strong> A⁻¹ = (1/det A)·adj(A). Només existeix si det A ≠ 0 (matriu regular).</li>
+        <li><strong>Producte:</strong> Aₘₓₙ · Bₙₓₚ és possible només si les columnes de A coincideixen amb les files de B.</li>
+        <li><strong>Potència:</strong> Aⁿ = A·A·…·A (n cops). A⁰ = I i, si A és regular, A⁻ⁿ = (A⁻¹)ⁿ.</li>
+        <li><strong>No commutativa:</strong> en general A·B ≠ B·A. Comprova-ho amb els botons A × B i B × A.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    const DEFAULTS = {
+      A: [[2, 1, 3], [1, 0, 2], [4, 1, 8]],
+      B: [[1, 2, 0], [0, 1, 3], [2, 0, 1]]
+    };
+
+    // ---------- Number helpers ----------
+    function parseEntry(str) {
+      str = (str || '').trim();
+      if (str === '' || str === '-' || str === '+') return 0;
+      if (str.includes('/')) {
+        const [num, den] = str.split('/');
+        const n = parseFloat(num), d = parseFloat(den);
+        if (!isFinite(n) || !isFinite(d) || d === 0) return 0;
+        return n / d;
+      }
+      const v = parseFloat(str.replace(',', '.'));
+      return isFinite(v) ? v : 0;
+    }
+
+    function fmt(x) {
+      if (!isFinite(x)) return '—';
+      let r = Math.round(x * 1e6) / 1e6;
+      if (Object.is(r, -0)) r = 0;
+      if (Math.abs(r - Math.round(r)) < 1e-9) return String(Math.round(r));
+      return r.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+    }
+
+    // wrap negatives in parentheses inside expressions
+    function paren(x) { return x < 0 ? '(' + fmt(x) + ')' : fmt(x); }
+
+    // ---------- Matrix maths ----------
+    function transpose(M) { return M[0].map((_, j) => M.map(row => row[j])); }
+
+    function minor(M, r, c) {
+      return M.filter((_, i) => i !== r).map(row => row.filter((_, j) => j !== c));
+    }
+
+    function det(M) {
+      const n = M.length;
+      if (n === 1) return M[0][0];
+      if (n === 2) return M[0][0] * M[1][1] - M[0][1] * M[1][0];
+      let sum = 0;
+      for (let j = 0; j < n; j++) {
+        sum += (j % 2 === 0 ? 1 : -1) * M[0][j] * det(minor(M, 0, j));
+      }
+      return sum;
+    }
+
+    function cofactorMatrix(M) {
+      const n = M.length, C = [];
+      for (let i = 0; i < n; i++) {
+        const row = [];
+        for (let j = 0; j < n; j++) {
+          row.push(((i + j) % 2 === 0 ? 1 : -1) * det(minor(M, i, j)));
+        }
+        C.push(row);
+      }
+      return C;
+    }
+
+    function inverse(M) {
+      const d = det(M);
+      const adj = transpose(cofactorMatrix(M));
+      return adj.map(row => row.map(v => v / d));
+    }
+
+    function mul(X, Y) {
+      const r = X.length, c = Y[0].length, n = Y.length, R = [];
+      for (let i = 0; i < r; i++) {
+        const row = [];
+        for (let j = 0; j < c; j++) {
+          let s = 0;
+          for (let k = 0; k < n; k++) s += X[i][k] * Y[k][j];
+          row.push(s);
+        }
+        R.push(row);
+      }
+      return R;
+    }
+
+    function identity(n) {
+      return Array.from({ length: n }, (_, i) =>
+        Array.from({ length: n }, (_, j) => (i === j ? 1 : 0)));
+    }
+
+    function isSquare(M) { return M.length === M[0].length; }
+
+    // ---------- Rendering ----------
+    function matHTML(M, extra = '') {
+      const cols = M[0].length;
+      let cells = '';
+      for (const row of M) for (const v of row) cells += `<span class="mat-cell">${fmt(v)}</span>`;
+      return `<span class="matriu ${extra}"><span class="matriu__cells" ` +
+        `style="grid-template-columns:repeat(${cols},minmax(1.4rem,auto))">${cells}</span></span>`;
+    }
+
+    // one-line determinant computation (for minors inside a bigger expansion)
+    function detInline(M) {
+      const n = M.length;
+      if (n === 1) return `<strong>${fmt(M[0][0])}</strong>`;
+      if (n === 2) {
+        const [[a, b], [c, d]] = M;
+        return `${paren(a)}·${paren(d)} − ${paren(b)}·${paren(c)} = <strong>${fmt(a * d - b * c)}</strong>`;
+      }
+      // n === 3 → Sarrus
+      const [[a, b, c], [d, e, f], [g, h, i]] = M;
+      const val = a * e * i + b * f * g + c * d * h - c * e * g - a * f * h - b * d * i;
+      return `${paren(a)}·${paren(e)}·${paren(i)} + ${paren(b)}·${paren(f)}·${paren(g)} + ` +
+        `${paren(c)}·${paren(d)}·${paren(h)} − ${paren(c)}·${paren(e)}·${paren(g)} − ` +
+        `${paren(a)}·${paren(f)}·${paren(h)} − ${paren(b)}·${paren(d)}·${paren(i)} = <strong>${fmt(val)}</strong>`;
+    }
+
+    // Sarrus augmented layout: repeat the first two columns to the right (shown muted)
+    function sarrusAug(M) {
+      const [[a, b, c], [d, e, f], [g, h, i]] = M;
+      const rows = [[a, b, c, a, b], [d, e, f, d, e], [g, h, i, g, h]];
+      let cells = '';
+      for (const row of rows) {
+        row.forEach((v, idx) => {
+          const ghost = idx >= 3 ? ' mat-cell--ghost' : '';
+          cells += `<span class="mat-cell${ghost}">${fmt(v)}</span>`;
+        });
+      }
+      return `<span class="matriu"><span class="matriu__cells" ` +
+        `style="grid-template-columns:repeat(5,minmax(1.4rem,auto))">${cells}</span></span>`;
+    }
+
+    function sarrus2HTML(M, name) {
+      const [[a, b], [c, d]] = M;
+      let html = `<div class="step-label">Regla de les diagonals (Sarrus): diagonal principal − diagonal secundària.</div>`;
+      html += `<div class="step">${matHTML(M)}</div>`;
+      html += `<div class="step eq">det(${name}) = a·d − b·c</div>`;
+      html += `<div class="step eq">= ${paren(a)}·${paren(d)} − ${paren(b)}·${paren(c)}</div>`;
+      html += `<div class="step eq">= ${fmt(a * d)} − ${fmt(b * c)} = <strong class="big-value">${fmt(a * d - b * c)}</strong></div>`;
+      return html;
+    }
+
+    function sarrus3HTML(M, name) {
+      const [[a, b, c], [d, e, f], [g, h, i]] = M;
+      const p1 = a * e * i, p2 = b * f * g, p3 = c * d * h;
+      const n1 = c * e * g, n2 = a * f * h, n3 = b * d * i;
+      const pos = p1 + p2 + p3, neg = n1 + n2 + n3;
+      let html = `<div class="step-label">Reescrivim les dues primeres columnes a la dreta i multipliquem en diagonal:</div>`;
+      html += `<div class="step">${sarrusAug(M)}</div>`;
+      html += `<div class="step-label">Diagonals descendents ↘ (positives):</div>`;
+      html += `<div class="step eq">${paren(a)}·${paren(e)}·${paren(i)} + ${paren(b)}·${paren(f)}·${paren(g)} + ${paren(c)}·${paren(d)}·${paren(h)} = ${fmt(p1)} + ${fmt(p2)} + ${fmt(p3)} = <strong>${fmt(pos)}</strong></div>`;
+      html += `<div class="step-label">Diagonals ascendents ↗ (negatives):</div>`;
+      html += `<div class="step eq">${paren(c)}·${paren(e)}·${paren(g)} + ${paren(a)}·${paren(f)}·${paren(h)} + ${paren(b)}·${paren(d)}·${paren(i)} = ${fmt(n1)} + ${fmt(n2)} + ${fmt(n3)} = <strong>${fmt(neg)}</strong></div>`;
+      html += `<div class="step eq">det(${name}) = ${fmt(pos)} − ${fmt(neg)} = <strong class="big-value">${fmt(pos - neg)}</strong></div>`;
+      return html;
+    }
+
+    // cofactor expansion along the first row (used for n >= 3)
+    function cofactorDetHTML(M, name) {
+      const n = M.length;
+      let expr = '', sub = '';
+      for (let j = 0; j < n; j++) {
+        const m = minor(M, 0, j);
+        const sign = j % 2 === 0 ? '+' : '−';
+        const lead = j === 0 ? (sign === '+' ? '' : '−&nbsp;') : `&nbsp;${sign}&nbsp;`;
+        expr += `${lead}${paren(M[0][j])}·${matHTML(m, 'matriu--inline')}`;
+        sub += `${lead}${paren(M[0][j])}·(${fmt(det(m))})`;
+      }
+      const minorNote = (n - 1 === 3) ? ' (cada menor 3×3 es calcula per Sarrus)'
+        : (n - 1 === 2) ? ' (cada menor 2×2 per diagonals)' : '';
+      let html = `<div class="step-label">Desenvolupament pels cofactors de la 1a fila (signes: + − + −):</div>`;
+      html += `<div class="step eq flow">det(${name}) = ${expr}</div>`;
+      html += `<div class="step-label">Calculem cada menor complementari${minorNote}:</div>`;
+      for (let j = 0; j < n; j++) {
+        const m = minor(M, 0, j);
+        html += `<div class="step eq flow">M<sub>1${j + 1}</sub> = ${matHTML(m, 'matriu--inline')} = ${detInline(m)}</div>`;
+      }
+      html += `<div class="step-label">Substituïm i sumem:</div>`;
+      html += `<div class="step eq">det(${name}) = ${sub}</div>`;
+      html += `<div class="step eq">= <strong class="big-value">${fmt(det(M))}</strong></div>`;
+      return html;
+    }
+
+    function detStepsHTML(M, name) {
+      const n = M.length;
+      if (n === 1) {
+        return `<div class="step eq">det(${name}) = |${fmt(M[0][0])}| = <strong class="big-value">${fmt(M[0][0])}</strong></div>`;
+      }
+      if (n === 2) {
+        return sarrus2HTML(M, name);
+      }
+      if (n === 3) {
+        return `<div class="method-title">Mètode 1 — Regla de Sarrus</div>` + sarrus3HTML(M, name) +
+          `<div class="method-title">Mètode 2 — Desenvolupament per cofactors</div>` + cofactorDetHTML(M, name);
+      }
+      // n === 4 : Sarrus no s'aplica → cofactors (els menors 3×3 sí que van per Sarrus)
+      return cofactorDetHTML(M, name);
+    }
+
+    function inverseStepsHTML(M, name) {
+      const d = det(M);
+      if (Math.abs(d) < 1e-12) {
+        return `<div class="step msg-error">det(${name}) = 0 → la matriu és singular i no té inversa.</div>`;
+      }
+      const C = cofactorMatrix(M);
+      const adj = transpose(C);
+      const inv = adj.map(row => row.map(v => v / d));
+      let html = `<div class="step eq">det(${name}) = <strong>${fmt(d)}</strong> &nbsp;(≠ 0 → té inversa)</div>`;
+      html += `<div class="step-label">Matriu de cofactors (Cᵢⱼ = (−1)^{i+j}·Mᵢⱼ):</div><div class="step">${matHTML(C)}</div>`;
+      html += `<div class="step-label">Matriu adjunta = transposada dels cofactors:</div><div class="step">${matHTML(adj)}</div>`;
+      html += `<div class="step-label">Apliquem ${name}⁻¹ = (1/det)·adj:</div>`;
+      html += `<div class="step eq flow">${name}⁻¹ = <span class="op-scalar">1/${fmt(d)}</span> · ${matHTML(adj, 'matriu--inline')} = ${matHTML(inv, 'matriu--result')}</div>`;
+      return html;
+    }
+
+    function powerStepsHTML(M, name, p) {
+      const n = M.length;
+      if (p === 0) {
+        return `<div class="step eq">${name}<sup>0</sup> = I (qualsevol matriu quadrada elevada a 0 és la identitat)</div>` +
+          `<div class="step">${matHTML(identity(n), 'matriu--result')}</div>`;
+      }
+      let base = M, blabel = name, html = '';
+      if (p < 0) {
+        if (Math.abs(det(M)) < 1e-12) {
+          return `<div class="step msg-error">${name} és singular (det = 0): no es pot elevar a un exponent negatiu.</div>`;
+        }
+        base = inverse(M);
+        blabel = name + '⁻¹';
+        html += `<div class="step-label">Exponent negatiu → utilitzem la inversa:</div>`;
+        html += `<div class="step eq flow">${name}<sup>${p}</sup> = (${name}⁻¹)<sup>${Math.abs(p)}</sup>, &nbsp; on ${name}⁻¹ = ${matHTML(base, 'matriu--inline')}</div>`;
+      }
+      const k = Math.abs(p);
+      if (k === 1) {
+        html += `<div class="step eq flow">${blabel}<sup>1</sup> = ${matHTML(base, 'matriu--result')}</div>`;
+        return html;
+      }
+      let R = base;
+      html += `<div class="step eq flow">${blabel}<sup>1</sup> = ${matHTML(base, 'matriu--inline')}</div>`;
+      for (let i = 2; i <= k; i++) {
+        const Rn = mul(R, base);
+        html += `<div class="step eq flow">${blabel}<sup>${i}</sup> = ${blabel}<sup>${i - 1}</sup> · ${blabel} = ` +
+          `${matHTML(R, 'matriu--inline')} · ${matHTML(base, 'matriu--inline')} = ` +
+          `${matHTML(Rn, i === k ? 'matriu--result' : 'matriu--inline')}</div>`;
+        R = Rn;
+      }
+      return html;
+    }
+
+    function mulStepsHTML(X, Y, nx, ny) {
+      if (X[0].length !== Y.length) {
+        return `<div class="step msg-error">No es pot multiplicar ${nx} × ${ny}: ` +
+          `les columnes de ${nx} (${X[0].length}) han de coincidir amb les files de ${ny} (${Y.length}).</div>`;
+      }
+      const R = mul(X, Y);
+      const terms = [];
+      for (let k = 0; k < Y.length; k++) terms.push(`${paren(X[0][k])}·${paren(Y[k][0])}`);
+      let html = `<div class="step-label">Regla: cᵢⱼ = suma de (fila i de ${nx}) · (columna j de ${ny}).</div>`;
+      html += `<div class="step eq">Exemple c₁₁ = ${terms.join(' + ')} = <strong>${fmt(R[0][0])}</strong></div>`;
+      html += `<div class="step eq flow">${nx} × ${ny} = ${matHTML(X, 'matriu--inline')} · ${matHTML(Y, 'matriu--inline')} = ${matHTML(R, 'matriu--result')}</div>`;
+      return html;
+    }
+
+    function addStepsHTML(X, Y, sym) {
+      if (X.length !== Y.length || X[0].length !== Y[0].length) {
+        return `<div class="step msg-error">Per sumar o restar, les dues matrius han de tenir la mateixa dimensió.</div>`;
+      }
+      const R = X.map((row, i) => row.map((v, j) => sym === '+' ? v + Y[i][j] : v - Y[i][j]));
+      return `<div class="step-label">Se sumen o resten element a element.</div>` +
+        `<div class="step eq flow">${matHTML(X, 'matriu--inline')} ${sym} ${matHTML(Y, 'matriu--inline')} = ${matHTML(R, 'matriu--result')}</div>`;
+    }
+
+    function transStepsHTML(M, name) {
+      return `<div class="step-label">La transposada intercanvia files per columnes.</div>` +
+        `<div class="step eq flow">${name}ᵀ = ${matHTML(M, 'matriu--inline')} → ${matHTML(transpose(M), 'matriu--result')}</div>`;
+    }
+
+    // ---------- Grid building / reading ----------
+    function buildGrid(name, useDefaults) {
+      const rows = +document.getElementById(name + '-rows').value;
+      const cols = +document.getElementById(name + '-cols').value;
+      const container = document.getElementById(name + '-grid');
+      const old = {};
+      container.querySelectorAll('input').forEach(inp => { old[inp.dataset.key] = inp.value; });
+      container.style.gridTemplateColumns = `repeat(${cols}, auto)`;
+      let html = '';
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+          const key = i + '-' + j;
+          let val;
+          if (old[key] !== undefined) val = old[key];
+          else if (useDefaults && DEFAULTS[name][i] && DEFAULTS[name][i][j] !== undefined) val = DEFAULTS[name][i][j];
+          else val = 0;
+          html += `<input type="text" inputmode="text" data-key="${key}" value="${val}" aria-label="${name} fila ${i + 1} columna ${j + 1}">`;
+        }
+      }
+      container.innerHTML = html;
+    }
+
+    function readMatrix(name) {
+      const rows = +document.getElementById(name + '-rows').value;
+      const cols = +document.getElementById(name + '-cols').value;
+      const container = document.getElementById(name + '-grid');
+      const M = [];
+      for (let i = 0; i < rows; i++) {
+        const row = [];
+        for (let j = 0; j < cols; j++) {
+          const inp = container.querySelector(`[data-key="${i}-${j}"]`);
+          row.push(parseEntry(inp ? inp.value : '0'));
+        }
+        M.push(row);
+      }
+      return M;
+    }
+
+    function fillMatrix(name, kind) {
+      const container = document.getElementById(name + '-grid');
+      container.querySelectorAll('input').forEach(inp => {
+        const [i, j] = inp.dataset.key.split('-').map(Number);
+        if (kind === 'ident') inp.value = i === j ? 1 : 0;
+        else if (kind === 'zeros') inp.value = 0;
+        else if (kind === 'rand') inp.value = Math.floor(Math.random() * 11) - 5;
+      });
+    }
+
+    // ---------- Result output ----------
+    function setResult(title, body) {
+      document.getElementById('resultat').innerHTML =
+        `<div class="result-title">${title}</div>${body}`;
+    }
+
+    function needSquare(M, name) {
+      if (!isSquare(M)) {
+        setResult(`Operació no vàlida`,
+          `<div class="step msg-error">La matriu ${name} no és quadrada (${M.length}×${M[0].length}). ` +
+          `Aquesta operació només té sentit per a matrius quadrades.</div>`);
+        return false;
+      }
+      return true;
+    }
+
+    const OPS = {
+      detA: () => { const M = readMatrix('A'); if (needSquare(M, 'A')) setResult('Determinant de A', detStepsHTML(M, 'A')); },
+      detB: () => { const M = readMatrix('B'); if (needSquare(M, 'B')) setResult('Determinant de B', detStepsHTML(M, 'B')); },
+      invA: () => { const M = readMatrix('A'); if (needSquare(M, 'A')) setResult('Inversa de A', inverseStepsHTML(M, 'A')); },
+      invB: () => { const M = readMatrix('B'); if (needSquare(M, 'B')) setResult('Inversa de B', inverseStepsHTML(M, 'B')); },
+      powA: () => { const M = readMatrix('A'); if (needSquare(M, 'A')) { const p = parseInt(document.getElementById('exp').value, 10) || 0; setResult(`Potència A<sup>${p}</sup>`, powerStepsHTML(M, 'A', p)); } },
+      powB: () => { const M = readMatrix('B'); if (needSquare(M, 'B')) { const p = parseInt(document.getElementById('exp').value, 10) || 0; setResult(`Potència B<sup>${p}</sup>`, powerStepsHTML(M, 'B', p)); } },
+      mulAB: () => setResult('Producte A × B', mulStepsHTML(readMatrix('A'), readMatrix('B'), 'A', 'B')),
+      mulBA: () => setResult('Producte B × A', mulStepsHTML(readMatrix('B'), readMatrix('A'), 'B', 'A')),
+      addAB: () => setResult('Suma A + B', addStepsHTML(readMatrix('A'), readMatrix('B'), '+')),
+      subAB: () => setResult('Resta A − B', addStepsHTML(readMatrix('A'), readMatrix('B'), '−')),
+      transA: () => setResult('Transposada Aᵀ', transStepsHTML(readMatrix('A'), 'A')),
+      transB: () => setResult('Transposada Bᵀ', transStepsHTML(readMatrix('B'), 'B'))
+    };
+
+    // ---------- Wiring ----------
+    ['A', 'B'].forEach(name => {
+      buildGrid(name, true);
+      document.getElementById(name + '-rows').addEventListener('change', () => buildGrid(name, false));
+      document.getElementById(name + '-cols').addEventListener('change', () => buildGrid(name, false));
+    });
+
+    document.querySelectorAll('[data-op]').forEach(btn => {
+      btn.addEventListener('click', () => OPS[btn.dataset.op]());
+    });
+
+    document.querySelectorAll('[data-fill]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const [name, kind] = btn.dataset.fill.split(':');
+        fillMatrix(name, kind);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semivida — Física Moderna</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+  <style>
+    .isotope-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .isotope-grid .btn.active { background: #6366f1; color: white; border-color: #6366f1; }
+    .dating-box {
+      background: linear-gradient(135deg, #eef2ff 0%, #faf5ff 100%);
+      border: 1px solid #c7d2fe;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .dating-box h2 { font-size: 1rem; margin-bottom: 0.35rem; color: #4338ca; }
+    .dating-result {
+      text-align: center;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      margin-top: 0.75rem;
+      border: 1px solid #e0e7ff;
+    }
+    .dating-result .age {
+      font-family: Consolas, monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #4338ca;
+    }
+    .dating-result .sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <header class="header-mod">
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="semivida.html" class="active">Semivida</a>
+      <a href="series.html">Sèries</a>
+      <a href="defecte-massa.html">Defecte de massa</a>
+    </nav>
+    <h1>Semivida, Activitat i Datació amb C-14</h1>
+    <p>
+      Llei de desintegració N(t), activitat A = λN i aplicació pràctica: calcular l'edat
+      d'una mostra arqueològica mesurant el carboni-14 restant.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equacions</h2>
+      <p class="formula">N(t) = N₀·e^(−λt) &nbsp;·&nbsp; A = λN &nbsp;·&nbsp; λ = ln2/T½</p>
+      <p class="formula-note">
+        Datació C-14: t = T½ · ln(N₀/N) / ln2 &nbsp;·&nbsp; T½(¹⁴C) = 5 730 anys &nbsp;·&nbsp;
+        1 Bq = 1 desintegració/s
+      </p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Gràfics N(t) i A(t)</h2>
+        <div class="chart-tabs">
+          <button class="btn active" data-graph="n">N(t)</button>
+          <button class="btn" data-graph="a">A(t)</button>
+          <button class="btn" data-graph="both">Ambdós</button>
+        </div>
+      </div>
+      <canvas id="graphCanvas" class="h280"></canvas>
+      <canvas id="particleCanvas" class="h120" style="margin-top:0.75rem;"></canvas>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:0.35rem;">
+        Cada nuclid desapareix en un instant aleatori (no hi ha ordre fix). La fracció global segueix N(t).
+        Al principi en desapareixen més per segon perquè n'hi ha més (A = λN), però la probabilitat de cada nuclid és la mateixa.
+      </p>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar</button>
+        <button class="btn" id="btnShuffle" title="Genera una nova distribució aleatòria de nuclids">🔀 Nova mostra</button>
+        <div class="slider-group"><label>Velocitat</label><input type="range" id="speedSlider" min="0.2" max="4" step="0.1" value="1"></div>
+        <div class="slider-group"><label>t</label><input type="range" id="timeSlider" min="0" max="5" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 T½</span></div>
+      </div>
+    </section>
+
+    <section class="controls-panel">
+      <h2>Isòtops precarregats</h2>
+      <div class="isotope-grid" id="isotopeBtns"></div>
+      <div class="two-col" style="margin-top:0.75rem;">
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">N₀</span> — Nuclids inicials</label><span class="param-value" id="N0-val"></span></div>
+          <input type="range" id="N0" min="100" max="1000" step="50" value="400">
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">T½</span> — Semivida</label><span class="param-value" id="Thalf-val"></span></div>
+          <input type="range" id="Thalf" min="0.1" max="10" step="0.1" value="1">
+          <p class="param-desc">Només editable en mode «Personalitzat»</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-grid" id="infoGrid"></section>
+
+    <section class="dating-box">
+      <h2>📅 Datació amb carboni-14 (¹⁴C)</h2>
+      <p style="font-size:0.875rem;color:var(--muted);margin-bottom:0.75rem;">
+        En éssers vius, la proporció de ¹⁴C es manté constant per intercanvi amb l'atmosfera.
+        En morir, el ¹⁴C desapareix segons N(t) = N₀·(½)^(t/T½). Mesurant el % restant es calcula l'edat.
+      </p>
+      <div class="two-col">
+        <div class="param">
+          <div class="param-header"><label>¹⁴C restant (respecte viu)</label><span class="param-value" id="c14pct-val"></span></div>
+          <input type="range" id="c14pct" min="1" max="100" step="0.5" value="100">
+          <p class="param-desc">100% = acaba de morir · 50% = 1 semivida (5 730 anys)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label>Edat calculada</label><span class="param-value" id="ageYears-val"></span></div>
+          <input type="range" id="ageYears" min="0" max="50000" step="50" value="0">
+          <p class="param-desc">Fins a ~50 000 anys (límit pràctic del mètode)</p>
+        </div>
+      </div>
+      <div class="dating-result">
+        <p style="font-size:0.85rem;color:var(--muted);">Edat de la mostra</p>
+        <p class="age" id="datingAge">0 anys</p>
+        <p class="sub" id="datingDetail">¹⁴C restant: 100% · t = 0 T½</p>
+        <p style="font-size:0.82rem;color:var(--muted);margin-top:0.5rem;font-family:Consolas,monospace;" id="datingFormula"></p>
+      </div>
+      <div class="preset-buttons" style="margin-top:0.75rem;">
+        <button class="btn" data-sample="trecent">Fusta recent (100%)</button>
+        <button class="btn" data-sample="neolitic">Neolític (~5 000 anys)</button>
+        <button class="btn" data-sample="altamira">Altamira (~15 000 anys)</button>
+        <button class="btn" data-sample="lascaux">Lascaux (~17 000 anys)</button>
+        <button class="btn" data-sample="limit">Límit del mètode (~45 000 anys)</button>
+      </div>
+    </section>
+
+    <section class="presets">
+      <h2>Preguntes per experimentar</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-q="1">Quant queda després de 2 semivides?</button>
+        <button class="btn" data-q="2">Relació A(t) i N(t)</button>
+        <button class="btn" data-q="3">Quan arriba al 25% del inicial?</button>
+      </div>
+      <p id="answer" style="margin-top:0.75rem;font-size:0.9rem;color:var(--muted);"></p>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Activitat A = λN:</strong> mesura quantes desintegracions per segon. S'expressa en becquerels (Bq). A(t) i N(t) decauen igual perquè λ és constant.</li>
+        <li><strong>A₀ = λN₀:</strong> activitat inicial. Si N es redueix a la meitat, A també.</li>
+        <li><strong>Datació C-14:</strong> t = (T½/ln2)·ln(N₀/N). Amb T½ = 5 730 a, un 50% restant → 5 730 anys.</li>
+        <li><strong>Límit del mètode:</strong> després de ~10 semivides (~57 000 anys) queda &lt;0,1% → mesura impossible.</li>
+        <li><strong>Nota:</strong> la datació real calibra amb correcions (ratio isotòpic modern, variacions atmosfèriques).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const C14_THALF = 5730; // anys
+    const SEC_PER_YEAR = 365.25 * 24 * 3600;
+
+    const ISOTOPES = [
+      { id: 'custom', name: 'Personalitzat', T: 1, unit: 'unitats', desc: 'Ajusta T½ manualment' },
+      { id: 'c14', name: '¹⁴C', T: C14_THALF, unit: 'anys', desc: 'Datació arqueològica' },
+      { id: 'i131', name: '¹³¹I', T: 8.02, unit: 'dies', desc: 'Medicina nuclear' },
+      { id: 'co60', name: '⁶⁰Co', T: 5.27, unit: 'anys', desc: 'Radioteràpia' },
+      { id: 'rn222', name: '²²²Rn', T: 3.82, unit: 'dies', desc: 'Sèrie de l\'urani' },
+      { id: 'po210', name: '²¹⁰Po', T: 138.4, unit: 'dies', desc: 'Desintegració α' },
+      { id: 'u238', name: '²³⁸U', T: 4.47e9, unit: 'anys', desc: 'Sèrie 4n+2' },
+      { id: 'u235', name: '²³⁵U', T: 7.04e8, unit: 'anys', desc: 'Sèrie 4n+3 / fissió' }
+    ];
+
+    const state = {
+      N0: 400, Thalf: 1, t: 0, playing: false, speed: 1,
+      isotope: 'custom', tMax: 5, graphMode: 'n',
+      datingSync: false
+    };
+
+    let particles = [];
+    let prevFraction = 1;
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < state.N0; i++) {
+        particles.push({
+          u: Math.random(),
+          x: 0.05 + Math.random() * 0.9,
+          y: 0.12 + Math.random() * 0.72,
+          pop: 0
+        });
+      }
+      prevFraction = fraction(state.t);
+    }
+
+    const graphCanvas = document.getElementById('graphCanvas');
+    const particleCanvas = document.getElementById('particleCanvas');
+    const gctx = graphCanvas.getContext('2d');
+    const pctx = particleCanvas.getContext('2d');
+
+    function lambda() { return Math.LN2 / state.Thalf; }
+    function lambdaSI() { return Math.LN2 / (state.Thalf * timeUnitToSeconds()); }
+    function timeUnitToSeconds() {
+      const iso = ISOTOPES.find(i => i.id === state.isotope);
+      if (!iso || iso.unit === 'anys') return SEC_PER_YEAR;
+      if (iso.unit === 'dies') return 86400;
+      return 1;
+    }
+    function Nat(t) { return state.N0 * Math.pow(0.5, t / state.Thalf); }
+    function Aat(t) { return lambdaSI() * Nat(t); }
+    function A0() { return lambdaSI() * state.N0; }
+    function fraction(t) { return Math.pow(0.5, t / state.Thalf); }
+
+    function ageFromFraction(f) {
+      if (f <= 0) return Infinity;
+      if (f >= 1) return 0;
+      return C14_THALF * Math.log(1 / f) / Math.LN2;
+    }
+    function fractionFromAge(years) {
+      return Math.pow(0.5, years / C14_THALF);
+    }
+
+    function buildIsotopeBtns() {
+      const container = document.getElementById('isotopeBtns');
+      ISOTOPES.forEach(iso => {
+        const btn = document.createElement('button');
+        btn.className = 'btn' + (iso.id === state.isotope ? ' active' : '');
+        btn.textContent = iso.name;
+        btn.dataset.isoId = iso.id;
+        btn.title = iso.desc;
+        btn.addEventListener('click', () => selectIsotope(iso.id));
+        container.appendChild(btn);
+      });
+    }
+
+    function selectIsotope(id) {
+      const iso = ISOTOPES.find(i => i.id === id);
+      state.isotope = id;
+      if (id !== 'custom') {
+        state.Thalf = iso.T;
+        document.getElementById('Thalf').disabled = true;
+        document.getElementById('Thalf-val').textContent = formatSci(iso.T) + ' ' + iso.unit;
+      } else {
+        document.getElementById('Thalf').disabled = false;
+        state.Thalf = parseFloat(document.getElementById('Thalf').value);
+      }
+      document.querySelectorAll('.isotope-grid .btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.isoId === id);
+      });
+      draw();
+    }
+
+    function formatActivity(a) {
+      if (a >= 1e6) return formatSci(a) + ' Bq';
+      if (a >= 1) return formatNum(a, 2) + ' Bq';
+      if (a >= 1e-3) return formatNum(a * 1000, 2) + ' mBq';
+      return formatSci(a) + ' Bq';
+    }
+
+    function updateInfo() {
+      const iso = ISOTOPES.find(i => i.id === state.isotope) || ISOTOPES[0];
+      const n = state.t / state.Thalf;
+      const remaining = fraction(state.t) * 100;
+      const lam = lambda();
+      const aNow = Aat(state.t);
+      const aInit = A0();
+
+      document.getElementById('infoGrid').innerHTML = `
+        <div class="info-card"><span>N(t)</span><strong>${formatNum(Nat(state.t), 0)} nuclids</strong></div>
+        <div class="info-card"><span>A(t) = λN</span><strong>${formatActivity(aNow)}</strong></div>
+        <div class="info-card"><span>A₀ = λN₀</span><strong>${formatActivity(aInit)}</strong></div>
+        <div class="info-card"><span>A(t)/A₀</span><strong>${formatNum(remaining, 1)} %</strong></div>
+        <div class="info-card"><span>λ = ln2/T½</span><strong>${formatSci(lam)} /${iso.unit}</strong></div>
+        <div class="info-card"><span>Fracció N restant</span><strong>${formatNum(remaining, 1)} %</strong></div>
+        <div class="info-card"><span>t / T½</span><strong>${formatNum(n, 2)} semivides</strong></div>
+        <div class="info-card"><span>Després de 1 T½</span><strong>A = ${formatActivity(aInit / 2)}</strong></div>`;
+    }
+
+    function updateDating(fromAge) {
+      state.datingSync = true;
+      let pct, age;
+      if (fromAge) {
+        age = parseFloat(document.getElementById('ageYears').value);
+        pct = fractionFromAge(age) * 100;
+        document.getElementById('c14pct').value = pct;
+      } else {
+        pct = parseFloat(document.getElementById('c14pct').value);
+        age = ageFromFraction(pct / 100);
+        document.getElementById('ageYears').value = Math.min(50000, Math.round(age));
+      }
+
+      document.getElementById('c14pct-val').textContent = formatNum(pct, 1) + ' %';
+      document.getElementById('ageYears-val').textContent = formatNum(age, 0) + ' anys';
+      document.getElementById('datingAge').textContent = age < 50000 ? formatNum(age, 0) + ' anys' : '> 50 000 anys';
+      document.getElementById('datingDetail').textContent =
+        `¹⁴C restant: ${formatNum(pct, 1)} % · t = ${formatNum(age / C14_THALF, 2)} T½ · A/A₀ = ${formatNum(pct, 1)} %`;
+      document.getElementById('datingFormula').textContent =
+        `t = T½ · ln(N₀/N) / ln2 = ${formatNum(C14_THALF, 0)} · ln(100/${formatNum(pct, 1)}) / 0,693 = ${formatNum(age, 0)} anys`;
+
+      selectIsotope('c14');
+      state.t = age;
+      state.tMax = Math.max(5, age / C14_THALF + 1);
+      document.getElementById('timeSlider').max = state.tMax;
+      document.getElementById('timeSlider').value = age / C14_THALF;
+      state.datingSync = false;
+      draw();
+    }
+
+    function drawGraph() {
+      setupCanvas(graphCanvas, gctx);
+      const w = graphCanvas.clientWidth, h = graphCanvas.clientHeight;
+      const padL = 52, padR = state.graphMode === 'both' ? 48 : 16, padT = 24, padB = 36;
+      const plotW = w - padL - padR, plotH = h - padT - padB;
+      gctx.clearRect(0, 0, w, h);
+
+      const tMax = state.tMax * state.Thalf;
+      const showN = state.graphMode === 'n' || state.graphMode === 'both';
+      const showA = state.graphMode === 'a' || state.graphMode === 'both';
+
+      const yMaxN = state.N0 * 1.05;
+      const yMaxA = A0() * 1.05;
+
+      const toX = t => padL + (t / tMax) * plotW;
+      const toYN = n => padT + ((yMaxN - n) / yMaxN) * plotH;
+      const toYA = a => padT + ((yMaxA - a) / yMaxA) * plotH;
+
+      drawGrid(gctx, padL, padT, plotW, plotH);
+      drawAxes(gctx, padL, padT, plotW, plotH, showN ? toYN(0) : toYA(0), { x: 't', y: showN && !showA ? 'N(t)' : showA && !showN ? 'A(t)' : 'valor' });
+
+      for (let i = 1; i <= 5; i++) {
+        const tx = i * state.Thalf;
+        if (tx <= tMax) {
+          gctx.strokeStyle = '#e0e7ff';
+          gctx.setLineDash([4, 4]);
+          gctx.beginPath(); gctx.moveTo(toX(tx), padT); gctx.lineTo(toX(tx), padT + plotH); gctx.stroke();
+          gctx.setLineDash([]);
+          gctx.fillStyle = '#6366f1';
+          gctx.font = '10px Segoe UI';
+          gctx.textAlign = 'center';
+          gctx.fillText(i + ' T½', toX(tx), padT + plotH + 14);
+        }
+      }
+
+      if (showN) {
+        gctx.strokeStyle = '#6366f1';
+        gctx.lineWidth = 2.5;
+        gctx.beginPath();
+        for (let i = 0; i <= 400; i++) {
+          const t = (i / 400) * tMax;
+          const px = toX(t), py = toYN(Nat(t));
+          if (i === 0) gctx.moveTo(px, py); else gctx.lineTo(px, py);
+        }
+        gctx.stroke();
+      }
+
+      if (showA) {
+        gctx.strokeStyle = '#ea580c';
+        gctx.lineWidth = showN ? 2 : 2.5;
+        gctx.setLineDash(showN ? [6, 4] : []);
+        gctx.beginPath();
+        for (let i = 0; i <= 400; i++) {
+          const t = (i / 400) * tMax;
+          const px = toX(t), py = toYA(Aat(t));
+          if (i === 0) gctx.moveTo(px, py); else gctx.lineTo(px, py);
+        }
+        gctx.stroke();
+        gctx.setLineDash([]);
+      }
+
+      gctx.strokeStyle = '#1a2332';
+      gctx.setLineDash([4, 3]);
+      gctx.beginPath(); gctx.moveTo(toX(state.t), padT); gctx.lineTo(toX(state.t), padT + plotH); gctx.stroke();
+      gctx.setLineDash([]);
+
+      if (showN) {
+        gctx.fillStyle = '#6366f1';
+        gctx.beginPath(); gctx.arc(toX(state.t), toYN(Nat(state.t)), 6, 0, TAU); gctx.fill();
+      }
+      if (showA) {
+        gctx.fillStyle = '#ea580c';
+        gctx.beginPath(); gctx.arc(toX(state.t), toYA(Aat(state.t)), 6, 0, TAU); gctx.fill();
+      }
+
+      gctx.font = '12px Segoe UI';
+      gctx.textAlign = 'left';
+      if (showN) { gctx.fillStyle = '#6366f1'; gctx.fillText('N(t)', padL + 8, padT + 14); }
+      if (showA) { gctx.fillStyle = '#ea580c'; gctx.fillText('A(t) = λN', padL + 8, padT + (showN ? 30 : 14)); }
+
+      if (state.isotope === 'c14' && state.t > 0) {
+        gctx.fillStyle = '#4338ca';
+        gctx.font = '11px Segoe UI';
+        gctx.textAlign = 'right';
+        gctx.fillText(`Edat: ${formatNum(state.t, 0)} anys`, w - padR - 8, padT + 14);
+      }
+    }
+
+    function drawParticles() {
+      setupCanvas(particleCanvas, pctx);
+      const w = particleCanvas.clientWidth, h = particleCanvas.clientHeight;
+      pctx.clearRect(0, 0, w, h);
+
+      const p = fraction(state.t);
+      const radius = Math.max(3, Math.min(w, h) / Math.sqrt(state.N0) * 0.38);
+      let alive = 0;
+
+      particles.forEach(pt => {
+        const isAlive = pt.u < p;
+        if (isAlive) alive++;
+
+        if (pt.pop > 0) pt.pop = Math.max(0, pt.pop - 0.06);
+
+        const px = pt.x * w, py = pt.y * h;
+        if (isAlive) {
+          pctx.fillStyle = '#6366f1';
+          pctx.beginPath();
+          pctx.arc(px, py, radius, 0, TAU);
+          pctx.fill();
+        } else {
+          if (pt.pop > 0) {
+            pctx.strokeStyle = `rgba(234, 88, 12, ${pt.pop})`;
+            pctx.lineWidth = 2;
+            pctx.beginPath();
+            pctx.arc(px, py, radius * (1.4 - pt.pop * 0.3), 0, TAU);
+            pctx.stroke();
+          }
+          pctx.fillStyle = '#e2e8f0';
+          pctx.beginPath();
+          pctx.arc(px, py, radius * 0.65, 0, TAU);
+          pctx.fill();
+        }
+      });
+
+      if (state.playing && p < prevFraction) {
+        particles.forEach(pt => {
+          const wasAlive = pt.u < prevFraction;
+          const nowDead = pt.u >= p;
+          if (wasAlive && nowDead) pt.pop = 1;
+        });
+      }
+      prevFraction = p;
+
+      pctx.fillStyle = '#64748b';
+      pctx.font = '11px Segoe UI';
+      pctx.textAlign = 'left';
+      pctx.fillText(`Vius: ${alive} · Desintegrats: ${state.N0 - alive} · A = ${formatActivity(Aat(state.t))}`, 8, h - 8);
+    }
+
+    function draw() {
+      const iso = ISOTOPES.find(i => i.id === state.isotope);
+      let timeLabel = `t = ${formatNum(state.t / state.Thalf, 2)} T½`;
+      if (state.isotope === 'c14') timeLabel += ` (${formatNum(state.t, 0)} anys)`;
+      else if (iso && iso.unit !== 'unitats') timeLabel += ` (${formatSci(state.t)} ${iso.unit})`;
+      document.getElementById('timeDisplay').textContent = timeLabel;
+
+      if (!state.datingSync && state.isotope === 'c14') {
+        const pct = fraction(state.t) * 100;
+        document.getElementById('c14pct').value = pct;
+        document.getElementById('ageYears').value = Math.min(50000, Math.round(state.t));
+        document.getElementById('c14pct-val').textContent = formatNum(pct, 1) + ' %';
+        document.getElementById('ageYears-val').textContent = formatNum(state.t, 0) + ' anys';
+        document.getElementById('datingAge').textContent = formatNum(state.t, 0) + ' anys';
+        document.getElementById('datingDetail').textContent =
+          `¹⁴C restant: ${formatNum(pct, 1)} % · t = ${formatNum(state.t / C14_THALF, 2)} T½`;
+        document.getElementById('datingFormula').textContent =
+          `t = ${formatNum(C14_THALF, 0)} · ln(100/${formatNum(pct, 1)}) / 0,693 = ${formatNum(state.t, 0)} anys`;
+      }
+
+      updateInfo();
+      drawGraph();
+      drawParticles();
+    }
+
+    function initDatingDisplay() {
+      const pct = 100, age = 0;
+      document.getElementById('c14pct-val').textContent = formatNum(pct, 1) + ' %';
+      document.getElementById('ageYears-val').textContent = '0 anys';
+      document.getElementById('datingAge').textContent = '0 anys';
+      document.getElementById('datingDetail').textContent = '¹⁴C restant: 100% · t = 0 T½';
+      document.getElementById('datingFormula').textContent =
+        `t = T½ · ln(N₀/N) / ln2 = ${formatNum(C14_THALF, 0)} · ln(100/100) / 0,693 = 0 anys`;
+    }
+
+    buildIsotopeBtns();
+    initParticles();
+    bindSlider('N0', 'N0-val', v => { state.N0 = v; initParticles(); draw(); }, v => formatNum(v, 0));
+    bindSlider('Thalf', 'Thalf-val', v => {
+      if (state.isotope === 'custom') { state.Thalf = v; draw(); }
+    }, v => formatSci(v));
+
+    document.getElementById('c14pct').addEventListener('input', () => updateDating(false));
+    document.getElementById('ageYears').addEventListener('input', () => updateDating(true));
+
+    document.querySelectorAll('[data-graph]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-graph]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.graphMode = btn.dataset.graph;
+        drawGraph();
+      });
+    });
+
+    document.querySelectorAll('[data-sample]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const samples = {
+          trecent: { age: 0, pct: 100 },
+          neolitic: { age: 5000, pct: fractionFromAge(5000) * 100 },
+          altamira: { age: 15000, pct: fractionFromAge(15000) * 100 },
+          lascaux: { age: 17000, pct: fractionFromAge(17000) * 100 },
+          limit: { age: 45000, pct: fractionFromAge(45000) * 100 }
+        };
+        const s = samples[btn.dataset.sample];
+        document.getElementById('ageYears').value = s.age;
+        document.getElementById('c14pct').value = s.pct;
+        updateDating(true);
+      });
+    });
+
+    document.getElementById('timeSlider').max = state.tMax;
+    document.getElementById('timeSlider').addEventListener('input', e => {
+      state.t = parseFloat(e.target.value) * state.Thalf;
+      draw();
+    });
+
+    document.getElementById('btnPlay').onclick = () => {
+      state.playing = !state.playing;
+      document.getElementById('btnPlay').textContent = state.playing ? '⏸ Pausa' : '▶ Reproduir';
+      if (state.playing) animate();
+    };
+    document.getElementById('btnShuffle').onclick = () => { initParticles(); draw(); };
+
+    document.getElementById('btnReset').onclick = () => {
+      state.t = 0; state.playing = false;
+      document.getElementById('btnPlay').textContent = '▶ Reproduir';
+      document.getElementById('timeSlider').value = 0;
+      initParticles();
+      if (state.isotope === 'c14') {
+        document.getElementById('c14pct').value = 100;
+        document.getElementById('ageYears').value = 0;
+        updateDating(false);
+      } else draw();
+    };
+    document.getElementById('speedSlider').addEventListener('input', e => { state.speed = parseFloat(e.target.value); });
+
+    function animate() {
+      if (!state.playing) return;
+      state.t += 0.016 * state.speed * state.Thalf * 0.04;
+      if (state.t > state.tMax * state.Thalf) {
+        state.t = 0;
+        initParticles();
+      }
+      document.getElementById('timeSlider').value = state.t / state.Thalf;
+      draw();
+      requestAnimationFrame(animate);
+    }
+
+    document.querySelectorAll('[data-q]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = document.getElementById('answer');
+        if (btn.dataset.q === '1') el.textContent = 'Després de 2 T½ queda N₀/4 = 25%. A també queda al 25% perquè A = λN i λ és constant.';
+        if (btn.dataset.q === '2') el.textContent = 'A(t)/A₀ = N(t)/N₀ sempre. Les dues corbes tenen la mateixa forma exponencial; només canvia l\'escala (λ és el factor).';
+        if (btn.dataset.q === '3') el.textContent = 'Arriba al 25% quan t = 2·T½. Amb C-14 això correspon a ~11 460 anys.';
+      });
+    });
+
+    initDatingDisplay();
+    draw();
+    window.addEventListener('resize', draw);
+  </script>
+</body>
+</html>

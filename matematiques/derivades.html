@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Derivades: de la TVM a la pendent — Matemàtiques 2n Batxillerat</title>
+  <link rel="stylesheet" href="../css/comunes.css">
+</head>
+<body>
+  <header class="header-mat">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Matemàtiques</a>
+      <a href="index.html">Inici</a>
+      <a href="matrius.html">Matrius</a>
+      <a href="sistemes.html">Sistemes</a>
+      <a href="probabilitat.html">Probabilitat</a>
+      <a href="derivades.html" class="active">Derivades</a>
+      <a href="integrals.html">Integrals</a>
+    </nav>
+    <h1>De la Taxa de Variació Mitjana a la Derivada</h1>
+    <p>
+      La <strong>TVM</strong> entre dos punts és la pendent de la recta <strong>secant</strong>. Quan
+      acostem el segon punt (h → 0), la secant es converteix en la recta <strong>tangent</strong> i la
+      TVM esdevé la <strong>derivada</strong> f′(a): la pendent en el punt.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Idea clau</h2>
+      <p class="formula">TVM[a, a+h] = ( f(a+h) − f(a) ) / h &nbsp;&nbsp;⟶&nbsp;&nbsp; f′(a) = limₕ→₀ ( f(a+h) − f(a) ) / h</p>
+      <p class="formula-note">
+        Interpretació física: si f(t) és la posició, la TVM és la <strong>velocitat mitjana</strong> entre
+        t = a i t = a+h, i f′(a) és la <strong>velocitat instantània</strong> en t = a.
+      </p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Secant i tangent</h2>
+        <div class="legend">
+          <label class="legend-item"><input type="checkbox" id="showSecant" checked><span class="legend-dot dot-w2"></span> Secant (TVM)</label>
+          <label class="legend-item"><input type="checkbox" id="showTangent" checked><span class="legend-dot dot-sum"></span> Tangent (f′(a))</label>
+          <label class="legend-item"><input type="checkbox" id="showTriangle" checked><span class="legend-dot dot-w1"></span> Triangle Δy/Δx</label>
+        </div>
+      </div>
+      <canvas id="mainCanvas" class="h360"></canvas>
+      <div class="controls-row">
+        <div class="chart-tabs" id="fn-tabs"></div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label>Punt <span class="symbol">a</span></label><span class="param-value" id="a-val"></span></div>
+          <input type="range" id="a" min="-3" max="3" step="0.1" value="1">
+          <p class="param-desc">Punt on volem la pendent (la tangent).</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label>Increment <span class="symbol">h</span></label><span class="param-value" id="h-val"></span></div>
+          <input type="range" id="h" min="0.02" max="3" step="0.02" value="1.5">
+          <p class="param-desc">Distància al segon punt. Redueix-lo per acostar la secant a la tangent.</p>
+        </div>
+        <div class="controls-row">
+          <button class="btn btn-primary" id="btn-anim">▶ Animar h → 0</button>
+          <span class="param-desc" id="fn-deriv"></span>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Càlcul en el punt</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>P₁ = (a, f(a)) = </span><strong id="p1">—</strong></div>
+          <div><span>P₂ = (a+h, f(a+h)) = </span><strong id="p2">—</strong></div>
+          <div><span>Δx = h = </span><strong id="dx">—</strong></div>
+          <div><span>Δy = f(a+h) − f(a) = </span><strong id="dy">—</strong></div>
+          <div><span>TVM = Δy/Δx (pendent secant) = </span><strong id="tvm">—</strong></div>
+          <div><span>f′(a) (pendent tangent) = </span><strong id="dfa">—</strong></div>
+          <div><span>Diferència |TVM − f′(a)| = </span><strong id="err">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Convergència de la TVM quan h → 0</h2>
+      <div id="conv-table"></div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>TVM (taxa de variació mitjana):</strong> variació de la funció dividida per la variació de x; és la pendent de la recta secant que uneix P₁ i P₂.</li>
+        <li><strong>Pas al límit:</strong> quan h → 0, el punt P₂ s'acosta a P₁ i la secant tendeix a la tangent.</li>
+        <li><strong>Derivada f′(a):</strong> el límit de la TVM; és la pendent de la funció en el punt a (taxa de variació instantània).</li>
+        <li><strong>Analogia física:</strong> velocitat mitjana (TVM) → velocitat instantània (derivada) quan l'interval de temps es fa molt petit.</li>
+        <li><strong>Recta tangent:</strong> y = f(a) + f′(a)·(x − a).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../js/utilitats.js"></script>
+  <script>
+    function fmt(x, d = 3) {
+      if (!isFinite(x)) return '—';
+      let r = Math.round(x * 1e6) / 1e6;
+      if (Object.is(r, -0)) r = 0;
+      if (Math.abs(r - Math.round(r)) < 1e-9) return String(Math.round(r));
+      return r.toFixed(d).replace(/0+$/, '').replace(/\.$/, '');
+    }
+
+    const PRESETS = {
+      sq:   { label: 'x²',      f: x => x * x,          df: x => 2 * x,             dfLabel: "f′(x) = 2x",        xmin: -4, xmax: 4,   ymin: -1,  ymax: 9,  aMin: -3,  aMax: 3,   a: 1 },
+      cub:  { label: 'x³ − 3x', f: x => x ** 3 - 3 * x, df: x => 3 * x * x - 3,     dfLabel: "f′(x) = 3x² − 3",   xmin: -3, xmax: 3,   ymin: -6,  ymax: 6,  aMin: -2.5, aMax: 2.5, a: 1 },
+      sin:  { label: 'sin x',   f: x => Math.sin(x),    df: x => Math.cos(x),       dfLabel: "f′(x) = cos x",     xmin: -6.5, xmax: 6.5, ymin: -2, ymax: 2,  aMin: -6,  aMax: 6,   a: 1 },
+      sqrt: { label: '√x',      f: x => Math.sqrt(x),   df: x => 1 / (2 * Math.sqrt(x)), dfLabel: "f′(x) = 1/(2√x)", xmin: 0, xmax: 6, ymin: -0.5, ymax: 3, aMin: 0.3, aMax: 5, a: 1 },
+      inv:  { label: '1/x',     f: x => 1 / x,          df: x => -1 / (x * x),      dfLabel: "f′(x) = −1/x²",     xmin: -5, xmax: 5,   ymin: -5,  ymax: 5,  aMin: 0.4, aMax: 4,   a: 1 },
+      exp:  { label: 'eˣ',      f: x => Math.exp(x),    df: x => Math.exp(x),       dfLabel: "f′(x) = eˣ",        xmin: -3, xmax: 2.5, ymin: -1,  ymax: 9,  aMin: -2,  aMax: 2,   a: 0.5 }
+    };
+
+    const state = { key: 'sq', a: 1, h: 1.5, showSecant: true, showTangent: true, showTriangle: true, animating: false };
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function P() { return PRESETS[state.key]; }
+
+    function draw() {
+      const p = P();
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      const padL = 46, padR = 20, padT = 18, padB = 34;
+      const plotW = w - padL - padR, plotH = h - padT - padB;
+      const { xmin, xmax, ymin, ymax } = p;
+      const sx = x => padL + (x - xmin) / (xmax - xmin) * plotW;
+      const sy = y => padT + (ymax - y) / (ymax - ymin) * plotH;
+
+      // grid + axes
+      ctx.strokeStyle = '#e8edf2'; ctx.lineWidth = 1;
+      ctx.fillStyle = '#94a3b8'; ctx.font = '11px Segoe UI, sans-serif';
+      const xstep = (xmax - xmin) > 12 ? 2 : 1;
+      for (let xi = Math.ceil(xmin); xi <= xmax; xi += xstep) {
+        ctx.beginPath(); ctx.moveTo(sx(xi), padT); ctx.lineTo(sx(xi), padT + plotH); ctx.stroke();
+      }
+      const ystep = (ymax - ymin) > 12 ? 2 : 1;
+      for (let yi = Math.ceil(ymin); yi <= ymax; yi += ystep) {
+        ctx.beginPath(); ctx.moveTo(padL, sy(yi)); ctx.lineTo(padL + plotW, sy(yi)); ctx.stroke();
+      }
+      // axes
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5;
+      if (ymin <= 0 && ymax >= 0) { ctx.beginPath(); ctx.moveTo(padL, sy(0)); ctx.lineTo(padL + plotW, sy(0)); ctx.stroke(); }
+      if (xmin <= 0 && xmax >= 0) { ctx.beginPath(); ctx.moveTo(sx(0), padT); ctx.lineTo(sx(0), padT + plotH); ctx.stroke(); }
+      ctx.fillStyle = '#64748b'; ctx.textAlign = 'center';
+      for (let xi = Math.ceil(xmin); xi <= xmax; xi += xstep) if (xi !== 0) ctx.fillText(xi, sx(xi), sy(0) + 14 < padT + plotH ? sy(0) + 14 : padT + plotH - 2);
+      ctx.textAlign = 'right';
+      for (let yi = Math.ceil(ymin); yi <= ymax; yi += ystep) if (yi !== 0) ctx.fillText(yi, (xmin <= 0 && xmax >= 0 ? sx(0) : padL) - 5, sy(yi) + 4);
+
+      const a = state.a, hh = state.h;
+      const fa = p.f(a), fah = p.f(a + hh), slope = (fah - fa) / hh, dfa = p.df(a);
+
+      ctx.save();
+      ctx.beginPath(); ctx.rect(padL, padT, plotW, plotH); ctx.clip();
+
+      // function curve
+      ctx.strokeStyle = '#1e3a5f'; ctx.lineWidth = 2.5; ctx.beginPath();
+      let pen = false;
+      for (let px = 0; px <= plotW; px++) {
+        const x = xmin + (px / plotW) * (xmax - xmin);
+        const y = p.f(x);
+        if (!isFinite(y) || y > ymax + (ymax - ymin) || y < ymin - (ymax - ymin)) { pen = false; continue; }
+        const X = sx(x), Y = sy(y);
+        if (!pen) { ctx.moveTo(X, Y); pen = true; } else ctx.lineTo(X, Y);
+      }
+      ctx.stroke();
+
+      // triangle Δx, Δy
+      if (state.showTriangle && isFinite(fah)) {
+        ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]);
+        ctx.beginPath(); ctx.moveTo(sx(a), sy(fa)); ctx.lineTo(sx(a + hh), sy(fa)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(sx(a + hh), sy(fa)); ctx.lineTo(sx(a + hh), sy(fah)); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // secant
+      if (state.showSecant && isFinite(slope)) {
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(sx(xmin), sy(fa + slope * (xmin - a))); ctx.lineTo(sx(xmax), sy(fa + slope * (xmax - a))); ctx.stroke();
+      }
+      // tangent
+      if (state.showTangent && isFinite(dfa)) {
+        ctx.strokeStyle = '#059669'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(sx(xmin), sy(fa + dfa * (xmin - a))); ctx.lineTo(sx(xmax), sy(fa + dfa * (xmax - a))); ctx.stroke();
+      }
+
+      // points
+      function dot(x, y, color) { ctx.fillStyle = color; ctx.beginPath(); ctx.arc(sx(x), sy(y), 5, 0, TAU); ctx.fill(); }
+      dot(a, fa, '#2563eb');
+      if (isFinite(fah)) dot(a + hh, fah, '#ea580c');
+      ctx.restore();
+
+      // labels for triangle (outside clip)
+      if (state.showTriangle && isFinite(fah)) {
+        ctx.fillStyle = '#2563eb'; ctx.font = '12px Segoe UI, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Δx = ' + fmt(hh, 2), (sx(a) + sx(a + hh)) / 2, sy(fa) + (fah >= fa ? 16 : -8));
+        ctx.textAlign = 'left';
+        ctx.fillText('Δy = ' + fmt(fah - fa, 2), sx(a + hh) + 6, (sy(fa) + sy(fah)) / 2);
+      }
+      // point labels
+      ctx.fillStyle = '#1a2332'; ctx.font = '600 12px Segoe UI, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('P₁', sx(a), sy(fa) - 9);
+      if (isFinite(fah)) ctx.fillText('P₂', sx(a + hh), sy(fah) - 9);
+    }
+
+    function updateReadouts() {
+      const p = P(), a = state.a, hh = state.h;
+      const fa = p.f(a), fah = p.f(a + hh), dy = fah - fa, tvm = dy / hh, dfa = p.df(a);
+      document.getElementById('p1').textContent = `(${fmt(a, 2)}, ${fmt(fa)})`;
+      document.getElementById('p2').textContent = `(${fmt(a + hh, 2)}, ${fmt(fah)})`;
+      document.getElementById('dx').textContent = fmt(hh, 2);
+      document.getElementById('dy').textContent = fmt(dy);
+      document.getElementById('tvm').textContent = fmt(tvm);
+      document.getElementById('dfa').textContent = fmt(dfa);
+      document.getElementById('err').textContent = fmt(Math.abs(tvm - dfa));
+      document.getElementById('fn-deriv').textContent = p.dfLabel;
+
+      // convergence table
+      const hs = [1, 0.5, 0.1, 0.01, 0.001];
+      let rows = '';
+      for (const hv of hs) {
+        const t = (p.f(a + hv) - fa) / hv;
+        rows += `<tr><td class="num">${fmt(hv, 3)}</td><td class="num">${fmt(t)}</td></tr>`;
+      }
+      document.getElementById('conv-table').innerHTML =
+        `<table class="mass-table"><tr><th>h</th><th>TVM = (f(a+h) − f(a))/h</th></tr>${rows}` +
+        `<tr><td class="num"><strong>→ 0</strong></td><td class="num"><strong>f′(a) = ${fmt(dfa)}</strong></td></tr></table>`;
+    }
+
+    function refresh() { draw(); updateReadouts(); }
+
+    function buildTabs() {
+      const tabs = document.getElementById('fn-tabs');
+      tabs.innerHTML = Object.entries(PRESETS).map(([k, v]) =>
+        `<button class="btn ${k === state.key ? 'active' : ''}" data-fn="${k}">${v.label}</button>`).join('');
+      tabs.querySelectorAll('[data-fn]').forEach(btn => btn.addEventListener('click', () => selectFn(btn.dataset.fn)));
+    }
+
+    function selectFn(key) {
+      state.key = key;
+      const p = P();
+      state.a = p.a; state.h = 1.5; state.animating = false;
+      document.getElementById('btn-anim').textContent = '▶ Animar h → 0';
+      const aSlider = document.getElementById('a');
+      aSlider.min = p.aMin; aSlider.max = p.aMax; aSlider.value = p.a;
+      document.getElementById('a-val').textContent = fmt(state.a, 2);
+      document.getElementById('h').value = state.h;
+      document.getElementById('h-val').textContent = fmt(state.h, 2);
+      buildTabs();
+      refresh();
+    }
+
+    function animate() {
+      if (!state.animating) return;
+      state.h *= 0.94;
+      if (state.h <= 0.02) { state.h = 0.02; state.animating = false; document.getElementById('btn-anim').textContent = '▶ Animar h → 0'; }
+      document.getElementById('h').value = state.h;
+      document.getElementById('h-val').textContent = fmt(state.h, 2);
+      refresh();
+      if (state.animating) requestAnimationFrame(animate);
+    }
+
+    // wiring
+    const aS = document.getElementById('a'), hS = document.getElementById('h');
+    aS.addEventListener('input', () => { state.a = parseFloat(aS.value); document.getElementById('a-val').textContent = fmt(state.a, 2); refresh(); });
+    hS.addEventListener('input', () => { state.h = parseFloat(hS.value); document.getElementById('h-val').textContent = fmt(state.h, 2); state.animating = false; document.getElementById('btn-anim').textContent = '▶ Animar h → 0'; refresh(); });
+    document.getElementById('btn-anim').addEventListener('click', () => {
+      const btn = document.getElementById('btn-anim');
+      if (state.animating) { state.animating = false; btn.textContent = '▶ Animar h → 0'; return; }
+      if (state.h <= 0.05) { state.h = 1.5; hS.value = 1.5; }
+      state.animating = true; btn.textContent = '⏸ Pausa'; requestAnimationFrame(animate);
+    });
+    ['showSecant', 'showTangent', 'showTriangle'].forEach(id =>
+      document.getElementById(id).addEventListener('change', e => { state[id] = e.target.checked; draw(); }));
+    window.addEventListener('resize', draw);
+
+    document.getElementById('a-val').textContent = fmt(state.a, 2);
+    document.getElementById('h-val').textContent = fmt(state.h, 2);
+    buildTabs();
+    refresh();
+  </script>
+</body>
+</html>

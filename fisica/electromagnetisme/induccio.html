@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inducció Electromagnètica — Simulador</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+</head>
+<body>
+  <header class="header-em">
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="coulomb.html">Coulomb</a>
+      <a href="circuits.html">Circuits</a>
+      <a href="induccio.html" class="active">Inducció</a>
+    </nav>
+    <h1>Inducció Electromagnètica — Faraday i Lenz</h1>
+    <p>
+      Un canvi del flux magnètic a través d'una espira indueix una força electromotriu (fem).
+      La llei de Lenz determina el sentit del corrent induït: s'oposa al canvi de flux.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equacions</h2>
+      <p class="formula">Φ = B · A · cos θ &nbsp;·&nbsp; ε = −dΦ/dt &nbsp;·&nbsp; Llei de Lenz</p>
+      <p class="formula-note">
+        Φ = flux magnètic (webers, Wb) &nbsp;·&nbsp; B = camp magnètic (tesla, T) &nbsp;·&nbsp;
+        El signe (−) indica que la fem induïda s'oposa al canvi de flux
+      </p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header"><h2>Imant movent-se respecte a l'espira</h2></div>
+      <canvas id="mainCanvas" class="h320"></canvas>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar</button>
+        <div class="slider-group"><label>Velocitat imant</label><input type="range" id="speedSlider" min="0.2" max="2" step="0.1" value="1"></div>
+        <div class="slider-group"><label>t</label><input type="range" id="timeSlider" min="0" max="8" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 s</span></div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">B</span> — Camp magnètic</label><span class="param-value" id="B-val"></span></div>
+          <input type="range" id="B" min="0.1" max="2" step="0.05" value="0.8">
+          <p class="param-desc">Intensitat del camp (T)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">A</span> — Àrea espira</label><span class="param-value" id="A-val"></span></div>
+          <input type="range" id="A" min="0.01" max="0.1" step="0.005" value="0.04">
+          <p class="param-desc">Àrea de l'espira (m²)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">N</span> — Voltes</label><span class="param-value" id="N-val"></span></div>
+          <input type="range" id="N" min="1" max="20" step="1" value="5">
+          <p class="param-desc">Nombre de voltes de la bobina</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label>Vel. imant v</label><span class="param-value" id="vMag-val"></span></div>
+          <input type="range" id="vMag" min="-0.5" max="0.5" step="0.05" value="0.2">
+          <p class="param-desc">Positiu = s'apropa a l'espira</p>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Valors en l'instant t</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>Φ = B·A = </span><strong id="flux">—</strong></div>
+          <div><span>dΦ/dt ≈ </span><strong id="dFlux">—</strong></div>
+          <div><span>ε = −N·dΦ/dt = </span><strong id="emf">—</strong></div>
+          <div><span>Sentit corrent induït: </span><strong id="currentDir">—</strong></div>
+          <div><span>Interpretació Lenz: </span><strong id="lenz">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Escenaris</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="approach">Imant s'apropa (Φ creix)</button>
+        <button class="btn" data-preset="recede">Imant s'allunya (Φ decreix)</button>
+        <button class="btn" data-preset="static">Imant en repòs (ε = 0)</button>
+        <button class="btn" data-preset="strongB">Camp fort (B = 1,5 T)</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Flux Φ:</strong> mesura quant camp magnètic travessa una superfície. Depèn de B, A i l'angle θ.</li>
+        <li><strong>Faraday:</strong> només un <em>canvi</em> de flux indueix fem. Si B i A són constants → ε = 0.</li>
+        <li><strong>Lenz:</strong> el corrent induït crea un camp que s'oposa al canvi de flux que l'ha produït.</li>
+        <li><strong>Imant s'apropa:</strong> Φ creix → corrent induït genera pol nord per repel·lir l'imant.</li>
+        <li><strong>Applications:</strong> generadors elèctrics, transformadors, freu magnètic.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const state = {
+      B: 0.8, A: 0.04, N: 5, vMag: 0.2,
+      t: 0, playing: false, speed: 1,
+      magnetPos: 0.3
+    };
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    let prevFlux = 0;
+
+    function magnetX(t) {
+      const base = 0.25 + state.vMag * t * 0.08;
+      return Math.max(0.08, Math.min(0.85, base));
+    }
+
+    function fluxAt(t) {
+      const mx = magnetX(t);
+      const dist = Math.abs(mx - 0.55);
+      const coupling = Math.exp(-dist * 8);
+      return state.B * state.A * coupling;
+    }
+
+    function dFluxDt(t) {
+      const dt = 0.001;
+      return (fluxAt(t + dt) - fluxAt(t - dt)) / (2 * dt);
+    }
+
+    function updateDerived() {
+      const phi = fluxAt(state.t);
+      const dPhi = dFluxDt(state.t);
+      const emf = -state.N * dPhi;
+
+      document.getElementById('flux').textContent = formatNum(phi * 1000, 2) + ' mWb';
+      document.getElementById('dFlux').textContent = formatNum(dPhi * 1000, 2) + ' mWb/s';
+      document.getElementById('emf').textContent = formatNum(Math.abs(emf) * 1000, 2) + ' mV';
+
+      let dir = 'Cap corrent (ε ≈ 0)';
+      let lenz = 'No hi ha canvi de flux';
+      if (Math.abs(dPhi) > 0.0001) {
+        if (dPhi > 0) {
+          dir = 'Horari (vist des de dalt) — crea pol N oposat';
+          lenz = 'Φ creix → corrent s\'oposa (repel·leix l\'imant)';
+        } else {
+          dir = 'Antihorari — crea pol S oposat';
+          lenz = 'Φ decreix → corrent s\'oposa (atrau l\'imant)';
+        }
+      }
+      document.getElementById('currentDir').textContent = dir;
+      document.getElementById('lenz').textContent = lenz;
+    }
+
+    function drawCoil(cx, cy, w, h, currentDir) {
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(cx - w / 2, cy - h / 2, w, h);
+      for (let i = 0; i < 4; i++) {
+        const y = cy - h / 2 + (i + 0.5) * h / 4;
+        ctx.beginPath();
+        ctx.arc(cx - w / 2 - 8, y, 6, 0, TAU);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx + w / 2 + 8, y, 6, 0, TAU);
+        ctx.stroke();
+      }
+      if (Math.abs(dFluxDt(state.t)) > 0.0001) {
+        ctx.strokeStyle = dFluxDt(state.t) > 0 ? '#dc2626' : '#2563eb';
+        ctx.lineWidth = 2;
+        const r = w * 0.35;
+        ctx.beginPath();
+        if (dFluxDt(state.t) > 0) {
+          ctx.arc(cx, cy, r, 0.3, TAU - 0.3);
+        } else {
+          ctx.arc(cx, cy, r, TAU + 0.3, -0.3, true);
+        }
+        ctx.stroke();
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.font = '11px Segoe UI';
+        ctx.textAlign = 'center';
+        ctx.fillText('I induït', cx, cy + h / 2 + 22);
+      }
+    }
+
+    function drawMagnet(x, y, w, h) {
+      const half = w / 2;
+      ctx.fillStyle = '#dc2626';
+      ctx.fillRect(x - w / 2, y - h / 2, half, h);
+      ctx.fillStyle = '#2563eb';
+      ctx.fillRect(x, y - h / 2, half, h);
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 12px Segoe UI';
+      ctx.textAlign = 'center';
+      ctx.fillText('N', x - half / 2, y + 4);
+      ctx.fillText('S', x + half / 2, y + 4);
+
+      ctx.strokeStyle = 'rgba(217,119,6,0.25)';
+      ctx.lineWidth = 1;
+      for (let i = -2; i <= 2; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x - w / 2, y + i * 12);
+        ctx.bezierCurveTo(x + 40, y + i * 30, x + 60, y - i * 20, x + w / 2 + 50, y + i * 8);
+        ctx.stroke();
+      }
+    }
+
+    function draw() {
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const coilX = w * 0.55, coilY = h * 0.5;
+      const magX = w * magnetX(state.t);
+
+      drawCoil(coilX, coilY, 80, 100);
+      drawMagnet(magX, coilY, 50, 70);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Segoe UI';
+      ctx.textAlign = 'center';
+      ctx.fillText('Espira (N = ' + state.N + ' voltes)', coilX, coilY - 65);
+      ctx.fillText('Imant', magX, coilY - 50);
+
+      if (state.vMag > 0.01) {
+        ctx.fillStyle = '#059669';
+        ctx.fillText('→ s\'apropa', magX, coilY + 55);
+      } else if (state.vMag < -0.01) {
+        ctx.fillStyle = '#dc2626';
+        ctx.fillText('← s\'allunya', magX, coilY + 55);
+      }
+
+      ctx.fillStyle = '#1a2332';
+      ctx.font = '13px Consolas, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('Φ = ' + formatNum(fluxAt(state.t) * 1000, 2) + ' mWb', 16, 24);
+      ctx.fillText('ε = ' + formatNum(Math.abs(-state.N * dFluxDt(state.t)) * 1000, 2) + ' mV', 16, 44);
+
+      updateDerived();
+    }
+
+    bindSlider('B', 'B-val', v => { state.B = v; draw(); }, v => formatNum(v, 2) + ' T');
+    bindSlider('A', 'A-val', v => { state.A = v; draw(); }, v => formatNum(v, 3) + ' m²');
+    bindSlider('N', 'N-val', v => { state.N = Math.round(v); draw(); }, v => String(Math.round(v)));
+    bindSlider('vMag', 'vMag-val', v => { state.vMag = v; draw(); }, v => formatNum(v, 2) + ' m/s');
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.preset;
+        if (p === 'approach') { state.vMag = 0.35; state.t = 0; }
+        if (p === 'recede') { state.vMag = -0.35; state.t = 0; }
+        if (p === 'static') { state.vMag = 0; }
+        if (p === 'strongB') { state.B = 1.5; document.getElementById('B').value = 1.5; document.getElementById('B-val').textContent = formatNum(1.5, 2) + ' T'; }
+        document.getElementById('vMag').value = state.vMag;
+        document.getElementById('vMag-val').textContent = formatNum(state.vMag, 2) + ' m/s';
+        document.getElementById('timeSlider').value = state.t;
+        draw();
+      });
+    });
+
+    bindPlayControls(state, draw, { maxT: 8 });
+    window.addEventListener('resize', draw);
+    draw();
+  </script>
+</body>
+</html>

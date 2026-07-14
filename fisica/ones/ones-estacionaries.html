@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ones Estacionàries — Simulador</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+  <style>
+    .wave-panel { border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); background: var(--surface); }
+    .panel-head { padding: 0.85rem 1.1rem; background: var(--wave1-bg); border-bottom: 1px solid #bfdbfe; }
+    .panel-head h3 { font-size: 1rem; }
+    .panel-body { padding: 1rem 1.1rem; }
+    select.boundary { width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); font-size: 0.875rem; margin-bottom: 0.85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="superposicio.html">Superposició</a>
+      <a href="ones-estacionaries.html" class="active">Ones estacionàries</a>
+      <a href="interferencia-young.html">Young</a>
+      <a href="efecte-doppler.html">Doppler</a>
+    </nav>
+    <h1>Ones Estacionàries en una Corda</h1>
+    <p>
+      Resultat de la superposició de dues ones de mateixa A, ω i k que viatgen en direccions oposades.
+      Observa nodes (amplitud zero) i ventres (amplitud màxima).
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equació</h2>
+      <p class="formula" id="formulaText">y(x, t) = 2A · sin(nπx/L) · cos(ωt)</p>
+      <p class="formula-note">Extrems fixos: n = 1, 2, 3… &nbsp;·&nbsp; Un extrem lliure: només harmonics imparells (m = 1, 2, 3…)</p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Corda en l'instant t</h2>
+        <div class="legend">
+          <label class="legend-item"><input type="checkbox" id="showEnvelope" checked><span class="legend-dot dot-w2"></span> Envolvent ±2A|sin(kx)|</label>
+          <label class="legend-item"><input type="checkbox" id="showNodes" checked><span class="legend-dot dot-sum"></span> Nodes / ventres</label>
+        </div>
+      </div>
+      <canvas id="mainCanvas" class="h320"></canvas>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar temps</button>
+        <div class="slider-group">
+          <label for="speedSlider">Velocitat</label>
+          <input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1">
+        </div>
+        <div class="slider-group">
+          <label for="timeSlider">t</label>
+          <input type="range" id="timeSlider" min="0" max="10" step="0.01" value="0">
+          <span class="time-display" id="timeDisplay">t = 0,00 s</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres de la corda</h2>
+        <label for="boundary" style="font-size:0.875rem;font-weight:600;">Condició de contorn</label>
+        <select id="boundary" class="boundary">
+          <option value="fixed">Extrems fixos (x = 0 i x = L)</option>
+          <option value="free">Extrem fix + extrem lliure</option>
+        </select>
+
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">L</span> — Longitud</label><span class="param-value" id="L-val"></span></div>
+          <input type="range" id="L" min="1" max="4" step="0.1" value="2">
+          <p class="param-desc">Longitud de la corda (m)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">n</span> — Harmònic</label><span class="param-value" id="n-val"></span></div>
+          <input type="range" id="n" min="1" max="6" step="1" value="2">
+          <p class="param-desc">Mode de vibració (enter positiu)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">A</span> — Amplitud</label><span class="param-value" id="A-val"></span></div>
+          <input type="range" id="A" min="0.1" max="1.5" step="0.05" value="0.8">
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">ω</span> — Freq. angular</label><span class="param-value" id="omega-val"></span></div>
+          <input type="range" id="omega" min="1" max="8" step="0.1" value="4">
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Valors derivats</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>λₙ = </span><strong id="lambdaN">—</strong></div>
+          <div><span>T = 2π/ω = </span><strong id="period">—</strong></div>
+          <div><span>fₙ = v/λₙ = </span><strong id="freqN">—</strong></div>
+          <div><span>Nombre de nodes (incl. extrems): </span><strong id="numNodes">—</strong></div>
+          <div><span>Nombre de ventres: </span><strong id="numAntinodes">—</strong></div>
+          <div><span>v = ω/k (amb k = nπ/L): </span><strong id="waveSpeed">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Escenaris</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="fundamental">Harmònic fonamental (n = 1)</button>
+        <button class="btn" data-preset="second">Segon harmònic (n = 2)</button>
+        <button class="btn" data-preset="third">Tercer harmònic (n = 3)</button>
+        <button class="btn" data-preset="free1">Extrem lliure — mode 1</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Ona estacionària:</strong> no transporta energia neta; l'energia queda confinada entre nodes.</li>
+        <li><strong>Node:</strong> punt on l'amplitud és sempre zero. <strong>Ventre:</strong> amplitud màxima (2A).</li>
+        <li><strong>Extrems fixos:</strong> només hi ha nodes als extrems → λₙ = 2L/n.</li>
+        <li><strong>Extrem lliure:</strong> hi ha un ventre a l'extrem lliure → λₘ = 4L/(2m−1).</li>
+        <li><strong>Relació amb superposició:</strong> y = A cos(kx−ωt) + A cos(kx+ωt) = 2A cos(kx) cos(ωt) = 2A sin(kx) cos(ωt−π/2).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const state = {
+      L: 2, n: 2, A: 0.8, omega: 4,
+      boundary: 'fixed',
+      t: 0, playing: false, speed: 1,
+      showEnvelope: true, showNodes: true
+    };
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function kValue() {
+      if (state.boundary === 'fixed') return state.n * Math.PI / state.L;
+      const m = state.n;
+      return (2 * m - 1) * Math.PI / (2 * state.L);
+    }
+
+    function spatialPart(x) {
+      const k = kValue();
+      return Math.sin(k * x);
+    }
+
+    function yAt(x, t) {
+      return 2 * state.A * spatialPart(x) * Math.cos(state.omega * t);
+    }
+
+    function lambdaN() {
+      if (state.boundary === 'fixed') return 2 * state.L / state.n;
+      const m = state.n;
+      return 4 * state.L / (2 * m - 1);
+    }
+
+    function updateDerived() {
+      const lam = lambdaN();
+      const k = kValue();
+      const v = state.omega / k;
+      const f = v / lam;
+      document.getElementById('lambdaN').textContent = formatNum(lam) + ' m';
+      document.getElementById('period').textContent = formatNum(TAU / state.omega) + ' s';
+      document.getElementById('freqN').textContent = formatNum(f) + ' Hz';
+      document.getElementById('waveSpeed').textContent = formatNum(v) + ' m/s';
+
+      if (state.boundary === 'fixed') {
+        document.getElementById('numNodes').textContent = state.n + 1;
+        document.getElementById('numAntinodes').textContent = state.n;
+        document.getElementById('formulaText').textContent = 'y(x, t) = 2A · sin(nπx/L) · cos(ωt)';
+      } else {
+        document.getElementById('numNodes').textContent = state.n;
+        document.getElementById('numAntinodes').textContent = state.n;
+        document.getElementById('formulaText').textContent = 'y(x, t) = 2A · sin((2m−1)πx/2L) · cos(ωt)';
+      }
+    }
+
+    function draw() {
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      const padL = 52, padR = 20, padT = 24, padB = 40;
+      const plotW = w - padL - padR, plotH = h - padT - padB;
+      ctx.clearRect(0, 0, w, h);
+
+      const yMax = 2 * state.A * 1.2;
+      const toX = x => padL + (x / state.L) * plotW;
+      const toY = y => padT + ((yMax - y) / (2 * yMax)) * plotH;
+
+      drawGrid(ctx, padL, padT, plotW, plotH);
+      const yZero = toY(0);
+      drawAxes(ctx, padL, padT, plotW, plotH, yZero, { x: 'x (m)', y: 'y (m)' });
+
+      // Corda
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(toX(0), yZero);
+      ctx.lineTo(toX(state.L), yZero);
+      ctx.stroke();
+
+      // Extrem fix (triangle)
+      ctx.fillStyle = '#64748b';
+      ctx.beginPath();
+      ctx.moveTo(toX(0), yZero - 12);
+      ctx.lineTo(toX(0) - 10, yZero + 8);
+      ctx.lineTo(toX(0) + 10, yZero + 8);
+      ctx.closePath();
+      ctx.fill();
+
+      if (state.boundary === 'free') {
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillRect(toX(state.L) - 2, yZero - 18, 4, 36);
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(toX(state.L), yZero - 12);
+        ctx.lineTo(toX(state.L) - 10, yZero + 8);
+        ctx.lineTo(toX(state.L) + 10, yZero + 8);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      if (state.showEnvelope) {
+        ctx.strokeStyle = '#fed7aa';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([6, 4]);
+        for (const sign of [1, -1]) {
+          ctx.beginPath();
+          for (let i = 0; i <= 400; i++) {
+            const x = (i / 400) * state.L;
+            const y = sign * 2 * state.A * Math.abs(spatialPart(x));
+            const px = toX(x), py = toY(y);
+            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+        }
+        ctx.setLineDash([]);
+      }
+
+      // Onda
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (let i = 0; i <= 500; i++) {
+        const x = (i / 500) * state.L;
+        const y = yAt(x, state.t);
+        const px = toX(x), py = toY(y);
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+
+      if (state.showNodes) {
+        const k = kValue();
+        const nodes = [], antinodes = [];
+        if (state.boundary === 'fixed') {
+          for (let j = 0; j <= state.n; j++) nodes.push(j * state.L / state.n);
+          for (let j = 0; j < state.n; j++) antinodes.push((j + 0.5) * state.L / state.n);
+        } else {
+          const m = state.n;
+          nodes.push(0);
+          for (let j = 1; j < m; j++) nodes.push(2 * j * state.L / (2 * m - 1));
+          for (let j = 0; j < m - 1; j++) antinodes.push((4 * j + 1) * state.L / (2 * m - 1));
+          antinodes.push(state.L);
+        }
+
+        nodes.forEach(x => {
+          ctx.fillStyle = '#059669';
+          ctx.beginPath();
+          ctx.arc(toX(x), yZero, 5, 0, TAU);
+          ctx.fill();
+          ctx.fillStyle = '#059669';
+          ctx.font = '10px Segoe UI';
+          ctx.textAlign = 'center';
+          ctx.fillText('N', toX(x), yZero + 20);
+        });
+
+        antinodes.forEach(x => {
+          if (x < 0 || x > state.L) return;
+          ctx.fillStyle = '#dc2626';
+          ctx.beginPath();
+          ctx.arc(toX(x), yZero, 5, 0, TAU);
+          ctx.fill();
+          ctx.fillStyle = '#dc2626';
+          ctx.fillText('V', toX(x), yZero + 20);
+        });
+      }
+
+      ctx.fillStyle = '#1a2332';
+      ctx.font = '13px Consolas, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`t = ${formatNum(state.t)} s`, padL + 8, padT + 14);
+    }
+
+    bindSlider('L', 'L-val', v => { state.L = v; updateDerived(); draw(); }, v => formatNum(v) + ' m');
+    bindSlider('n', 'n-val', v => { state.n = Math.round(v); updateDerived(); draw(); }, v => String(Math.round(v)));
+    bindSlider('A', 'A-val', v => { state.A = v; draw(); }, v => formatNum(v) + ' m');
+    bindSlider('omega', 'omega-val', v => { state.omega = v; updateDerived(); draw(); }, v => formatNum(v) + ' rad/s');
+
+    document.getElementById('boundary').addEventListener('change', e => {
+      state.boundary = e.target.value;
+      updateDerived();
+      draw();
+    });
+
+    document.getElementById('showEnvelope').addEventListener('change', e => { state.showEnvelope = e.target.checked; draw(); });
+    document.getElementById('showNodes').addEventListener('change', e => { state.showNodes = e.target.checked; draw(); });
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.preset;
+        if (p === 'fundamental') { state.boundary = 'fixed'; state.n = 1; }
+        if (p === 'second') { state.boundary = 'fixed'; state.n = 2; }
+        if (p === 'third') { state.boundary = 'fixed'; state.n = 3; }
+        if (p === 'free1') { state.boundary = 'free'; state.n = 1; }
+        document.getElementById('boundary').value = state.boundary;
+        document.getElementById('n').value = state.n;
+        document.getElementById('n-val').textContent = String(state.n);
+        updateDerived();
+        draw();
+      });
+    });
+
+    bindPlayControls(state, draw, { maxT: 10 });
+    window.addEventListener('resize', draw);
+    updateDerived();
+    draw();
+  </script>
+</body>
+</html>

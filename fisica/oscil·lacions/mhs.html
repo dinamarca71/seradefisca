@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MHS — Moviment Harmònic Simple</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+</head>
+<body>
+  <header class="header-osc">
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="mhs.html" class="active">MHS</a>
+      <a href="ressort.html">Ressort</a>
+      <a href="energia.html">Energia</a>
+      <a href="pendul.html">Pèndul</a>
+    </nav>
+    <h1>Moviment Harmònic Simple (MHS)</h1>
+    <p>
+      El MHS es descriu per x(t) = A·cos(ωt + φ). La velocitat i l'acceleració
+      són les derivades temporals: v = dx/dt i a = dv/dt = −ω²x.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equacions del MHS</h2>
+      <p class="formula">x = A·cos(ωt + φ) &nbsp;·&nbsp; v = −Aω·sin(ωt + φ) &nbsp;·&nbsp; a = −ω²x</p>
+      <p class="formula-note">Període T = 2π/ω &nbsp;·&nbsp; Freqüència f = 1/T &nbsp;·&nbsp; Relació clau: a = −ω²x (acceleració proporcional i oposada a x)</p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Animació i gràfic temporal</h2>
+        <div class="chart-tabs">
+          <button class="btn active" data-view="x">x(t)</button>
+          <button class="btn" data-view="v">v(t)</button>
+          <button class="btn" data-view="a">a(t)</button>
+          <button class="btn" data-view="all">Tots</button>
+        </div>
+      </div>
+      <canvas id="animCanvas" class="h280" style="margin-bottom:0.75rem;"></canvas>
+      <canvas id="graphCanvas" class="h280"></canvas>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar</button>
+        <div class="slider-group"><label>Velocitat</label><input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1"></div>
+        <div class="slider-group"><label>t</label><input type="range" id="timeSlider" min="0" max="10" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 s</span></div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">A</span> — Amplitud</label><span class="param-value" id="A-val"></span></div>
+          <input type="range" id="A" min="0.2" max="2" step="0.05" value="1">
+          <p class="param-desc">Desplaçament màxim des de l'equilibri (m)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">ω</span> — Freq. angular</label><span class="param-value" id="omega-val"></span></div>
+          <input type="range" id="omega" min="0.5" max="5" step="0.1" value="2">
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">φ</span> — Fase inicial</label><span class="param-value" id="phi-val"></span></div>
+          <input type="range" id="phi" min="-3.14" max="3.14" step="0.05" value="0">
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Valors en l'instant t</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>x = </span><strong id="valX">—</strong></div>
+          <div><span>v = </span><strong id="valV">—</strong></div>
+          <div><span>a = </span><strong id="valA">—</strong></div>
+          <div><span>T = 2π/ω = </span><strong id="valT">—</strong></div>
+          <div><span>|v|<sub>max</sub> = Aω = </span><strong id="valVmax">—</strong></div>
+          <div><span>|a|<sub>max</sub> = Aω² = </span><strong id="valAmax">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Escenaris</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="zero">φ = 0 (parteix de x = A)</button>
+        <button class="btn" data-preset="quarter">φ = π/2 (parteix del equilibri cap a +x)</button>
+        <button class="btn" data-preset="slow">Oscil·lació lenta (ω = 1)</button>
+        <button class="btn" data-preset="fast">Oscil·lació ràpida (ω = 4)</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Amplitud A:</strong> valor màxim de |x|. No depèn de φ.</li>
+        <li><strong>Velocitat màxima:</strong> es produeix al centre (x = 0) i val Aω.</li>
+        <li><strong>Acceleració màxima:</strong> als extrems (x = ±A) i val Aω².</li>
+        <li><strong>a = −ω²x:</strong> l'acceleració sempre va cap al punt d'equilibri → és la condició del MHS.</li>
+        <li><strong>Desfasament φ:</strong> determina posició i velocitat inicials a t = 0.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const state = { A: 1, omega: 2, phi: 0, t: 0, playing: false, speed: 1, view: 'x' };
+
+    const animCanvas = document.getElementById('animCanvas');
+    const graphCanvas = document.getElementById('graphCanvas');
+    const actx = animCanvas.getContext('2d');
+    const gctx = graphCanvas.getContext('2d');
+
+    function xAt(t) { return state.A * Math.cos(state.omega * t + state.phi); }
+    function vAt(t) { return -state.A * state.omega * Math.sin(state.omega * t + state.phi); }
+    function aAt(t) { return -state.omega * state.omega * xAt(t); }
+
+    function updateInstant() {
+      document.getElementById('valX').textContent = formatNum(xAt(state.t)) + ' m';
+      document.getElementById('valV').textContent = formatNum(vAt(state.t)) + ' m/s';
+      document.getElementById('valA').textContent = formatNum(aAt(state.t)) + ' m/s²';
+      document.getElementById('valT').textContent = formatNum(TAU / state.omega) + ' s';
+      document.getElementById('valVmax').textContent = formatNum(state.A * state.omega) + ' m/s';
+      document.getElementById('valAmax').textContent = formatNum(state.A * state.omega ** 2) + ' m/s²';
+    }
+
+    function drawAnim() {
+      setupCanvas(animCanvas, actx);
+      const w = animCanvas.clientWidth, h = animCanvas.clientHeight;
+      actx.clearRect(0, 0, w, h);
+      const midY = h / 2;
+      const scale = (w * 0.35) / Math.max(state.A, 0.5);
+      const eqX = w / 2;
+
+      actx.strokeStyle = '#cbd5e1';
+      actx.lineWidth = 2;
+      actx.beginPath(); actx.moveTo(40, midY); actx.lineTo(w - 40, midY); actx.stroke();
+
+      actx.fillStyle = '#64748b';
+      actx.font = '11px Segoe UI';
+      actx.textAlign = 'center';
+      actx.fillText('Equilibri', eqX, midY + 20);
+
+      const px = eqX + xAt(state.t) * scale;
+      actx.fillStyle = '#7c3aed';
+      actx.beginPath(); actx.arc(px, midY, 14, 0, TAU); actx.fill();
+      actx.fillStyle = '#fff';
+      actx.fillText('m', px, midY + 4);
+
+      actx.strokeStyle = '#94a3b8';
+      actx.setLineDash([4, 4]);
+      actx.beginPath(); actx.moveTo(eqX - state.A * scale, midY - 30); actx.lineTo(eqX - state.A * scale, midY + 30); actx.stroke();
+      actx.beginPath(); actx.moveTo(eqX + state.A * scale, midY - 30); actx.lineTo(eqX + state.A * scale, midY + 30); actx.stroke();
+      actx.setLineDash([]);
+      actx.fillStyle = '#64748b';
+      actx.fillText('−A', eqX - state.A * scale, midY - 38);
+      actx.fillText('+A', eqX + state.A * scale, midY - 38);
+
+      const v = vAt(state.t);
+      if (Math.abs(v) > 0.05) {
+        actx.strokeStyle = '#2563eb';
+        actx.lineWidth = 2;
+        actx.beginPath(); actx.moveTo(px, midY); actx.lineTo(px + v * scale * 0.3, midY); actx.stroke();
+        actx.fillStyle = '#2563eb';
+        actx.fillText('v', px + v * scale * 0.35, midY - 10);
+      }
+    }
+
+    function drawGraph() {
+      setupCanvas(graphCanvas, gctx);
+      const w = graphCanvas.clientWidth, h = graphCanvas.clientHeight;
+      const padL = 52, padR = 16, padT = 24, padB = 36;
+      const plotW = w - padL - padR, plotH = h - padT - padB;
+      gctx.clearRect(0, 0, w, h);
+
+      const tMax = 10;
+      const show = state.view === 'all' ? ['x', 'v', 'a'] : [state.view];
+      let yMax = state.A;
+      if (show.includes('v')) yMax = Math.max(yMax, state.A * state.omega);
+      if (show.includes('a')) yMax = Math.max(yMax, state.A * state.omega ** 2);
+      yMax *= 1.15;
+
+      const toX = t => padL + (t / tMax) * plotW;
+      const toY = y => padT + ((yMax - y) / (2 * yMax)) * plotH;
+      drawGrid(gctx, padL, padT, plotW, plotH);
+      drawAxes(gctx, padL, padT, plotW, plotH, toY(0), { x: 't (s)', y: 'valor' });
+
+      const fns = {
+        x: { fn: xAt, color: '#7c3aed', label: 'x(t)' },
+        v: { fn: vAt, color: '#2563eb', label: 'v(t)' },
+        a: { fn: aAt, color: '#dc2626', label: 'a(t)' }
+      };
+
+      show.forEach(key => {
+        const c = fns[key];
+        gctx.strokeStyle = c.color;
+        gctx.lineWidth = state.view === 'all' ? 1.8 : 2.5;
+        gctx.beginPath();
+        for (let i = 0; i <= 500; i++) {
+          const t = (i / 500) * tMax;
+          const px = toX(t), py = toY(c.fn(t));
+          if (i === 0) gctx.moveTo(px, py); else gctx.lineTo(px, py);
+        }
+        gctx.stroke();
+      });
+
+      const tNow = state.t;
+      gctx.strokeStyle = '#1a2332';
+      gctx.lineWidth = 1;
+      gctx.setLineDash([4, 3]);
+      gctx.beginPath(); gctx.moveTo(toX(tNow), padT); gctx.lineTo(toX(tNow), padT + plotH); gctx.stroke();
+      gctx.setLineDash([]);
+
+      show.forEach(key => {
+        const c = fns[key];
+        gctx.fillStyle = c.color;
+        gctx.beginPath(); gctx.arc(toX(tNow), toY(c.fn(tNow)), 5, 0, TAU); gctx.fill();
+      });
+
+      gctx.fillStyle = '#1a2332';
+      gctx.font = '12px Segoe UI';
+      gctx.textAlign = 'left';
+      let ly = padT + 14;
+      show.forEach(key => {
+        gctx.fillStyle = fns[key].color;
+        gctx.fillText(fns[key].label, padL + 8, ly);
+        ly += 16;
+      });
+    }
+
+    function draw() { updateInstant(); drawAnim(); drawGraph(); }
+
+    bindSlider('A', 'A-val', v => { state.A = v; draw(); }, v => formatNum(v) + ' m');
+    bindSlider('omega', 'omega-val', v => { state.omega = v; draw(); }, v => formatNum(v) + ' rad/s');
+    bindSlider('phi', 'phi-val', v => { state.phi = v; draw(); }, formatPhase);
+
+    document.querySelectorAll('[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.view = btn.dataset.view;
+        drawGraph();
+      });
+    });
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.preset;
+        if (p === 'zero') { state.phi = 0; state.omega = 2; }
+        if (p === 'quarter') { state.phi = Math.PI / 2; state.omega = 2; }
+        if (p === 'slow') { state.omega = 1; }
+        if (p === 'fast') { state.omega = 4; }
+        document.getElementById('phi').value = state.phi;
+        document.getElementById('omega').value = state.omega;
+        document.getElementById('phi-val').textContent = formatPhase(state.phi);
+        document.getElementById('omega-val').textContent = formatNum(state.omega) + ' rad/s';
+        draw();
+      });
+    });
+
+    bindPlayControls(state, draw, { maxT: 10 });
+    window.addEventListener('resize', draw);
+    draw();
+  </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interferència de Young — Simulador</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="superposicio.html">Superposició</a>
+      <a href="ones-estacionaries.html">Ones estacionàries</a>
+      <a href="interferencia-young.html" class="active">Young</a>
+      <a href="efecte-doppler.html">Doppler</a>
+    </nav>
+    <h1>Interferència de Young — Doble Fenda</h1>
+    <p>
+      Dues fentes il·luminades per una ona coherent generen un patró d'interferència a la pantalla.
+      Observa com canvien les franges brillants i fosques en variar λ, d i L.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Condició d'interferència</h2>
+      <p class="formula">Δ = d · sin θ ≈ d · y / L</p>
+      <p class="formula-note">
+        Constructiva: Δ = mλ &nbsp;·&nbsp; Destructiva: Δ = (m + ½)λ &nbsp;·&nbsp;
+        Separació entre franges: Δy = λL / d
+      </p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header"><h2>Esquema experimental i patró a la pantalla</h2></div>
+      <canvas id="mainCanvas" class="h360"></canvas>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">λ</span> — Longitud d'ona</label><span class="param-value" id="lambda-val"></span></div>
+          <input type="range" id="lambda" min="400" max="700" step="5" value="550">
+          <p class="param-desc">400 nm (violeta) – 700 nm (vermell)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">d</span> — Separació fentes</label><span class="param-value" id="d-val"></span></div>
+          <input type="range" id="d" min="0.05" max="0.5" step="0.01" value="0.15">
+          <p class="param-desc">Distància entre les dues fentes (mm)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">L</span> — Distància a pantalla</label><span class="param-value" id="L-val"></span></div>
+          <input type="range" id="L" min="0.5" max="3" step="0.05" value="1.5">
+          <p class="param-desc">Distància fentes–pantalla (m)</p>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Resultats calculats</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>Δy (franges consecutives) = </span><strong id="fringeSpacing">—</strong></div>
+          <div><span>Posició 1r màxim (m=1): y₁ = </span><strong id="y1">—</strong></div>
+          <div><span>Posició 1r mínim: y = </span><strong id="yMin1">—</strong></div>
+          <div><span>Angle θ₁ ≈ </span><strong id="theta1">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="info-grid" id="orderGrid"></section>
+
+    <section class="presets">
+      <h2>Escenaris</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="red">Llum vermella (λ = 650 nm)</button>
+        <button class="btn" data-preset="green">Llum verda (λ = 532 nm)</button>
+        <button class="btn" data-preset="narrow">Fentes molt properes (d petit → franges amples)</button>
+        <button class="btn" data-preset="wide">Fentes allunyades (d gran → franges estretes)</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Coherència:</strong> les dues fentes han de mantenir una diferència de fase constant (mateix λ, mateixa font).</li>
+        <li><strong>Diferència de camí Δ:</strong> si Δ = mλ → interferència constructiva (franja brillant); si Δ = (m+½)λ → destructiva (fosca).</li>
+        <li><strong>Δy = λL/d:</strong> augmentar L o λ separa més les franges; augmentar d les acosta.</li>
+        <li><strong>Aproximació de petit angle:</strong> sin θ ≈ tan θ ≈ y/L quan θ és petit (règim habitual a batxillerat).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const state = { lambda: 550e-9, d: 0.15e-3, L: 1.5 };
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function nmToRgb(nm) {
+      let r, g, b;
+      if (nm >= 380 && nm < 440) { r = -(nm - 440) / (440 - 380); g = 0; b = 1; }
+      else if (nm >= 440 && nm < 490) { r = 0; g = (nm - 440) / (490 - 440); b = 1; }
+      else if (nm >= 490 && nm < 510) { r = 0; g = 1; b = -(nm - 510) / (510 - 490); }
+      else if (nm >= 510 && nm < 580) { r = (nm - 510) / (580 - 510); g = 1; b = 0; }
+      else if (nm >= 580 && nm < 645) { r = 1; g = -(nm - 645) / (645 - 580); b = 0; }
+      else if (nm >= 645 && nm <= 780) { r = 1; g = 0; b = 0; }
+      else { r = 0.5; g = 0.5; b = 0.5; }
+      const f = nm < 420 ? 0.3 + 0.7 * (nm - 380) / 40 : nm > 700 ? 0.3 + 0.7 * (780 - nm) / 80 : 1;
+      return `rgb(${Math.round(r * f * 255)},${Math.round(g * f * 255)},${Math.round(b * f * 255)})`;
+    }
+
+    function intensity(y) {
+      const delta = state.d * y / state.L;
+      const beta = Math.PI * delta / state.lambda;
+      if (Math.abs(beta) < 1e-10) return 1;
+      return Math.pow(Math.sin(beta) / beta, 2);
+    }
+
+    function updateDerived() {
+      const dy = state.lambda * state.L / state.d;
+      const y1 = state.lambda * state.L / state.d;
+      const yMin = state.lambda * state.L / (2 * state.d);
+      const theta1 = Math.atan(y1 / state.L) * 180 / Math.PI;
+
+      document.getElementById('fringeSpacing').textContent = formatNum(dy * 1000, 2) + ' mm';
+      document.getElementById('y1').textContent = formatNum(y1 * 1000, 2) + ' mm';
+      document.getElementById('yMin1').textContent = formatNum(yMin * 1000, 2) + ' mm';
+      document.getElementById('theta1').textContent = formatNum(theta1, 3) + '°';
+
+      const grid = document.getElementById('orderGrid');
+      grid.innerHTML = '';
+      for (let m = -3; m <= 3; m++) {
+        const y = m * state.lambda * state.L / state.d;
+        const card = document.createElement('div');
+        card.className = 'info-card';
+        card.innerHTML = `<span>Franja m = ${m}</span><strong>y = ${formatNum(y * 1000, 2)} mm</strong>`;
+        grid.appendChild(card);
+      }
+    }
+
+    function draw() {
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const setupW = w * 0.42;
+      const screenX = w * 0.78;
+      const midY = h * 0.5;
+      const slitX = setupW * 0.55;
+      const sourceX = 30;
+
+      // Source
+      ctx.fillStyle = nmToRgb(state.lambda * 1e9);
+      ctx.beginPath(); ctx.arc(sourceX, midY, 8, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#64748b'; ctx.font = '11px Segoe UI';
+      ctx.textAlign = 'center'; ctx.fillText('Font', sourceX, midY + 24);
+
+      // Barrier with slits
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(slitX - 3, midY - h * 0.35, 6, h * 0.7);
+      const dPx = (state.d / 0.5e-3) * h * 0.12;
+      const slitGap = Math.max(dPx, 8);
+      ctx.fillStyle = '#fafbfc';
+      ctx.fillRect(slitX - 4, midY - slitGap / 2 - 6, 8, 12);
+      ctx.fillRect(slitX - 4, midY + slitGap / 2 - 6, 8, 12);
+      ctx.fillStyle = '#64748b'; ctx.fillText('d', slitX + 18, midY + 4);
+
+      // Rays to screen
+      ctx.strokeStyle = nmToRgb(state.lambda * 1e9);
+      ctx.globalAlpha = 0.35;
+      ctx.lineWidth = 1;
+      for (let m = -2; m <= 2; m++) {
+        const yScreen = midY + m * (state.lambda * state.L / state.d) * (h * 0.35 / (3 * state.lambda * state.L / state.d));
+        const scale = h * 0.35 / (3 * state.lambda * state.L / state.d);
+        const yTarget = midY + m * state.lambda * state.L / state.d * scale;
+        ctx.beginPath();
+        ctx.moveTo(sourceX + 8, midY);
+        ctx.lineTo(slitX, midY - slitGap / 2);
+        ctx.lineTo(screenX, yTarget);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(sourceX + 8, midY);
+        ctx.lineTo(slitX, midY + slitGap / 2);
+        ctx.lineTo(screenX, yTarget);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      // L arrow
+      ctx.strokeStyle = '#94a3b8';
+      ctx.beginPath();
+      ctx.moveTo(slitX + 20, midY + h * 0.32);
+      ctx.lineTo(screenX - 10, midY + h * 0.32);
+      ctx.stroke();
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('L', (slitX + screenX) / 2, midY + h * 0.32 + 16);
+
+      // Screen + pattern
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(screenX, midY - h * 0.38, 8, h * 0.76);
+      ctx.fillStyle = '#64748b'; ctx.fillText('Pantalla', screenX + 4, midY + h * 0.42);
+
+      const patLeft = screenX + 20;
+      const patW = w - patLeft - 16;
+      const patH = h * 0.76;
+      const patTop = midY - patH / 2;
+      const color = nmToRgb(state.lambda * 1e9);
+
+      for (let py = 0; py < patH; py++) {
+        const yPhys = ((py - patH / 2) / (patH / 2)) * 3 * state.lambda * state.L / state.d;
+        const I = intensity(yPhys);
+        ctx.fillStyle = color;
+        ctx.globalAlpha = I;
+        ctx.fillRect(patLeft, patTop + py, patW, 1);
+      }
+      ctx.globalAlpha = 1;
+
+      // Labels on pattern
+      ctx.fillStyle = '#1a2332';
+      ctx.font = '11px Segoe UI';
+      ctx.textAlign = 'left';
+      ctx.fillText('Intensitat I(y)', patLeft, patTop - 8);
+
+      // Axis y on pattern
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.beginPath(); ctx.moveTo(patLeft, midY); ctx.lineTo(patLeft + patW, midY); ctx.stroke();
+      ctx.fillStyle = '#64748b'; ctx.fillText('y', patLeft + patW - 10, midY + 16);
+
+      // Mark maxima positions
+      const scale = patH / (2 * 3 * state.lambda * state.L / state.d);
+      ctx.fillStyle = '#059669';
+      for (let m = -2; m <= 2; m++) {
+        const yPos = midY + m * state.lambda * state.L / state.d * scale;
+        if (yPos > patTop && yPos < patTop + patH) {
+          ctx.beginPath(); ctx.arc(patLeft - 6, yPos, 3, 0, TAU); ctx.fill();
+        }
+      }
+    }
+
+    bindSlider('lambda', 'lambda-val', v => { state.lambda = v * 1e-9; updateDerived(); draw(); }, v => formatNum(v, 0) + ' nm');
+    bindSlider('d', 'd-val', v => { state.d = v * 1e-3; updateDerived(); draw(); }, v => formatNum(v, 2) + ' mm');
+    bindSlider('L', 'L-val', v => { state.L = v; updateDerived(); draw(); }, v => formatNum(v, 2) + ' m');
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.preset;
+        if (p === 'red') { document.getElementById('lambda').value = 650; state.lambda = 650e-9; }
+        if (p === 'green') { document.getElementById('lambda').value = 532; state.lambda = 532e-9; }
+        if (p === 'narrow') { document.getElementById('d').value = 0.08; state.d = 0.08e-3; }
+        if (p === 'wide') { document.getElementById('d').value = 0.4; state.d = 0.4e-3; }
+        document.getElementById('lambda-val').textContent = formatNum(parseFloat(document.getElementById('lambda').value), 0) + ' nm';
+        document.getElementById('d-val').textContent = formatNum(parseFloat(document.getElementById('d').value), 2) + ' mm';
+        updateDerived(); draw();
+      });
+    });
+
+    window.addEventListener('resize', draw);
+    updateDerived();
+    draw();
+  </script>
+</body>
+</html>

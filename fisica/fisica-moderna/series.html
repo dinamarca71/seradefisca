@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sèries Desintegratives — Física Moderna</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+  <style>
+    .series-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .series-tabs .btn { font-size: 0.82rem; }
+    .series-tabs .btn.active { background: #6366f1; color: white; border-color: #6366f1; }
+    .step-detail {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .step-detail h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .step-nav { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+  </style>
+</head>
+<body>
+  <header class="header-mod">
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="semivida.html">Semivida</a>
+      <a href="series.html" class="active">Sèries</a>
+      <a href="defecte-massa.html">Defecte de massa</a>
+    </nav>
+    <h1>Les 4 Sèries Desintegratives Naturals</h1>
+    <p>
+      Quatre famílies de nuclids pesants que desintegren per emissió α i β⁻ fins a un nuclid estable.
+      Classificació segons 4n, 4n+1, 4n+2 i 4n+3 (n enter).
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Tipus de desintegració en les sèries</h2>
+      <p class="formula">α: ᴬ_Z X → ᴬ⁻⁴_Z₋₂ Y + ⁴₂He &nbsp;·&nbsp; β⁻: ᴬ_Z X → ᴬ_Z₊₁ Y + e⁻ + ν̄</p>
+      <p class="formula-note">Totes acaben en plom o bismut estable: ²⁰⁸Pb, ²⁰⁹Bi, ²⁰⁶Pb, ²⁰⁷Pb</p>
+    </section>
+
+    <section class="controls-panel">
+      <h2>Tria la sèrie</h2>
+      <div class="series-tabs" id="seriesTabs"></div>
+      <p id="seriesDesc" style="font-size:0.875rem;color:var(--muted);"></p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Cadena de desintegració</h2>
+        <div class="step-nav">
+          <button class="btn" id="btnPrev">← Anterior</button>
+          <button class="btn" id="btnNext">Següent →</button>
+          <button class="btn" id="btnShowAll">Mostra tota la cadena</button>
+        </div>
+      </div>
+      <div class="decay-chain" id="chainContainer"></div>
+      <div class="step-detail" id="stepDetail"></div>
+    </section>
+
+    <section class="concepts">
+      <h2>Les 4 sèries (resum)</h2>
+      <ul>
+        <li><strong>Sèrie del thori (4n):</strong> ²³²Th → ²⁰⁸Pb. Present a roques i sòls.</li>
+        <li><strong>Sèrie del neptuni (4n+1):</strong> ²³⁷Np → ²⁰⁹Bi. Originada per bombardeig (no natural en quantitats significatives avui).</li>
+        <li><strong>Sèrie de l'urani (4n+2):</strong> ²³⁸U → ²⁰⁶Pb. La més important geològicament; inclou el radó ²²²Rn.</li>
+        <li><strong>Sèrie de l'actini (4n+3):</strong> ²³⁵U → ²⁰⁷Pb. Important en reactors nuclears (fissió).</li>
+        <li><strong>Equilibri secular:</strong> en moltes etapes, la taxa de producció i desintegració s'equilibra (ex.: ²²⁶Ra i ²²²Rn).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const SERIES = {
+      thori: {
+        name: 'Thori (4n)',
+        start: '232Th', end: '208Pb',
+        desc: 'Comença amb ²³²Th (Z=90). Tots els nuclids tenen nombre de massa múltiple de 4. Acaba en ²⁰⁸Pb estable.',
+        steps: [
+          { nuclide: '232Th', Z: 90, A: 232, stable: false, decay: null, half: '—' },
+          { nuclide: '228Ra', Z: 88, A: 228, decay: 'α', half: '5,75 anys' },
+          { nuclide: '224Ra', Z: 88, A: 224, decay: 'α', half: '3,66 dies' },
+          { nuclide: '220Rn', Z: 86, A: 220, decay: 'α', half: '55,6 s' },
+          { nuclide: '216Po', Z: 84, A: 216, decay: 'α', half: '0,15 s' },
+          { nuclide: '212Pb', Z: 82, A: 212, decay: 'α', half: '0,5 ms' },
+          { nuclide: '212Bi', Z: 83, A: 212, decay: 'β⁻', half: '10,6 h' },
+          { nuclide: '212Po', Z: 84, A: 212, decay: 'α', half: '45,1 s' },
+          { nuclide: '208Pb', Z: 82, A: 208, stable: true, decay: null, half: 'Estable' }
+        ]
+      },
+      neptuni: {
+        name: 'Neptuni (4n+1)',
+        start: '237Np', end: '209Bi',
+        desc: 'Comença amb ²³⁷Np (Z=93). Nombre de massa = 4n+1. Acaba en ²⁰⁹Bi estable. Sèrie d\'origen artificial.',
+        steps: [
+          { nuclide: '237Np', Z: 93, A: 237, stable: false, decay: null, half: '—' },
+          { nuclide: '233Pa', Z: 91, A: 233, decay: 'α', half: '2,14·10⁶ anys' },
+          { nuclide: '233U', Z: 92, A: 233, decay: 'β⁻', half: '27,0 dies' },
+          { nuclide: '229Th', Z: 90, A: 229, decay: 'α', half: '1,59·10⁵ anys' },
+          { nuclide: '225Ra', Z: 88, A: 225, decay: 'α', half: '7,54·10³ anys' },
+          { nuclide: '225Ac', Z: 89, A: 225, decay: 'β⁻', half: '14,8 dies' },
+          { nuclide: '221Fr', Z: 87, A: 221, decay: 'α', half: '4,8 min' },
+          { nuclide: '217At', Z: 85, A: 217, decay: 'α', half: '32,3 ms' },
+          { nuclide: '213Bi', Z: 83, A: 213, decay: 'α', half: '45,6 min' },
+          { nuclide: '213Po', Z: 84, A: 213, decay: 'β⁻', half: '4,2 μs' },
+          { nuclide: '209Pb', Z: 82, A: 209, decay: 'α', half: '3,3 h' },
+          { nuclide: '209Bi', Z: 83, A: 209, stable: true, decay: null, half: 'Estable' }
+        ]
+      },
+      urani: {
+        name: 'Urani (4n+2)',
+        start: '238U', end: '206Pb',
+        desc: 'Comença amb ²³⁸U. La cadena inclou el radó ²²²Rn (gas perillós) i el poloni ²¹⁰Po. Acaba en ²⁰⁶Pb.',
+        steps: [
+          { nuclide: '238U', Z: 92, A: 238, stable: false, decay: null, half: '—' },
+          { nuclide: '234Th', Z: 90, A: 234, decay: 'α', half: '4,47·10⁹ anys' },
+          { nuclide: '234Pa', Z: 91, A: 234, decay: 'β⁻', half: '24,1 dies' },
+          { nuclide: '234U', Z: 92, A: 234, decay: 'β⁻', half: '1,17 min' },
+          { nuclide: '230Th', Z: 90, A: 230, decay: 'α', half: '2,45·10⁵ anys' },
+          { nuclide: '226Ra', Z: 88, A: 226, decay: 'α', half: '7,54·10⁴ anys' },
+          { nuclide: '222Rn', Z: 86, A: 222, decay: 'α', half: '1 600 anys' },
+          { nuclide: '218Po', Z: 84, A: 218, decay: 'α', half: '3,82 dies' },
+          { nuclide: '214Pb', Z: 82, A: 214, decay: 'α', half: '3,1 min' },
+          { nuclide: '214Bi', Z: 83, A: 214, decay: 'β⁻', half: '26,8 min' },
+          { nuclide: '214Po', Z: 84, A: 214, decay: 'β⁻', half: '19,9 min' },
+          { nuclide: '210Pb', Z: 82, A: 210, decay: 'α', half: '164 μs' },
+          { nuclide: '210Bi', Z: 83, A: 210, decay: 'β⁻', half: '22,3 anys' },
+          { nuclide: '210Po', Z: 84, A: 210, decay: 'β⁻', half: '5,01 dies' },
+          { nuclide: '206Pb', Z: 82, A: 206, stable: true, decay: null, half: 'Estable' }
+        ]
+      },
+      actini: {
+        name: 'Actini (4n+3)',
+        start: '235U', end: '207Pb',
+        desc: 'Comença amb ²³⁵U (combustible nuclear). Nombre de massa = 4n+3. Acaba en ²⁰⁷Pb estable.',
+        steps: [
+          { nuclide: '235U', Z: 92, A: 235, stable: false, decay: null, half: '—' },
+          { nuclide: '231Th', Z: 90, A: 231, decay: 'α', half: '7,04·10⁸ anys' },
+          { nuclide: '231Pa', Z: 91, A: 231, decay: 'β⁻', half: '25,5 h' },
+          { nuclide: '227Ac', Z: 89, A: 227, decay: 'β⁻', half: '3,28·10⁴ anys' },
+          { nuclide: '227Th', Z: 90, A: 227, decay: 'β⁻', half: '21,8 anys' },
+          { nuclide: '223Ra', Z: 88, A: 223, decay: 'α', half: '18,7 dies' },
+          { nuclide: '219Rn', Z: 86, A: 219, decay: 'α', half: '11,4 dies' },
+          { nuclide: '215Po', Z: 84, A: 215, decay: 'α', half: '3,96 s' },
+          { nuclide: '211Pb', Z: 82, A: 211, decay: 'α', half: '1,78 ms' },
+          { nuclide: '211Bi', Z: 83, A: 211, decay: 'β⁻', half: '2,14 min' },
+          { nuclide: '207Tl', Z: 81, A: 207, decay: 'α', half: '2,81 min' },
+          { nuclide: '207Pb', Z: 82, A: 207, stable: true, decay: null, half: 'Estable' }
+        ]
+      }
+    };
+
+    let currentSeries = 'urani';
+    let currentStep = 0;
+    let showAll = false;
+
+    function renderTabs() {
+      const tabs = document.getElementById('seriesTabs');
+      tabs.innerHTML = '';
+      Object.entries(SERIES).forEach(([key, s]) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn' + (key === currentSeries ? ' active' : '');
+        btn.textContent = s.name;
+        btn.addEventListener('click', () => {
+          currentSeries = key;
+          currentStep = 0;
+          showAll = false;
+          renderTabs();
+          render();
+        });
+        tabs.appendChild(btn);
+      });
+    }
+
+    function nuclideHtml(step, idx, active) {
+      const sym = step.nuclide.replace(/^\d+/, '');
+      const mass = step.nuclide.match(/^\d+/)[0];
+      return `<div class="nuclide ${step.stable ? 'stable' : ''} ${active ? 'active' : ''}" data-idx="${idx}">
+        <div class="mass">${mass}</div>
+        <div class="sym">${sym}</div>
+        <div class="Z">Z=${step.Z}</div>
+      </div>`;
+    }
+
+    function renderChain() {
+      const s = SERIES[currentSeries];
+      document.getElementById('seriesDesc').textContent = s.desc;
+      const container = document.getElementById('chainContainer');
+      container.innerHTML = '';
+
+      const steps = s.steps;
+      const visible = showAll ? steps.map((_, i) => i) : [Math.min(currentStep, steps.length - 1)];
+
+      if (!showAll && currentStep > 0) {
+        container.innerHTML += nuclideHtml(steps[currentStep - 1], currentStep - 1, false);
+        const prev = steps[currentStep];
+        container.innerHTML += `<div class="decay-arrow"><span class="type">${prev.decay || '?'}</span>${prev.half}</div>`;
+      }
+
+      if (showAll) {
+        steps.forEach((step, i) => {
+          if (i > 0) {
+            container.innerHTML += `<div class="decay-arrow"><span class="type">${step.decay}</span><span>${step.half}</span></div>`;
+          }
+          container.innerHTML += nuclideHtml(step, i, i === currentStep);
+        });
+      } else {
+        const step = steps[currentStep];
+        container.innerHTML += nuclideHtml(step, currentStep, true);
+        if (currentStep < steps.length - 1) {
+          const next = steps[currentStep + 1];
+          container.innerHTML += `<div class="decay-arrow"><span class="type">${next.decay}</span><span>${next.half}</span></div>`;
+          container.innerHTML += nuclideHtml(next, currentStep + 1, false);
+        }
+      }
+
+      container.querySelectorAll('.nuclide').forEach(el => {
+        el.addEventListener('click', () => {
+          currentStep = parseInt(el.dataset.idx);
+          showAll = false;
+          render();
+        });
+      });
+    }
+
+    function renderDetail() {
+      const s = SERIES[currentSeries];
+      const step = s.steps[currentStep];
+      const detail = document.getElementById('stepDetail');
+      if (step.stable) {
+        detail.innerHTML = `<h3>${step.nuclide} — Nuclid estable final</h3>
+          <p>La cadena ${s.start} → ${s.end} s'ha completat. Aquest nuclid no es desintegra més.</p>
+          <p><strong>Classificació:</strong> ${s.name}. Nombre de massa final A = ${step.A}.</p>`;
+        return;
+      }
+      const next = s.steps[currentStep + 1];
+      let eq = '';
+      if (next && next.decay === 'α') {
+        eq = `${step.nuclide} → ${next.nuclide} + ⁴He`;
+      } else if (next && next.decay === 'β⁻') {
+        eq = `${step.nuclide} → ${next.nuclide} + e⁻ + ν̄`;
+      } else if (currentStep === 0) {
+        eq = `Inici de la sèrie: ${step.nuclide}`;
+      }
+      detail.innerHTML = `
+        <h3>Pas ${currentStep + 1} de ${s.steps.length}: ${step.nuclide}</h3>
+        <p><strong>Equació:</strong> ${eq}</p>
+        <p><strong>Semivida:</strong> ${next ? next.half : step.half} &nbsp;·&nbsp; <strong>Z = ${step.Z}, A = ${step.A}</strong></p>
+        <p><strong>Tipus:</strong> ${next ? (next.decay === 'α' ? 'Emissió α (número atòmic −2, massa −4)' : 'Emissió β⁻ (número atòmic +1, massa igual)') : '—'}</p>`;
+    }
+
+    function render() {
+      renderChain();
+      renderDetail();
+    }
+
+    renderTabs();
+    document.getElementById('btnPrev').addEventListener('click', () => {
+      showAll = false;
+      currentStep = Math.max(0, currentStep - 1);
+      render();
+    });
+    document.getElementById('btnNext').addEventListener('click', () => {
+      showAll = false;
+      currentStep = Math.min(SERIES[currentSeries].steps.length - 1, currentStep + 1);
+      render();
+    });
+    document.getElementById('btnShowAll').addEventListener('click', () => {
+      showAll = !showAll;
+      document.getElementById('btnShowAll').textContent = showAll ? 'Mode pas a pas' : 'Mostra tota la cadena';
+      render();
+    });
+    render();
+  </script>
+</body>
+</html>

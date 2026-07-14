@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrals: àrea i sumes de Riemann — Matemàtiques 2n Batxillerat</title>
+  <link rel="stylesheet" href="../css/comunes.css">
+</head>
+<body>
+  <header class="header-mat">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Matemàtiques</a>
+      <a href="index.html">Inici</a>
+      <a href="matrius.html">Matrius</a>
+      <a href="sistemes.html">Sistemes</a>
+      <a href="probabilitat.html">Probabilitat</a>
+      <a href="derivades.html">Derivades</a>
+      <a href="integrals.html" class="active">Integrals</a>
+    </nav>
+    <h1>La Integral com a Àrea: Sumes de Riemann</h1>
+    <p>
+      L'àrea sota una corba s'aproxima sumant rectangles. Com més rectangles (n → ∞), més s'acosta la
+      <strong>suma de Riemann</strong> al valor exacte de la <strong>integral definida</strong>.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Idea clau</h2>
+      <p class="formula">∫ₐᵇ f(x) dx = limₙ→∞ Σᵢ f(xᵢ)·Δx &nbsp;&nbsp;amb&nbsp;&nbsp; Δx = (b − a)/n</p>
+      <p class="formula-note">
+        Regla de Barrow (valor exacte): ∫ₐᵇ f(x) dx = F(b) − F(a), on F és una primitiva de f.
+        L'àrea és <strong>amb signe</strong>: negativa on f(x) &lt; 0.
+      </p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Àrea sota la corba i rectangles</h2>
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot dot-sum"></span> Àrea exacta</span>
+          <span class="legend-item"><span class="legend-dot dot-w1"></span> Rectangles (+)</span>
+          <span class="legend-item"><span class="legend-dot dot-w2"></span> Rectangles (−)</span>
+        </div>
+      </div>
+      <canvas id="mainCanvas" class="h360"></canvas>
+      <div class="controls-row">
+        <div class="chart-tabs" id="fn-tabs"></div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label>Límit inferior <span class="symbol">a</span></label><span class="param-value" id="a-val"></span></div>
+          <input type="range" id="a" min="-1" max="3" step="0.1" value="0">
+        </div>
+        <div class="param">
+          <div class="param-header"><label>Límit superior <span class="symbol">b</span></label><span class="param-value" id="b-val"></span></div>
+          <input type="range" id="b" min="-1" max="3" step="0.1" value="2">
+        </div>
+        <div class="param">
+          <div class="param-header"><label>Nombre de rectangles <span class="symbol">n</span></label><span class="param-value" id="n-val"></span></div>
+          <input type="range" id="n" min="1" max="200" step="1" value="8">
+        </div>
+        <div class="mode-radios" style="margin:0.75rem 0 0;">
+          <label><input type="radio" name="method" value="left" checked> Extrem esquerre</label>
+          <label><input type="radio" name="method" value="right"> Extrem dret</label>
+          <label><input type="radio" name="method" value="mid"> Punt mig</label>
+          <label><input type="radio" name="method" value="trap"> Trapezis</label>
+        </div>
+        <div class="controls-row">
+          <button class="btn btn-primary" id="btn-anim">▶ Animar n → ∞</button>
+          <span class="param-desc" id="fn-prim"></span>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Càlcul</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>Δx = (b − a)/n = </span><strong id="dx">—</strong></div>
+          <div><span>Mètode: </span><strong id="method-name">—</strong></div>
+          <div><span>Suma de Riemann (aproximació) = </span><strong id="approx">—</strong></div>
+          <div><span>Valor exacte F(b) − F(a) = </span><strong id="exact">—</strong></div>
+          <div><span>Error |aprox − exacte| = </span><strong id="err">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Convergència quan n → ∞ (mètode seleccionat)</h2>
+      <div id="conv-table"></div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Suma de Riemann:</strong> Σ f(xᵢ)·Δx aproxima l'àrea amb n rectangles d'amplada Δx.</li>
+        <li><strong>Punt de mostreig:</strong> l'alçada de cada rectangle es pren a l'extrem esquerre, dret o al punt mig; els trapezis uneixen els dos extrems.</li>
+        <li><strong>Pas al límit:</strong> quan n → ∞ (Δx → 0), la suma tendeix al valor exacte de la integral.</li>
+        <li><strong>Integral definida:</strong> ∫ₐᵇ f(x) dx és l'àrea amb signe entre la corba i l'eix X.</li>
+        <li><strong>Regla de Barrow:</strong> ∫ₐᵇ f(x) dx = F(b) − F(a), amb F primitiva de f.</li>
+        <li><strong>Analogia física:</strong> si f(t) és la velocitat, l'àrea sota la corba és l'espai recorregut entre t = a i t = b.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../js/utilitats.js"></script>
+  <script>
+    function fmt(x, d = 4) {
+      if (!isFinite(x)) return '—';
+      let r = Math.round(x * 1e6) / 1e6;
+      if (Object.is(r, -0)) r = 0;
+      if (Math.abs(r - Math.round(r)) < 1e-9) return String(Math.round(r));
+      return r.toFixed(d).replace(/0+$/, '').replace(/\.$/, '');
+    }
+
+    const PRESETS = {
+      sq:   { label: 'x²',      f: x => x * x,          F: x => x ** 3 / 3,               prim: "F(x) = x³/3",             xmin: -1, xmax: 3.5, ymin: -1, ymax: 9, limMin: -1, limMax: 3.5, a: 0, b: 2 },
+      cub:  { label: 'x³ − 3x', f: x => x ** 3 - 3 * x, F: x => x ** 4 / 4 - 1.5 * x * x, prim: "F(x) = x⁴/4 − 3x²/2",     xmin: -3, xmax: 3,   ymin: -6, ymax: 6, limMin: -3, limMax: 3,   a: -1, b: 2 },
+      sin:  { label: 'sin x',   f: x => Math.sin(x),    F: x => -Math.cos(x),             prim: "F(x) = −cos x",           xmin: -0.5, xmax: 6.8, ymin: -1.5, ymax: 1.5, limMin: 0, limMax: 6.5, a: 0, b: 3.14 },
+      sqrt: { label: '√x',      f: x => Math.sqrt(x),   F: x => (2 / 3) * x ** 1.5,       prim: "F(x) = (2/3)·x^(3/2)",    xmin: 0, xmax: 6,   ymin: -0.5, ymax: 3, limMin: 0, limMax: 5.5, a: 0, b: 4 },
+      inv:  { label: '1/x',     f: x => 1 / x,          F: x => Math.log(Math.abs(x)),    prim: "F(x) = ln|x|",            xmin: 0, xmax: 6,   ymin: -0.5, ymax: 5, limMin: 0.2, limMax: 5.5, a: 1, b: 4 },
+      exp:  { label: 'eˣ',      f: x => Math.exp(x),    F: x => Math.exp(x),              prim: "F(x) = eˣ",               xmin: -2, xmax: 2.5, ymin: -1, ymax: 9, limMin: -2, limMax: 2.3, a: 0, b: 2 }
+    };
+    const METHODS = { left: 'Extrem esquerre', right: 'Extrem dret', mid: 'Punt mig', trap: 'Trapezis' };
+
+    const state = { key: 'sq', a: 0, b: 2, n: 8, method: 'left', animating: false };
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    function P() { return PRESETS[state.key]; }
+
+    function riemann(f, a, b, n, method) {
+      const dx = (b - a) / n;
+      let s = 0;
+      if (method === 'trap') {
+        s = 0.5 * (f(a) + f(b));
+        for (let i = 1; i < n; i++) s += f(a + i * dx);
+        return s * dx;
+      }
+      for (let i = 0; i < n; i++) {
+        const off = method === 'left' ? 0 : method === 'right' ? 1 : 0.5;
+        s += f(a + (i + off) * dx);
+      }
+      return s * dx;
+    }
+
+    function draw() {
+      const p = P();
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      const padL = 46, padR = 20, padT = 18, padB = 34;
+      const plotW = w - padL - padR, plotH = h - padT - padB;
+      const { xmin, xmax, ymin, ymax } = p;
+      const sx = x => padL + (x - xmin) / (xmax - xmin) * plotW;
+      const sy = y => padT + (ymax - y) / (ymax - ymin) * plotH;
+
+      // grid
+      ctx.strokeStyle = '#e8edf2'; ctx.lineWidth = 1;
+      const xstep = (xmax - xmin) > 12 ? 2 : 1;
+      for (let xi = Math.ceil(xmin); xi <= xmax; xi += xstep) { ctx.beginPath(); ctx.moveTo(sx(xi), padT); ctx.lineTo(sx(xi), padT + plotH); ctx.stroke(); }
+      const ystep = (ymax - ymin) > 12 ? 2 : 1;
+      for (let yi = Math.ceil(ymin); yi <= ymax; yi += ystep) { ctx.beginPath(); ctx.moveTo(padL, sy(yi)); ctx.lineTo(padL + plotW, sy(yi)); ctx.stroke(); }
+      // axes
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5;
+      if (ymin <= 0 && ymax >= 0) { ctx.beginPath(); ctx.moveTo(padL, sy(0)); ctx.lineTo(padL + plotW, sy(0)); ctx.stroke(); }
+      if (xmin <= 0 && xmax >= 0) { ctx.beginPath(); ctx.moveTo(sx(0), padT); ctx.lineTo(sx(0), padT + plotH); ctx.stroke(); }
+      ctx.fillStyle = '#64748b'; ctx.font = '11px Segoe UI, sans-serif'; ctx.textAlign = 'center';
+      for (let xi = Math.ceil(xmin); xi <= xmax; xi += xstep) if (xi !== 0) ctx.fillText(xi, sx(xi), (ymin <= 0 && ymax >= 0 ? sy(0) : padT + plotH) + 14);
+      ctx.textAlign = 'right';
+      for (let yi = Math.ceil(ymin); yi <= ymax; yi += ystep) if (yi !== 0) ctx.fillText(yi, (xmin <= 0 && xmax >= 0 ? sx(0) : padL) - 5, sy(yi) + 4);
+
+      const a = state.a, b = state.b, n = state.n;
+      const valid = b > a;
+
+      ctx.save();
+      ctx.beginPath(); ctx.rect(padL, padT, plotW, plotH); ctx.clip();
+
+      // exact area fill
+      if (valid) {
+        ctx.fillStyle = 'rgba(5,150,105,0.15)';
+        ctx.beginPath(); ctx.moveTo(sx(a), sy(0));
+        const steps = 200;
+        for (let i = 0; i <= steps; i++) { const x = a + (i / steps) * (b - a); ctx.lineTo(sx(x), sy(p.f(x))); }
+        ctx.lineTo(sx(b), sy(0)); ctx.closePath(); ctx.fill();
+      }
+
+      // rectangles / trapezoids
+      if (valid) {
+        const dx = (b - a) / n;
+        for (let i = 0; i < n; i++) {
+          const xl = a + i * dx, xr = xl + dx;
+          let hL, hR;
+          if (state.method === 'trap') { hL = p.f(xl); hR = p.f(xr); }
+          else {
+            const off = state.method === 'left' ? 0 : state.method === 'right' ? 1 : 0.5;
+            hL = hR = p.f(xl + off * dx);
+          }
+          const avg = (hL + hR) / 2;
+          ctx.fillStyle = avg >= 0 ? 'rgba(37,99,235,0.28)' : 'rgba(234,88,12,0.28)';
+          ctx.strokeStyle = avg >= 0 ? '#2563eb' : '#ea580c';
+          ctx.lineWidth = n > 60 ? 0.4 : 1;
+          ctx.beginPath();
+          ctx.moveTo(sx(xl), sy(0)); ctx.lineTo(sx(xl), sy(hL)); ctx.lineTo(sx(xr), sy(hR)); ctx.lineTo(sx(xr), sy(0)); ctx.closePath();
+          ctx.fill(); ctx.stroke();
+        }
+      }
+
+      // curve
+      ctx.strokeStyle = '#1e3a5f'; ctx.lineWidth = 2.5; ctx.beginPath();
+      let pen = false;
+      for (let px = 0; px <= plotW; px++) {
+        const x = xmin + (px / plotW) * (xmax - xmin);
+        const y = p.f(x);
+        if (!isFinite(y) || y > ymax + (ymax - ymin) || y < ymin - (ymax - ymin)) { pen = false; continue; }
+        const X = sx(x), Y = sy(y);
+        if (!pen) { ctx.moveTo(X, Y); pen = true; } else ctx.lineTo(X, Y);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // limit markers a, b
+      if (valid) {
+        ctx.strokeStyle = '#4f46e5'; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.2;
+        [a, b].forEach(t => { ctx.beginPath(); ctx.moveTo(sx(t), padT); ctx.lineTo(sx(t), padT + plotH); ctx.stroke(); });
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#4f46e5'; ctx.font = '600 12px Segoe UI, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('a', sx(a), padT + 12); ctx.fillText('b', sx(b), padT + 12);
+      } else {
+        ctx.fillStyle = '#dc2626'; ctx.font = '600 13px Segoe UI'; ctx.textAlign = 'center';
+        ctx.fillText('Cal que a < b', padL + plotW / 2, padT + plotH / 2);
+      }
+    }
+
+    function updateReadouts() {
+      const p = P(), a = state.a, b = state.b, n = state.n;
+      document.getElementById('method-name').textContent = METHODS[state.method];
+      document.getElementById('fn-prim').textContent = p.prim;
+      if (b <= a) {
+        ['dx', 'approx', 'exact', 'err'].forEach(id => document.getElementById(id).textContent = '—');
+        document.getElementById('conv-table').innerHTML = '<p class="param-desc">Ajusta els límits perquè a &lt; b.</p>';
+        return;
+      }
+      const dx = (b - a) / n;
+      const approx = riemann(p.f, a, b, n, state.method);
+      const exact = p.F(b) - p.F(a);
+      document.getElementById('dx').textContent = fmt(dx, 4);
+      document.getElementById('approx').textContent = fmt(approx);
+      document.getElementById('exact').textContent = fmt(exact);
+      document.getElementById('err').textContent = fmt(Math.abs(approx - exact));
+
+      const ns = [4, 10, 50, 200];
+      let rows = '';
+      for (const nv of ns) rows += `<tr><td class="num">${nv}</td><td class="num">${fmt(riemann(p.f, a, b, nv, state.method))}</td><td class="num">${fmt(Math.abs(riemann(p.f, a, b, nv, state.method) - exact))}</td></tr>`;
+      document.getElementById('conv-table').innerHTML =
+        `<table class="mass-table"><tr><th>n</th><th>Suma de Riemann</th><th>Error</th></tr>${rows}` +
+        `<tr><td class="num"><strong>→ ∞</strong></td><td class="num"><strong>${fmt(exact)}</strong></td><td class="num"><strong>0</strong></td></tr></table>`;
+    }
+
+    function refresh() { draw(); updateReadouts(); }
+
+    function buildTabs() {
+      const tabs = document.getElementById('fn-tabs');
+      tabs.innerHTML = Object.entries(PRESETS).map(([k, v]) => `<button class="btn ${k === state.key ? 'active' : ''}" data-fn="${k}">${v.label}</button>`).join('');
+      tabs.querySelectorAll('[data-fn]').forEach(btn => btn.addEventListener('click', () => selectFn(btn.dataset.fn)));
+    }
+
+    function selectFn(key) {
+      state.key = key; const p = P();
+      state.a = p.a; state.b = p.b; state.n = 8; state.animating = false;
+      document.getElementById('btn-anim').textContent = '▶ Animar n → ∞';
+      const aS = document.getElementById('a'), bS = document.getElementById('b');
+      aS.min = p.limMin; aS.max = p.limMax; aS.value = p.a;
+      bS.min = p.limMin; bS.max = p.limMax; bS.value = p.b;
+      document.getElementById('n').value = 8;
+      document.getElementById('a-val').textContent = fmt(state.a, 2);
+      document.getElementById('b-val').textContent = fmt(state.b, 2);
+      document.getElementById('n-val').textContent = '8';
+      buildTabs();
+      refresh();
+    }
+
+    function animate() {
+      if (!state.animating) return;
+      state.n = Math.min(200, state.n + Math.ceil(state.n * 0.18) + 1);
+      document.getElementById('n').value = state.n;
+      document.getElementById('n-val').textContent = String(state.n);
+      refresh();
+      if (state.n >= 200) { state.animating = false; document.getElementById('btn-anim').textContent = '▶ Animar n → ∞'; return; }
+      requestAnimationFrame(animate);
+    }
+
+    // wiring
+    const aS = document.getElementById('a'), bS = document.getElementById('b'), nS = document.getElementById('n');
+    aS.addEventListener('input', () => { state.a = parseFloat(aS.value); document.getElementById('a-val').textContent = fmt(state.a, 2); refresh(); });
+    bS.addEventListener('input', () => { state.b = parseFloat(bS.value); document.getElementById('b-val').textContent = fmt(state.b, 2); refresh(); });
+    nS.addEventListener('input', () => { state.n = parseInt(nS.value, 10); document.getElementById('n-val').textContent = String(state.n); state.animating = false; document.getElementById('btn-anim').textContent = '▶ Animar n → ∞'; refresh(); });
+    document.querySelectorAll('input[name="method"]').forEach(r => r.addEventListener('change', e => { state.method = e.target.value; refresh(); }));
+    document.getElementById('btn-anim').addEventListener('click', () => {
+      const btn = document.getElementById('btn-anim');
+      if (state.animating) { state.animating = false; btn.textContent = '▶ Animar n → ∞'; return; }
+      if (state.n >= 200) { state.n = 4; nS.value = 4; }
+      state.animating = true; btn.textContent = '⏸ Pausa'; requestAnimationFrame(animate);
+    });
+    window.addEventListener('resize', draw);
+
+    document.getElementById('a-val').textContent = fmt(state.a, 2);
+    document.getElementById('b-val').textContent = fmt(state.b, 2);
+    document.getElementById('n-val').textContent = '8';
+    buildTabs();
+    refresh();
+  </script>
+</body>
+</html>

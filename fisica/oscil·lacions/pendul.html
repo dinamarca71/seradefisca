@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pèndul Simple — Simulador</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+  <style>
+    .warning {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.85rem;
+      color: #92400e;
+      margin-top: 0.75rem;
+      display: none;
+    }
+    .warning.visible { display: block; }
+  </style>
+</head>
+<body>
+  <header class="header-osc">
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="mhs.html">MHS</a>
+      <a href="ressort.html">Ressort</a>
+      <a href="energia.html">Energia</a>
+      <a href="pendul.html" class="active">Pèndul</a>
+    </nav>
+    <h1>Pèndul Simple</h1>
+    <p>
+      Per a angles petits (θ ≲ 15°), el pèndul realitza MHS amb θ(t) = θ₀·cos(ωt).
+      El període depèn de la longitud i de g, però no de la massa ni de l'amplitud.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equacions del pèndol (angle petit)</h2>
+      <p class="formula">ω = √(g/L) &nbsp;·&nbsp; T = 2π√(L/g) &nbsp;·&nbsp; θ(t) = θ₀·cos(ωt)</p>
+      <p class="formula-note">Valid quan θ₀ ≲ 15° (≈ 0,26 rad). Per a angles grans cal considerar termes no lineals.</p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header"><h2>Animació i gràfic θ(t)</h2></div>
+      <canvas id="animCanvas" class="h320" style="margin-bottom:0.75rem;"></canvas>
+      <canvas id="graphCanvas" class="h240"></canvas>
+      <div id="warning" class="warning">
+        ⚠ Angle inicial &gt; 15°: l'aproximació θ ≈ sin θ deixa de ser vàlida i T depèn de l'amplitud.
+        El simulador mostra el moviment real (no lineal) però T calculat assumeix angle petit.
+      </div>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar</button>
+        <div class="slider-group"><label>Velocitat</label><input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1"></div>
+        <div class="slider-group"><label>t</label><input type="range" id="timeSlider" min="0" max="10" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 s</span></div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">L</span> — Longitud</label><span class="param-value" id="L-val"></span></div>
+          <input type="range" id="L" min="0.3" max="2.5" step="0.05" value="1">
+          <p class="param-desc">Longitud del fil (m)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">θ₀</span> — Angle inicial</label><span class="param-value" id="theta0-val"></span></div>
+          <input type="range" id="theta0" min="2" max="60" step="1" value="12">
+          <p class="param-desc">Angle màxim (graus)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">g</span> — Gravetat</label><span class="param-value" id="g-val"></span></div>
+          <input type="range" id="g" min="1.6" max="10" step="0.1" value="9.8">
+          <p class="param-desc">Acceleració de la gravetat (m/s²)</p>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Valors calculats</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>ω = √(g/L) = </span><strong id="omega">—</strong></div>
+          <div><span>T = 2π√(L/g) = </span><strong id="period">—</strong></div>
+          <div><span>f = 1/T = </span><strong id="freq">—</strong></div>
+          <div><span>θ actual = </span><strong id="thetaNow">—</strong></div>
+          <div><span>v<sub>tangent</sub> = L·dθ/dt = </span><strong id="vTan">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Escenaris</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="earth">Terra (g = 9,8 m/s², L = 1 m)</button>
+        <button class="btn" data-preset="moon">Lluna (g = 1,6 m/s²)</button>
+        <button class="btn" data-preset="small">Angle petit vàlid (θ₀ = 10°)</button>
+        <button class="btn" data-preset="large">Angle gran (θ₀ = 45°) — no lineal</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>T = 2π√(L/g):</strong> període independent de la massa i de θ₀ (per a angles petits).</li>
+        <li><strong>Longitud:</strong> pèndul més llarg → període més gran (oscil·la més lent).</li>
+        <li><strong>Gravetat:</strong> a la Lluna (g petit) el pèndul bat més lentament.</li>
+        <li><strong>Isocronisme:</strong> per a θ₀ petit, T no depèn de l'amplitud — propietat del MHS.</li>
+        <li><strong>Limitació:</strong> per θ₀ &gt; 15° cal la solució exacta (funcions el·líptiques) — no és MHS estricte.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const state = { L: 1, theta0Deg: 12, g: 9.8, t: 0, playing: false, speed: 1 };
+
+    const animCanvas = document.getElementById('animCanvas');
+    const graphCanvas = document.getElementById('graphCanvas');
+    const actx = animCanvas.getContext('2d');
+    const gctx = graphCanvas.getContext('2d');
+
+    function theta0Rad() { return state.theta0Deg * Math.PI / 180; }
+    function omegaSmall() { return Math.sqrt(state.g / state.L); }
+
+    function thetaAtSmall(t) {
+      return theta0Rad() * Math.cos(omegaSmall() * t);
+    }
+
+    function thetaAt(t) {
+      const th0 = theta0Rad();
+      if (state.theta0Deg <= 15) return thetaAtSmall(t);
+      const w = omegaSmall();
+      return th0 * Math.cos(w * t) + (th0 ** 3 / 16) * (Math.cos(w * t) - Math.cos(3 * w * t));
+    }
+
+    function dThetaDt(t) {
+      const dt = 0.0001;
+      return (thetaAt(t + dt) - thetaAt(t - dt)) / (2 * dt);
+    }
+
+    function updateDerived() {
+      const w = omegaSmall();
+      const T = TAU / w;
+      const th = thetaAt(state.t);
+      document.getElementById('omega').textContent = formatNum(w) + ' rad/s';
+      document.getElementById('period').textContent = formatNum(T) + ' s';
+      document.getElementById('freq').textContent = formatNum(1 / T) + ' Hz';
+      document.getElementById('thetaNow').textContent = formatNum(th * 180 / Math.PI, 1) + '°';
+      document.getElementById('vTan').textContent = formatNum(state.L * dThetaDt(state.t)) + ' m/s';
+      document.getElementById('warning').classList.toggle('visible', state.theta0Deg > 15);
+    }
+
+    function drawPendulum() {
+      setupCanvas(animCanvas, actx);
+      const w = animCanvas.clientWidth, h = animCanvas.clientHeight;
+      actx.clearRect(0, 0, w, h);
+
+      const pivotX = w / 2, pivotY = h * 0.15;
+      const scale = Math.min(h * 0.55, w * 0.4) / Math.max(state.L, 0.5);
+      const th = thetaAt(state.t);
+      const bobX = pivotX + state.L * scale * Math.sin(th);
+      const bobY = pivotY + state.L * scale * Math.cos(th);
+
+      actx.strokeStyle = '#cbd5e1';
+      actx.lineWidth = 2;
+      actx.beginPath(); actx.moveTo(pivotX - 60, pivotY); actx.lineTo(pivotX + 60, pivotY); actx.stroke();
+
+      actx.strokeStyle = '#64748b';
+      actx.lineWidth = 2;
+      actx.beginPath(); actx.moveTo(pivotX, pivotY); actx.lineTo(bobX, bobY); actx.stroke();
+
+      actx.fillStyle = '#7c3aed';
+      actx.beginPath(); actx.arc(bobX, bobY, 16, 0, TAU); actx.fill();
+      actx.fillStyle = '#fff';
+      actx.font = '11px Segoe UI';
+      actx.textAlign = 'center';
+      actx.fillText('m', bobX, bobY + 4);
+
+      actx.strokeStyle = '#94a3b8';
+      actx.setLineDash([4, 4]);
+      actx.beginPath(); actx.moveTo(pivotX, pivotY); actx.lineTo(pivotX, pivotY + state.L * scale); actx.stroke();
+      actx.setLineDash([]);
+
+      actx.fillStyle = '#64748b';
+      actx.fillText('θ', pivotX + 20, pivotY + 30);
+      actx.strokeStyle = '#ea580c';
+      actx.beginPath(); actx.arc(pivotX, pivotY, 35, Math.PI / 2 - th, Math.PI / 2); actx.stroke();
+
+      actx.fillStyle = '#1a2332';
+      actx.font = '13px Consolas, monospace';
+      actx.textAlign = 'left';
+      actx.fillText(`θ = ${formatNum(th * 180 / Math.PI, 1)}°`, 16, 24);
+      actx.fillText(`T = ${formatNum(TAU / omegaSmall())} s`, 16, 44);
+    }
+
+    function drawGraph() {
+      setupCanvas(graphCanvas, gctx);
+      const w = graphCanvas.clientWidth, h = graphCanvas.clientHeight;
+      const padL = 52, padR = 16, padT = 20, padB = 32;
+      const plotW = w - padL - padR, plotH = h - padT - padB;
+      gctx.clearRect(0, 0, w, h);
+
+      const thMax = theta0Rad() * 1.2;
+      const tMax = 10;
+      const toX = t => padL + (t / tMax) * plotW;
+      const toY = th => padT + ((thMax - th) / (2 * thMax)) * plotH;
+
+      drawGrid(gctx, padL, padT, plotW, plotH);
+      drawAxes(gctx, padL, padT, plotW, plotH, toY(0), { x: 't (s)', y: 'θ (rad)' });
+
+      gctx.strokeStyle = '#7c3aed';
+      gctx.lineWidth = 2.5;
+      gctx.beginPath();
+      for (let i = 0; i <= 500; i++) {
+        const t = (i / 500) * tMax;
+        const px = toX(t), py = toY(thetaAt(t));
+        if (i === 0) gctx.moveTo(px, py); else gctx.lineTo(px, py);
+      }
+      gctx.stroke();
+
+      if (state.theta0Deg <= 15) {
+        gctx.strokeStyle = '#94a3b8';
+        gctx.lineWidth = 1;
+        gctx.setLineDash([6, 4]);
+        gctx.beginPath();
+        for (let i = 0; i <= 500; i++) {
+          const t = (i / 500) * tMax;
+          const px = toX(t), py = toY(thetaAtSmall(t));
+          if (i === 0) gctx.moveTo(px, py); else gctx.lineTo(px, py);
+        }
+        gctx.stroke();
+        gctx.setLineDash([]);
+      }
+
+      gctx.strokeStyle = '#1a2332';
+      gctx.setLineDash([4, 3]);
+      gctx.beginPath(); gctx.moveTo(toX(state.t), padT); gctx.lineTo(toX(state.t), padT + plotH); gctx.stroke();
+      gctx.setLineDash([]);
+    }
+
+    function draw() { updateDerived(); drawPendulum(); drawGraph(); }
+
+    bindSlider('L', 'L-val', v => { state.L = v; draw(); }, v => formatNum(v) + ' m');
+    bindSlider('theta0', 'theta0-val', v => { state.theta0Deg = v; draw(); }, v => formatNum(v, 0) + '°');
+    bindSlider('g', 'g-val', v => { state.g = v; draw(); }, v => formatNum(v, 1) + ' m/s²');
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.preset;
+        if (p === 'earth') { state.g = 9.8; state.L = 1; state.theta0Deg = 12; }
+        if (p === 'moon') { state.g = 1.6; state.L = 1; state.theta0Deg = 12; }
+        if (p === 'small') { state.theta0Deg = 10; }
+        if (p === 'large') { state.theta0Deg = 45; }
+        document.getElementById('L').value = state.L;
+        document.getElementById('g').value = state.g;
+        document.getElementById('theta0').value = state.theta0Deg;
+        document.getElementById('L-val').textContent = formatNum(state.L) + ' m';
+        document.getElementById('g-val').textContent = formatNum(state.g, 1) + ' m/s²';
+        document.getElementById('theta0-val').textContent = formatNum(state.theta0Deg, 0) + '°';
+        draw();
+      });
+    });
+
+    bindPlayControls(state, draw, { maxT: 10 });
+    window.addEventListener('resize', draw);
+    draw();
+  </script>
+</body>
+</html>

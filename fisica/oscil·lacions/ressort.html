@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oscil·lador per Ressort — Simulador</title>
+  <link rel="stylesheet" href="../../css/comunes.css">
+</head>
+<body>
+  <header class="header-osc">
+    <nav class="nav-pack">
+      <a href="../index.html" class="nav-all">← Tots els packs</a>
+      <a href="index.html">Inici</a>
+      <a href="mhs.html">MHS</a>
+      <a href="ressort.html" class="active">Ressort</a>
+      <a href="energia.html">Energia</a>
+      <a href="pendul.html">Pèndul</a>
+    </nav>
+    <h1>Oscil·lador per Ressort</h1>
+    <p>
+      Una massa m unida a un ressort de constant k realitza MHS quan no hi ha fregament.
+      La força recuperadora obeeix la llei de Hooke: F = −kx.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>Equacions del ressort</h2>
+      <p class="formula">F = −kx &nbsp;·&nbsp; ω = √(k/m) &nbsp;·&nbsp; T = 2π√(m/k)</p>
+      <p class="formula-note">x(t) = A·cos(ωt + φ) &nbsp;·&nbsp; El sistema oscil·la al voltant de la posició d'equilibri (allargament nul del ressort en l'ideal)</p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header"><h2>Animació del sistema massa-ressort</h2></div>
+      <canvas id="mainCanvas" class="h320"></canvas>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
+        <button class="btn" id="btnReset">↺ Reiniciar</button>
+        <div class="slider-group"><label>Velocitat</label><input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1"></div>
+        <div class="slider-group"><label>t</label><input type="range" id="timeSlider" min="0" max="10" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 s</span></div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="controls-panel">
+        <h2>Paràmetres</h2>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">m</span> — Massa</label><span class="param-value" id="m-val"></span></div>
+          <input type="range" id="m" min="0.2" max="5" step="0.1" value="1">
+          <p class="param-desc">Massa del cos (kg)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">k</span> — Constant elàstica</label><span class="param-value" id="k-val"></span></div>
+          <input type="range" id="k" min="2" max="30" step="0.5" value="10">
+          <p class="param-desc">Rigidesa del ressort (N/m)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label><span class="symbol">A</span> — Amplitud</label><span class="param-value" id="A-val"></span></div>
+          <input type="range" id="A" min="0.1" max="0.8" step="0.05" value="0.4">
+          <p class="param-desc">Allargament màxim (m)</p>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Valors calculats</h2>
+        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
+          <div><span>ω = √(k/m) = </span><strong id="omega">—</strong></div>
+          <div><span>T = 2π√(m/k) = </span><strong id="period">—</strong></div>
+          <div><span>f = 1/T = </span><strong id="freq">—</strong></div>
+          <div><span>F<sub>max</sub> = kA = </span><strong id="fmax">—</strong></div>
+          <div><span>x actual = </span><strong id="xNow">—</strong></div>
+          <div><span>F actual = −kx = </span><strong id="fNow">—</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="presets">
+      <h2>Escenaris</h2>
+      <div class="preset-buttons">
+        <button class="btn" data-preset="soft">Ressort tou (k petit)</button>
+        <button class="btn" data-preset="stiff">Ressort dur (k gran)</button>
+        <button class="btn" data-preset="heavy">Massa gran (T més gran)</button>
+        <button class="btn" data-preset="light">Massa petita (T més petit)</button>
+      </div>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li><strong>Llei de Hooke:</strong> F = −kx. El signe negatiu indica que la força sempre va cap a l'equilibri.</li>
+        <li><strong>ω = √(k/m):</strong> ressort més dur (k↑) o massa més petita (m↓) → oscil·lació més ràpida.</li>
+        <li><strong>T = 2π√(m/k):</strong> fórmula fonamental per a l'oscil·lador harmònic ideal.</li>
+        <li><strong>Amplitud A:</strong> no afecta T ni f — propietat clau del MHS (isocronisme).</li>
+        <li><strong>Sense fregament:</strong> l'energia mecànica es conserva (vegeu el simulador d'energia).</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../../js/utilitats.js"></script>
+  <script>
+    const state = { m: 1, k: 10, A: 0.4, phi: 0, t: 0, playing: false, speed: 1 };
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function omega() { return Math.sqrt(state.k / state.m); }
+    function xAt(t) { return state.A * Math.cos(omega() * t + state.phi); }
+
+    function updateDerived() {
+      const w = omega();
+      const T = TAU / w;
+      const x = xAt(state.t);
+      document.getElementById('omega').textContent = formatNum(w) + ' rad/s';
+      document.getElementById('period').textContent = formatNum(T) + ' s';
+      document.getElementById('freq').textContent = formatNum(1 / T) + ' Hz';
+      document.getElementById('fmax').textContent = formatNum(state.k * state.A) + ' N';
+      document.getElementById('xNow').textContent = formatNum(x) + ' m';
+      document.getElementById('fNow').textContent = formatNum(-state.k * x) + ' N';
+    }
+
+    function drawSpring(x1, y, x2, coils) {
+      const len = x2 - x1;
+      const coilW = len / coils;
+      ctx.beginPath();
+      ctx.moveTo(x1, y);
+      for (let i = 0; i < coils; i++) {
+        const cx = x1 + (i + 0.5) * coilW;
+        ctx.lineTo(cx - coilW * 0.2, y - 10);
+        ctx.lineTo(cx + coilW * 0.2, y + 10);
+      }
+      ctx.lineTo(x2, y);
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function draw() {
+      setupCanvas(canvas, ctx);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const groundY = h * 0.65;
+      const wallX = 50;
+      const eqX = w * 0.45;
+      const pxPerM = (w * 0.35) / Math.max(state.A, 0.3);
+      const x = xAt(state.t);
+      const massX = eqX + x * pxPerM;
+
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(0, groundY, w, 4);
+      ctx.fillRect(wallX - 12, groundY - 120, 12, 120);
+
+      drawSpring(wallX, groundY - 40, massX - 22, 10);
+
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillRect(massX - 22, groundY - 55, 44, 44);
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px Segoe UI';
+      ctx.textAlign = 'center';
+      ctx.fillText('m', massX, groundY - 28);
+
+      ctx.strokeStyle = '#94a3b8';
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(eqX, groundY - 80); ctx.lineTo(eqX, groundY + 10); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Equilibri', eqX, groundY + 24);
+
+      const f = -state.k * x;
+      const fScale = 0.8;
+      if (Math.abs(f) > 0.5) {
+        ctx.strokeStyle = '#dc2626';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(massX, groundY - 55);
+        ctx.lineTo(massX + f * fScale, groundY - 55);
+        ctx.stroke();
+        ctx.fillStyle = '#dc2626';
+        ctx.fillText('F = ' + formatNum(f) + ' N', massX + f * fScale * 0.5, groundY - 65);
+      }
+
+      ctx.fillStyle = '#1a2332';
+      ctx.font = '13px Consolas, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`x = ${formatNum(x)} m`, 16, 24);
+      ctx.fillText(`T = ${formatNum(TAU / omega())} s`, 16, 44);
+
+      updateDerived();
+    }
+
+    bindSlider('m', 'm-val', v => { state.m = v; draw(); }, v => formatNum(v) + ' kg');
+    bindSlider('k', 'k-val', v => { state.k = v; draw(); }, v => formatNum(v) + ' N/m');
+    bindSlider('A', 'A-val', v => { state.A = v; draw(); }, v => formatNum(v) + ' m');
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = btn.dataset.preset;
+        const set = (id, v) => { document.getElementById(id).value = v; };
+        if (p === 'soft') { set('k', 4); state.k = 4; }
+        if (p === 'stiff') { set('k', 25); state.k = 25; }
+        if (p === 'heavy') { set('m', 4); state.m = 4; }
+        if (p === 'light') { set('m', 0.5); state.m = 0.5; }
+        document.getElementById('k-val').textContent = formatNum(state.k) + ' N/m';
+        document.getElementById('m-val').textContent = formatNum(state.m) + ' kg';
+        draw();
+      });
+    });
+
+    bindPlayControls(state, draw, { maxT: 10 });
+    window.addEventListener('resize', draw);
+    draw();
+  </script>
+</body>
+</html>
