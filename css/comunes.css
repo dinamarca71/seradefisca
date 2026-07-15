@@ -761,3 +761,17 @@ header.header-mat {
 }
 
 .pack-card.soon .tag { color: var(--muted); }
+
+/* Peu de pàgina: crèdits, llicència i ús d'IA */
+.site-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.site-footer p { margin: 0.2rem 0; }
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+.site-footer strong { color: var(--text); }
