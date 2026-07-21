@@ -18,6 +18,11 @@ Punt d'entrada global: `index.html` (des d'aquí es tria Matemàtiques o Física
 
 ## Estructura
 
+Navegació de **2 nivells** (com Matemàtiques): portada de matèria → simulador.
+No hi ha portades de «pack» intermèdies; els simuladors són **fitxers plans**
+dins de `fisica/` o `matematiques/`, i la portada els agrupa visualment per
+seccions temàtiques (`pack-section-title` + `pack-grid`).
+
 ```
 escola/
 ├── index.html              # portada global (Matemàtiques | Física)
@@ -25,16 +30,19 @@ escola/
 ├── css/comunes.css         # estils compartits per TOT el projecte
 ├── js/utilitats.js         # helpers de canvas i controls compartits
 ├── vendor/katex/           # KaTeX vendoritzat en local (css, js, fonts)
-├── matematiques/           # matrius, sistemes, probabilitat, derivades, integrals
-│   ├── index.html          # portada de mates
+├── matematiques/           # portada + simuladors (fitxers plans)
+│   ├── index.html          # portada de mates (agrupada per seccions)
+│   ├── matrius.html · sistemes.html · probabilitat.html · derivades.html · integrals.html
 │   └── dades/              # datasets JSON (p. ex. estadística)
-└── fisica/                 # portada de física + packs temàtics
-    ├── index.html
-    ├── ones/               # superposició, estacionàries, Young, Doppler
-    ├── oscil·lacions/      # mhs, ressort, energia, pèndol
-    ├── camp-gravitatori/   # laboratori d'òrbites (+ orbites.css, orbites.js)
-    ├── electromagnetisme/  # coulomb, circuits, inducció
-    └── fisica-moderna/     # semivida, sèries, defecte de massa
+└── fisica/                 # portada + simuladors (fitxers plans)
+    ├── index.html          # portada de física (agrupada per seccions)
+    ├── semivida.html · series.html · defecte-massa.html        # física moderna
+    ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
+    ├── coulomb.html                                            # camp elèctric
+    ├── circuits.html · induccio.html                           # electromagnetisme
+    └── mhs.html · ressort.html · energia.html · pendul.html ·
+        superposicio.html · ones-estacionaries.html ·
+        interferencia-young.html · efecte-doppler.html          # ones
 ```
 
 ## Convencions
@@ -52,13 +60,13 @@ escola/
 - **Reutilitza el compartit**: estils a `css/comunes.css` i helpers a
   `js/utilitats.js`; no dupliquis codi entre simuladors. Si una pàgina necessita
   estils propis, posa'ls en un CSS específic prim (p. ex.
-  `fisica/camp-gravitatori/orbites.css`) que **només** contingui el que és propi,
+  `fisica/orbites.css`) que **només** contingui el que és propi,
   sense recopiar `comunes.css`.
 - **Rutes relatives** sempre (mai `d:\...`). La profunditat de carpeta determina
   els `../` cap a `css/`, `js/` i `vendor/`:
   - arrel → `css/comunes.css`, `js/utilitats.js`
-  - `fisica/` o `matematiques/` → `../css/…`, `../js/…`
-  - `fisica/ones/` (i altres packs) → `../../css/…`, `../../js/…`, `../../vendor/…`
+  - `fisica/` o `matematiques/` (on viuen els simuladors) → `../css/…`,
+    `../js/…`, `../vendor/…`
 - En **moure fitxers**, revisa sempre que els `href`/`src` segueixin resolent.
 - **UTF-8 sense BOM** per conservar accents i caràcters catalans.
 - **Comentaris**: només per aclarir intencions no òbvies; no narris el codi.
@@ -170,7 +178,7 @@ I obre `http://localhost:8000/`.
 
 ## Referència
 
-El **laboratori d'òrbites** (`fisica/camp-gravitatori/simulador-orbites.html`) és
+El **laboratori d'òrbites** (`fisica/orbites.html`) és
 la referència del patró visual, pedagògic i funcional per a les simulacions
 futures. No s'ha de copiar mecànicament: cal reutilitzar-ne els principis, els
 components compartits i l'organització, adaptant-los a cada fenomen.
