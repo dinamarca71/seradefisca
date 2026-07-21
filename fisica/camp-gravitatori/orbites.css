@@ -1,0 +1,388 @@
+/* Estils específics del laboratori d'òrbites del camp gravitatori.
+   Els estils compartits (capçalera, nav, peu, sr-only) viuen a css/comunes.css.
+   Aquest full només conté el que és propi d'aquesta simulació. */
+:root {
+  --ink: #17212b;
+  --muted: #5c6975;
+  --paper: #f6f8fb;
+  --card: #ffffff;
+  --line: #d6dee7;
+  --primary: #174e8d;
+  --primary-soft: #e9f2fd;
+  --orbit: #0ea5e9;
+  --velocity: #2563eb;
+  --acceleration: #dc2626;
+  --kinetic: #2563eb;
+  --potential: #b14f08;
+  --mechanical: #0a6f5c;
+  --angular: #7a1e52;
+  --warning: #fff5e7;
+}
+
+body {
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.42;
+}
+
+header.header-grav { padding: 12px max(20px, calc((100vw - 1360px) / 2)) 14px; }
+.header-inner { max-width: 1360px; margin: 0 auto; }
+header.header-grav h1 { margin: 0 0 4px; font-size: clamp(1.4rem, 2.35vw, 1.95rem); }
+header.header-grav p { margin: 0; opacity: .94; max-width: 1220px; font-size: .91rem; }
+.nav-pack { margin-bottom: 5px; }
+
+main {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 12px 18px 18px;
+  display: block;
+}
+
+.card, details {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  box-shadow: 0 2px 9px rgba(27, 56, 84, .06);
+}
+.card { padding: 15px; }
+.compact { padding: 10px 14px; }
+h2, h3 { margin: 0 0 9px; }
+h2 { font-size: 1.08rem; }
+h3 { font-size: .97rem; }
+.hint, .plot-note { color: var(--muted); margin: 5px 0 0; font-size: .88rem; }
+
+.topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(310px, .85fr);
+  gap: 14px;
+  margin-bottom: 12px;
+  align-items: stretch;
+}
+
+.card-heading, .plot-title, .panel-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.formula-mini {
+  background: #f4f8fc;
+  border: 1px solid #d6e4f2;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-family: "Cambria Math", Cambria, Georgia, serif;
+  font-size: .95rem;
+  white-space: nowrap;
+}
+
+.setup-selectors {
+  display: grid;
+  grid-template-columns: .72fr .72fr 1.35fr;
+  gap: 10px;
+  margin-top: 7px;
+  align-items: end;
+}
+
+.selector-group {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.selector-group legend, .planet-fields > label > span:first-child {
+  display: block;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 650;
+  margin-bottom: 4px;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #b9c8d8;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+.segmented label { cursor: pointer; min-width: 0; }
+.segmented label + label { border-left: 1px solid #b9c8d8; }
+.segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented span {
+  display: block;
+  padding: 7px 8px;
+  text-align: center;
+  font-size: .86rem;
+  transition: .15s ease;
+}
+.segmented input:checked + span { color: white; background: var(--primary); font-weight: 700; }
+.segmented label:hover span { background: #f6fbff; }
+.segmented input:checked + span:hover { background: var(--primary); }
+
+.planet-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  min-width: 0;
+}
+.planet-fields label { min-width: 0; }
+.number-with-unit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #b9c8d8;
+  border-radius: 8px;
+  background: white;
+  padding: 3px 7px;
+}
+.number-with-unit input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  padding: 3px 0;
+  font: 650 .86rem Consolas, monospace;
+  color: #173d65;
+  background: transparent;
+}
+.number-with-unit b { white-space: nowrap; font-size: .72rem; color: var(--muted); }
+.planet-fields.is-fixed .number-with-unit { background: #f5f7fa; opacity: .8; }
+
+.initial-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.slider-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3px 9px;
+  align-items: center;
+  min-width: 0;
+}
+.slider-row label { font-size: .88rem; font-weight: 650; }
+.slider-row .value {
+  font-variant-numeric: tabular-nums;
+  font: 700 .82rem Consolas, monospace;
+  color: #244e76;
+  white-space: nowrap;
+}
+.slider-row input[type="range"] {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: var(--primary);
+}
+.slider-row small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: .72rem;
+  min-height: 1.1em;
+}
+.slider-row input:disabled { opacity: .45; cursor: not-allowed; }
+
+.setup-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin-top: 6px;
+}
+button {
+  border: 1px solid #b9c8d8;
+  background: #fff;
+  color: var(--ink);
+  padding: 8px 11px;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+  transition: .15s ease;
+}
+button:hover { border-color: var(--primary); background: #f6fbff; }
+button.primary { color: white; border-color: var(--primary); background: var(--primary); }
+button.primary:hover { background: #123f73; }
+button.small { padding: 6px 9px; font-size: .84rem; }
+button:disabled { opacity: .42; cursor: not-allowed; background: #f2f4f7; }
+.action-button { border-color: #9bc4df; background: var(--primary-soft); color: #123f73; font-weight: 650; }
+.body-summary { text-align: right; color: var(--muted); font-size: .74rem; }
+.body-summary span { color: var(--ink); font-weight: 750; margin-right: 6px; }
+.body-summary b { font-family: Consolas, monospace; font-weight: 500; }
+
+.presets-card { display: flex; flex-direction: column; }
+.preset-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.preset-btn { flex: 0 1 auto; padding: 5px 7px; font-size: .78rem; }
+.scenario-title { margin-top: 14px; }
+
+.model-box {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.formula-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+.model-explanation { margin: 0 0 10px; color: var(--ink); font-size: .92rem; }
+.model-explanation + .model-explanation { margin-top: 6px; }
+
+.formula-row > span {
+  background: #f4f8fc;
+  border: 1px solid #d6e4f2;
+  padding: 5px 6px;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.58fr) minmax(380px, .82fr);
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 12px;
+}
+.plot-card { padding: 13px; min-width: 0; }
+.plot-title { margin: 0 0 7px; align-items: baseline; }
+.plot-title h2 { margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: .82rem; color: var(--muted); }
+.legend-item { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; }
+.legend-item input { accent-color: var(--primary); }
+.legend-arrow, .legend-line { display: inline-block; width: 18px; height: 3px; border-radius: 2px; position: relative; }
+.legend-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; border-left: 6px solid currentColor; border-top: 4px solid transparent; border-bottom: 4px solid transparent; }
+.velocity-arrow { background: var(--velocity); color: var(--velocity); }
+.acceleration-arrow { background: var(--acceleration); color: var(--acceleration); }
+.trail-line { background: var(--orbit); }
+
+canvas {
+  width: 100%;
+  display: block;
+  border: 1px solid #d9e1e9;
+  border-radius: 9px;
+  background: white;
+}
+.orbit-canvas { height: 435px; background: #07111f; border-color: #213149; }
+
+.simulation-controls {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px 13px;
+  align-items: center;
+  margin-top: 9px;
+}
+.button-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.control-inline { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.control-inline label { white-space: nowrap; font-size: .86rem; }
+.control-inline input[type="range"] { flex: 1; min-width: 110px; accent-color: var(--primary); }
+.value-badge { min-width: 68px; text-align: right; font-variant-numeric: tabular-nums; color: #173d65; font-weight: 650; font-size: .82rem; }
+.time-display { font: .82rem Consolas, monospace; color: var(--muted); white-space: nowrap; }
+
+.energy-data { border-top: 5px solid var(--mechanical); display: flex; flex-direction: column; }
+.energy-title { align-items: flex-start; }
+.conservation-badge {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eaf8f3;
+  border: 1px solid #a9ddcc;
+  color: #075e50;
+  font-size: .72rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.metric-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.metric { min-width: 0; padding: 8px 9px; background: #f8fafc; border: 1px solid transparent; border-radius: 8px; }
+.metric span { display: block; color: var(--muted); font-size: .7rem; line-height: 1.25; margin-bottom: 3px; }
+.metric strong { display: block; overflow-wrap: anywhere; font: 700 .82rem/1.3 Consolas, monospace; }
+.metric.kinetic { background: #eff6ff; border-color: #bfdbfe; }
+.metric.potential { background: #fff7ed; border-color: #fed7aa; }
+.metric.mechanical { background: #ecfdf5; border-color: #a7f3d0; }
+.metric.angular { background: #fdf2f8; border-color: #fbcfe8; }
+.chart-canvas { background: #fafbfc; }
+.energy-chart { height: 255px; margin-top: 9px; }
+.energy-reading {
+  margin-top: 8px;
+  background: var(--warning);
+  border: 1px solid #f0d09a;
+  border-radius: 9px;
+  padding: 8px 10px;
+  font-size: .82rem;
+}
+
+.bottom-data-grid {
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.data-panel { padding: 13px; min-width: 0; }
+.panel-title-row { align-items: center; margin-bottom: 8px; }
+.data-panel > h2 { margin-bottom: 8px; }
+.orbital-metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.angular-chart { height: 175px; margin-top: 8px; }
+
+.orbit-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.8rem;
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+.orbit-badge.circular { color: #0369a1; background: #e0f2fe; border-color: #7dd3fc; }
+.orbit-badge.elliptical { color: #6d28d9; background: #f5f3ff; border-color: #c4b5fd; }
+.orbit-badge.parabolic { color: #a16207; background: #fefce8; border-color: #fde047; }
+.orbit-badge.hyperbolic { color: #c2410c; background: #fff7ed; border-color: #fdba74; }
+.orbit-badge.falling { color: #9f1239; background: #fff1f2; border-color: #fda4af; }
+.orbit-badge.collision { color: #b91c1c; background: #fef2f2; border-color: #fca5a5; }
+
+.concepts { padding: 0 14px; margin-bottom: 6px; }
+.concepts summary { cursor: pointer; font-weight: 700; padding: 12px 0; }
+.concepts > div { padding: 0 0 12px; }
+.concepts ul { margin: 3px 0 0 20px; padding: 0; color: var(--muted); font-size: .88rem; }
+.concepts li { margin: 5px 0; }
+.concepts strong { color: var(--ink); }
+.site-footer { margin-top: 14px; }
+
+@media (max-width: 1120px) {
+  .topbar { grid-template-columns: 1fr; }
+  .presets-card { display: block; }
+  .model-box { margin-top: 10px; }
+  .formula-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .workspace { grid-template-columns: minmax(0, 1.45fr) minmax(340px, .75fr); }
+  .orbit-canvas { height: 420px; }
+}
+
+@media (max-width: 940px) {
+  .workspace, .bottom-data-grid { grid-template-columns: 1fr; }
+  .setup-selectors { grid-template-columns: 1fr 1fr; }
+  .planet-fields { grid-column: 1 / -1; }
+  .orbit-canvas { height: 430px; }
+  .energy-chart { height: 245px; }
+  .orbital-metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  main { padding: 10px; }
+  header.header-grav { padding: 16px 14px; }
+  .card { padding: 12px; }
+  .card-heading, .plot-title { display: block; }
+  .formula-mini { display: inline-block; margin-top: 7px; white-space: normal; }
+  .setup-selectors, .initial-controls-grid { grid-template-columns: 1fr; }
+  .planet-fields { grid-column: auto; }
+  .setup-footer { align-items: stretch; flex-direction: column; }
+  .body-summary { text-align: left; }
+  .formula-row { grid-template-columns: 1fr; }
+  .orbit-canvas { height: 350px; }
+  .orbit-legend { margin-top: 7px; }
+  .simulation-controls { grid-template-columns: 1fr; }
+  .time-scale-control { width: 100%; }
+  .orbital-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 430px) {
+  .planet-fields, .metric-grid, .orbital-metrics { grid-template-columns: 1fr; }
+  .button-row button { flex: 1; padding-left: 7px; padding-right: 7px; }
+}

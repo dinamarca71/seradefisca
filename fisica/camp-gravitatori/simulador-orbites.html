@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Laboratori interactiu d’òrbites gravitatòries per a batxillerat.">
+  <title>Laboratori d’òrbites — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../../css/comunes.css">
+  <link rel="stylesheet" href="orbites.css">
+</head>
+<body>
+<header class="header-grav">
+    <div class="header-inner">
+      <nav class="nav-pack">
+        <a href="../../index.html" class="nav-all">← Tots els packs</a>
+        <a href="index.html">Inici</a>
+        <a href="simulador-orbites.html" class="active">Òrbites</a>
+      </nav>
+      <h1>Laboratori interactiu d’òrbites gravitatòries</h1>
+      <p>
+        Modifica les condicions inicials i observa alhora la trajectòria, les transformacions
+        entre energia cinètica i potencial i la conservació de l’energia mecànica.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="topbar">
+      <div class="card compact setup-card">
+        <div class="card-heading">
+          <div>
+            <h2>Condicions inicials</h2>
+            <p class="hint">Tria el cos central i fixa la posició i la velocitat inicials del satèl·lit.</p>
+          </div>
+        </div>
+
+        <div class="setup-selectors">
+          <fieldset class="selector-group">
+            <legend>Cos central</legend>
+            <div class="segmented" role="radiogroup" aria-label="Cos central">
+              <label><input type="radio" name="centralBody" value="earth" checked><span>Terra</span></label>
+              <label><input type="radio" name="centralBody" value="x"><span>Planeta X</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="selector-group">
+            <legend>Mode orbital</legend>
+            <div class="segmented" role="radiogroup" aria-label="Mode de simulació">
+              <label><input type="radio" name="orbitMode" value="circular" checked><span>Circular</span></label>
+              <label><input type="radio" name="orbitMode" value="free"><span>Lliure</span></label>
+            </div>
+          </fieldset>
+
+          <div class="planet-fields" id="planetFields">
+            <label>
+              <span>Massa del cos central M</span>
+              <span class="number-with-unit"><input id="planetMassInput" type="number" min="0.1" max="50" step="0.1" value="5.972"><b>·10²⁴ kg</b></span>
+            </label>
+            <label>
+              <span>Radi del cos central R</span>
+              <span class="number-with-unit"><input id="planetRadiusInput" type="number" min="1000" max="30000" step="100" value="6371"><b>km</b></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="initial-controls-grid">
+          <div class="slider-row">
+            <label for="radiusSlider">Radi inicial r<sub>0</sub></label><span id="radiusValue" class="value">6 771 km</span>
+            <input id="radiusSlider" type="range" min="6571" max="56371" step="10" value="6771">
+            <small id="heightInitial">h<sub>0</sub> = 400 km sobre la superfície</small>
+          </div>
+
+          <div class="slider-row">
+            <label for="speedSlider">Velocitat tangencial v<sub>0</sub></label><span id="speedValue" class="value">7,67 km/s</span>
+            <input id="speedSlider" type="range" min="0" max="15" step="0.01" value="7.67">
+          </div>
+
+          <div class="slider-row">
+            <label for="massSlider">Massa del satèl·lit m</label><span id="massValue" class="value">1 000 kg</span>
+            <input id="massSlider" type="range" min="100" max="5000" step="100" value="1000">
+            <small>Canvia E i L, però no la trajectòria.</small>
+          </div>
+        </div>
+
+        <div class="setup-footer">
+          <button id="btnCircularize" class="small action-button" type="button">Ajusta v<sub>0</sub> per circularitzar</button>
+          <div class="body-summary">
+            <span id="centralBodyName">Terra</span>
+            <b id="centralBodyData">M = 5,972·10²⁴ kg · R = 6 371 km</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="card compact presets-card">
+        <div class="model-box">
+          <h2>Model físic</h2>
+          <p class="model-explanation">Aproximació de dos cossos amb <strong>m<sub>1</sub> ≫ m<sub>2</sub></strong> i el centre de masses situat pràcticament sobre el centre de m<sub>1</sub>. Sobre el satèl·lit només actua la força gravitatòria.</p>
+          <p class="model-explanation">La força gravitatòria és <strong>conservativa</strong> i, per tant, es conserva l’energia mecànica. També és una <strong>força central</strong> i, per tant, es conserva el moment angular.</p>
+          <div class="formula-row">
+            <span data-math="\vec{F}_g=-\frac{GMm}{r^3}\vec{r}"></span>
+            <span data-math="E_m=E_c+E_p=\text{constant}"></span>
+            <span data-math="\vec{L}=m(\vec{r}\times\vec{v})=\text{constant}"></span>
+          </div>
+          <p class="hint"><span data-math="\vec{r}"></span> és el vector posició respecte del centre del cos central i <span data-math="r=|\vec{r}|"></span>.</p>
+          <p class="hint">En el mode lliure, r<sub>0</sub> i v<sub>0</sub> són independents i la velocitat inicial és tangencial.</p>
+        </div>
+
+        <h2 class="scenario-title">Escenaris per experimentar</h2>
+        <div class="preset-row orbit-presets">
+          <button class="small preset-btn" data-preset="leo" type="button">Baixa</button>
+          <button id="geoPreset" class="small preset-btn" data-preset="geo" type="button">Geoest.</button>
+          <button class="small preset-btn" data-preset="ellipse" type="button">El·líptica</button>
+          <button class="small preset-btn" data-preset="eccentric" type="button">Excèntrica</button>
+          <button class="small preset-btn" data-preset="escape" type="button">Escapament</button>
+          <button class="small preset-btn" data-preset="hyperbolic" type="button">Hiperbòlica</button>
+          <button class="small preset-btn" data-preset="fall" type="button">Caiguda</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="card plot-card orbit-stage">
+        <div class="plot-title">
+          <div>
+            <h2>Trajectòria orbital</h2>
+            <p id="orbitStatus" class="plot-note">Òrbita circular</p>
+          </div>
+          <div class="legend orbit-legend">
+            <label class="legend-item"><input id="showVelocity" type="checkbox" checked> <span class="legend-arrow velocity-arrow"></span> v</label>
+            <label class="legend-item"><input id="showAcceleration" type="checkbox" checked> <span class="legend-arrow acceleration-arrow"></span> a</label>
+            <label class="legend-item"><input id="showTrail" type="checkbox" checked> <span class="legend-line trail-line"></span> trajectòria</label>
+          </div>
+        </div>
+
+        <canvas id="orbitCanvas" class="orbit-canvas" aria-label="Simulació de la trajectòria orbital" aria-describedby="orbitDescription"></canvas>
+        <p id="orbitDescription" class="sr-only">Representació del cos central, el satèl·lit, la trajectòria i els vectors seleccionats.</p>
+
+        <div class="simulation-controls orbit-playback">
+          <div class="button-row">
+            <button id="btnPlay" class="primary" type="button">▶ Reprodueix</button>
+            <button id="btnStep" type="button">Pas +60 s</button>
+            <button id="btnReset" type="button">↺ Reinicia</button>
+          </div>
+          <div class="control-inline time-scale-control">
+            <label for="timeScale">Ritme temporal</label>
+            <input id="timeScale" type="range" min="60" max="7200" step="60" value="900">
+            <span id="timeScaleValue" class="value-badge">15 min/s</span>
+          </div>
+          <span id="timeDisplay" class="time-display">t = 0,00 min</span>
+        </div>
+      </div>
+
+      <article class="card plot-card energy-data">
+        <div class="plot-title energy-title">
+          <div>
+            <h2>Transformacions d’energia</h2>
+            <p class="plot-note">Compara el gràfic amb la posició del satèl·lit.</p>
+          </div>
+          <span class="conservation-badge">E<sub>m</sub> constant</span>
+        </div>
+
+        <div class="metric-grid energy-metrics">
+          <div class="metric kinetic"><span>Energia cinètica E<sub>c</sub></span><strong id="metricEc">—</strong></div>
+          <div class="metric potential"><span>Energia potencial E<sub>p</sub></span><strong id="metricEp">—</strong></div>
+          <div class="metric mechanical"><span>Energia mecànica E<sub>m</sub></span><strong id="metricEm">—</strong></div>
+          <div class="metric"><span>Error numèric ΔE<sub>m</sub>/E<sub>m0</sub></span><strong id="metricEnergyError">—</strong></div>
+        </div>
+        <canvas id="energyCanvas" class="chart-canvas energy-chart" aria-label="Gràfic temporal de les energies" aria-describedby="energyDescription"></canvas>
+        <p id="energyDescription" class="sr-only">Evolució temporal de les energies cinètica, potencial i mecànica.</p>
+        <div class="energy-reading">
+          <b>Observa:</b> quan r disminueix, E<sub>c</sub> augmenta i E<sub>p</sub> disminueix, mentre E<sub>m</sub> es manté.
+        </div>
+      </article>
+    </section>
+
+    <section class="bottom-data-grid">
+      <article class="card data-panel orbital-data">
+        <div class="panel-title-row">
+          <h2>Paràmetres orbitals</h2>
+          <span id="orbitTypeBadge" class="orbit-badge circular">Circular</span>
+        </div>
+        <div class="metric-grid orbital-metrics">
+          <div class="metric"><span>Radi r</span><strong id="metricR">—</strong></div>
+          <div class="metric"><span>Altura h</span><strong id="metricH">—</strong></div>
+          <div class="metric"><span>Velocitat v</span><strong id="metricV">—</strong></div>
+          <div class="metric"><span>Vel. angular ω</span><strong id="metricOmega">—</strong></div>
+          <div class="metric"><span>Període T</span><strong id="metricT">—</strong></div>
+          <div class="metric"><span>Semieix major a</span><strong id="metricA">—</strong></div>
+          <div class="metric"><span>Excentricitat e</span><strong id="metricE">—</strong></div>
+          <div class="metric"><span>Angle recorregut θ</span><strong id="metricTheta">—</strong></div>
+        </div>
+      </article>
+
+      <article class="card data-panel angular-data">
+        <h2>Moment angular</h2>
+        <div class="metric-grid angular-metrics">
+          <div class="metric angular"><span>Moment angular L</span><strong id="metricL">—</strong></div>
+          <div class="metric"><span>Moment inicial L<sub>0</sub></span><strong id="metricL0">—</strong></div>
+          <div class="metric"><span>Variació ΔL/L<sub>0</sub></span><strong id="metricLError">—</strong></div>
+          <div class="metric"><span>Comprovació L = mr²ω</span><strong id="metricLCheck">—</strong></div>
+        </div>
+        <canvas id="angularCanvas" class="chart-canvas angular-chart" aria-label="Gràfic de conservació del moment angular"></canvas>
+      </article>
+    </section>
+
+    <details class="concepts">
+      <summary>Conceptes clau i propostes d’observació</summary>
+      <div>
+        <ul>
+          <li><strong>Òrbita circular:</strong> la força gravitatòria actua com a força centrípeta i <span data-math="v=\sqrt{GM/r}"></span>.</li>
+          <li><strong>Òrbita el·líptica:</strong> r, v, E<sub>c</sub> i E<sub>p</sub> varien, però E<sub>m</sub> i L es conserven.</li>
+          <li><strong>Moment angular:</strong> <span data-math="L=mr^2\omega"></span>. Quan el satèl·lit s’apropa al cos central, r disminueix i ω augmenta.</li>
+          <li><strong>Massa del satèl·lit:</strong> no afecta l’acceleració ni la trajectòria, però E i L són proporcionals a m.</li>
+          <li><strong>Planeta X:</strong> modifica M i R i comprova quines magnituds depenen de la massa del cos central.</li>
+        </ul>
+      </div>
+    </details>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb ChatGPT (GPT-5.6 Thinking) i Cursor (Claude Opus 4.8 High).</p>
+    </footer>
+  </main>
+  <script src="../../vendor/katex/katex.min.js"></script>
+  <script src="orbites.js"></script>
+</body>
+</html>

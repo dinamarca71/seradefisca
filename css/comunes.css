@@ -775,3 +775,20 @@ header.header-mat {
 .site-footer a { color: var(--accent); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 .site-footer strong { color: var(--text); }
+
+header.header-grav {
+  background: linear-gradient(135deg, #103b69 0%, #1a6d86 100%);
+}
+
+/* Utilitat només per a lectors de pantalla (accessibilitat) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
