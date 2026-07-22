@@ -73,17 +73,17 @@ main {
   gap: 1.25rem;
 }
 
-.formula-box, .canvas-section, .presets, .concepts, .controls-panel, .info-grid {
+.formula-box, .canvas-section, .presets, .concepts, .controls-panel, .info-grid, .recursos {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
 
-.formula-box, .presets, .concepts, .controls-panel { padding: 1rem 1.25rem; }
+.formula-box, .presets, .concepts, .controls-panel, .recursos { padding: 1rem 1.25rem; }
 .canvas-section { padding: 1rem; }
 
-.formula-box h2, .presets h2, .concepts h2, .controls-panel h2, .canvas-header h2 {
+.formula-box h2, .presets h2, .concepts h2, .controls-panel h2, .canvas-header h2, .recursos h2 {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -249,6 +249,38 @@ canvas.h360 { height: 360px; }
 .concepts ul { padding-left: 1.2rem; font-size: 0.875rem; color: var(--muted); }
 .concepts li { margin-bottom: 0.35rem; }
 .concepts li strong { color: var(--text); }
+
+/* Recursos / bibliografia destacada (enllaços externs curats) */
+.recursos-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+.recurs {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.recurs:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+.recurs .ic { font-size: 1.25rem; line-height: 1.35; flex-shrink: 0; }
+.recurs .cos { flex: 1; min-width: 0; font-size: 0.875rem; }
+.recurs a { font-weight: 600; color: var(--accent); text-decoration: none; }
+.recurs a:hover { text-decoration: underline; }
+.recurs .meta { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+.recurs .lang {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  margin-left: 0.35rem;
+  vertical-align: middle;
+}
 
 .info-grid {
   display: grid;

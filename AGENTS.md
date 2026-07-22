@@ -84,6 +84,18 @@ escola/
   substitueixen els controls manuals: són punts de partida per experimentar.
 - Una secció final de **conceptes clau** (pot anar en un bloc plegable
   `<details>`).
+- **Opcional: recursos / bibliografia destacada** (`<section class="recursos">`),
+  just abans del peu de pàgina. Poques fonts triades (3–5): infografies, vídeos
+  o articles al nivell de 2n de batxillerat.
+  - Aquí l'idioma **pot ser CA, ES o EN** (excepció a la resta del web); les
+    descripcions, però, es mantenen en català i cada recurs porta una etiqueta
+    d'idioma (`<span class="lang">`).
+  - Cada recurs: icona de tipus (🎬 vídeo · 📊 infografia · 📄 article · 🧪 eina),
+    títol enllaçat, etiqueta d'idioma i una línia de context (font + per què és útil).
+  - **Només enllaços externs** (`target="_blank" rel="noopener"`): res d'`<iframe>`
+    incrustats, que trencarien l'obertura offline i afegirien rastrejadors.
+  - Prioritza **fonts estables** (institucions, universitats, canals grans) per
+    reduir els enllaços morts. Estils compartits a `.recursos` de `comunes.css`.
 - Un **peu de pàgina** (`.site-footer`) amb crèdits, llicència i ús d'IA
   (vegeu la secció següent).
 - **Finalitat educativa**: mostra sempre el desenvolupament **pas a pas**, no

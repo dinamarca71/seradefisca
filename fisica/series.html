@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sèries Desintegratives — Física Moderna</title>
+  <meta name="description" content="Les quatre sèries radioactives naturals (4n, 4n+1, 4n+2, 4n+3): cadenes de desintegració α i β⁻ des del nuclid pare fins al nuclid estable, pas a pas.">
+  <title>Sèries radioactives — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
   <link rel="stylesheet" href="../css/comunes.css">
   <style>
     .series-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
@@ -17,7 +19,47 @@
       font-size: 0.9rem;
     }
     .step-detail h3 { font-size: 1rem; margin-bottom: 0.5rem; }
-    .step-nav { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+    .step-detail .eq { margin: 0.4rem 0 0.6rem; }
+    .step-nav { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
+    .series-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(180px, 0.8fr);
+      gap: 1rem;
+      align-items: start;
+      margin-top: 0.5rem;
+    }
+    .series-diagram {
+      margin: 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem;
+      text-align: center;
+      position: sticky;
+      top: 0.75rem;
+    }
+    .series-diagram img {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      height: auto;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 4px;
+    }
+    .series-diagram figcaption {
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.45;
+      text-align: left;
+    }
+    .series-diagram figcaption a { color: var(--accent); }
+    @media (max-width: 860px) {
+      .series-layout { grid-template-columns: 1fr; }
+      .series-diagram { position: static; }
+      .series-diagram img { max-height: 420px; }
+    }
   </style>
 </head>
 <body>
@@ -28,18 +70,33 @@
       <a href="series.html" class="active">Sèries</a>
       <a href="defecte-massa.html">Defecte de massa</a>
     </nav>
-    <h1>Les 4 Sèries Desintegratives Naturals</h1>
+    <h1>Les 4 sèries radioactives naturals</h1>
     <p>
-      Quatre famílies de nuclids pesants que desintegren per emissió α i β⁻ fins a un nuclid estable.
-      Classificació segons 4n, 4n+1, 4n+2 i 4n+3 (n enter).
+      Quatre famílies de nuclids pesants que es desintegren en cadena per emissió
+      α i β⁻ fins a arribar a un nuclid estable. Es classifiquen segons el nombre
+      de massa: <span data-math="4n"></span>, <span data-math="4n+1"></span>,
+      <span data-math="4n+2"></span> i <span data-math="4n+3"></span>
+      (<span data-math="n"></span> enter). Es mostra la <strong>branca principal</strong> de cada sèrie.
     </p>
   </header>
 
   <main>
     <section class="formula-box">
-      <h2>Tipus de desintegració en les sèries</h2>
-      <p class="formula">α: ᴬ_Z X → ᴬ⁻⁴_Z₋₂ Y + ⁴₂He &nbsp;·&nbsp; β⁻: ᴬ_Z X → ᴬ_Z₊₁ Y + e⁻ + ν̄</p>
-      <p class="formula-note">Totes acaben en plom o bismut estable: ²⁰⁸Pb, ²⁰⁹Bi, ²⁰⁶Pb, ²⁰⁷Pb</p>
+      <h2>Model físic</h2>
+      <div class="math-row">
+        <span data-math="{}^{A}_{Z}\mathrm{X} \rightarrow {}^{A-4}_{Z-2}\mathrm{Y} + {}^{4}_{2}\mathrm{He}"></span>
+        <span data-math="{}^{A}_{Z}\mathrm{X} \rightarrow {}^{\;A}_{Z+1}\mathrm{Y} + e^{-} + \bar{\nu}_e"></span>
+        <span data-math="\lambda = \dfrac{\ln 2}{T_{1/2}}"></span>
+        <span data-math="N(t) = N_0\, e^{-\lambda t}"></span>
+        <span data-math="A(t) = \lambda N(t) = A_0\, e^{-\lambda t}"></span>
+        <span data-math="\text{Equilibri secular: } \lambda_1 N_1 = \lambda_2 N_2"></span>
+      </div>
+      <ul class="model-hyp">
+        <li>En una emissió <span data-math="\alpha"></span> el nucli perd 2 protons i 2 neutrons: <span data-math="A"></span> baixa 4 i <span data-math="Z"></span> baixa 2.</li>
+        <li>En una emissió <span data-math="\beta^-"></span> un neutró es converteix en protó: <span data-math="A"></span> es manté i <span data-math="Z"></span> puja 1.</li>
+        <li>Com que <span data-math="\alpha"></span> canvia <span data-math="A"></span> en 4 i <span data-math="\beta^-"></span> no el canvia, el residu <span data-math="A \bmod 4"></span> es conserva: per això hi ha exactament quatre sèries.</li>
+        <li>La sèrie del neptuni (<span data-math="4n+1"></span>) no es troba avui a la natura: els seus nuclids ja s'han desintegrat (semivides curtes comparades amb l'edat de la Terra).</li>
+      </ul>
     </section>
 
     <section class="controls-panel">
@@ -57,18 +114,79 @@
           <button class="btn" id="btnShowAll">Mostra tota la cadena</button>
         </div>
       </div>
-      <div class="decay-chain" id="chainContainer"></div>
-      <div class="step-detail" id="stepDetail"></div>
+      <div class="series-layout">
+        <div class="series-main">
+          <div class="decay-chain" id="chainContainer" role="img"
+            aria-label="Cadena de desintegració radioactiva: caixes amb cada nuclid (nombre de massa, símbol i nombre atòmic) unides per fletxes que indiquen el tipus d'emissió i la semivida."></div>
+          <p class="sr-only" id="chainStatus" aria-live="polite"></p>
+          <div class="step-detail" id="stepDetail"></div>
+        </div>
+        <figure class="series-diagram">
+          <img id="seriesDiagram" src="img/series/urani.svg" alt="Diagrama de la sèrie de l'urani (4n+2) segons Wikimedia Commons">
+          <figcaption id="seriesDiagramCap">
+            Diagrama de la sèrie de l'urani ·
+            <a href="https://commons.wikimedia.org/wiki/File:Decay_chain(4n%2B2,_Uranium_series).svg" target="_blank" rel="noopener">Wikimedia Commons</a>
+            · CC BY-SA 3.0
+          </figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="concepts">
       <h2>Les 4 sèries (resum)</h2>
       <ul>
-        <li><strong>Sèrie del thori (4n):</strong> ²³²Th → ²⁰⁸Pb. Present a roques i sòls.</li>
-        <li><strong>Sèrie del neptuni (4n+1):</strong> ²³⁷Np → ²⁰⁹Bi. Originada per bombardeig (no natural en quantitats significatives avui).</li>
+        <li><strong>Sèrie del tori (4n):</strong> ²³²Th → ²⁰⁸Pb. Present a roques i sòls.</li>
+        <li><strong>Sèrie del neptuni (4n+1):</strong> ²³⁷Np → ²⁰⁹Bi. Extingida a la natura; s'obté artificialment.</li>
         <li><strong>Sèrie de l'urani (4n+2):</strong> ²³⁸U → ²⁰⁶Pb. La més important geològicament; inclou el radó ²²²Rn.</li>
-        <li><strong>Sèrie de l'actini (4n+3):</strong> ²³⁵U → ²⁰⁷Pb. Important en reactors nuclears (fissió).</li>
-        <li><strong>Equilibri secular:</strong> en moltes etapes, la taxa de producció i desintegració s'equilibra (ex.: ²²⁶Ra i ²²²Rn).</li>
+        <li><strong>Sèrie de l'actini (4n+3):</strong> ²³⁵U → ²⁰⁷Pb. El ²³⁵U és el combustible fissil dels reactors.</li>
+        <li><strong>Branques:</strong> alguns nuclids (com ²¹²Bi o ²¹⁴Bi) es poden desintegrar per dos camins alhora; aquí es mostra el majoritari.</li>
+        <li><strong>Equilibri secular:</strong> quan el pare és molt més longeu que els fills, tots els nuclids de la cadena tenen la mateixa activitat (ex.: ²²⁶Ra i ²²²Rn).</li>
+      </ul>
+    </section>
+
+    <section class="recursos">
+      <h2>Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Cadena_de_desintegraci%C3%B3" target="_blank" rel="noopener">Cadena de desintegració — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">Taules i esquemes de les quatre sèries amb semivides i tipus d'emissió.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://en.wikipedia.org/wiki/Decay_chain" target="_blank" rel="noopener">Decay chain — Wikipedia</a>
+            <span class="lang">EN</span>
+            <span class="meta">Diagrama clàssic de les quatre cadenes (4n, 4n+1, 4n+2, 4n+3) en un sol gràfic de colors.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://dfs.uib.cat/apl/aac/fisicapbau/hrt5rtx.htm" target="_blank" rel="noopener">La radiactivitat (Física PAU, UIB)</a>
+            <span class="lang">CA</span>
+            <span class="meta">Explicació breu amb vídeo i qüestions d'autoavaluació sobre desintegracions successives.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://openstax.org/books/qu%C3%ADmica-2ed/pages/21-3-decaimiento-radiactivo" target="_blank" rel="noopener">Decaimiento radiactivo (OpenStax)</a>
+            <span class="lang">ES</span>
+            <span class="meta">Manual obert · explica les sèries i mostra el diagrama de l'U-238 (8 α + 6 β⁻).</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.youtube.com/watch?v=3koOwozY4oc" target="_blank" rel="noopener">Types of decay — Khan Academy</a>
+            <span class="lang">EN</span>
+            <span class="meta">Vídeo clar i estructurat sobre desintegració α, β i γ amb exemples pas a pas.</span>
+          </div>
+        </li>
       </ul>
     </section>
   <footer class="site-footer">
@@ -77,83 +195,120 @@
   </footer>
   </main>
 
+  <script src="../vendor/katex/katex.min.js"></script>
   <script src="../js/utilitats.js"></script>
   <script>
+    function renderMath(root) {
+      root = root || document;
+      const katex = window.katex;
+      root.querySelectorAll('[data-math]').forEach(el => {
+        const src = el.dataset.math || el.textContent || '';
+        if (!katex) { el.textContent = src; return; }
+        katex.render(src, el, { throwOnError: false, strict: 'ignore', displayMode: false });
+      });
+    }
+    renderMath();
+
+    // Model de dades: cada nuclid guarda la SEVA semivida i COM es desintegra
+    // (decay: 'α' | 'β⁻' | null si és estable). La transició cap al següent nuclid
+    // queda determinada per la desintegració del nuclid actual.
     const SERIES = {
-      thori: {
-        name: 'Thori (4n)',
-        start: '232Th', end: '208Pb',
+      tori: {
+        name: 'Tori (4n)',
         desc: 'Comença amb ²³²Th (Z=90). Tots els nuclids tenen nombre de massa múltiple de 4. Acaba en ²⁰⁸Pb estable.',
+        diagram: {
+          src: 'img/series/tori.svg',
+          commons: 'https://commons.wikimedia.org/wiki/File:Decay_Chain_of_Thorium.svg',
+          label: 'sèrie del tori (4n)',
+          credit: 'BatesIsBack / Jvandoor (Wikimedia Commons)'
+        },
         steps: [
-          { nuclide: '232Th', Z: 90, A: 232, stable: false, decay: null, half: '—' },
-          { nuclide: '228Ra', Z: 88, A: 228, decay: 'α', half: '5,75 anys' },
-          { nuclide: '224Ra', Z: 88, A: 224, decay: 'α', half: '3,66 dies' },
-          { nuclide: '220Rn', Z: 86, A: 220, decay: 'α', half: '55,6 s' },
-          { nuclide: '216Po', Z: 84, A: 216, decay: 'α', half: '0,15 s' },
-          { nuclide: '212Pb', Z: 82, A: 212, decay: 'α', half: '0,5 ms' },
-          { nuclide: '212Bi', Z: 83, A: 212, decay: 'β⁻', half: '10,6 h' },
-          { nuclide: '212Po', Z: 84, A: 212, decay: 'α', half: '45,1 s' },
-          { nuclide: '208Pb', Z: 82, A: 208, stable: true, decay: null, half: 'Estable' }
+          { A: 232, sym: 'Th', Z: 90, half: '1,40·10¹⁰ anys', decay: 'α' },
+          { A: 228, sym: 'Ra', Z: 88, half: '5,75 anys', decay: 'β⁻' },
+          { A: 228, sym: 'Ac', Z: 89, half: '6,15 h', decay: 'β⁻' },
+          { A: 228, sym: 'Th', Z: 90, half: '1,91 anys', decay: 'α' },
+          { A: 224, sym: 'Ra', Z: 88, half: '3,63 dies', decay: 'α' },
+          { A: 220, sym: 'Rn', Z: 86, half: '55,6 s', decay: 'α' },
+          { A: 216, sym: 'Po', Z: 84, half: '0,145 s', decay: 'α' },
+          { A: 212, sym: 'Pb', Z: 82, half: '10,64 h', decay: 'β⁻' },
+          { A: 212, sym: 'Bi', Z: 83, half: '60,55 min', decay: 'β⁻' },
+          { A: 212, sym: 'Po', Z: 84, half: '0,299 μs', decay: 'α' },
+          { A: 208, sym: 'Pb', Z: 82, half: 'Estable', decay: null, stable: true }
         ]
       },
       neptuni: {
         name: 'Neptuni (4n+1)',
-        start: '237Np', end: '209Bi',
-        desc: 'Comença amb ²³⁷Np (Z=93). Nombre de massa = 4n+1. Acaba en ²⁰⁹Bi estable. Sèrie d\'origen artificial.',
+        desc: 'Comença amb ²³⁷Np (Z=93). Nombre de massa = 4n+1. Acaba en ²⁰⁹Bi. Sèrie extingida a la natura, d\'origen artificial.',
+        diagram: {
+          src: 'img/series/neptuni.svg',
+          commons: 'https://commons.wikimedia.org/wiki/File:Decay_Chain(4n%2B1,_Neptunium_Series).svg',
+          label: 'sèrie del neptuni (4n+1)',
+          credit: 'BatesIsBack (Wikimedia Commons)'
+        },
         steps: [
-          { nuclide: '237Np', Z: 93, A: 237, stable: false, decay: null, half: '—' },
-          { nuclide: '233Pa', Z: 91, A: 233, decay: 'α', half: '2,14·10⁶ anys' },
-          { nuclide: '233U', Z: 92, A: 233, decay: 'β⁻', half: '27,0 dies' },
-          { nuclide: '229Th', Z: 90, A: 229, decay: 'α', half: '1,59·10⁵ anys' },
-          { nuclide: '225Ra', Z: 88, A: 225, decay: 'α', half: '7,54·10³ anys' },
-          { nuclide: '225Ac', Z: 89, A: 225, decay: 'β⁻', half: '14,8 dies' },
-          { nuclide: '221Fr', Z: 87, A: 221, decay: 'α', half: '4,8 min' },
-          { nuclide: '217At', Z: 85, A: 217, decay: 'α', half: '32,3 ms' },
-          { nuclide: '213Bi', Z: 83, A: 213, decay: 'α', half: '45,6 min' },
-          { nuclide: '213Po', Z: 84, A: 213, decay: 'β⁻', half: '4,2 μs' },
-          { nuclide: '209Pb', Z: 82, A: 209, decay: 'α', half: '3,3 h' },
-          { nuclide: '209Bi', Z: 83, A: 209, stable: true, decay: null, half: 'Estable' }
+          { A: 237, sym: 'Np', Z: 93, half: '2,14·10⁶ anys', decay: 'α' },
+          { A: 233, sym: 'Pa', Z: 91, half: '26,97 dies', decay: 'β⁻' },
+          { A: 233, sym: 'U', Z: 92, half: '1,59·10⁵ anys', decay: 'α' },
+          { A: 229, sym: 'Th', Z: 90, half: '7 340 anys', decay: 'α' },
+          { A: 225, sym: 'Ra', Z: 88, half: '14,9 dies', decay: 'β⁻' },
+          { A: 225, sym: 'Ac', Z: 89, half: '10,0 dies', decay: 'α' },
+          { A: 221, sym: 'Fr', Z: 87, half: '4,8 min', decay: 'α' },
+          { A: 217, sym: 'At', Z: 85, half: '32 ms', decay: 'α' },
+          { A: 213, sym: 'Bi', Z: 83, half: '45,6 min', decay: 'β⁻' },
+          { A: 213, sym: 'Po', Z: 84, half: '3,7 μs', decay: 'α' },
+          { A: 209, sym: 'Pb', Z: 82, half: '3,25 h', decay: 'β⁻' },
+          { A: 209, sym: 'Bi', Z: 83, half: 'Estable', decay: null, stable: true }
         ]
       },
       urani: {
         name: 'Urani (4n+2)',
-        start: '238U', end: '206Pb',
-        desc: 'Comença amb ²³⁸U. La cadena inclou el radó ²²²Rn (gas perillós) i el poloni ²¹⁰Po. Acaba en ²⁰⁶Pb.',
+        desc: 'Comença amb ²³⁸U. La cadena inclou el radó ²²²Rn (gas radioactiu) i el poloni ²¹⁰Po. Acaba en ²⁰⁶Pb.',
+        diagram: {
+          src: 'img/series/urani.svg',
+          commons: 'https://commons.wikimedia.org/wiki/File:Decay_chain(4n%2B2,_Uranium_series).svg',
+          label: 'sèrie de l\'urani (4n+2)',
+          credit: 'Tosaka (Wikimedia Commons)'
+        },
         steps: [
-          { nuclide: '238U', Z: 92, A: 238, stable: false, decay: null, half: '—' },
-          { nuclide: '234Th', Z: 90, A: 234, decay: 'α', half: '4,47·10⁹ anys' },
-          { nuclide: '234Pa', Z: 91, A: 234, decay: 'β⁻', half: '24,1 dies' },
-          { nuclide: '234U', Z: 92, A: 234, decay: 'β⁻', half: '1,17 min' },
-          { nuclide: '230Th', Z: 90, A: 230, decay: 'α', half: '2,45·10⁵ anys' },
-          { nuclide: '226Ra', Z: 88, A: 226, decay: 'α', half: '7,54·10⁴ anys' },
-          { nuclide: '222Rn', Z: 86, A: 222, decay: 'α', half: '1 600 anys' },
-          { nuclide: '218Po', Z: 84, A: 218, decay: 'α', half: '3,82 dies' },
-          { nuclide: '214Pb', Z: 82, A: 214, decay: 'α', half: '3,1 min' },
-          { nuclide: '214Bi', Z: 83, A: 214, decay: 'β⁻', half: '26,8 min' },
-          { nuclide: '214Po', Z: 84, A: 214, decay: 'β⁻', half: '19,9 min' },
-          { nuclide: '210Pb', Z: 82, A: 210, decay: 'α', half: '164 μs' },
-          { nuclide: '210Bi', Z: 83, A: 210, decay: 'β⁻', half: '22,3 anys' },
-          { nuclide: '210Po', Z: 84, A: 210, decay: 'β⁻', half: '5,01 dies' },
-          { nuclide: '206Pb', Z: 82, A: 206, stable: true, decay: null, half: 'Estable' }
+          { A: 238, sym: 'U', Z: 92, half: '4,47·10⁹ anys', decay: 'α' },
+          { A: 234, sym: 'Th', Z: 90, half: '24,1 dies', decay: 'β⁻' },
+          { A: 234, sym: 'Pa', Z: 91, half: '1,17 min', decay: 'β⁻' },
+          { A: 234, sym: 'U', Z: 92, half: '2,45·10⁵ anys', decay: 'α' },
+          { A: 230, sym: 'Th', Z: 90, half: '7,54·10⁴ anys', decay: 'α' },
+          { A: 226, sym: 'Ra', Z: 88, half: '1 600 anys', decay: 'α' },
+          { A: 222, sym: 'Rn', Z: 86, half: '3,82 dies', decay: 'α' },
+          { A: 218, sym: 'Po', Z: 84, half: '3,10 min', decay: 'α' },
+          { A: 214, sym: 'Pb', Z: 82, half: '26,8 min', decay: 'β⁻' },
+          { A: 214, sym: 'Bi', Z: 83, half: '19,9 min', decay: 'β⁻' },
+          { A: 214, sym: 'Po', Z: 84, half: '164 μs', decay: 'α' },
+          { A: 210, sym: 'Pb', Z: 82, half: '22,3 anys', decay: 'β⁻' },
+          { A: 210, sym: 'Bi', Z: 83, half: '5,01 dies', decay: 'β⁻' },
+          { A: 210, sym: 'Po', Z: 84, half: '138,4 dies', decay: 'α' },
+          { A: 206, sym: 'Pb', Z: 82, half: 'Estable', decay: null, stable: true }
         ]
       },
       actini: {
         name: 'Actini (4n+3)',
-        start: '235U', end: '207Pb',
-        desc: 'Comença amb ²³⁵U (combustible nuclear). Nombre de massa = 4n+3. Acaba en ²⁰⁷Pb estable.',
+        desc: 'Comença amb ²³⁵U (combustible fissil). Nombre de massa = 4n+3. Acaba en ²⁰⁷Pb estable.',
+        diagram: {
+          src: 'img/series/actini.svg',
+          commons: 'https://commons.wikimedia.org/wiki/File:Decay_Chain_of_Actinium.svg',
+          label: 'sèrie de l\'actini (4n+3)',
+          credit: 'Edgar Bonet (Wikimedia Commons)'
+        },
         steps: [
-          { nuclide: '235U', Z: 92, A: 235, stable: false, decay: null, half: '—' },
-          { nuclide: '231Th', Z: 90, A: 231, decay: 'α', half: '7,04·10⁸ anys' },
-          { nuclide: '231Pa', Z: 91, A: 231, decay: 'β⁻', half: '25,5 h' },
-          { nuclide: '227Ac', Z: 89, A: 227, decay: 'β⁻', half: '3,28·10⁴ anys' },
-          { nuclide: '227Th', Z: 90, A: 227, decay: 'β⁻', half: '21,8 anys' },
-          { nuclide: '223Ra', Z: 88, A: 223, decay: 'α', half: '18,7 dies' },
-          { nuclide: '219Rn', Z: 86, A: 219, decay: 'α', half: '11,4 dies' },
-          { nuclide: '215Po', Z: 84, A: 215, decay: 'α', half: '3,96 s' },
-          { nuclide: '211Pb', Z: 82, A: 211, decay: 'α', half: '1,78 ms' },
-          { nuclide: '211Bi', Z: 83, A: 211, decay: 'β⁻', half: '2,14 min' },
-          { nuclide: '207Tl', Z: 81, A: 207, decay: 'α', half: '2,81 min' },
-          { nuclide: '207Pb', Z: 82, A: 207, stable: true, decay: null, half: 'Estable' }
+          { A: 235, sym: 'U', Z: 92, half: '7,04·10⁸ anys', decay: 'α' },
+          { A: 231, sym: 'Th', Z: 90, half: '25,5 h', decay: 'β⁻' },
+          { A: 231, sym: 'Pa', Z: 91, half: '3,28·10⁴ anys', decay: 'α' },
+          { A: 227, sym: 'Ac', Z: 89, half: '21,77 anys', decay: 'β⁻' },
+          { A: 227, sym: 'Th', Z: 90, half: '18,68 dies', decay: 'α' },
+          { A: 223, sym: 'Ra', Z: 88, half: '11,43 dies', decay: 'α' },
+          { A: 219, sym: 'Rn', Z: 86, half: '3,96 s', decay: 'α' },
+          { A: 215, sym: 'Po', Z: 84, half: '1,78 ms', decay: 'α' },
+          { A: 211, sym: 'Pb', Z: 82, half: '36,1 min', decay: 'β⁻' },
+          { A: 211, sym: 'Bi', Z: 83, half: '2,14 min', decay: 'α' },
+          { A: 207, sym: 'Tl', Z: 81, half: '4,77 min', decay: 'β⁻' },
+          { A: 207, sym: 'Pb', Z: 82, half: 'Estable', decay: null, stable: true }
         ]
       }
     };
@@ -181,44 +336,40 @@
     }
 
     function nuclideHtml(step, idx, active) {
-      const sym = step.nuclide.replace(/^\d+/, '');
-      const mass = step.nuclide.match(/^\d+/)[0];
       return `<div class="nuclide ${step.stable ? 'stable' : ''} ${active ? 'active' : ''}" data-idx="${idx}">
-        <div class="mass">${mass}</div>
-        <div class="sym">${sym}</div>
+        <div class="mass">${step.A}</div>
+        <div class="sym">${step.sym}</div>
         <div class="Z">Z=${step.Z}</div>
       </div>`;
+    }
+
+    // Fletxa: representa la desintegració del nuclid PARE (tipus i la seva semivida)
+    function arrowHtml(parent) {
+      return `<div class="decay-arrow"><span class="type">${parent.decay}</span><span>${parent.half}</span></div>`;
     }
 
     function renderChain() {
       const s = SERIES[currentSeries];
       document.getElementById('seriesDesc').textContent = s.desc;
       const container = document.getElementById('chainContainer');
-      container.innerHTML = '';
-
       const steps = s.steps;
-      const visible = showAll ? steps.map((_, i) => i) : [Math.min(currentStep, steps.length - 1)];
-
-      if (!showAll && currentStep > 0) {
-        container.innerHTML += nuclideHtml(steps[currentStep - 1], currentStep - 1, false);
-        const prev = steps[currentStep];
-        container.innerHTML += `<div class="decay-arrow"><span class="type">${prev.decay || '?'}</span>${prev.half}</div>`;
-      }
+      currentStep = Math.min(currentStep, steps.length - 1);
+      container.innerHTML = '';
 
       if (showAll) {
         steps.forEach((step, i) => {
-          if (i > 0) {
-            container.innerHTML += `<div class="decay-arrow"><span class="type">${step.decay}</span><span>${step.half}</span></div>`;
-          }
+          if (i > 0) container.innerHTML += arrowHtml(steps[i - 1]);
           container.innerHTML += nuclideHtml(step, i, i === currentStep);
         });
       } else {
-        const step = steps[currentStep];
-        container.innerHTML += nuclideHtml(step, currentStep, true);
+        if (currentStep > 0) {
+          container.innerHTML += nuclideHtml(steps[currentStep - 1], currentStep - 1, false);
+          container.innerHTML += arrowHtml(steps[currentStep - 1]);
+        }
+        container.innerHTML += nuclideHtml(steps[currentStep], currentStep, true);
         if (currentStep < steps.length - 1) {
-          const next = steps[currentStep + 1];
-          container.innerHTML += `<div class="decay-arrow"><span class="type">${next.decay}</span><span>${next.half}</span></div>`;
-          container.innerHTML += nuclideHtml(next, currentStep + 1, false);
+          container.innerHTML += arrowHtml(steps[currentStep]);
+          container.innerHTML += nuclideHtml(steps[currentStep + 1], currentStep + 1, false);
         }
       }
 
@@ -231,35 +382,69 @@
       });
     }
 
+    function decayEquation(step, next) {
+      if (step.decay === 'α') {
+        return `{}^{${step.A}}_{${step.Z}}\\mathrm{${step.sym}} \\rightarrow {}^{${next.A}}_{${next.Z}}\\mathrm{${next.sym}} + {}^{4}_{2}\\mathrm{He}`;
+      }
+      return `{}^{${step.A}}_{${step.Z}}\\mathrm{${step.sym}} \\rightarrow {}^{${next.A}}_{${next.Z}}\\mathrm{${next.sym}} + e^{-} + \\bar{\\nu}_e`;
+    }
+
     function renderDetail() {
       const s = SERIES[currentSeries];
       const step = s.steps[currentStep];
       const detail = document.getElementById('stepDetail');
+
       if (step.stable) {
-        detail.innerHTML = `<h3>${step.nuclide} — Nuclid estable final</h3>
-          <p>La cadena ${s.start} → ${s.end} s'ha completat. Aquest nuclid no es desintegra més.</p>
-          <p><strong>Classificació:</strong> ${s.name}. Nombre de massa final A = ${step.A}.</p>`;
+        detail.innerHTML = `<h3>${step.A}${step.sym} — nuclid estable final</h3>
+          <p>La cadena de la sèrie ${s.name} s'ha completat: aquest nuclid ja no es desintegra.</p>
+          <p><strong>Nombre atòmic:</strong> Z = ${step.Z} &nbsp;·&nbsp; <strong>Nombre de massa:</strong> A = ${step.A}.</p>`;
+        renderMath(detail);
         return;
       }
+
       const next = s.steps[currentStep + 1];
-      let eq = '';
-      if (next && next.decay === 'α') {
-        eq = `${step.nuclide} → ${next.nuclide} + ⁴He`;
-      } else if (next && next.decay === 'β⁻') {
-        eq = `${step.nuclide} → ${next.nuclide} + e⁻ + ν̄`;
-      } else if (currentStep === 0) {
-        eq = `Inici de la sèrie: ${step.nuclide}`;
-      }
+      const tipus = step.decay === 'α'
+        ? 'Emissió α (Z −2, A −4)'
+        : 'Emissió β⁻ (Z +1, A igual)';
       detail.innerHTML = `
-        <h3>Pas ${currentStep + 1} de ${s.steps.length}: ${step.nuclide}</h3>
-        <p><strong>Equació:</strong> ${eq}</p>
-        <p><strong>Semivida:</strong> ${next ? next.half : step.half} &nbsp;·&nbsp; <strong>Z = ${step.Z}, A = ${step.A}</strong></p>
-        <p><strong>Tipus:</strong> ${next ? (next.decay === 'α' ? 'Emissió α (número atòmic −2, massa −4)' : 'Emissió β⁻ (número atòmic +1, massa igual)') : '—'}</p>`;
+        <h3>Pas ${currentStep + 1} de ${s.steps.length - 1}: desintegració de ${step.A}${step.sym}</h3>
+        <div class="eq"><span data-math="${decayEquation(step, next)}"></span></div>
+        <p><strong>Semivida de ${step.A}${step.sym}:</strong> ${step.half}</p>
+        <p><strong>Tipus:</strong> ${tipus} &nbsp;·&nbsp; <strong>Z = ${step.Z}, A = ${step.A}</strong></p>`;
+      renderMath(detail);
+    }
+
+    function updateDiagram() {
+      const s = SERIES[currentSeries];
+      const d = s.diagram;
+      const img = document.getElementById('seriesDiagram');
+      const cap = document.getElementById('seriesDiagramCap');
+      if (!img || !cap || !d) return;
+      img.src = d.src;
+      img.alt = `Diagrama de la ${d.label} segons Wikimedia Commons`;
+      cap.innerHTML = `Diagrama de la ${d.label} ·
+        <a href="${d.commons}" target="_blank" rel="noopener">Wikimedia Commons</a>
+        · ${d.credit} ·
+        <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>`;
+    }
+
+    function updateStatus() {
+      const s = SERIES[currentSeries];
+      const step = s.steps[currentStep];
+      const status = document.getElementById('chainStatus');
+      if (!status) return;
+      if (step.stable) {
+        status.textContent = `Sèrie ${s.name}. Nuclid final estable: A=${step.A}, ${step.sym}, Z=${step.Z}.`;
+      } else {
+        status.textContent = `Sèrie ${s.name}, pas ${currentStep + 1}: ${step.A} ${step.sym} (Z=${step.Z}) es desintegra per emissió ${step.decay}, semivida ${step.half}.`;
+      }
     }
 
     function render() {
       renderChain();
       renderDetail();
+      updateDiagram();
+      updateStatus();
     }
 
     renderTabs();
