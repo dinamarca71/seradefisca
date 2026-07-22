@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interferència de Young — Simulador</title>
+  <meta name="description" content="Simulador de la interferència de Young (doble escletxa): franges d'interferència segons la longitud d'ona, la separació de les escletxes i la distància a la pantalla.">
+  <title>Interferència de Young — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
   <link rel="stylesheet" href="../css/comunes.css">
 </head>
 <body>
@@ -15,26 +17,37 @@
       <a href="interferencia-young.html" class="active">Young</a>
       <a href="efecte-doppler.html">Doppler</a>
     </nav>
-    <h1>Interferència de Young — Doble Fenda</h1>
+    <h1>Interferència de Young — Doble Escletxa</h1>
     <p>
-      Dues fentes il·luminades per una ona coherent generen un patró d'interferència a la pantalla.
+      Dues escletxes il·luminades per una ona coherent generen un patró d'interferència a la pantalla.
       Observa com canvien les franges brillants i fosques en variar λ, d i L.
     </p>
   </header>
 
   <main>
     <section class="formula-box">
-      <h2>Condició d'interferència</h2>
-      <p class="formula">Δ = d · sin θ ≈ d · y / L</p>
-      <p class="formula-note">
-        Constructiva: Δ = mλ &nbsp;·&nbsp; Destructiva: Δ = (m + ½)λ &nbsp;·&nbsp;
-        Separació entre franges: Δy = λL / d
-      </p>
+      <h2>Model físic</h2>
+      <div class="math-row">
+        <span data-math="\Delta = d\,\sin\theta \approx \dfrac{d\,y}{L}"></span>
+        <span data-math="\text{Màxim: } \Delta = m\lambda"></span>
+        <span data-math="\text{Mínim: } \Delta = \left(m+\tfrac{1}{2}\right)\lambda"></span>
+        <span data-math="I(y) = I_0\cos^{2}\!\left(\dfrac{\pi d\,y}{\lambda L}\right)"></span>
+        <span data-math="y_m = m\,\dfrac{\lambda L}{d}"></span>
+        <span data-math="\Delta y = \dfrac{\lambda L}{d}"></span>
+      </div>
+      <ul class="model-hyp">
+        <li>Llum monocromàtica i coherent: mateixa λ i diferència de fase constant a les dues escletxes.</li>
+        <li>Escletxes molt estretes i molt properes comparades amb L (es tracten com a fonts puntuals).</li>
+        <li>Aproximació d'angle petit: sin θ ≈ tan θ ≈ y/L.</li>
+        <li>Interferència de <strong>dues</strong> fonts: franges d'intensitat pràcticament iguals (sense el factor de difracció d'escletxa finita).</li>
+      </ul>
     </section>
 
     <section class="canvas-section">
       <div class="canvas-header"><h2>Esquema experimental i patró a la pantalla</h2></div>
-      <canvas id="mainCanvas" class="h360"></canvas>
+      <canvas id="mainCanvas" class="h360" role="img"
+        aria-label="Esquema d'una font monocromàtica que il·lumina dues escletxes separades una distància d; a la dreta, una pantalla situada a distància L mostra el patró de franges brillants i fosques d'interferència."></canvas>
+      <p class="sr-only" id="canvasStatus" aria-live="polite"></p>
     </section>
 
     <div class="two-col">
@@ -46,14 +59,14 @@
           <p class="param-desc">400 nm (violeta) – 700 nm (vermell)</p>
         </div>
         <div class="param">
-          <div class="param-header"><label><span class="symbol">d</span> — Separació fentes</label><span class="param-value" id="d-val"></span></div>
+          <div class="param-header"><label><span class="symbol">d</span> — Separació escletxes</label><span class="param-value" id="d-val"></span></div>
           <input type="range" id="d" min="0.05" max="0.5" step="0.01" value="0.15">
-          <p class="param-desc">Distància entre les dues fentes (mm)</p>
+          <p class="param-desc">Distància entre les dues escletxes (mm)</p>
         </div>
         <div class="param">
           <div class="param-header"><label><span class="symbol">L</span> — Distància a pantalla</label><span class="param-value" id="L-val"></span></div>
           <input type="range" id="L" min="0.5" max="3" step="0.05" value="1.5">
-          <p class="param-desc">Distància fentes–pantalla (m)</p>
+          <p class="param-desc">Distància escletxes–pantalla (m)</p>
         </div>
       </section>
 
@@ -75,15 +88,15 @@
       <div class="preset-buttons">
         <button class="btn" data-preset="red">Llum vermella (λ = 650 nm)</button>
         <button class="btn" data-preset="green">Llum verda (λ = 532 nm)</button>
-        <button class="btn" data-preset="narrow">Fentes molt properes (d petit → franges amples)</button>
-        <button class="btn" data-preset="wide">Fentes allunyades (d gran → franges estretes)</button>
+        <button class="btn" data-preset="narrow">Escletxes molt properes (d petit → franges amples)</button>
+        <button class="btn" data-preset="wide">Escletxes allunyades (d gran → franges estretes)</button>
       </div>
     </section>
 
     <section class="concepts">
       <h2>Conceptes clau</h2>
       <ul>
-        <li><strong>Coherència:</strong> les dues fentes han de mantenir una diferència de fase constant (mateix λ, mateixa font).</li>
+        <li><strong>Coherència:</strong> les dues escletxes han de mantenir una diferència de fase constant (mateix λ, mateixa font).</li>
         <li><strong>Diferència de camí Δ:</strong> si Δ = mλ → interferència constructiva (franja brillant); si Δ = (m+½)λ → destructiva (fosca).</li>
         <li><strong>Δy = λL/d:</strong> augmentar L o λ separa més les franges; augmentar d les acosta.</li>
         <li><strong>Aproximació de petit angle:</strong> sin θ ≈ tan θ ≈ y/L quan θ és petit (règim habitual a batxillerat).</li>
@@ -95,8 +108,20 @@
   </footer>
   </main>
 
+  <script src="../vendor/katex/katex.min.js"></script>
   <script src="../js/utilitats.js"></script>
   <script>
+    function renderMath(root) {
+      root = root || document;
+      const katex = window.katex;
+      root.querySelectorAll('[data-math]').forEach(el => {
+        const src = el.dataset.math || el.textContent || '';
+        if (!katex) { el.textContent = src; return; }
+        katex.render(src, el, { throwOnError: false, strict: 'ignore', displayMode: false });
+      });
+    }
+    renderMath();
+
     const state = { lambda: 550e-9, d: 0.15e-3, L: 1.5 };
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
@@ -115,10 +140,9 @@
     }
 
     function intensity(y) {
-      const delta = state.d * y / state.L;
-      const beta = Math.PI * delta / state.lambda;
-      if (Math.abs(beta) < 1e-10) return 1;
-      return Math.pow(Math.sin(beta) / beta, 2);
+      const delta = state.d * y / state.L;          // diferència de camí Δ
+      const beta = Math.PI * delta / state.lambda;  // meitat de la diferència de fase
+      return Math.pow(Math.cos(beta), 2);           // interferència de dues fonts: I ∝ cos²
     }
 
     function updateDerived() {
@@ -141,6 +165,11 @@
         card.innerHTML = `<span>Franja m = ${m}</span><strong>y = ${formatNum(y * 1000, 2)} mm</strong>`;
         grid.appendChild(card);
       }
+
+      const status = document.getElementById('canvasStatus');
+      if (status) {
+        status.textContent = `λ = ${formatNum(state.lambda * 1e9, 0)} nm, d = ${formatNum(state.d * 1e3, 2)} mm, L = ${formatNum(state.L, 2)} m. Separació entre franges Δy = ${formatNum(dy * 1000, 2)} mm.`;
+      }
     }
 
     function draw() {
@@ -153,6 +182,10 @@
       const midY = h * 0.5;
       const slitX = setupW * 0.55;
       const sourceX = 30;
+
+      const Y_HALF = 0.02;                              // ±20 mm físics visibles a la pantalla (escala FIXA)
+      const yScale = (h * 0.38) / Y_HALF;              // metres → píxels a la pantalla
+      const fringe = state.lambda * state.L / state.d; // Δy = λL/d
 
       // Source
       ctx.fillStyle = nmToRgb(state.lambda * 1e9);
@@ -170,14 +203,14 @@
       ctx.fillRect(slitX - 4, midY + slitGap / 2 - 6, 8, 12);
       ctx.fillStyle = '#64748b'; ctx.fillText('d', slitX + 18, midY + 4);
 
-      // Rays to screen
+      // Rajos cap als màxims reals de la pantalla
       ctx.strokeStyle = nmToRgb(state.lambda * 1e9);
       ctx.globalAlpha = 0.35;
       ctx.lineWidth = 1;
       for (let m = -2; m <= 2; m++) {
-        const yScreen = midY + m * (state.lambda * state.L / state.d) * (h * 0.35 / (3 * state.lambda * state.L / state.d));
-        const scale = h * 0.35 / (3 * state.lambda * state.L / state.d);
-        const yTarget = midY + m * state.lambda * state.L / state.d * scale;
+        const yPhys = m * fringe;
+        if (Math.abs(yPhys) > Y_HALF) continue;
+        const yTarget = midY + yPhys * yScale;
         ctx.beginPath();
         ctx.moveTo(sourceX + 8, midY);
         ctx.lineTo(slitX, midY - slitGap / 2);
@@ -212,7 +245,7 @@
       const color = nmToRgb(state.lambda * 1e9);
 
       for (let py = 0; py < patH; py++) {
-        const yPhys = ((py - patH / 2) / (patH / 2)) * 3 * state.lambda * state.L / state.d;
+        const yPhys = ((py - patH / 2) / (patH / 2)) * Y_HALF;
         const I = intensity(yPhys);
         ctx.fillStyle = color;
         ctx.globalAlpha = I;
@@ -231,12 +264,11 @@
       ctx.beginPath(); ctx.moveTo(patLeft, midY); ctx.lineTo(patLeft + patW, midY); ctx.stroke();
       ctx.fillStyle = '#64748b'; ctx.fillText('y', patLeft + patW - 10, midY + 16);
 
-      // Mark maxima positions
-      const scale = patH / (2 * 3 * state.lambda * state.L / state.d);
+      // Marca les posicions dels màxims (y_m = m·λL/d) amb escala fixa
       ctx.fillStyle = '#059669';
-      for (let m = -2; m <= 2; m++) {
-        const yPos = midY + m * state.lambda * state.L / state.d * scale;
-        if (yPos > patTop && yPos < patTop + patH) {
+      for (let m = -20; m <= 20; m++) {
+        const yPos = midY + m * fringe * yScale;
+        if (yPos > patTop + 1 && yPos < patTop + patH - 1) {
           ctx.beginPath(); ctx.arc(patLeft - 6, yPos, 3, 0, TAU); ctx.fill();
         }
       }

@@ -267,6 +267,13 @@ canvas.h360 { height: 360px; }
 .info-card span { display: block; color: var(--muted); margin-bottom: 0.15rem; }
 .info-card strong { font-family: Consolas, monospace; font-size: 0.95rem; }
 
+.math-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem 1.25rem; margin-top: 0.35rem; }
+.math-row [data-math] { padding: 0.3rem 0; }
+@media (max-width: 640px) { .math-row { grid-template-columns: 1fr; } }
+.model-hyp { list-style: none; padding: 0; margin: 0.5rem 0 0; font-size: 0.85rem; color: var(--muted); }
+.model-hyp li { padding-left: 1.2rem; position: relative; margin-bottom: 0.25rem; }
+.model-hyp li::before { content: "·"; position: absolute; left: 0.3rem; color: var(--accent); font-weight: 700; }
+
 /* Pack hub */
 .pack-grid {
   display: grid;
