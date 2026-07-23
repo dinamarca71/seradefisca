@@ -3,14 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ones Estacionàries — Simulador</title>
+  <meta name="description" content="Ones estacionàries en una corda: nodes i ventres segons les condicions de contorn (extrems fixos, un lliure o dos lliures).">
+  <title>Ones estacionàries — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
   <link rel="stylesheet" href="../css/comunes.css">
   <style>
-    .wave-panel { border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); background: var(--surface); }
-    .panel-head { padding: 0.85rem 1.1rem; background: var(--wave1-bg); border-bottom: 1px solid #bfdbfe; }
-    .panel-head h3 { font-size: 1rem; }
-    .panel-body { padding: 1rem 1.1rem; }
-    select.boundary { width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); font-size: 0.875rem; margin-bottom: 0.85rem; }
+    select.boundary {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.875rem;
+      margin: 0.35rem 0 0.85rem;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .harm-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 0.7rem;
+      margin: 0.35rem 0 0.75rem;
+      line-height: 1.45;
+    }
+    .harm-note strong { color: var(--text); }
   </style>
 </head>
 <body>
@@ -22,32 +40,45 @@
       <a href="interferencia-young.html">Young</a>
       <a href="efecte-doppler.html">Doppler</a>
     </nav>
-    <h1>Ones Estacionàries en una Corda</h1>
+    <h1>Ones estacionàries en una corda</h1>
     <p>
-      Resultat de la superposició de dues ones de mateixa A, ω i k que viatgen en direccions oposades.
-      Observa nodes (amplitud zero) i ventres (amplitud màxima).
+      Superposició de dues ones de la mateixa amplitud, freqüència i longitud d'ona
+      que viatgen en sentits oposats. Observa nodes (amplitud zero) i ventres
+      (amplitud màxima) segons les condicions de contorn.
     </p>
   </header>
 
   <main>
     <section class="formula-box">
-      <h2>Equació</h2>
-      <p class="formula" id="formulaText">y(x, t) = 2A · sin(nπx/L) · cos(ωt)</p>
-      <p class="formula-note">Extrems fixos: n = 1, 2, 3… &nbsp;·&nbsp; Un extrem lliure: només harmonics imparells (m = 1, 2, 3…)</p>
+      <h2>Model físic</h2>
+      <div class="math-row">
+        <span data-math="y(x,t)=2A\,\psi(x)\,\cos(\omega t)"></span>
+        <span data-math="v=\dfrac{\lambda}{T}=\dfrac{\omega}{k}"></span>
+        <span id="mathLambda" data-math="\lambda_n=\dfrac{2L}{n}\quad(n=1,2,3,\ldots)"></span>
+        <span id="mathPsi" data-math="\psi(x)=\sin\!\left(\dfrac{n\pi x}{L}\right)"></span>
+      </div>
+      <ul class="model-hyp">
+        <li>Dues ones progressives idèntiques en sentits oposats (sense atenuació ni fregament).</li>
+        <li>La corda és ideal: tensió i densitat lineals constants; la velocitat <span data-math="v"></span> és la mateixa a tots els modes.</li>
+        <li>Les condicions de contorn seleccionen quins modes (valors de <span data-math="n"></span>) són possibles.</li>
+        <li id="hypBoundary">Extrems fixos: nodes a <span data-math="x=0"></span> i <span data-math="x=L"></span> → <span data-math="\lambda_n=2L/n"></span>.</li>
+      </ul>
     </section>
 
     <section class="canvas-section">
       <div class="canvas-header">
         <h2>Corda en l'instant t</h2>
         <div class="legend">
-          <label class="legend-item"><input type="checkbox" id="showEnvelope" checked><span class="legend-dot dot-w2"></span> Envolvent ±2A|sin(kx)|</label>
+          <label class="legend-item"><input type="checkbox" id="showEnvelope" checked><span class="legend-dot dot-w2"></span> Envolvent ±2A|ψ(x)|</label>
           <label class="legend-item"><input type="checkbox" id="showNodes" checked><span class="legend-dot dot-sum"></span> Nodes / ventres</label>
         </div>
       </div>
-      <canvas id="mainCanvas" class="h320"></canvas>
+      <canvas id="mainCanvas" class="h320" role="img"
+        aria-label="Corda horitzontal que vibra en un mode estacionari: punts verds marquen nodes i punts vermells ventres; l'envolvent mostra l'amplitud màxima en cada punt."></canvas>
+      <p class="sr-only" id="canvasStatus" aria-live="polite"></p>
       <div class="controls-row">
-        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
-        <button class="btn" id="btnReset">↺ Reiniciar temps</button>
+        <button class="btn btn-primary" id="btnPlay" type="button">▶ Reproduir</button>
+        <button class="btn" id="btnReset" type="button">↺ Reiniciar</button>
         <div class="slider-group">
           <label for="speedSlider">Velocitat</label>
           <input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1">
@@ -65,39 +96,45 @@
         <h2>Paràmetres de la corda</h2>
         <label for="boundary" style="font-size:0.875rem;font-weight:600;">Condició de contorn</label>
         <select id="boundary" class="boundary">
-          <option value="fixed">Extrems fixos (x = 0 i x = L)</option>
-          <option value="free">Extrem fix + extrem lliure</option>
+          <option value="fixed">Dos extrems fixos</option>
+          <option value="mixed">Un extrem fix + un extrem lliure</option>
+          <option value="free">Dos extrems lliures</option>
         </select>
+        <p class="harm-note" id="harmNote"></p>
 
         <div class="param">
-          <div class="param-header"><label><span class="symbol">L</span> — Longitud</label><span class="param-value" id="L-val"></span></div>
+          <div class="param-header"><label for="L"><span class="symbol">L</span> — Longitud</label><span class="param-value" id="L-val"></span></div>
           <input type="range" id="L" min="1" max="4" step="0.1" value="2">
           <p class="param-desc">Longitud de la corda (m)</p>
         </div>
         <div class="param">
-          <div class="param-header"><label><span class="symbol">n</span> — Harmònic</label><span class="param-value" id="n-val"></span></div>
+          <div class="param-header"><label for="n"><span class="symbol">n</span> — <span id="nLabel">Harmònic</span></label><span class="param-value" id="n-val"></span></div>
           <input type="range" id="n" min="1" max="6" step="1" value="2">
-          <p class="param-desc">Mode de vibració (enter positiu)</p>
+          <p class="param-desc" id="nDesc">Mode de vibració</p>
         </div>
         <div class="param">
-          <div class="param-header"><label><span class="symbol">A</span> — Amplitud</label><span class="param-value" id="A-val"></span></div>
+          <div class="param-header"><label for="A"><span class="symbol">A</span> — Amplitud</label><span class="param-value" id="A-val"></span></div>
           <input type="range" id="A" min="0.1" max="1.5" step="0.05" value="0.8">
+          <p class="param-desc">Amplitud de cada ona progressiva (m); el ventre arriba a 2A</p>
         </div>
         <div class="param">
-          <div class="param-header"><label><span class="symbol">ω</span> — Freq. angular</label><span class="param-value" id="omega-val"></span></div>
+          <div class="param-header"><label for="omega"><span class="symbol">ω</span> — Freq. angular</label><span class="param-value" id="omega-val"></span></div>
           <input type="range" id="omega" min="1" max="8" step="0.1" value="4">
+          <p class="param-desc">Freqüència angular de l'oscil·lació (rad/s)</p>
         </div>
       </section>
 
       <section class="controls-panel">
         <h2>Valors derivats</h2>
         <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
-          <div><span>λₙ = </span><strong id="lambdaN">—</strong></div>
+          <div><span>λ<sub>n</sub> = </span><strong id="lambdaN">—</strong></div>
           <div><span>T = 2π/ω = </span><strong id="period">—</strong></div>
-          <div><span>fₙ = v/λₙ = </span><strong id="freqN">—</strong></div>
-          <div><span>Nombre de nodes (incl. extrems): </span><strong id="numNodes">—</strong></div>
-          <div><span>Nombre de ventres: </span><strong id="numAntinodes">—</strong></div>
-          <div><span>v = ω/k (amb k = nπ/L): </span><strong id="waveSpeed">—</strong></div>
+          <div><span>f<sub>n</sub> = v/λ<sub>n</sub> = </span><strong id="freqN">—</strong></div>
+          <div><span>v = λ/T = ω/k = </span><strong id="waveSpeed">—</strong></div>
+          <div><span>k = 2π/λ = </span><strong id="kWave">—</strong></div>
+          <div><span>Nodes: </span><strong id="numNodes">—</strong></div>
+          <div><span>Ventres: </span><strong id="numAntinodes">—</strong></div>
+          <div><span>Mode: </span><strong id="modeDesc">—</strong></div>
         </div>
       </section>
     </div>
@@ -105,31 +142,87 @@
     <section class="presets">
       <h2>Escenaris</h2>
       <div class="preset-buttons">
-        <button class="btn" data-preset="fundamental">Harmònic fonamental (n = 1)</button>
-        <button class="btn" data-preset="second">Segon harmònic (n = 2)</button>
-        <button class="btn" data-preset="third">Tercer harmònic (n = 3)</button>
-        <button class="btn" data-preset="free1">Extrem lliure — mode 1</button>
+        <button class="btn" type="button" data-preset="fund">Fixos — fonamental (n = 1)</button>
+        <button class="btn" type="button" data-preset="second">Fixos — n = 2</button>
+        <button class="btn" type="button" data-preset="third">Fixos — n = 3</button>
+        <button class="btn" type="button" data-preset="mixed1">Fix+lliure — n = 1</button>
+        <button class="btn" type="button" data-preset="mixed3">Fix+lliure — n = 3</button>
+        <button class="btn" type="button" data-preset="free2">Dos lliures — n = 2</button>
       </div>
     </section>
 
     <section class="concepts">
-      <h2>Conceptes clau</h2>
-      <ul>
-        <li><strong>Ona estacionària:</strong> no transporta energia neta; l'energia queda confinada entre nodes.</li>
-        <li><strong>Node:</strong> punt on l'amplitud és sempre zero. <strong>Ventre:</strong> amplitud màxima (2A).</li>
-        <li><strong>Extrems fixos:</strong> només hi ha nodes als extrems → λₙ = 2L/n.</li>
-        <li><strong>Extrem lliure:</strong> hi ha un ventre a l'extrem lliure → λₘ = 4L/(2m−1).</li>
-        <li><strong>Relació amb superposició:</strong> y = A cos(kx−ωt) + A cos(kx+ωt) = 2A cos(kx) cos(ωt) = 2A sin(kx) cos(ωt−π/2).</li>
+      <details open>
+        <summary><h2>Conceptes clau</h2></summary>
+        <ul>
+          <li><strong>Ona estacionària:</strong> no transporta energia neta al llarg de la corda; l'energia queda confinada entre nodes.</li>
+          <li><strong>Node:</strong> amplitud sempre zero. <strong>Ventre:</strong> amplitud màxima (2A).</li>
+          <li><strong>Dos extrems fixos:</strong> nodes als dos caps → λ<sub>n</sub> = 2L/n amb n = 1, 2, 3… (1r, 2n, 3r harmònic).</li>
+          <li><strong>Un fix + un lliure:</strong> node a un cap i ventre a l'altre → només harmònics <em>senars</em> n = 1, 3, 5… i λ<sub>n</sub> = 4L/n. Aquí n és l'índex del mode, no el «número d'ordre» 1r/2n/3r.</li>
+          <li><strong>Dos extrems lliures:</strong> ventres als dos caps → λ<sub>n</sub> = 2L/n amb n = 1, 2, 3… (mateixes longituds d'ona que amb dos fixos, però amb cosinus espacial).</li>
+          <li><strong>Velocitat de l'ona:</strong> v = λ/T = ω/k; és una propietat de la corda, independent del mode.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="recursos">
+      <h2>Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/wave-on-a-string" target="_blank" rel="noopener">Onda en una cuerda — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">Simulació de Colorado: pots fixar o deixar lliure un extrem i generar ones estacionàries.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/waves-intro" target="_blank" rel="noopener">Introducción a las ondas — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">Laboratori d'ones a l'aigua, so i llum: útil per contrastar progressives i estacionàries.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://openstax.org/books/f%C3%ADsica-universitaria-volumen-1/pages/16-6-ondas-estacionarias-y-resonancia" target="_blank" rel="noopener">Ondas estacionarias y resonancia — OpenStax</a>
+            <span class="lang">ES</span>
+            <span class="meta">Manual obert · modes en cordes i tubs, amb la nomenclatura dels harmònics.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Ona_estacion%C3%A0ria" target="_blank" rel="noopener">Ona estacionària — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">Resum amb nodes, ventres i exemples en cordes i columnes d'aire.</span>
+          </div>
+        </li>
       </ul>
     </section>
+
   <footer class="site-footer">
     <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
     <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i el model Claude Opus 4.8 (High).</p>
   </footer>
   </main>
 
+  <script src="../vendor/katex/katex.min.js"></script>
   <script src="../js/utilitats.js"></script>
   <script>
+    function renderMath(root) {
+      root = root || document;
+      const katex = window.katex;
+      root.querySelectorAll('[data-math]').forEach(el => {
+        const src = el.dataset.math || el.textContent || '';
+        if (!katex) { el.textContent = src; return; }
+        katex.render(src, el, { throwOnError: false, strict: 'ignore', displayMode: false });
+      });
+    }
+    renderMath();
+
     const state = {
       L: 2, n: 2, A: 0.8, omega: 4,
       boundary: 'fixed',
@@ -139,46 +232,172 @@
 
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
+    const nSlider = document.getElementById('n');
 
-    function kValue() {
-      if (state.boundary === 'fixed') return state.n * Math.PI / state.L;
-      const m = state.n;
-      return (2 * m - 1) * Math.PI / (2 * state.L);
+    /** Índex n del mode segons el criteri de selectivitat catalana. */
+    function modeN() {
+      return state.n;
     }
 
+    function lambdaN() {
+      if (state.boundary === 'mixed') return 4 * state.L / modeN();
+      return 2 * state.L / modeN();
+    }
+
+    function kValue() {
+      return TAU / lambdaN(); // k = 2π/λ
+    }
+
+    /** Part espacial ψ(x): sin o cos segons els contorns. */
     function spatialPart(x) {
-      const k = kValue();
-      return Math.sin(k * x);
+      const n = modeN();
+      const L = state.L;
+      if (state.boundary === 'fixed') return Math.sin(n * Math.PI * x / L);
+      if (state.boundary === 'free') return Math.cos(n * Math.PI * x / L);
+      // mixed: fix a x=0 (node), lliure a x=L (ventre); n = 1,3,5…
+      return Math.sin(n * Math.PI * x / (2 * L));
     }
 
     function yAt(x, t) {
       return 2 * state.A * spatialPart(x) * Math.cos(state.omega * t);
     }
 
-    function lambdaN() {
-      if (state.boundary === 'fixed') return 2 * state.L / state.n;
-      const m = state.n;
-      return 4 * state.L / (2 * m - 1);
+    function nodePositions() {
+      const n = modeN();
+      const L = state.L;
+      const nodes = [];
+      if (state.boundary === 'fixed') {
+        for (let j = 0; j <= n; j++) nodes.push(j * L / n);
+      } else if (state.boundary === 'free') {
+        for (let j = 0; j < n; j++) nodes.push((j + 0.5) * L / n);
+      } else {
+        // mixed: node a 0 i nodes interiors; NO node a L
+        nodes.push(0);
+        for (let j = 1; j < (n + 1) / 2; j++) nodes.push(2 * j * L / n);
+      }
+      return nodes;
+    }
+
+    function antinodePositions() {
+      const n = modeN();
+      const L = state.L;
+      const ant = [];
+      if (state.boundary === 'fixed') {
+        for (let j = 0; j < n; j++) ant.push((j + 0.5) * L / n);
+      } else if (state.boundary === 'free') {
+        for (let j = 0; j <= n; j++) ant.push(j * L / n);
+      } else {
+        // mixed: ventres a (1,3,5…)L/n i ventre a L
+        for (let j = 0; j < (n + 1) / 2; j++) ant.push((2 * j + 1) * L / n);
+      }
+      return ant;
+    }
+
+    function ensureValidN() {
+      if (state.boundary === 'mixed' && state.n % 2 === 0) {
+        state.n = Math.max(1, state.n - 1);
+      }
+      configureNSlider();
+      nSlider.value = state.n;
+      document.getElementById('n-val').textContent = String(state.n);
+    }
+
+    function configureNSlider() {
+      if (state.boundary === 'mixed') {
+        nSlider.min = 1;
+        nSlider.max = 7;
+        nSlider.step = 2;
+        document.getElementById('nLabel').textContent = 'Harmònic n (senar)';
+        document.getElementById('nDesc').textContent = 'Només valors senars: 1, 3, 5, 7';
+      } else {
+        nSlider.min = 1;
+        nSlider.max = 6;
+        nSlider.step = 1;
+        document.getElementById('nLabel').textContent = 'Harmònic n';
+        document.getElementById('nDesc').textContent = 'Mode de vibració: n = 1, 2, 3…';
+      }
+    }
+
+    function updateBoundaryUI() {
+      const note = document.getElementById('harmNote');
+      const hyp = document.getElementById('hypBoundary');
+      const mathLam = document.getElementById('mathLambda');
+      const mathPsi = document.getElementById('mathPsi');
+
+      if (state.boundary === 'fixed') {
+        note.innerHTML = '<strong>Dos extrems fixos:</strong> els modes es numeren n = 1, 2, 3… (1r, 2n, 3r harmònic). Nodes als dos caps.';
+        hyp.innerHTML = 'Extrems fixos: nodes a <span data-math="x=0"></span> i <span data-math="x=L"></span> → <span data-math="\\lambda_n=2L/n"></span> amb <span data-math="n=1,2,3,\\ldots"></span>.';
+        mathLam.dataset.math = '\\lambda_n=\\dfrac{2L}{n}\\quad(n=1,2,3,\\ldots)';
+        mathPsi.dataset.math = '\\psi(x)=\\sin\\!\\left(\\dfrac{n\\pi x}{L}\\right)';
+      } else if (state.boundary === 'mixed') {
+        note.innerHTML = '<strong>Un extrem fix + un de lliure:</strong> només són possibles els harmònics <strong>senars</strong> ' +
+          '<span data-math="n=1,3,5,7,\\ldots"></span>. Aquí <em>n</em> és l\'índex del mode (criteri actual de selectivitat), ' +
+          'no el número d\'ordre 1r/2n/3r. Així el mode n = 3 és el <em>harmònic 3</em>, no el «segon harmònic».';
+        hyp.innerHTML = 'Extrem fix a <span data-math="x=0"></span> (node) i lliure a <span data-math="x=L"></span> (ventre) → només <span data-math="n"></span> senar i <span data-math="\\lambda_n=4L/n"></span>.';
+        mathLam.dataset.math = '\\lambda_n=\\dfrac{4L}{n}\\quad(n=1,3,5,\\ldots)';
+        mathPsi.dataset.math = '\\psi(x)=\\sin\\!\\left(\\dfrac{n\\pi x}{2L}\\right)';
+      } else {
+        note.innerHTML = '<strong>Dos extrems lliures:</strong> ventres als dos caps. Modes n = 1, 2, 3… amb les mateixes λ que amb dos fixos, però amb part espacial en cosinus.';
+        hyp.innerHTML = 'Extrems lliures: ventres a <span data-math="x=0"></span> i <span data-math="x=L"></span> → <span data-math="\\lambda_n=2L/n"></span> amb <span data-math="n=1,2,3,\\ldots"></span>.';
+        mathLam.dataset.math = '\\lambda_n=\\dfrac{2L}{n}\\quad(n=1,2,3,\\ldots)';
+        mathPsi.dataset.math = '\\psi(x)=\\cos\\!\\left(\\dfrac{n\\pi x}{L}\\right)';
+      }
+      renderMath(note);
+      renderMath(hyp);
+      renderMath(mathLam.parentElement);
     }
 
     function updateDerived() {
       const lam = lambdaN();
       const k = kValue();
-      const v = state.omega / k;
+      const T = TAU / state.omega;
+      const v = lam / T; // v = λ/T (= ω/k)
       const f = v / lam;
+      const nodes = nodePositions();
+      const ants = antinodePositions();
+      const n = modeN();
+
       document.getElementById('lambdaN').textContent = formatNum(lam) + ' m';
-      document.getElementById('period').textContent = formatNum(TAU / state.omega) + ' s';
+      document.getElementById('period').textContent = formatNum(T) + ' s';
       document.getElementById('freqN').textContent = formatNum(f) + ' Hz';
       document.getElementById('waveSpeed').textContent = formatNum(v) + ' m/s';
+      document.getElementById('kWave').textContent = formatNum(k) + ' rad/m';
+      document.getElementById('numNodes').textContent = String(nodes.length);
+      document.getElementById('numAntinodes').textContent = String(ants.length);
 
-      if (state.boundary === 'fixed') {
-        document.getElementById('numNodes').textContent = state.n + 1;
-        document.getElementById('numAntinodes').textContent = state.n;
-        document.getElementById('formulaText').textContent = 'y(x, t) = 2A · sin(nπx/L) · cos(ωt)';
+      let modeTxt;
+      if (state.boundary === 'mixed') {
+        modeTxt = `n = ${n} (harmònic senar)`;
       } else {
-        document.getElementById('numNodes').textContent = state.n;
-        document.getElementById('numAntinodes').textContent = state.n;
-        document.getElementById('formulaText').textContent = 'y(x, t) = 2A · sin((2m−1)πx/2L) · cos(ωt)';
+        const ord = n === 1 ? '1r' : n === 2 ? '2n' : n === 3 ? '3r' : `${n}è`;
+        modeTxt = `n = ${n} (${ord} harmònic)`;
+      }
+      document.getElementById('modeDesc').textContent = modeTxt;
+
+      const status = document.getElementById('canvasStatus');
+      if (status) {
+        status.textContent = `Mode n = ${n}, λ = ${formatNum(lam)} m, ${nodes.length} nodes i ${ants.length} ventres.`;
+      }
+    }
+
+    function drawEndMarker(xPx, yZero, kind) {
+      // kind: 'fixed' | 'free'
+      if (kind === 'fixed') {
+        ctx.fillStyle = '#64748b';
+        ctx.beginPath();
+        ctx.moveTo(xPx, yZero - 12);
+        ctx.lineTo(xPx - 10, yZero + 8);
+        ctx.lineTo(xPx + 10, yZero + 8);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillRect(xPx - 2, yZero - 18, 4, 36);
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(xPx, yZero, 7, 0, TAU);
+        ctx.stroke();
       }
     }
 
@@ -197,7 +416,6 @@
       const yZero = toY(0);
       drawAxes(ctx, padL, padT, plotW, plotH, yZero, { x: 'x (m)', y: 'y (m)' });
 
-      // Corda
       ctx.strokeStyle = '#cbd5e1';
       ctx.lineWidth = 3;
       ctx.beginPath();
@@ -205,26 +423,10 @@
       ctx.lineTo(toX(state.L), yZero);
       ctx.stroke();
 
-      // Extrem fix (triangle)
-      ctx.fillStyle = '#64748b';
-      ctx.beginPath();
-      ctx.moveTo(toX(0), yZero - 12);
-      ctx.lineTo(toX(0) - 10, yZero + 8);
-      ctx.lineTo(toX(0) + 10, yZero + 8);
-      ctx.closePath();
-      ctx.fill();
-
-      if (state.boundary === 'free') {
-        ctx.fillStyle = '#94a3b8';
-        ctx.fillRect(toX(state.L) - 2, yZero - 18, 4, 36);
-      } else {
-        ctx.beginPath();
-        ctx.moveTo(toX(state.L), yZero - 12);
-        ctx.lineTo(toX(state.L) - 10, yZero + 8);
-        ctx.lineTo(toX(state.L) + 10, yZero + 8);
-        ctx.closePath();
-        ctx.fill();
-      }
+      const leftKind = state.boundary === 'free' ? 'free' : 'fixed';
+      const rightKind = state.boundary === 'fixed' ? 'fixed' : 'free';
+      drawEndMarker(toX(0), yZero, leftKind);
+      drawEndMarker(toX(state.L), yZero, rightKind);
 
       if (state.showEnvelope) {
         ctx.strokeStyle = '#fed7aa';
@@ -243,7 +445,6 @@
         ctx.setLineDash([]);
       }
 
-      // Onda
       ctx.strokeStyle = '#2563eb';
       ctx.lineWidth = 2.5;
       ctx.beginPath();
@@ -256,37 +457,21 @@
       ctx.stroke();
 
       if (state.showNodes) {
-        const k = kValue();
-        const nodes = [], antinodes = [];
-        if (state.boundary === 'fixed') {
-          for (let j = 0; j <= state.n; j++) nodes.push(j * state.L / state.n);
-          for (let j = 0; j < state.n; j++) antinodes.push((j + 0.5) * state.L / state.n);
-        } else {
-          const m = state.n;
-          nodes.push(0);
-          for (let j = 1; j < m; j++) nodes.push(2 * j * state.L / (2 * m - 1));
-          for (let j = 0; j < m - 1; j++) antinodes.push((4 * j + 1) * state.L / (2 * m - 1));
-          antinodes.push(state.L);
-        }
-
-        nodes.forEach(x => {
+        ctx.font = '10px Segoe UI';
+        ctx.textAlign = 'center';
+        nodePositions().forEach(x => {
           ctx.fillStyle = '#059669';
           ctx.beginPath();
           ctx.arc(toX(x), yZero, 5, 0, TAU);
           ctx.fill();
-          ctx.fillStyle = '#059669';
-          ctx.font = '10px Segoe UI';
-          ctx.textAlign = 'center';
           ctx.fillText('N', toX(x), yZero + 20);
         });
-
-        antinodes.forEach(x => {
-          if (x < 0 || x > state.L) return;
+        antinodePositions().forEach(x => {
+          if (x < -1e-9 || x > state.L + 1e-9) return;
           ctx.fillStyle = '#dc2626';
           ctx.beginPath();
           ctx.arc(toX(x), yZero, 5, 0, TAU);
           ctx.fill();
-          ctx.fillStyle = '#dc2626';
           ctx.fillText('V', toX(x), yZero + 20);
         });
       }
@@ -294,42 +479,58 @@
       ctx.fillStyle = '#1a2332';
       ctx.font = '13px Consolas, monospace';
       ctx.textAlign = 'left';
-      ctx.fillText(`t = ${formatNum(state.t)} s`, padL + 8, padT + 14);
+      ctx.fillText(`t = ${formatNum(state.t)} s · n = ${modeN()}`, padL + 8, padT + 14);
+
+      updateDerived();
     }
 
-    bindSlider('L', 'L-val', v => { state.L = v; updateDerived(); draw(); }, v => formatNum(v) + ' m');
-    bindSlider('n', 'n-val', v => { state.n = Math.round(v); updateDerived(); draw(); }, v => String(Math.round(v)));
+    function refreshAll() {
+      ensureValidN();
+      updateBoundaryUI();
+      draw();
+    }
+
+    bindSlider('L', 'L-val', v => { state.L = v; draw(); }, v => formatNum(v) + ' m');
+    bindSlider('n', 'n-val', v => {
+      state.n = Math.round(v);
+      if (state.boundary === 'mixed' && state.n % 2 === 0) state.n = Math.max(1, state.n - 1);
+      document.getElementById('n-val').textContent = String(state.n);
+      draw();
+    }, v => String(Math.round(v)));
     bindSlider('A', 'A-val', v => { state.A = v; draw(); }, v => formatNum(v) + ' m');
-    bindSlider('omega', 'omega-val', v => { state.omega = v; updateDerived(); draw(); }, v => formatNum(v) + ' rad/s');
+    bindSlider('omega', 'omega-val', v => { state.omega = v; draw(); }, v => formatNum(v) + ' rad/s');
 
     document.getElementById('boundary').addEventListener('change', e => {
       state.boundary = e.target.value;
-      updateDerived();
-      draw();
+      refreshAll();
     });
 
-    document.getElementById('showEnvelope').addEventListener('change', e => { state.showEnvelope = e.target.checked; draw(); });
-    document.getElementById('showNodes').addEventListener('change', e => { state.showNodes = e.target.checked; draw(); });
+    document.getElementById('showEnvelope').addEventListener('change', e => {
+      state.showEnvelope = e.target.checked;
+      draw();
+    });
+    document.getElementById('showNodes').addEventListener('change', e => {
+      state.showNodes = e.target.checked;
+      draw();
+    });
 
     document.querySelectorAll('[data-preset]').forEach(btn => {
       btn.addEventListener('click', () => {
         const p = btn.dataset.preset;
-        if (p === 'fundamental') { state.boundary = 'fixed'; state.n = 1; }
+        if (p === 'fund') { state.boundary = 'fixed'; state.n = 1; }
         if (p === 'second') { state.boundary = 'fixed'; state.n = 2; }
         if (p === 'third') { state.boundary = 'fixed'; state.n = 3; }
-        if (p === 'free1') { state.boundary = 'free'; state.n = 1; }
+        if (p === 'mixed1') { state.boundary = 'mixed'; state.n = 1; }
+        if (p === 'mixed3') { state.boundary = 'mixed'; state.n = 3; }
+        if (p === 'free2') { state.boundary = 'free'; state.n = 2; }
         document.getElementById('boundary').value = state.boundary;
-        document.getElementById('n').value = state.n;
-        document.getElementById('n-val').textContent = String(state.n);
-        updateDerived();
-        draw();
+        refreshAll();
       });
     });
 
     bindPlayControls(state, draw, { maxT: 10 });
     window.addEventListener('resize', draw);
-    updateDerived();
-    draw();
+    refreshAll();
   </script>
 </body>
 </html>
