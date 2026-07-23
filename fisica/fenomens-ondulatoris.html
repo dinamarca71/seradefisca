@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fenòmens ondulatoris de 2n de batxillerat: reflexió i refracció, angle límit, efecte Doppler, dispersió i polarització, amb simulacions externes triades i aplicacions.">
+  <title>Fenòmens ondulatoris — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <style>
+    .fenomen {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem 1.25rem;
+    }
+    .fenomen h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+    .fenomen-intro {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      max-width: 52rem;
+    }
+    .fenomen h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0.85rem 0 0.45rem;
+    }
+    .apps-list {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    .apps-list li { margin-bottom: 0.3rem; }
+    .apps-list strong { color: var(--text); }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="superposicio.html">Superposició</a>
+      <a href="ones-estacionaries.html">Ones estacionàries</a>
+      <a href="interferencia-young.html">Young</a>
+      <a href="fenomens-ondulatoris.html" class="active">Fenòmens</a>
+    </nav>
+    <h1>Fenòmens ondulatoris</h1>
+    <p>
+      Guia curada de simulacions externes (sobretot PhET i oPhysics) per treballar
+      a classe la reflexió i la refracció, l'angle límit, l'efecte Doppler,
+      la dispersió i la polarització. Poques fonts, triades i amb finalitat didàctica.
+    </p>
+  </header>
+
+  <main>
+    <section class="fenomen" id="reflexio">
+      <h2>1. Reflexió, refracció i angle límit</h2>
+      <p class="fenomen-intro">
+        Cal dominar-ho amb detall: llei de Snell, índex de refracció i angle crític
+        (reflexió total interna). Observa com canvia el raig refractat en variar
+        l'angle i els índexs, i busca quan desapareix el raig transmès.
+      </p>
+      <h3>Simulacions</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/bending-light" target="_blank" rel="noopener">Luz que se dobla — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">La referència: Snell, reflexió, angle límit i TIR; pantalles Intro i Más herramientas.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://ophysics.com/l7.html" target="_blank" rel="noopener">Reflection and Refraction — oPhysics</a>
+            <span class="lang">EN</span>
+            <span class="meta">Simulació clara i minimalista: llisca n₁, n₂ i l'angle d'incidència; ideal per mesurar i comprovar Snell.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Aplicacions i tecnologia</h3>
+      <ul class="apps-list">
+        <li><strong>Fibra òptica:</strong> la reflexió total interna guia la llum amb pèrdues molt baixes.</li>
+        <li><strong>Miralls i periscopis:</strong> la llei de la reflexió en òptica geomètrica quotidiana.</li>
+        <li><strong>Miratges:</strong> refracció gradual a l'aire calent prop del terra (índex variable).</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="doppler">
+      <h2>2. Efecte Doppler</h2>
+      <p class="fenomen-intro">
+        A 2n cal sobretot la intuïció: quan la font o l'observador s'acosten, la
+        freqüència puja; quan s'allunyen, baixa. Les simulacions mostren la
+        compressió o l'estirament dels fronts d'ona millor que qualsevol dibuix estàtic.
+      </p>
+      <h3>Simulacions</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/sound" target="_blank" rel="noopener">Sonido — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">Mou la font i escolta/observa com canvien la freqüència i els fronts d'ona.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.falstad.com/ripple/" target="_blank" rel="noopener">Ripple Tank — Falstad</a>
+            <span class="lang">EN</span>
+            <span class="meta">Tanc d'ones 2D: la font mòbil fa cercles concèntrics desplaçats; intuïció visual molt potent.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://ophysics.com/waves11.html" target="_blank" rel="noopener">The Doppler Effect — oPhysics</a>
+            <span class="lang">EN</span>
+            <span class="meta">Complement: font i observador amb control explícit de velocitats (també boom sònic a w11).</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Aplicacions i tecnologia</h3>
+      <ul class="apps-list">
+        <li><strong>Radar de trànsit:</strong> mesura la velocitat dels vehicles amb microones.</li>
+        <li><strong>Ecografia Doppler:</strong> flux sanguini i velocitat del cor.</li>
+        <li><strong>Astronomia:</strong> desplaçament al vermell/blau de les galàxies (efecte Doppler relativista de la llum).</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="dispersio">
+      <h2>3. Dispersió</h2>
+      <p class="fenomen-intro">
+        La velocitat (i per tant l'índex n) depèn de la longitud d'ona: el violeta
+        es desvia més que el vermell. Es pot veure sola (prisma) o barrejada amb
+        la refracció a la interfície entre medis.
+      </p>
+      <h3>Simulacions</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/bending-light" target="_blank" rel="noopener">Luz que se dobla — PhET (pestanya Prismas)</a>
+            <span class="lang">ES</span>
+            <span class="meta">Obre la pantalla Prismas i fes servir llum blanca: veuràs la dispersió i l'arc dins del prisma.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://ophysics.com/l8.html" target="_blank" rel="noopener">Dispersion of Light — oPhysics</a>
+            <span class="lang">EN</span>
+            <span class="meta">Prisma i dispersió de colors de forma directa, sense distraccions.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Aplicacions i tecnologia</h3>
+      <ul class="apps-list">
+        <li><strong>Arc de Sant Martí:</strong> refracció + reflexió interna + dispersió a les gotes d'aigua.</li>
+        <li><strong>Espectroscòpia:</strong> separar longituds d'ona per identificar materials.</li>
+        <li><strong>Aberració cromàtica:</strong> les lents no enfocen igual tots els colors (disseny òptic).</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="polaritzacio">
+      <h2>4. Polarització</h2>
+      <p class="fenomen-intro">
+        La llum natural és, en general, no polaritzada. Un polaritzador selecciona
+        una direcció de vibració del camp elèctric. Amb dos polaritzadors es veu
+        clarament la llei de Malus i l'extinció a 90°.
+      </p>
+      <h3>Simulacions</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://ophysics.com/l3.html" target="_blank" rel="noopener">Polarization of Light — oPhysics</a>
+            <span class="lang">EN</span>
+            <span class="meta">Visualitza l'ona transversal i com un eix de transmissió deixa passar (o bloqueja) la component.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="http://physics.bu.edu/~duffy/HTML5/polarized_light.html" target="_blank" rel="noopener">Polarized light — Duffy (BU)</a>
+            <span class="lang">EN</span>
+            <span class="meta">Fins a tres polaritzadors i gràfic d'intensitat: perfecte per la llei de Malus.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Aplicacions i tecnologia</h3>
+      <ul class="apps-list">
+        <li><strong>Ulleres de sol polaritzades:</strong> redueixen el reflex especular (llum ja parcialment polaritzada).</li>
+        <li><strong>Pantalles LCD:</strong> cada píxel regula la llum amb polaritzadors i cristalls líquids.</li>
+        <li><strong>Fotografia:</strong> filtres polaritzadors per eliminar reflexes a aigua o vidre.</li>
+      </ul>
+    </section>
+
+    <section class="formula-box">
+      <h2>Model físic (fórmules clau)</h2>
+      <div class="math-row">
+        <span data-math="n_1\sin\theta_1 = n_2\sin\theta_2"></span>
+        <span data-math="\sin\theta_c = \dfrac{n_2}{n_1}\quad(n_1>n_2)"></span>
+        <span data-math="f' = f\,\dfrac{v\pm v_o}{v\mp v_f}"></span>
+        <span data-math="I = I_0\cos^{2}\theta"></span>
+      </div>
+      <ul class="model-hyp">
+        <li>Reflexió: l'angle d'incidència és igual a l'angle de reflexió (mesurats respecte a la normal).</li>
+        <li>Refracció (Snell): el canvi de velocitat entre medis desvia el raig; l'angle límit marca l'inici de la reflexió total.</li>
+        <li>Doppler (so, 1D): la freqüència observada canvia si es mou la font, l'observador o tots dos respecte al medi.</li>
+        <li>Polarització (Malus): un polaritzador deixa passar només la component alineada amb l'eix de transmissió.</li>
+      </ul>
+    </section>
+
+  <footer class="site-footer">
+    <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i el model Claude Opus 4.8 (High).</p>
+  </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script>
+    (function () {
+      const katex = window.katex;
+      document.querySelectorAll('[data-math]').forEach(el => {
+        const src = el.dataset.math || el.textContent || '';
+        if (!katex) { el.textContent = src; return; }
+        katex.render(src, el, { throwOnError: false, strict: 'ignore', displayMode: false });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -41,7 +41,7 @@ escola/
     ├── induccio.html                                           # electromagnetisme
     ├── mhs.html (+ mhs.css · mhs.js) · pendul.html             # MHS / oscil·lacions
     ├── superposicio.html · ones-estacionaries.html ·
-    │   interferencia-young.html · efecte-doppler.html          # ones
+    │   interferencia-young.html · fenomens-ondulatoris.html    # ones
     └── img/series/         # diagrames Wikimedia (sèries radioactives)
 ```
 
