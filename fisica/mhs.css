@@ -1,0 +1,94 @@
+/* Estils específics del laboratori MHS (massa–ressort + energia).
+   Els estils compartits viuen a css/comunes.css. */
+
+.mhs-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.mhs-vals {
+  border: none;
+  padding-top: 0;
+  margin-top: 0;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
+}
+
+.mhs-vals div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.conserv-badge {
+  margin-top: 0.85rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: Consolas, monospace;
+}
+
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.chart-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+  margin-left: auto;
+}
+
+.curve-x { color: #7c3aed; font-weight: 600; }
+.curve-v { color: #2563eb; font-weight: 600; }
+.curve-a { color: #dc2626; font-weight: 600; }
+
+.graph-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-height: 1.1em;
+}
+
+.mhs-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.mhs-energy {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(160px, 0.6fr);
+  gap: 1rem;
+  align-items: end;
+}
+
+.energy-phase {
+  margin-top: 0.65rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.concepts details { border: none; }
+.concepts summary {
+  list-style: none;
+  cursor: pointer;
+}
+.concepts summary::-webkit-details-marker { display: none; }
+.concepts summary h2 { display: inline; }
+.concepts details[open] ul { margin-top: 0.5rem; }
+
+@media (max-width: 900px) {
+  .mhs-top,
+  .mhs-workspace,
+  .mhs-energy { grid-template-columns: 1fr; }
+}

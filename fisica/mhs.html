@@ -3,268 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MHS — Moviment Harmònic Simple</title>
+  <meta name="description" content="Laboratori de moviment harmònic simple: massa–ressort, cinemàtica x(t)/v(t)/a(t) i conservació de l'energia mecànica.">
+  <title>Moviment harmònic simple — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
   <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="mhs.css">
 </head>
 <body>
   <header class="header-osc">
     <nav class="nav-pack">
       <a href="index.html" class="nav-all">← Física</a>
       <a href="mhs.html" class="active">MHS</a>
-      <a href="ressort.html">Ressort</a>
-      <a href="energia.html">Energia</a>
       <a href="pendul.html">Pèndul</a>
     </nav>
-    <h1>Moviment Harmònic Simple (MHS)</h1>
+    <h1>Laboratori de moviment harmònic simple</h1>
     <p>
-      El MHS es descriu per x(t) = A·cos(ωt + φ). La velocitat i l'acceleració
-      són les derivades temporals: v = dx/dt i a = dv/dt = −ω²x.
+      Observa alhora el sistema massa–ressort, les gràfiques de posició, velocitat i
+      acceleració, i l'intercanvi entre energia cinètica i potencial elàstica.
     </p>
   </header>
 
   <main>
     <section class="formula-box">
-      <h2>Equacions del MHS</h2>
-      <p class="formula">x = A·cos(ωt + φ) &nbsp;·&nbsp; v = −Aω·sin(ωt + φ) &nbsp;·&nbsp; a = −ω²x</p>
-      <p class="formula-note">Període T = 2π/ω &nbsp;·&nbsp; Freqüència f = 1/T &nbsp;·&nbsp; Relació clau: a = −ω²x (acceleració proporcional i oposada a x)</p>
+      <h2>Model físic</h2>
+      <div class="math-row">
+        <span data-math="F = -k\,x"></span>
+        <span data-math="\omega = \sqrt{\dfrac{k}{m}}"></span>
+        <span data-math="x(t) = A\cos(\omega t + \varphi)"></span>
+        <span data-math="v(t) = -A\omega\sin(\omega t + \varphi)"></span>
+        <span data-math="a(t) = -\omega^{2}x"></span>
+        <span data-math="E = E_c + E_p = \dfrac{1}{2}kA^{2}"></span>
+      </div>
+      <ul class="model-hyp">
+        <li>Oscil·lador ideal unidimensional: força recuperadora de Hooke, <strong>sense fregament</strong>.</li>
+        <li>La freqüència angular ve només de <span data-math="m"></span> i <span data-math="k"></span>: l'amplitud no afecta el període (isocronisme).</li>
+        <li>L'energia mecànica es conserva: a l'extrem <span data-math="x=\pm A"></span> és tota potencial; al centre <span data-math="x=0"></span>, tota cinètica.</li>
+      </ul>
     </section>
 
-    <section class="canvas-section">
-      <div class="canvas-header">
-        <h2>Animació i gràfic temporal</h2>
-        <div class="chart-tabs">
-          <button class="btn active" data-view="x">x(t)</button>
-          <button class="btn" data-view="v">v(t)</button>
-          <button class="btn" data-view="a">a(t)</button>
-          <button class="btn" data-view="all">Tots</button>
-        </div>
-      </div>
-      <canvas id="animCanvas" class="h280" style="margin-bottom:0.75rem;"></canvas>
-      <canvas id="graphCanvas" class="h280"></canvas>
-      <div class="controls-row">
-        <button class="btn btn-primary" id="btnPlay">▶ Reproduir</button>
-        <button class="btn" id="btnReset">↺ Reiniciar</button>
-        <div class="slider-group"><label>Velocitat</label><input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1"></div>
-        <div class="slider-group"><label>t</label><input type="range" id="timeSlider" min="0" max="10" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 s</span></div>
-      </div>
-    </section>
-
-    <div class="two-col">
+    <div class="mhs-top">
       <section class="controls-panel">
         <h2>Paràmetres</h2>
         <div class="param">
-          <div class="param-header"><label><span class="symbol">A</span> — Amplitud</label><span class="param-value" id="A-val"></span></div>
-          <input type="range" id="A" min="0.2" max="2" step="0.05" value="1">
-          <p class="param-desc">Desplaçament màxim des de l'equilibri (m)</p>
+          <div class="param-header"><label for="m"><span class="symbol">m</span> — Massa</label><span class="param-value" id="m-val"></span></div>
+          <input type="range" id="m" min="0.2" max="5" step="0.1" value="1">
+          <p class="param-desc">Massa del cos (kg)</p>
         </div>
         <div class="param">
-          <div class="param-header"><label><span class="symbol">ω</span> — Freq. angular</label><span class="param-value" id="omega-val"></span></div>
-          <input type="range" id="omega" min="0.5" max="5" step="0.1" value="2">
+          <div class="param-header"><label for="k"><span class="symbol">k</span> — Constant elàstica</label><span class="param-value" id="k-val"></span></div>
+          <input type="range" id="k" min="2" max="30" step="0.5" value="10">
+          <p class="param-desc">Rigidesa del ressort (N/m)</p>
         </div>
         <div class="param">
-          <div class="param-header"><label><span class="symbol">φ</span> — Fase inicial</label><span class="param-value" id="phi-val"></span></div>
+          <div class="param-header"><label for="A"><span class="symbol">A</span> — Amplitud</label><span class="param-value" id="A-val"></span></div>
+          <input type="range" id="A" min="0.1" max="0.8" step="0.05" value="0.4">
+          <p class="param-desc">Allargament màxim (m)</p>
+        </div>
+        <div class="param">
+          <div class="param-header"><label for="phi"><span class="symbol">φ</span> — Fase inicial</label><span class="param-value" id="phi-val"></span></div>
           <input type="range" id="phi" min="-3.14" max="3.14" step="0.05" value="0">
+          <p class="param-desc">Determina x i v a t = 0</p>
         </div>
       </section>
 
       <section class="controls-panel">
         <h2>Valors en l'instant t</h2>
-        <div class="derived" style="border:none;padding-top:0;margin-top:0;grid-template-columns:1fr;">
-          <div><span>x = </span><strong id="valX">—</strong></div>
-          <div><span>v = </span><strong id="valV">—</strong></div>
-          <div><span>a = </span><strong id="valA">—</strong></div>
-          <div><span>T = 2π/ω = </span><strong id="valT">—</strong></div>
-          <div><span>|v|<sub>max</sub> = Aω = </span><strong id="valVmax">—</strong></div>
-          <div><span>|a|<sub>max</sub> = Aω² = </span><strong id="valAmax">—</strong></div>
+        <div class="derived mhs-vals">
+          <div><span>ω = √(k/m)</span><strong id="valOmega">—</strong></div>
+          <div><span>T = 2π/ω</span><strong id="valT">—</strong></div>
+          <div><span>f = 1/T</span><strong id="valF">—</strong></div>
+          <div><span>x</span><strong id="valX">—</strong></div>
+          <div><span>v</span><strong id="valV">—</strong></div>
+          <div><span>a</span><strong id="valA">—</strong></div>
+          <div><span>F = −kx</span><strong id="valForce">—</strong></div>
+          <div><span>|v|<sub>max</sub> = Aω</span><strong id="valVmax">—</strong></div>
+          <div><span>|a|<sub>max</sub> = Aω²</span><strong id="valAmax">—</strong></div>
         </div>
+        <p class="conserv-badge" id="conservBadge">E constant · desviació —</p>
       </section>
     </div>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Escena i cinemàtica</h2>
+        <div class="legend-row">
+          <label class="legend-item"><input type="checkbox" id="showV" checked> vector <span data-math="\vec{v}"></span></label>
+          <label class="legend-item"><input type="checkbox" id="showF" checked> vector <span data-math="\vec{F}"></span></label>
+          <div class="chart-toggles" role="group" aria-label="Corbes del gràfic">
+            <label class="legend-item curve-x"><input type="checkbox" id="showX" checked> x(t)</label>
+            <label class="legend-item curve-v"><input type="checkbox" id="showGraphV"> v(t)</label>
+            <label class="legend-item curve-a"><input type="checkbox" id="showGraphA"> a(t)</label>
+          </div>
+        </div>
+      </div>
+      <div class="mhs-workspace">
+        <div>
+          <canvas id="springCanvas" class="h320" role="img"
+            aria-label="Sistema massa–ressort horitzontal: la massa oscil·la al voltant de l'equilibri; es poden mostrar els vectors velocitat i força."></canvas>
+          <p class="sr-only" id="springStatus" aria-live="polite"></p>
+        </div>
+        <div>
+          <canvas id="graphCanvas" class="h320" role="img"
+            aria-label="Gràfic temporal: es poden superposar posició, velocitat i acceleració."></canvas>
+          <p class="graph-hint" id="graphHint"></p>
+        </div>
+      </div>
+      <div class="controls-row">
+        <button class="btn btn-primary" id="btnPlay" type="button">▶ Reproduir</button>
+        <button class="btn" id="btnReset" type="button">↺ Reiniciar</button>
+        <div class="slider-group"><label for="speedSlider">Velocitat</label><input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1"></div>
+        <div class="slider-group"><label for="timeSlider">t</label><input type="range" id="timeSlider" min="0" max="10" step="0.01" value="0"><span class="time-display" id="timeDisplay">t = 0,00 s</span></div>
+      </div>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-header">
+        <h2>Energia mecànica</h2>
+      </div>
+      <div class="mhs-energy">
+        <canvas id="energyCanvas" class="h280" role="img"
+          aria-label="Gràfic temporal de l'energia potencial, cinètica i total."></canvas>
+        <div class="energy-bars" aria-hidden="true">
+          <div class="energy-bar-wrap">
+            <div class="energy-bar bar-potential" id="barEp" style="height:50%;"></div>
+            <span>E<sub>p</sub> = <strong id="valEp">—</strong> J</span>
+          </div>
+          <div class="energy-bar-wrap">
+            <div class="energy-bar bar-kinetic" id="barEc" style="height:50%;"></div>
+            <span>E<sub>c</sub> = <strong id="valEc">—</strong> J</span>
+          </div>
+          <div class="energy-bar-wrap">
+            <div class="energy-bar bar-total" id="barE" style="height:100%;"></div>
+            <span>E = <strong id="valE">—</strong> J</span>
+          </div>
+        </div>
+      </div>
+      <p class="energy-phase" id="phaseDesc">—</p>
+    </section>
 
     <section class="presets">
       <h2>Escenaris</h2>
       <div class="preset-buttons">
-        <button class="btn" data-preset="zero">φ = 0 (parteix de x = A)</button>
-        <button class="btn" data-preset="quarter">φ = π/2 (parteix del equilibri cap a +x)</button>
-        <button class="btn" data-preset="slow">Oscil·lació lenta (ω = 1)</button>
-        <button class="btn" data-preset="fast">Oscil·lació ràpida (ω = 4)</button>
+        <button class="btn" type="button" data-preset="soft">Ressort tou (k petit → T gran)</button>
+        <button class="btn" type="button" data-preset="stiff">Ressort dur (k gran → T petit)</button>
+        <button class="btn" type="button" data-preset="heavy">Massa gran (T més gran)</button>
+        <button class="btn" type="button" data-preset="phi0">φ = 0 (parteix de x = A)</button>
+        <button class="btn" type="button" data-preset="phi90">φ = π/2 (parteix de l'equilibri)</button>
+        <button class="btn" type="button" data-preset="center">t = T/4: tota Ec</button>
       </div>
     </section>
 
     <section class="concepts">
-      <h2>Conceptes clau</h2>
-      <ul>
-        <li><strong>Amplitud A:</strong> valor màxim de |x|. No depèn de φ.</li>
-        <li><strong>Velocitat màxima:</strong> es produeix al centre (x = 0) i val Aω.</li>
-        <li><strong>Acceleració màxima:</strong> als extrems (x = ±A) i val Aω².</li>
-        <li><strong>a = −ω²x:</strong> l'acceleració sempre va cap al punt d'equilibri → és la condició del MHS.</li>
-        <li><strong>Desfasament φ:</strong> determina posició i velocitat inicials a t = 0.</li>
+      <details>
+        <summary><h2>Conceptes clau</h2></summary>
+        <ul>
+          <li><strong>Llei de Hooke:</strong> F = −kx; el signe negatiu indica que la força sempre apunta cap a l'equilibri.</li>
+          <li><strong>ω = √(k/m):</strong> més k o menys m → oscil·lació més ràpida. L'amplitud no canvia T.</li>
+          <li><strong>a = −ω²x:</strong> condició del MHS: acceleració proporcional i oposada a la posició.</li>
+          <li><strong>Velocitat màxima:</strong> al centre (x = 0), val Aω. <strong>Acceleració màxima:</strong> als extrems, Aω².</li>
+          <li><strong>Conservació:</strong> E = Ec + Ep = ½kA². Doblar A quadruplica l'energia total.</li>
+          <li><strong>Pèndul:</strong> per a angles petits també és MHS, però amb ω = √(g/L) — vegeu la pàgina del pèndol.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="recursos">
+      <h2>Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://openstax.org/books/f%C3%ADsica-universitaria-volumen-1/pages/15-1-movimiento-armonico-simple" target="_blank" rel="noopener">Movimiento armónico simple — OpenStax</a>
+            <span class="lang">ES</span>
+            <span class="meta">Manual obert · definicions, equacions de la massa–ressort i el paper de la fase.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.khanacademy.org/science/physics/mechanical-waves-and-sound/simple-harmonic-motion-with-calculus/v/introduction-to-harmonic-motion" target="_blank" rel="noopener">Introduction to harmonic motion — Khan Academy</a>
+            <span class="lang">EN</span>
+            <span class="meta">Vídeo introductori clar sobre el MHS i la massa unida a un ressort.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Moviment_harm%C3%B2nic_simple" target="_blank" rel="noopener">Moviment harmònic simple — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">Resum amb equacions, energia i la relació amb el moviment circular.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/masses-and-springs" target="_blank" rel="noopener">Masas y resortes — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">Laboratori interactiu de Colorado: pots comparar diversos ressorts i masses.</span>
+          </div>
+        </li>
       </ul>
     </section>
+
   <footer class="site-footer">
     <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
     <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i el model Claude Opus 4.8 (High).</p>
   </footer>
   </main>
 
+  <script src="../vendor/katex/katex.min.js"></script>
   <script src="../js/utilitats.js"></script>
-  <script>
-    const state = { A: 1, omega: 2, phi: 0, t: 0, playing: false, speed: 1, view: 'x' };
-
-    const animCanvas = document.getElementById('animCanvas');
-    const graphCanvas = document.getElementById('graphCanvas');
-    const actx = animCanvas.getContext('2d');
-    const gctx = graphCanvas.getContext('2d');
-
-    function xAt(t) { return state.A * Math.cos(state.omega * t + state.phi); }
-    function vAt(t) { return -state.A * state.omega * Math.sin(state.omega * t + state.phi); }
-    function aAt(t) { return -state.omega * state.omega * xAt(t); }
-
-    function updateInstant() {
-      document.getElementById('valX').textContent = formatNum(xAt(state.t)) + ' m';
-      document.getElementById('valV').textContent = formatNum(vAt(state.t)) + ' m/s';
-      document.getElementById('valA').textContent = formatNum(aAt(state.t)) + ' m/s²';
-      document.getElementById('valT').textContent = formatNum(TAU / state.omega) + ' s';
-      document.getElementById('valVmax').textContent = formatNum(state.A * state.omega) + ' m/s';
-      document.getElementById('valAmax').textContent = formatNum(state.A * state.omega ** 2) + ' m/s²';
-    }
-
-    function drawAnim() {
-      setupCanvas(animCanvas, actx);
-      const w = animCanvas.clientWidth, h = animCanvas.clientHeight;
-      actx.clearRect(0, 0, w, h);
-      const midY = h / 2;
-      const scale = (w * 0.35) / Math.max(state.A, 0.5);
-      const eqX = w / 2;
-
-      actx.strokeStyle = '#cbd5e1';
-      actx.lineWidth = 2;
-      actx.beginPath(); actx.moveTo(40, midY); actx.lineTo(w - 40, midY); actx.stroke();
-
-      actx.fillStyle = '#64748b';
-      actx.font = '11px Segoe UI';
-      actx.textAlign = 'center';
-      actx.fillText('Equilibri', eqX, midY + 20);
-
-      const px = eqX + xAt(state.t) * scale;
-      actx.fillStyle = '#7c3aed';
-      actx.beginPath(); actx.arc(px, midY, 14, 0, TAU); actx.fill();
-      actx.fillStyle = '#fff';
-      actx.fillText('m', px, midY + 4);
-
-      actx.strokeStyle = '#94a3b8';
-      actx.setLineDash([4, 4]);
-      actx.beginPath(); actx.moveTo(eqX - state.A * scale, midY - 30); actx.lineTo(eqX - state.A * scale, midY + 30); actx.stroke();
-      actx.beginPath(); actx.moveTo(eqX + state.A * scale, midY - 30); actx.lineTo(eqX + state.A * scale, midY + 30); actx.stroke();
-      actx.setLineDash([]);
-      actx.fillStyle = '#64748b';
-      actx.fillText('−A', eqX - state.A * scale, midY - 38);
-      actx.fillText('+A', eqX + state.A * scale, midY - 38);
-
-      const v = vAt(state.t);
-      if (Math.abs(v) > 0.05) {
-        actx.strokeStyle = '#2563eb';
-        actx.lineWidth = 2;
-        actx.beginPath(); actx.moveTo(px, midY); actx.lineTo(px + v * scale * 0.3, midY); actx.stroke();
-        actx.fillStyle = '#2563eb';
-        actx.fillText('v', px + v * scale * 0.35, midY - 10);
-      }
-    }
-
-    function drawGraph() {
-      setupCanvas(graphCanvas, gctx);
-      const w = graphCanvas.clientWidth, h = graphCanvas.clientHeight;
-      const padL = 52, padR = 16, padT = 24, padB = 36;
-      const plotW = w - padL - padR, plotH = h - padT - padB;
-      gctx.clearRect(0, 0, w, h);
-
-      const tMax = 10;
-      const show = state.view === 'all' ? ['x', 'v', 'a'] : [state.view];
-      let yMax = state.A;
-      if (show.includes('v')) yMax = Math.max(yMax, state.A * state.omega);
-      if (show.includes('a')) yMax = Math.max(yMax, state.A * state.omega ** 2);
-      yMax *= 1.15;
-
-      const toX = t => padL + (t / tMax) * plotW;
-      const toY = y => padT + ((yMax - y) / (2 * yMax)) * plotH;
-      drawGrid(gctx, padL, padT, plotW, plotH);
-      drawAxes(gctx, padL, padT, plotW, plotH, toY(0), { x: 't (s)', y: 'valor' });
-
-      const fns = {
-        x: { fn: xAt, color: '#7c3aed', label: 'x(t)' },
-        v: { fn: vAt, color: '#2563eb', label: 'v(t)' },
-        a: { fn: aAt, color: '#dc2626', label: 'a(t)' }
-      };
-
-      show.forEach(key => {
-        const c = fns[key];
-        gctx.strokeStyle = c.color;
-        gctx.lineWidth = state.view === 'all' ? 1.8 : 2.5;
-        gctx.beginPath();
-        for (let i = 0; i <= 500; i++) {
-          const t = (i / 500) * tMax;
-          const px = toX(t), py = toY(c.fn(t));
-          if (i === 0) gctx.moveTo(px, py); else gctx.lineTo(px, py);
-        }
-        gctx.stroke();
-      });
-
-      const tNow = state.t;
-      gctx.strokeStyle = '#1a2332';
-      gctx.lineWidth = 1;
-      gctx.setLineDash([4, 3]);
-      gctx.beginPath(); gctx.moveTo(toX(tNow), padT); gctx.lineTo(toX(tNow), padT + plotH); gctx.stroke();
-      gctx.setLineDash([]);
-
-      show.forEach(key => {
-        const c = fns[key];
-        gctx.fillStyle = c.color;
-        gctx.beginPath(); gctx.arc(toX(tNow), toY(c.fn(tNow)), 5, 0, TAU); gctx.fill();
-      });
-
-      gctx.fillStyle = '#1a2332';
-      gctx.font = '12px Segoe UI';
-      gctx.textAlign = 'left';
-      let ly = padT + 14;
-      show.forEach(key => {
-        gctx.fillStyle = fns[key].color;
-        gctx.fillText(fns[key].label, padL + 8, ly);
-        ly += 16;
-      });
-    }
-
-    function draw() { updateInstant(); drawAnim(); drawGraph(); }
-
-    bindSlider('A', 'A-val', v => { state.A = v; draw(); }, v => formatNum(v) + ' m');
-    bindSlider('omega', 'omega-val', v => { state.omega = v; draw(); }, v => formatNum(v) + ' rad/s');
-    bindSlider('phi', 'phi-val', v => { state.phi = v; draw(); }, formatPhase);
-
-    document.querySelectorAll('[data-view]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.view = btn.dataset.view;
-        drawGraph();
-      });
-    });
-
-    document.querySelectorAll('[data-preset]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const p = btn.dataset.preset;
-        if (p === 'zero') { state.phi = 0; state.omega = 2; }
-        if (p === 'quarter') { state.phi = Math.PI / 2; state.omega = 2; }
-        if (p === 'slow') { state.omega = 1; }
-        if (p === 'fast') { state.omega = 4; }
-        document.getElementById('phi').value = state.phi;
-        document.getElementById('omega').value = state.omega;
-        document.getElementById('phi-val').textContent = formatPhase(state.phi);
-        document.getElementById('omega-val').textContent = formatNum(state.omega) + ' rad/s';
-        draw();
-      });
-    });
-
-    bindPlayControls(state, draw, { maxT: 10 });
-    window.addEventListener('resize', draw);
-    draw();
-  </script>
+  <script src="mhs.js"></script>
 </body>
 </html>

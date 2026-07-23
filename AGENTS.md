@@ -38,11 +38,11 @@ escola/
     ├── index.html          # portada de física (agrupada per seccions)
     ├── semivida.html · series.html · defecte-massa.html        # física moderna
     ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
-    ├── coulomb.html                                            # camp elèctric
-    ├── circuits.html · induccio.html                           # electromagnetisme
-    └── mhs.html · ressort.html · energia.html · pendul.html ·
-        superposicio.html · ones-estacionaries.html ·
-        interferencia-young.html · efecte-doppler.html          # ones
+    ├── induccio.html                                           # electromagnetisme
+    ├── mhs.html (+ mhs.css · mhs.js) · pendul.html             # MHS / oscil·lacions
+    ├── superposicio.html · ones-estacionaries.html ·
+    │   interferencia-young.html · efecte-doppler.html          # ones
+    └── img/series/         # diagrames Wikimedia (sèries radioactives)
 ```
 
 ## Convencions
