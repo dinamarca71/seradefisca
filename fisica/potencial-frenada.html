@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Partícula carregada entre plaques d’un condensador: camp elèctric, energia i potencial de frenada.">
+  <title>Potencial de frenada — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="potencial-frenada.css">
+</head>
+<body>
+  <header class="header-em">
+    <div class="header-inner">
+      <nav class="nav-pack">
+        <a href="index.html" class="nav-all">← Física</a>
+        <a href="induccio.html">Inducció</a>
+        <a href="potencial-frenada.html" class="active">Potencial de frenada</a>
+      </nav>
+      <h1>Partícula carregada entre plaques — potencial de frenada</h1>
+      <p>
+        Explora el camp uniforme, la força elèctrica, la transformació d’energia
+        i el potencial de frenada. El model és unidimensional i clàssic; quan la
+        partícula s’atura, torna cap a la placa d’entrada.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <div class="lab-grid">
+      <aside class="card">
+        <h2>Condicions inicials</h2>
+        <p class="hint">Placa esquerra a x = 0 amb V₁ = 0. ΔV = V₂ − V₁.</p>
+
+        <label for="particle">Partícula</label>
+        <select id="particle">
+          <option value="electron">Electró</option>
+          <option value="proton">Protó</option>
+          <option value="alpha">Partícula alfa</option>
+          <option value="custom">Personalitzada</option>
+        </select>
+
+        <div id="customBox" class="hidden">
+          <div class="control">
+            <label for="massMultiple">Massa (múltiples de mₑ)</label>
+            <span class="value" id="massMultipleOut"></span>
+            <input id="massMultiple" type="range" min="0.1" max="10000" step="0.1" value="1">
+          </div>
+          <div class="control">
+            <label for="chargeMultiple">Càrrega (múltiples d’e)</label>
+            <span class="value" id="chargeMultipleOut"></span>
+            <input id="chargeMultiple" type="range" min="-5" max="5" step="0.1" value="-1">
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="voltage">ΔV = V₂ − V₁</label>
+          <span class="value" id="voltageOut"></span>
+          <input id="voltage" type="range" min="-100" max="100" step="0.1" value="-8">
+        </div>
+        <button id="invert" class="small action-button" type="button">Inverteix la polaritat</button>
+
+        <div class="control">
+          <label for="distance">Separació d</label>
+          <span class="value" id="distanceOut"></span>
+          <input id="distance" type="range" min="0.005" max="0.20" step="0.001" value="0.05">
+        </div>
+
+        <div class="control">
+          <label for="speed">Velocitat inicial v₀</label>
+          <span class="value" id="speedOut"></span>
+          <input id="speed" type="range" min="10000" max="5000000" step="10000" value="1500000">
+        </div>
+
+        <div class="warning" id="relWarning" role="status">
+          ⚠ v₀ supera 0,1c: el model clàssic perd precisió.
+        </div>
+
+        <h3>Escenaris</h3>
+        <div class="row">
+          <button class="preset" data-preset="just" type="button">Arriba just</button>
+          <button class="preset" data-preset="half" type="button">S’atura a mig camí</button>
+          <button class="preset" data-preset="cross" type="button">Travessa</button>
+          <button class="preset" data-preset="accelerate" type="button">Accelera</button>
+          <button class="preset" data-preset="proton" type="button">Protó</button>
+        </div>
+
+        <h3>Reproducció</h3>
+        <div class="row">
+          <button id="play" class="primary" type="button">▶ Reproduir</button>
+          <button id="step" type="button">Pas</button>
+          <button id="reset" type="button">↺ Reiniciar</button>
+        </div>
+        <div class="control">
+          <label for="playback">Velocitat visual</label>
+          <span class="value" id="playbackOut"></span>
+          <input id="playback" type="range" min="0.2" max="3" step="0.1" value="1">
+        </div>
+
+        <details class="model-details">
+          <summary>Hipòtesis del model</summary>
+          <p class="note">
+            Plaques ideals, camp uniforme i sense efectes de vora; moviment en una dimensió;
+            partícula puntual; gravetat i radiació negligibles. L’animació és alentida i les
+            mides no són a escala. Si s’atura abans d’arribar a la segona placa, torna cap a
+            la placa d’entrada.
+          </p>
+        </details>
+      </aside>
+
+      <section>
+        <div class="card">
+          <h2>Moviment dins del condensador</h2>
+          <canvas id="scene" role="img"
+            aria-label="Simulació d’una partícula carregada entre dues plaques paral·leles"
+            aria-describedby="sceneDesc"></canvas>
+          <p id="sceneDesc" class="sr-only">
+            Plaques a x = 0 i x = d, camp elèctric uniforme, partícula amb vectors velocitat i força.
+            Si s’atura, torna cap a l’entrada.
+          </p>
+          <div id="status" class="status" aria-live="polite"></div>
+          <div class="legend">
+            <span><i class="swatch" style="background:#2563eb"></i>velocitat</span>
+            <span><i class="swatch" style="background:#dc2626"></i>força</span>
+            <span><i class="swatch" style="background:#0f8f74"></i>camp elèctric</span>
+          </div>
+        </div>
+
+        <div class="graphs">
+          <div class="card graph-card">
+            <h2>Energia en funció de la posició</h2>
+            <canvas id="energyGraph" role="img"
+              aria-label="Gràfic d’energies cinètica, potencial i mecànica en funció de x"></canvas>
+            <div class="legend">
+              <span><i class="swatch" style="background:#2563eb"></i>E<sub>c</sub></span>
+              <span><i class="swatch" style="background:#b14f08"></i>ΔU</span>
+              <span><i class="swatch" style="background:#0a6f5c"></i>Eₘ</span>
+            </div>
+          </div>
+          <div class="card graph-card">
+            <h2>Potencial i camp</h2>
+            <canvas id="potentialGraph" role="img"
+              aria-label="Gràfic del potencial elèctric i del camp en funció de x"></canvas>
+            <p class="note">La pendent de V(x) determina el camp: <span data-math="E_x=-\mathrm{d}V/\mathrm{d}x"></span>.</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card right">
+        <h2>Valors instantanis</h2>
+        <div class="metrics" id="metrics"></div>
+
+        <h3>Relacions clau</h3>
+        <div class="formula-box-local"><span data-math="E_x=-\Delta V/d"></span></div>
+        <div class="formula-box-local"><span data-math="F_x=q E_x,\quad a_x=F_x/m"></span></div>
+        <div class="formula-box-local"><span data-math="\Delta U=q[V(x)-V_1]"></span></div>
+        <div class="formula-box-local"><span data-math="E_c(x)=E_{c0}-\Delta U(x)"></span></div>
+        <div class="formula-box-local"><span data-math="V_{\mathrm{frenada}}=E_{c0}/|q|"></span></div>
+
+        <h3>Predicció energètica</h3>
+        <div id="prediction" class="prediction"></div>
+
+        <details class="side-details" open>
+          <summary>Desenvolupament numèric</summary>
+          <div class="steps" id="steps"></div>
+        </details>
+      </aside>
+    </div>
+
+    <details class="concepts">
+      <summary>Conceptes clau</summary>
+      <div>
+        <ul>
+          <li>El camp apunta cap als potencials decreixents.</li>
+          <li>La força té el sentit del camp només si q és positiva.</li>
+          <li>La magnitud <span data-math="q\Delta V"></span> és una energia.</li>
+          <li>Un electró que travessa 1 V canvia la seva energia en 1 eV.</li>
+          <li>Si la partícula s’atura abans d’arribar a la segona placa, torna cap a l’entrada (punt de retorn).</li>
+          <li>En l’efecte fotoelèctric: <span data-math="e V_f=E_{c,\max}"></span>.</li>
+        </ul>
+      </div>
+    </details>
+
+    <section class="recursos">
+      <h2>Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/charges-and-fields" target="_blank" rel="noopener">Cargas y campos — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">Visualitza camps i potencials amb càrregues puntuals; útil per contrastar amb el camp uniforme entre plaques.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://ophysics.com/em6.html" target="_blank" rel="noopener">Charged Particle in an Electric Field — oPhysics</a>
+            <span class="lang">EN</span>
+            <span class="meta">Partícula en camp elèctric uniforme: trajectòria, acceleració i energia.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://openstax.org/books/university-physics-volume-2/pages/7-3-electric-potential-and-potential-difference" target="_blank" rel="noopener">Electric potential and potential difference — OpenStax</a>
+            <span class="lang">EN</span>
+            <span class="meta">Text de referència: potencial, ΔV i la relació amb el treball elèctric.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.khanacademy.org/science/physics/electric-charge-electric-force-and-voltage/electric-potential-voltage-ap/v/electric-potential-energy" target="_blank" rel="noopener">Electric potential energy — Khan Academy</a>
+            <span class="lang">EN</span>
+            <span class="meta">Vídeo clar sobre energia potencial elèctrica i el canvi ΔU = qΔV.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb ChatGPT (GPT-5.6 Thinking) i Cursor.</p>
+    </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="../js/utilitats.js"></script>
+  <script src="potencial-frenada.js"></script>
+</body>
+</html>

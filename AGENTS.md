@@ -38,7 +38,7 @@ escola/
     ├── index.html          # portada de física (agrupada per seccions)
     ├── semivida.html · series.html · defecte-massa.html        # física moderna
     ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
-    ├── induccio.html                                           # electromagnetisme
+    ├── induccio.html · potencial-frenada.html (+ css/js)        # electromagnetisme
     ├── mhs.html (+ mhs.css · mhs.js) · pendul.html             # MHS / oscil·lacions
     ├── superposicio.html · ones-estacionaries.html ·
     │   interferencia-young.html · fenomens-ondulatoris.html    # ones
