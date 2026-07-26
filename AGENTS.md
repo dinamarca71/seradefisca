@@ -40,7 +40,7 @@ escola/
     ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
     ├── induccio.html · potencial-frenada.html (+ css/js)        # electromagnetisme
     ├── mhs.html (+ mhs.css · mhs.js) · pendul.html             # MHS / oscil·lacions
-    ├── superposicio.html · ones-estacionaries.html ·
+    ├── superposicio.html (+ css/js) · ones-estacionaries.html ·
     │   interferencia-young.html · fenomens-ondulatoris.html    # ones
     └── img/series/         # diagrames Wikimedia (sèries radioactives)
 ```
