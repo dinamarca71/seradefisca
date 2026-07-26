@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071225">
+  <meta name="description" content="Guia interactiva familiar per observar el cel i l'eclipsi total de Sol des de Torrevicente.">
+  <title>El cel de Torrevicente</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Ves al contingut</a>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="El cel de Torrevicente">
+        <div class="brand-mark" aria-hidden="true">
+          <span class="brand-star">✦</span>
+          <span class="brand-tower"></span>
+        </div>
+        <div>
+          <p class="eyebrow">GUIA FAMILIAR</p>
+          <h1>El cel de Torrevicente</h1>
+          <p class="subtitle">Mira amunt, juga i guarda'n el record</p>
+        </div>
+      </div>
+
+      <div class="location-chip" title="Coordenades emprades per als càlculs">
+        <span aria-hidden="true">⌖</span>
+        <span><strong>Torrevicente</strong><small>41,335° N · 2,941° O · 1.202 m</small></span>
+      </div>
+
+      <button class="icon-button" id="installButton" hidden title="Instal·la la web al dispositiu" aria-label="Instal·la l'aplicació">⇩</button>
+    </header>
+
+    <main id="main">
+      <nav class="section-tabs" aria-label="Seccions principals">
+        <button class="tab is-active" data-target="skySection"><span>✦</span> Cel nocturn</button>
+        <button class="tab" data-target="eclipseSection"><span>☀</span> Eclipsi</button>
+        <button class="tab" data-target="recordSection"><span>✓</span> El nostre registre</button>
+      </nav>
+
+      <section class="page-section is-active" id="skySection" aria-labelledby="skyTitle">
+        <div class="controls-card panel">
+          <div class="control-group date-group">
+            <label for="skyDateTime">Data i hora a Torrevicente</label>
+            <input id="skyDateTime" type="datetime-local" step="60" value="2026-08-12T22:30">
+          </div>
+          <div class="button-row" role="group" aria-label="Controls del temps">
+            <button class="secondary-button" id="minus30">− 30 min</button>
+            <button class="primary-button" id="nowButton">Ara</button>
+            <button class="secondary-button" id="plus30">+ 30 min</button>
+            <button class="secondary-button play-button" id="playButton" aria-pressed="false"><span>▶</span> Animar</button>
+          </div>
+          <div class="toggle-row">
+            <label class="switch-control"><input type="checkbox" id="familyMode" checked><span class="switch"></span><span>Mode família</span></label>
+            <label class="switch-control"><input type="checkbox" id="redMode"><span class="switch"></span><span>Llum vermella</span></label>
+            <label class="switch-control"><input type="checkbox" id="constellationLines" checked><span class="switch"></span><span>Constel·lacions</span></label>
+          </div>
+        </div>
+
+        <div class="sky-layout">
+          <aside class="left-column">
+            <article class="panel compact-card">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">AQUESTA NIT</p>
+                  <h2 id="skyTitle">Què podem trobar?</h2>
+                </div>
+                <span class="status-dot" title="Mapa calculat per a la data seleccionada"></span>
+              </div>
+              <div class="discover-list" id="discoverList"></div>
+            </article>
+
+            <article class="panel compact-card">
+              <p class="eyebrow">ORIENTACIÓ</p>
+              <h2>Com llegir el mapa</h2>
+              <div class="orientation-help">
+                <div class="mini-compass" aria-hidden="true"><b>N</b><span>E</span><span>S</span><span>O</span><i></i></div>
+                <p>És un mapa de tot el cel: el <strong>centre és el zenit</strong>, just damunt del cap, i el cercle exterior és l'horitzó.</p>
+              </div>
+              <p class="small-note">Toca una estrella o un repte per destacar-la. El mapa és orientatiu per a observació a ull nu.</p>
+            </article>
+          </aside>
+
+          <div class="sky-stage panel">
+            <div class="stage-header">
+              <div>
+                <p class="eyebrow">MAPA DINÀMIC</p>
+                <h2 id="mapDateLabel">12 d'agost de 2026 · 22:30</h2>
+              </div>
+              <div class="sky-condition"><span aria-hidden="true">◔</span><strong id="twilightLabel">Nit astronòmica</strong></div>
+            </div>
+
+            <div class="canvas-wrap" id="canvasWrap">
+              <canvas id="skyCanvas" aria-label="Mapa interactiu del cel visible des de Torrevicente"></canvas>
+              <div class="map-badge">N al capdamunt · E a la dreta</div>
+              <div class="star-tooltip" id="starTooltip" role="status" hidden></div>
+            </div>
+
+            <div class="object-detail" id="objectDetail" aria-live="polite">
+              <div class="detail-symbol">✦</div>
+              <div>
+                <strong>Explora el mapa</strong>
+                <p>Toca una estrella destacada per descobrir-ne una curiositat.</p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="right-column">
+            <article class="panel challenge-card">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">MISSIÓ FAMILIAR</p>
+                  <h2>Reptes del cel</h2>
+                </div>
+                <div class="progress-ring" id="challengeProgress" aria-label="Progrés dels reptes"><span>0/6</span></div>
+              </div>
+              <div class="challenge-list" id="challengeList"></div>
+              <button class="text-button" id="resetChallenges">Reinicia els reptes</button>
+            </article>
+
+            <article class="panel compact-card tip-card">
+              <p class="eyebrow">TRUC IMPORTANT</p>
+              <h2>Dóna temps als ulls</h2>
+              <div class="adaptation-meter" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+              <p>Al cap de 15–20 minuts sense pantalles ni llums blanques començaràs a veure moltes més estrelles.</p>
+              <button class="secondary-button full-width" id="startAdaptation">Inicia 20 minuts</button>
+              <div class="adaptation-countdown" id="adaptationCountdown" hidden></div>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page-section" id="eclipseSection" aria-labelledby="eclipseTitle">
+        <div class="eclipse-hero panel">
+          <div class="eclipse-copy">
+            <p class="eyebrow warm">12 D'AGOST DE 2026</p>
+            <h2 id="eclipseTitle">Un minut i quaranta-un segons de nit en ple dia</h2>
+            <p>Des de Torrevicente, la totalitat començarà a les <strong>20:29:49</strong>, arribarà al màxim a les <strong>20:30:40</strong> i acabarà a les <strong>20:31:31</strong>.</p>
+            <div class="eclipse-stats">
+              <div><span>Durada totalitat</span><strong>1 min 41 s</strong></div>
+              <div><span>Altura del Sol</span><strong>7°</strong></div>
+              <div><span>Direcció</span><strong>283° · ONO</strong></div>
+            </div>
+            <div class="countdown-card">
+              <span id="countdownCaption">Temps fins al màxim</span>
+              <strong id="eclipseCountdown">—</strong>
+            </div>
+          </div>
+
+          <div class="eclipse-visual-card">
+            <canvas id="eclipseCanvas" aria-label="Simulació de les fases de l'eclipsi"></canvas>
+            <div class="eclipse-clock" id="eclipseClock">20:30:40</div>
+            <input id="eclipseSlider" type="range" min="0" max="5813" value="3333" step="1" aria-label="Avança per les fases de l'eclipsi">
+            <div class="slider-labels"><span>19:35</span><span>20:30</span><span>21:12</span></div>
+          </div>
+        </div>
+
+        <div class="eclipse-grid">
+          <article class="panel timeline-card">
+            <div class="panel-heading"><div><p class="eyebrow">CRONOLOGIA</p><h2>Els cinc moments clau</h2></div></div>
+            <ol class="eclipse-timeline" id="eclipseTimeline">
+              <li data-sec="0"><time>19:35:07</time><div><strong>Comença la parcialitat</strong><p>La Lluna fa el primer petit mos al Sol.</p></div></li>
+              <li data-sec="3282"><time>20:29:49</time><div><strong>Comença la totalitat</strong><p>Només ara es poden retirar les ulleres.</p></div></li>
+              <li data-sec="3333"><time>20:30:40</time><div><strong>Màxim</strong><p>Corona solar, horitzó crepuscular i cel enfosquit.</p></div></li>
+              <li data-sec="3384"><time>20:31:31</time><div><strong>Acaba la totalitat</strong><p>Reapareix el Sol: ulleres posades immediatament.</p></div></li>
+              <li data-sec="5813"><time>21:12:00</time><div><strong>Final de l'eclipsi</strong><p>El Sol és ja pràcticament a l'horitzó.</p></div></li>
+            </ol>
+          </article>
+
+          <article class="panel safety-card">
+            <p class="eyebrow danger">SEGURETAT</p>
+            <h2>La regla que no pot fallar</h2>
+            <div class="safety-rule">
+              <span aria-hidden="true">🕶</span>
+              <p><strong>Ulleres homologades sempre</strong>, excepte durant la totalitat completa.</p>
+            </div>
+            <ul class="clean-list">
+              <li>Han d'indicar la norma <strong>ISO 12312-2</strong> i estar intactes.</li>
+              <li>Les ulleres de sol, radiografies, CD o filtres casolans <strong>no serveixen</strong>.</li>
+              <li>Càmeres, prismàtics i telescopis necessiten un <strong>filtre solar davant de l'objectiu</strong>.</li>
+              <li>Amb nens, un adult comprova les ulleres i supervisa tota l'observació.</li>
+            </ul>
+            <p class="warning-note">No retireu les ulleres fins que el disc solar hagi desaparegut del tot. Torneu-les a posar amb el primer punt de llum.</p>
+          </article>
+
+          <article class="panel horizon-card">
+            <p class="eyebrow">TRIA DEL LLOC</p>
+            <h2>Cal un horitzó molt net</h2>
+            <div class="horizon-diagram" aria-label="El Sol estarà a set graus sobre l'horitzó oest-nord-oest">
+              <div class="sun-low">☀</div>
+              <div class="angle-line"><span>7°</span></div>
+              <div class="horizon-land"><i></i><i></i><i></i></div>
+              <b>ONO · 283°</b>
+            </div>
+            <p>Un turó, arbres o una casa relativament baixos poden tapar el Sol. Comproveu el lloc el dia abans cap a les <strong>20:30</strong>.</p>
+            <label class="check-line"><input type="checkbox" id="horizonChecked"><span>Ja hem comprovat l'horitzó</span></label>
+          </article>
+        </div>
+
+        <div class="sources-note panel">
+          <strong>Sobre les dades</strong>
+          <p>Horaris locals calculats per a Torrevicente (UTC+2). L'atmosfera, el relleu i possibles actualitzacions poden modificar lleugerament l'experiència real; reviseu els avisos oficials els dies previs.</p>
+          <div class="source-links">
+            <a href="https://astronomia.ign.es/eclipses-de-sol-y-luna/eclipse-total-sol-de-12-de-agosto-2026" target="_blank" rel="noopener">IGN · informació oficial</a>
+            <a href="https://science.nasa.gov/eclipses/future-eclipses/total-solar-eclipse-on-august-12-2026/" target="_blank" rel="noopener">NASA · eclipsi 2026</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" id="recordSection" aria-labelledby="recordTitle">
+        <div class="record-layout">
+          <div class="record-form panel">
+            <p class="eyebrow">EL NOSTRE RECORD</p>
+            <h2 id="recordTitle">Què hem vist aquesta nit?</h2>
+            <p class="section-intro">Les dades es desen només en aquest dispositiu. Podeu tornar-hi l'endemà i continuar.</p>
+
+            <div class="seen-grid" id="seenGrid"></div>
+
+            <div class="counter-grid">
+              <div class="counter-card">
+                <span>Estrelles fugaces</span>
+                <div><button data-counter="meteors" data-delta="-1" aria-label="Resta una estrella fugaç">−</button><strong id="meteorsCount">0</strong><button data-counter="meteors" data-delta="1" aria-label="Suma una estrella fugaç">+</button></div>
+              </div>
+              <div class="counter-card">
+                <span>Satèl·lits</span>
+                <div><button data-counter="satellites" data-delta="-1" aria-label="Resta un satèl·lit">−</button><strong id="satellitesCount">0</strong><button data-counter="satellites" data-delta="1" aria-label="Suma un satèl·lit">+</button></div>
+              </div>
+            </div>
+
+            <label class="notes-label" for="observationNotes">Una frase per recordar la nit</label>
+            <textarea id="observationNotes" rows="4" maxlength="220" placeholder="Per exemple: La primera Persèida ha travessat el Cigne..."></textarea>
+            <div class="form-actions">
+              <button class="primary-button" id="saveRecord">Desa el registre</button>
+              <button class="secondary-button" id="downloadMemory">Crea una imatge-record</button>
+              <button class="text-button danger-text" id="clearRecord">Esborra-ho tot</button>
+            </div>
+            <div class="save-message" id="saveMessage" role="status"></div>
+          </div>
+
+          <aside class="memory-preview panel" id="memoryPreview">
+            <div class="memory-sky" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><div class="memory-meteor"></div></div>
+            <p class="eyebrow warm">NIT D'ESTIU · TORREVICENTE</p>
+            <h2>El nostre cel</h2>
+            <p class="memory-date" id="memoryDate">12 d'agost de 2026</p>
+            <ul id="memoryList"><li>Encara no hi ha cap observació marcada.</li></ul>
+            <blockquote id="memoryQuote">«Aquesta nit encara està per escriure.»</blockquote>
+            <div class="memory-footer"><span>41,335° N · 2,941° O</span><strong>✦</strong></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Fet per mirar el cel en família · Funciona sense connexió després de la primera visita</p>
+      <button class="text-button" id="aboutButton">Com funciona?</button>
+    </footer>
+  </div>
+
+  <dialog id="aboutDialog">
+    <button class="dialog-close" id="closeDialog" aria-label="Tanca">×</button>
+    <p class="eyebrow">VERSIÓ 1.0</p>
+    <h2>Una guia, no un planetari professional</h2>
+    <p>El mapa calcula la posició de les estrelles principals a partir de les seves coordenades celestes, la data, l'hora i la ubicació de Torrevicente. Les línies i la Via Làctia són esquemàtiques, pensades per ajudar a orientar-se.</p>
+    <p>Els reptes i el registre es desen al navegador mitjançant emmagatzematge local. No s'envia cap dada a internet.</p>
+    <p>Per a observacions de precisió, satèl·lits o planetes, convé contrastar la informació amb una aplicació astronòmica especialitzada.</p>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "El cel de Torrevicente",
+  "short_name": "Cel Torrevicente",
+  "description": "Guia interactiva familiar del cel i l'eclipsi total de 2026.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#071225",
+  "theme_color": "#071225",
+  "lang": "ca",
+  "icons": [
+    {"src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}

@@ -815,6 +815,28 @@ header.header-mat {
 .site-footer a:hover { text-decoration: underline; }
 .site-footer strong { color: var(--text); }
 
+.footer-cel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.2em;
+  margin: 0 0.15rem;
+  color: #1a2332;
+  opacity: 0.5;
+  border-radius: 999px;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.footer-cel:hover,
+.footer-cel:focus-visible {
+  opacity: 1;
+  text-decoration: none !important;
+  transform: scale(1.1);
+}
+.footer-cel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 header.header-grav {
   background: linear-gradient(135deg, #103b69 0%, #1a6d86 100%);
 }

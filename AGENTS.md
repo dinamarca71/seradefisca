@@ -26,6 +26,7 @@ seccions temàtiques (`pack-section-title` + `pack-grid`).
 ```
 escola/
 ├── index.html              # portada global (Matemàtiques | Física)
+├── cel-torrevicente/       # guia familiar de l'eclipsi (fora del currículum; enllaç discret al peu)
 ├── LICENSE                 # llicència CC BY 4.0 dels continguts
 ├── css/comunes.css         # estils compartits per TOT el projecte
 ├── js/utilitats.js         # helpers de canvas i controls compartits
@@ -47,6 +48,7 @@ escola/
         └── defecte-massa/      # corba d’energia d’enllaç (Wikimedia CC0)
 ```
 
+`cel-torrevicente/` és una guia familiar independent (eclipsi 2026); no forma part dels simuladors de batxillerat ni cal que segueixi el patró pedagògic de la resta.
 ## Convencions
 
 - **Idioma**: tots els textos visibles, títols i comentaris nous, en **català**.
@@ -158,10 +160,13 @@ escola/
   Haro** — actualment **Nivell 4 (cocreació humà-IA)**.
 - La segona línia indica **amb quina eina i model** s'ha fet realment cada
   pàgina (transparència MIAE): la majoria, amb Cursor i Claude Opus 4.8 (High);
-  el laboratori d'òrbites, amb ChatGPT (GPT-5.6 Thinking) i Cursor.
+  el laboratori d'òrbites i diverses pàgines posteriors, amb ChatGPT (GPT-5.6
+  Thinking) i Cursor; les integracions en mode Auto ho indiquen amb
+  «Cursor (Auto)».
 - Els enllaços del peu són **externs** (Creative Commons, marc MIAE, GitHub),
   així que el bloc és idèntic a qualsevol profunditat de carpeta.
-- L'enllaç al **repositori de GitHub** només va a `index.html` (portada global).
+- L'enllaç al **repositori de GitHub** només va a `index.html` (portada global),
+  on també hi ha un enllaç discret (icona d'eclipsi) a `cel-torrevicente/`.
 - En **crear una pàgina nova**, copia el peu d'una d'existent perquè es mantingui
   coherent. Si canvia el nom de l'autoria, la llicència o el nivell MIAE,
   actualitza'l a totes les pàgines i al fitxer `LICENSE`.
