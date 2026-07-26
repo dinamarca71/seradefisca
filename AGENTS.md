@@ -36,13 +36,15 @@ escola/
 │   └── dades/              # datasets JSON (p. ex. estadística)
 └── fisica/                 # portada + simuladors (fitxers plans)
     ├── index.html          # portada de física (agrupada per seccions)
-    ├── semivida.html · series.html · defecte-massa.html        # física moderna
+    ├── semivida.html · series.html · defecte-massa.html (+ css/js)  # física moderna
     ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
     ├── induccio.html · potencial-frenada.html (+ css/js)        # electromagnetisme
     ├── mhs.html (+ mhs.css · mhs.js) · pendul.html             # MHS / oscil·lacions
     ├── superposicio.html (+ css/js) · ones-estacionaries.html ·
     │   interferencia-young.html · fenomens-ondulatoris.html    # ones
-    └── img/series/         # diagrames Wikimedia (sèries radioactives)
+    └── img/
+        ├── series/             # diagrames Wikimedia (sèries radioactives)
+        └── defecte-massa/      # corba d’energia d’enllaç (Wikimedia CC0)
 ```
 
 ## Convencions

@@ -3,194 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Defecte de Massa — Física Moderna</title>
+  <meta name="description" content="Reaccions nuclears, conservació d'A i Z, defecte de massa i energia alliberada.">
+  <title>Defecte de massa — Física 2n Batxillerat</title>
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
   <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="defecte-massa.css">
 </head>
 <body>
   <header class="header-mod">
-    <nav class="nav-pack">
-      <a href="index.html" class="nav-all">← Física</a>
-      <a href="semivida.html">Semivida</a>
-      <a href="series.html">Sèries</a>
-      <a href="defecte-massa.html" class="active">Defecte de massa</a>
-    </nav>
-    <h1>Defecte de Massa i Energia Nuclear</h1>
-    <p>
-      En les reaccions nuclears, la massa no es conserva exactament: la diferència es converteix
-      en energia segons Einstein: E = Δm · c².
-    </p>
+    <div class="header-inner">
+      <nav class="nav-pack">
+        <a href="index.html" class="nav-all">← Física</a>
+        <a href="semivida.html">Semivida</a>
+        <a href="series.html">Sèries</a>
+        <a href="defecte-massa.html" class="active">Defecte de massa</a>
+      </nav>
+      <h1>Reaccions nuclears i defecte de massa</h1>
+      <p>
+        Llegeix la reacció en tres nivells: ajust d’A i Z, transformació dins del nucli
+        i balanç de masses que determina l’energia alliberada.
+      </p>
+    </div>
   </header>
 
   <main>
-    <section class="formula-box">
-      <h2>Equacions</h2>
-      <p class="formula">Δm = Σm<sub>reactius</sub> − Σm<sub>productes</sub> &nbsp;·&nbsp; E = Δm · c² &nbsp;·&nbsp; 1 u = 931,49 MeV/c²</p>
-      <p class="formula-note">Si Δm &gt; 0, la reacció allibera energia (exotèrmica). c = 2,998·10⁸ m/s.</p>
-    </section>
+    <div class="lab-grid">
+      <aside class="card selector-card">
+        <h2>Reaccions resoltes</h2>
+        <p class="hint">Tria un exemple. Estan ordenats per tipus de transformació.</p>
 
-    <section class="controls-panel">
-      <h2>Exemples precarregats</h2>
-      <div class="preset-buttons" id="exampleBtns"></div>
-      <p id="exampleDesc" style="margin-top:0.75rem;font-size:0.875rem;color:var(--muted);"></p>
-    </section>
+        <div id="presetList" class="preset-list" role="list"></div>
 
-    <section class="canvas-section">
-      <div class="canvas-header"><h2>Reacció nuclear</h2></div>
-      <div id="reactionDisplay" style="text-align:center;padding:1.5rem;font-family:'Cambria Math',serif;font-size:1.2rem;"></div>
-    </section>
+        <details class="model-details">
+          <summary>Convenció de masses</summary>
+          <p class="note">
+            Utilitzem masses atòmiques tabulades, és a dir, masses d’àtoms neutres.
+            Això simplifica els càlculs, però cal interpretar amb cura les desintegracions β.
+          </p>
+        </details>
+      </aside>
 
-    <section class="controls-panel">
-      <h2>Tablea de masses</h2>
-      <table class="mass-table" id="massTable"></table>
+      <section class="center-column">
+        <article class="card reaction-card">
+          <div class="reaction-header">
+            <div>
+              <p class="eyebrow" id="reactionType"></p>
+              <h2 id="reactionTitle"></h2>
+              <p class="reaction-description" id="reactionDescription"></p>
+            </div>
+            <span class="context-badge" id="contextBadge"></span>
+          </div>
 
-      <div class="result-highlight">
-        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.35rem;">Defecte de massa i energia alliberada</p>
-        <p class="big" id="deltaM">Δm = —</p>
-        <p class="big" id="energyMeV" style="margin-top:0.35rem;">E = —</p>
-        <p style="font-size:0.85rem;color:var(--muted);margin-top:0.5rem;" id="energyJ"></p>
+          <div class="reaction-stage">
+            <div id="reactionEquation" class="reaction-equation" aria-live="polite"></div>
+          </div>
+
+          <div class="nuclear-process">
+            <div class="process-label">Què passa dins del nucli?</div>
+            <div id="nuclearEquation" class="nuclear-equation"></div>
+            <p id="nuclearExplanation" class="note"></p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-heading">
+            <div>
+              <span class="step-number">1</span>
+              <h2>Ajust de la reacció</h2>
+            </div>
+            <span id="balanceStatus" class="status-pill"></span>
+          </div>
+
+          <p class="hint">
+            El nombre màssic A compta nucleons. El nombre atòmic Z compta la càrrega nuclear.
+            Tots dos s’han de conservar.
+          </p>
+
+          <div class="balance-board">
+            <div class="balance-column">
+              <span class="balance-title">Reactius</span>
+              <div id="leftBreakdown" class="balance-breakdown"></div>
+              <div id="leftTotals" class="balance-totals"></div>
+            </div>
+
+            <div class="balance-symbol">=</div>
+
+            <div class="balance-column">
+              <span class="balance-title">Productes</span>
+              <div id="rightBreakdown" class="balance-breakdown"></div>
+              <div id="rightTotals" class="balance-totals"></div>
+            </div>
+          </div>
+
+          <div class="conservation-grid">
+            <div id="checkA" class="conservation-card"></div>
+            <div id="checkZ" class="conservation-card"></div>
+          </div>
+
+          <div id="adjustmentNote" class="teaching-note"></div>
+        </article>
+
+        <article class="card">
+          <div class="section-heading">
+            <div>
+              <span class="step-number">2</span>
+              <h2>Defecte de massa i energia</h2>
+            </div>
+          </div>
+
+          <div class="mass-layout">
+            <div>
+              <table class="mass-table">
+                <thead>
+                  <tr>
+                    <th>Costat</th>
+                    <th>Espècie</th>
+                    <th>Massa (u)</th>
+                  </tr>
+                </thead>
+                <tbody id="massTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="calculation-panel">
+              <div id="massReactants" class="formula-step"></div>
+              <div id="massProducts" class="formula-step"></div>
+              <div id="massCorrection" class="formula-step correction-step"></div>
+              <div id="deltaMassLine" class="formula-step result-step"></div>
+              <div id="energyLine" class="formula-step result-step"></div>
+            </div>
+          </div>
+
+          <div class="metrics" id="resultMetrics"></div>
+          <div id="massNote" class="teaching-note"></div>
+        </article>
+      </section>
+
+      <aside class="card right">
+        <h2>Lectura física</h2>
+
+        <div class="formula-box-local">
+          <span data-math="\sum A_\mathrm{reactius}=\sum A_\mathrm{productes}"></span>
+        </div>
+        <div class="formula-box-local">
+          <span data-math="\sum Z_\mathrm{reactius}=\sum Z_\mathrm{productes}"></span>
+        </div>
+        <div class="formula-box-local">
+          <span data-math="\Delta m=\sum m_\mathrm{reactius}-\sum m_\mathrm{productes}"></span>
+        </div>
+        <div class="formula-box-local">
+          <span data-math="Q=\Delta m\,c^2"></span>
+        </div>
+
+        <h3>Àtom, nucli i ionització</h3>
+        <div id="ionizationBox" class="ionization-box"></div>
+
+        <h3>Resultat energètic</h3>
+        <div id="energyInterpretation" class="prediction"></div>
+
+        <details class="side-details" open>
+          <summary>Desenvolupament numèric</summary>
+          <div id="numericSteps" class="steps"></div>
+        </details>
+      </aside>
+    </div>
+
+    <details class="concepts">
+      <summary>Conceptes clau i errors habituals</summary>
+      <div class="concepts-layout">
+        <figure class="binding-figure">
+          <img src="img/defecte-massa/binding-energy.svg"
+            alt="Corba d’energia d’enllaç per nucleó per a isòtops comuns: màxim al voltant del ferro i caiguda per als nuclis lleugers i molt pesats">
+          <figcaption>
+            Energia d’enllaç per nucleó. Autoria:
+            <a href="https://commons.wikimedia.org/wiki/File:Binding_energy_curve_of_common_isotopes.svg" target="_blank" rel="noopener">ScottMars — Wikimedia Commons</a>
+            (CC0). Article:
+            <a href="https://en.wikipedia.org/wiki/Nuclear_binding_energy" target="_blank" rel="noopener">Nuclear binding energy</a>.
+          </figcaption>
+        </figure>
+        <ul>
+          <li>En l’ajust nuclear, electrons, positrons, neutrins i fotons s’escriuen també amb <strong>A = 0</strong>.</li>
+          <li>Per a l’electró β⁻: <span data-math="{}^{0}_{-1}e"></span>; per al positró β⁺: <span data-math="{}^{0}_{+1}e"></span>.</li>
+          <li>El neutrí i l’antineutrí tenen <span data-math="A=0"></span> i <span data-math="Z=0"></span>.</li>
+          <li>Les masses atòmiques tabulades corresponen a àtoms neutres; el producte immediat d’una desintegració β pot estar ionitzat.</li>
+          <li>La massa no desapareix: la diferència es transforma en energia cinètica, radiació i energia de retrocés.</li>
+          <li>Una emissió γ no canvia A ni Z: només redueix l’energia interna del nucli.</li>
+          <li>La corba d’energia d’enllaç explica per què la <strong>fusió</strong> (nuclis lleugers) i la <strong>fissió</strong> (nuclis molt pesats) poden alliberar energia: els productes queden més a prop del màxim (prop del Fe).</li>
+        </ul>
       </div>
-    </section>
+    </details>
 
-    <section class="concepts">
-      <h2>Conceptes clau</h2>
-      <ul>
-        <li><strong>Defecte de massa:</strong> la massa dels productes és lleugerament menor que la dels reactius; la diferència surt com a energia cinètica i radiació.</li>
-        <li><strong>Energia de enllaç:</strong> cada nuclió està lligat amb energia; per separar-los cal aportar energia (defecte de massa del nuclid).</li>
-        <li><strong>Desintegració α:</strong> allibera ~4–9 MeV. La massa del ⁴He (partícula α) surt del nuclid pare.</li>
-        <li><strong>Fissió:</strong> un nuclid pesat es trenca en fragments més lleugers + neutrons; Δm gran → molta energia (centenars de MeV).</li>
-        <li><strong>Fusió:</strong> nuclis lleugers s'uneixen (ex. D+T); requereix temperatures extremes però allibera molta energia per nuclió.</li>
+    <section class="recursos">
+      <h2>Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses" target="_blank" rel="noopener">Atomic Weights and Isotopic Compositions — NIST</a>
+            <span class="lang">EN</span>
+            <span class="meta">Taules de masses isotòpiques utilitzades en els balanços de massa.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html" target="_blank" rel="noopener">LiveChart of Nuclides — IAEA</a>
+            <span class="lang">EN</span>
+            <span class="meta">Carta de nuclidis interactiva amb desintegracions, energies i períodes de semidesintegració.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://openstax.org/books/university-physics-volume-3/pages/10-introduction" target="_blank" rel="noopener">Nuclear Physics — OpenStax</a>
+            <span class="lang">EN</span>
+            <span class="meta">Text introductori sobre desintegracions, energia d’enllaç, fissió i fusió.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.khanacademy.org/science/physics/quantum-physics/atoms-and-electrons/v/mass-defect-and-binding-energy" target="_blank" rel="noopener">Mass defect and binding energy — Khan Academy</a>
+            <span class="lang">EN</span>
+            <span class="meta">Vídeo curt que relaciona defecte de massa, energia d’enllaç i E = mc².</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://en.wikipedia.org/wiki/Nuclear_binding_energy" target="_blank" rel="noopener">Nuclear binding energy — Wikipedia</a>
+            <span class="lang">EN</span>
+            <span class="meta">Article clar sobre energia d’enllaç, defecte de massa i la corba E/A vs A (fusió i fissió).</span>
+          </div>
+        </li>
       </ul>
     </section>
-  <footer class="site-footer">
-    <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
-    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i el model Claude Opus 4.8 (High).</p>
-  </footer>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb ChatGPT (GPT-5.6 Thinking) i Cursor.</p>
+    </footer>
   </main>
 
+  <script src="../vendor/katex/katex.min.js"></script>
   <script src="../js/utilitats.js"></script>
-  <script>
-    const C2 = 2.99792458e8 ** 2;
-    const U_TO_MEV = 931.494; // MeV/c² per u
-
-    const EXAMPLES = {
-      alpha: {
-        name: 'Desintegració α (²¹⁰Po)',
-        desc: 'El poloni-210 emet una partícula α (núcle d\'heli) i es transforma en plom-206. Exemple clàssic de la sèrie de l\'urani.',
-        reaction: '²¹⁰₈₄Po  →  ²⁰⁶₈₂Pb  +  ⁴₂He',
-        reactants: [
-          { label: '²¹⁰Po', mass: 209.9828737, note: 'Nucli pare' }
-        ],
-        products: [
-          { label: '²⁰⁶Pb', mass: 205.9744653, note: 'Nucli fill' },
-          { label: '⁴He (α)', mass: 4.002603254, note: 'Partícula α' }
-        ]
-      },
-      beta: {
-        name: 'Desintegració β⁻ (¹⁴C)',
-        desc: 'El carboni-14 es converteix en nitrogen-14 emetent un electró i un antineutrí. Base de la datació per radiocarboni.',
-        reaction: '¹⁴₆C  →  ¹⁴₇N  +  e⁻  +  ν̄',
-        reactants: [
-          { label: '¹⁴C', mass: 14.0032420, note: 'Radioactiu' }
-        ],
-        products: [
-          { label: '¹⁴N', mass: 14.0030740, note: 'Estable' },
-          { label: 'e⁻', mass: 0.000548579, note: 'Electró β' }
-        ]
-      },
-      fission: {
-        name: 'Fissió induïda (²³⁵U + n)',
-        desc: 'Un neutró colpeja un nuclid d\'urani-235 i el divideix en dos fragments + 2 neutrons. Reacció de central nuclear.',
-        reaction: '²³⁵₉₂U + ¹n  →  ⁹⁴₃₈Sr + ¹⁴⁰₅₄Xe + 2·¹n',
-        reactants: [
-          { label: '²³⁵U', mass: 235.0439299, note: 'Combustible' },
-          { label: '¹n', mass: 1.008664916, note: 'Neutró incident' }
-        ],
-        products: [
-          { label: '⁹⁴Sr', mass: 93.915361, note: 'Fragment 1' },
-          { label: '¹⁴⁰Xe', mass: 139.921641, note: 'Fragment 2' },
-          { label: '2·¹n', mass: 2 * 1.008664916, note: '2 neutrons' }
-        ]
-      },
-      fusion: {
-        name: 'Fusió D-T (²H + ³H)',
-        desc: 'Fusió de deuterí i triti formant heli-4 i un neutró. Reacció candidata per a reactors de fusió (ITER).',
-        reaction: '²₁H + ³₁H  →  ⁴₂He + ¹n',
-        reactants: [
-          { label: '²H (deuterí)', mass: 2.014101778, note: 'Hidrogen pesat' },
-          { label: '³H (triti)', mass: 3.016049277, note: 'Hidrogen triple' }
-        ],
-        products: [
-          { label: '⁴He', mass: 4.002603254, note: 'Heli' },
-          { label: '¹n', mass: 1.008664916, note: 'Neutró' }
-        ]
-      },
-      ra226: {
-        name: 'Desintegració α (²²⁶Ra)',
-        desc: 'El radi-226 de la sèrie de l\'urani emet α i es converteix en radó-222 (gas). Exemple de risc ambiental.',
-        reaction: '²²⁶₈₈Ra  →  ²²²₈₆Rn  +  ⁴₂He',
-        reactants: [
-          { label: '²²⁶Ra', mass: 226.025410, note: 'Sèrie ²³⁸U' }
-        ],
-        products: [
-          { label: '²²²Rn', mass: 222.017578, note: 'Gas radon' },
-          { label: '⁴He (α)', mass: 4.002603254, note: 'Partícula α' }
-        ]
-      }
-    };
-
-    let current = 'alpha';
-
-    function sumMass(items) { return items.reduce((s, i) => s + i.mass, 0); }
-
-    function calculate(ex) {
-      const mReact = sumMass(ex.reactants);
-      const mProd = sumMass(ex.products);
-      const deltaM = mReact - mProd;
-      const E_MeV = deltaM * U_TO_MEV;
-      const E_J = deltaM * 1.66053906660e-27 * C2;
-      return { mReact, mProd, deltaM, E_MeV, E_J };
-    }
-
-    function render() {
-      const ex = EXAMPLES[current];
-      document.getElementById('exampleDesc').textContent = ex.desc;
-      document.getElementById('reactionDisplay').textContent = ex.reaction;
-
-      const calc = calculate(ex);
-      let tableHtml = `<thead><tr><th>Component</th><th>Massa (u)</th><th>Nota</th></tr></thead><tbody>`;
-      tableHtml += `<tr><td colspan="3" style="background:#eef2ff;font-weight:600;">Reactius</td></tr>`;
-      ex.reactants.forEach(r => {
-        tableHtml += `<tr><td>${r.label}</td><td class="num">${r.mass.toFixed(7)}</td><td>${r.note}</td></tr>`;
-      });
-      tableHtml += `<tr><td><strong>Σ reactius</strong></td><td class="num"><strong>${calc.mReact.toFixed(7)}</strong></td><td></td></tr>`;
-      tableHtml += `<tr><td colspan="3" style="background:#ecfdf5;font-weight:600;">Productes</td></tr>`;
-      ex.products.forEach(p => {
-        tableHtml += `<tr><td>${p.label}</td><td class="num">${p.mass.toFixed(7)}</td><td>${p.note}</td></tr>`;
-      });
-      tableHtml += `<tr><td><strong>Σ productes</strong></td><td class="num"><strong>${calc.mProd.toFixed(7)}</strong></td><td></td></tr>`;
-      tableHtml += '</tbody>';
-      document.getElementById('massTable').innerHTML = tableHtml;
-
-      document.getElementById('deltaM').textContent = `Δm = ${formatNum(calc.deltaM, 6)} u`;
-      document.getElementById('energyMeV').textContent = `E = ${formatNum(calc.E_MeV, 2)} MeV`;
-      document.getElementById('energyJ').textContent = `= ${formatSci(calc.E_J)} J  (per un nuclí / una reacció)`;
-    }
-
-    const btns = document.getElementById('exampleBtns');
-    Object.entries(EXAMPLES).forEach(([key, ex]) => {
-      const btn = document.createElement('button');
-      btn.className = 'btn' + (key === current ? ' active' : '');
-      btn.textContent = ex.name;
-      btn.addEventListener('click', () => {
-        current = key;
-        btns.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        render();
-      });
-      btns.appendChild(btn);
-    });
-
-    render();
-  </script>
+  <script src="defecte-massa.js"></script>
 </body>
 </html>
