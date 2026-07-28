@@ -30,11 +30,13 @@ escola/
 ├── LICENSE                 # llicència CC BY 4.0 dels continguts
 ├── css/
 │   ├── comunes.css         # estils compartits per TOT el projecte
-│   └── recursos.css        # estils de la biblioteca de recursos de física
+│   ├── recursos.css        # estils de la biblioteca de recursos de física
+│   └── recursos-matematiques.css  # estils de la biblioteca de recursos de mates
 ├── js/utilitats.js         # helpers de canvas i controls compartits
 ├── vendor/katex/           # KaTeX vendoritzat en local (css, js, fonts)
 ├── matematiques/           # portada + simuladors (fitxers plans)
 │   ├── index.html          # portada de mates (agrupada per seccions)
+│   ├── recursos.html       # biblioteca curada d'enllaços (teoria, PAU, viz…)
 │   ├── matrius.html · sistemes.html · probabilitat.html · derivades.html · integrals.html
 │   └── dades/              # datasets JSON (p. ex. estadística)
 └── fisica/                 # portada + simuladors (fitxers plans)
