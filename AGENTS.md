@@ -28,7 +28,9 @@ escola/
 ├── index.html              # portada global (Matemàtiques | Física)
 ├── cel-torrevicente/       # guia familiar de l'eclipsi (fora del currículum; enllaç discret al peu)
 ├── LICENSE                 # llicència CC BY 4.0 dels continguts
-├── css/comunes.css         # estils compartits per TOT el projecte
+├── css/
+│   ├── comunes.css         # estils compartits per TOT el projecte
+│   └── recursos.css        # estils de la biblioteca de recursos de física
 ├── js/utilitats.js         # helpers de canvas i controls compartits
 ├── vendor/katex/           # KaTeX vendoritzat en local (css, js, fonts)
 ├── matematiques/           # portada + simuladors (fitxers plans)
@@ -37,6 +39,7 @@ escola/
 │   └── dades/              # datasets JSON (p. ex. estadística)
 └── fisica/                 # portada + simuladors (fitxers plans)
     ├── index.html          # portada de física (agrupada per seccions)
+    ├── recursos.html       # biblioteca curada d'enllaços (teoria, PAU, sims…)
     ├── semivida.html · series.html · defecte-massa.html (+ css/js)  # física moderna
     ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
     ├── induccio.html · potencial-frenada.html (+ css/js)        # electromagnetisme
