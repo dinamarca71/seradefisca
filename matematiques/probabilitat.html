@@ -4,7 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Probabilitat — Matemàtiques 2n Batxillerat</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
   <link rel="stylesheet" href="../css/comunes.css">
+  <style>
+    #combi-res .step.eq {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.5rem;
+      line-height: 1.4;
+    }
+    #combi-res .katex { font-size: 1.05em; }
+  </style>
 </head>
 <body>
   <header class="header-mat">
@@ -93,15 +105,15 @@
     <section class="concepts">
       <h2>Conceptes clau</h2>
       <ul>
-        <li><strong>Variacions:</strong> V(n,k) = n!/(n−k)! — ordenacions de k elements de n, sense repetir (l'ordre importa).</li>
-        <li><strong>Variacions amb repetició:</strong> VR(n,k) = nᵏ — l'ordre importa i es poden repetir elements.</li>
-        <li><strong>Combinacions:</strong> C(n,k) = n!/(k!·(n−k)!) — tries de k elements de n on l'ordre NO importa.</li>
-        <li><strong>Probabilitat condicional:</strong> P(B|A) = P(A∩B)/P(A). D'aquí: P(A∩B) = P(A)·P(B|A).</li>
+        <li><strong>Variacions:</strong> <span data-math="V(n,k)=\dfrac{n!}{(n-k)!}"></span> — ordenacions de k elements de n, sense repetir (l'ordre importa).</li>
+        <li><strong>Variacions amb repetició:</strong> <span data-math="VR(n,k)=n^{k}"></span> — l'ordre importa i es poden repetir elements.</li>
+        <li><strong>Combinacions:</strong> <span data-math="C(n,k)=\dfrac{n!}{k!\,(n-k)!}"></span> — tries de k elements de n on l'ordre NO importa.</li>
+        <li><strong>Probabilitat condicional:</strong> <span data-math="P(B\mid A)=\dfrac{P(A\cap B)}{P(A)}"></span>. D'aquí: <span data-math="P(A\cap B)=P(A)\cdot P(B\mid A)"></span>.</li>
         <li><strong>Arbre → taula:</strong> cada branca completa multiplica les probabilitats i dóna una intersecció (una casella de la taula).</li>
         <li><strong>Taula → arbre:</strong> es divideix cada intersecció pel marginal de la fila per recuperar la condicionada.</li>
-        <li><strong>Probabilitat total:</strong> P(B) = P(A)·P(B|A) + P(A′)·P(B|A′).</li>
-        <li><strong>Independència:</strong> A i B són independents si P(A∩B) = P(A)·P(B); equival a dir que P(B|A) = P(B).</li>
-        <li><strong>Teorema de Bayes:</strong> P(A|B) = P(A∩B)/P(B) = P(A)·P(B|A) / [P(A)·P(B|A) + P(A′)·P(B|A′)].</li>
+        <li><strong>Probabilitat total:</strong> <span data-math="P(B)=P(A)\cdot P(B\mid A)+P(A')\cdot P(B\mid A')"></span>.</li>
+        <li><strong>Independència:</strong> A i B són independents si <span data-math="P(A\cap B)=P(A)\cdot P(B)"></span>; equival a dir que <span data-math="P(B\mid A)=P(B)"></span>.</li>
+        <li><strong>Teorema de Bayes:</strong> <span data-math="P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}=\dfrac{P(A)\cdot P(B\mid A)}{P(A)\cdot P(B\mid A)+P(A')\cdot P(B\mid A')}"></span>.</li>
       </ul>
     </section>
   <footer class="site-footer">
@@ -110,7 +122,13 @@
   </footer>
   </main>
 
+  <script src="../vendor/katex/katex.min.js"></script>
   <script>
+    function tex(src, display = false) {
+      if (!window.katex) return src;
+      return katex.renderToString(src, { throwOnError: false, strict: 'ignore', displayMode: display });
+    }
+
     function fmt(x) {
       if (!isFinite(x)) return '—';
       let r = Math.round(x * 1e6) / 1e6;
@@ -128,26 +146,34 @@
       }
       let html = '';
 
-      // Variacions V(n,k) = n!/(n-k)! = n·(n-1)·…·(n-k+1)
+      // Variacions
       html += `<div class="method-title">Variacions — V(${n}, ${k})</div>`;
+      html += `<p class="param-desc">Hem escollit <strong>${k}</strong> (k) elements de <strong>${n}</strong> (n) possibles <strong>sense poder repetir</strong> i <strong>l'ordre importa</strong>.</p>`;
       if (k > n) {
         html += `<div class="step">No està definida per a k &gt; n (no pots ordenar ${k} elements de només ${n}).</div>`;
       } else {
         let prod = 1n;
         const terms = [];
         for (let i = 0; i < k; i++) { terms.push(n - i); prod *= BigInt(n - i); }
-        const prodStr = terms.length ? terms.join('·') : '1';
-        html += `<div class="step eq">V(n,k) = n!/(n−k)! = ${n}!/${n - k}! = ${prodStr} = <strong class="big-value">${prod}</strong></div>`;
+        const prodStr = terms.length ? terms.join('\\cdot') : '1';
+        const nk = n - k;
+        html += `<div class="step eq">${tex(`V(n,k)=\\dfrac{n!}{(n-k)!}`)}</div>`;
+        html += `<div class="step eq">${tex(`V(${n},${k})=\\dfrac{${n}!}{(${n}-${k})!}=\\dfrac{${n}!}{${nk}!}`)}</div>`;
+        html += `<div class="step eq">${tex(`= ${prodStr} = ${prod}`)}</div>`;
+        html += `<div class="step">Resultat: <strong class="big-value">${prod}</strong></div>`;
       }
 
-      // Variacions amb repetició VR(n,k) = n^k
+      // Variacions amb repetició
       html += `<div class="method-title">Variacions amb repetició — VR(${n}, ${k})</div>`;
+      html += `<p class="param-desc">Hem escollit <strong>${k}</strong> (k) elements de <strong>${n}</strong> (n) possibles <strong>podent repetir</strong> i <strong>l'ordre importa</strong>.</p>`;
       const vr = BigInt(n) ** BigInt(k);
-      const vrTerms = k > 0 ? Array(k).fill(n).join('·') : '1 (cap element)';
-      html += `<div class="step eq">VR(n,k) = nᵏ = ${n}^${k} = ${k > 0 ? vrTerms + ' = ' : ''}<strong class="big-value">${vr}</strong></div>`;
+      const vrTerms = k > 0 ? Array(k).fill(String(n)).join('\\cdot') : '1';
+      html += `<div class="step eq">${tex(`VR(n,k)=n^{k}`)}</div>`;
+      html += `<div class="step eq">${tex(`VR(${n},${k})=${n}^{${k}}`)}${k > 0 ? ` = ${tex(vrTerms)}` : ''} = <strong class="big-value">${vr}</strong></div>`;
 
-      // Combinacions C(n,k) = n!/(k!(n-k)!) = V(n,k)/k!
+      // Combinacions
       html += `<div class="method-title">Combinacions — C(${n}, ${k})</div>`;
+      html += `<p class="param-desc">Hem escollit <strong>${k}</strong> (k) elements de <strong>${n}</strong> (n) possibles <strong>sense poder repetir</strong> i <strong>l'ordre no importa</strong>.</p>`;
       if (k > n) {
         html += `<div class="step">No està definida per a k &gt; n.</div>`;
       } else {
@@ -155,7 +181,11 @@
         for (let i = 0; i < k; i++) prod *= BigInt(n - i);
         const kfact = factBig(k);
         const c = prod / kfact;
-        html += `<div class="step eq">C(n,k) = n!/(k!·(n−k)!) = V(${n},${k})/${k}! = ${prod}/${kfact} = <strong class="big-value">${c}</strong></div>`;
+        const nk = n - k;
+        html += `<div class="step eq">${tex(`C(n,k)=\\dfrac{n!}{k!\\,(n-k)!}`)}</div>`;
+        html += `<div class="step eq">${tex(`C(${n},${k})=\\dfrac{${n}!}{${k}!\\,(${n}-${k})!}=\\dfrac{${n}!}{${k}!\\,${nk}!}`)}</div>`;
+        html += `<div class="step eq">${tex(`=\\dfrac{V(${n},${k})}{${k}!}=\\dfrac{${prod}}{${kfact}}`)} = <strong class="big-value">${c}</strong></div>`;
+        html += `<div class="step param-desc">Dividim les variacions per ${k}! perquè, en combinacions, les ${kfact} ordenacions dels mateixos ${k} elements compten com una sola tria.</div>`;
       }
       return html;
     }
@@ -320,6 +350,11 @@
 
     runCombi();
     runProb();
+
+    document.querySelectorAll('[data-math]').forEach(el => {
+      if (!window.katex) { el.textContent = el.dataset.math; return; }
+      katex.render(el.dataset.math, el, { throwOnError: false, strict: 'ignore', displayMode: false });
+    });
   </script>
 </body>
 </html>
