@@ -38,6 +38,7 @@ escola/
 │   ├── index.html          # portada de mates (agrupada per seccions)
 │   ├── recursos.html       # biblioteca curada d'enllaços (teoria, PAU, viz…)
 │   ├── matrius.html · sistemes.html · probabilitat.html · derivades.html · integrals.html
+│   ├── geometria.html      # hub curat de geometria a l'espai (sims externes)
 │   └── dades/              # datasets JSON (p. ex. estadística)
 └── fisica/                 # portada + simuladors (fitxers plans)
     ├── index.html          # portada de física (agrupada per seccions)

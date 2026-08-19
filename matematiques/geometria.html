@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Geometria a l'espai de 2n de batxillerat: vectors 3D, rectes i plans, productes escalar, vectorial i mixt, amb simulacions i eines externes triades.">
+  <title>Geometria a l'espai — Matemàtiques 2n Batxillerat</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <style>
+    .fenomen {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem 1.25rem;
+    }
+    .fenomen h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+    .fenomen-intro {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      max-width: 52rem;
+    }
+    .fenomen h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0.85rem 0 0.45rem;
+    }
+    .apps-list {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    .apps-list li { margin-bottom: 0.3rem; }
+    .apps-list strong { color: var(--text); }
+    .part-lead {
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 52rem;
+      margin: -0.35rem 0 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header-mat">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Matemàtiques</a>
+      <a href="matrius.html">Matrius</a>
+      <a href="sistemes.html">Sistemes</a>
+      <a href="probabilitat.html">Probabilitat</a>
+      <a href="derivades.html">Derivades</a>
+      <a href="integrals.html">Integrals</a>
+      <a href="geometria.html" class="active">Geometria</a>
+    </nav>
+    <h1>Geometria a l'espai</h1>
+    <p>
+      De geometria a l'espai hi ha molts recursos geogebra, desmos ... els aprofitarem.
+    </p>
+  </header>
+
+  <main>
+    <section class="fenomen" id="eines">
+      <h2>Tres eines de treball</h2>
+      <p class="fenomen-intro">
+        Tres calculadores 3D  que ens serviran per <em>tota</em> la unitat. 
+      </p>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.geogebra.org/3d?lang=ca" target="_blank" rel="noopener">GeoGebra 3D</a>
+            <span class="lang">CA</span>
+            <span class="meta">La referència absoluta.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://c3d.libretexts.org/CalcPlot3D/index.html" target="_blank" rel="noopener">CalcPlot3D — LibreTexts</a>
+            <span class="lang">EN</span>
+            <span class="meta">Molt xula i pontent però més orientada a l'ànalisis de corbes (rectes paramètriques) i superfícies implícites (també plans ax+by+cz=d).</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.desmos.com/3d" target="_blank" rel="noopener">Desmos 3D</a>
+            <span class="lang">EN</span>
+            <span class="meta">Ja la coneixem, fantàstica per funcions 2D, verem que també podrem treballar en 3D. Ràpid i net: escriu un punt (1,2,3), un pla z=2−x o una recta paramètrica i gira la vista. Molt útil per comprovar un resultat fet a mà.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <h2 class="pack-section-title">3. Qüestions algebraiques</h2>
+    <p class="part-lead">
+      Operar amb vectors, reconèixer dependència lineal i escriure equacions:
+      primer situar objectes a l'espai, després preguntar-se com es relacionen.
+    </p>
+
+    <section class="fenomen" id="vectors">
+      <h2>3.1 Operacions lineals amb vectors 3D i concepte de base</h2>
+      <p class="fenomen-intro">
+        Un vector a l'espai té tres components. Sumar, restar i multiplicar per un
+        escalar es veuen millor en 3D que en paper: la combinació lineal
+        <span data-math="\alpha\vec{u}+\beta\vec{v}+\gamma\vec{w}"></span>
+        omple tot l'espai si els tres vectors formen una <strong>base</strong>
+        (són linealment independents).
+      </p>
+      <h3>Simulacions i eines</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://academo.org/demos/3d-vector-plotter/" target="_blank" rel="noopener">3D Vector Plotter — Academo</a>
+            <span class="lang">EN</span>
+            <span class="meta">Introdueix dos o tres vectors i observa suma, diferència i producte vectorial. Gira l'escena: la intuïció 3D apareix en moure's.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.geogebra.org/m/tfgc32au" target="_blank" rel="noopener">Base, combinacions lineals i independència — GeoGebra</a>
+            <span class="lang">EN</span>
+            <span class="meta">Quan una combinació lineal deixa de poder arribar a tot l'espai: span, dependència i idea de base.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.3blue1brown.com/lessons/vectors" target="_blank" rel="noopener">Vectors, what even are they? — 3Blue1Brown</a>
+            <span class="lang">EN</span>
+            <span class="meta">Vídeo breu i visual: vector com a fletxa i com a combinació de la base canònica i, j, k.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Què observar</h3>
+      <ul class="apps-list">
+        <li><strong>Suma:</strong> regla del paral·lelogram; en 3D el resultat no té per què quedar al pla del paper.</li>
+        <li><strong>Base canònica:</strong> <span data-math="\vec{\imath},\vec{\jmath},\vec{k}"></span> són ortogonals i de mòdul 1; qualsevol vector s'escriu <span data-math="x\,\vec{\imath}+y\,\vec{\jmath}+z\,\vec{k}"></span>.</li>
+        <li><strong>Dependència:</strong> dos vectors són dependents si són paral·lels; tres, si un és combinació dels altres (coplanaris amb l'origen).</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="alineats">
+      <h2>3.2 Punts alineats i punts coplanaris</h2>
+      <p class="fenomen-intro">
+        Tres punts A, B, C són <strong>alineats</strong> si els vectors
+        <span data-math="\overrightarrow{AB}"></span> i
+        <span data-math="\overrightarrow{AC}"></span> són paral·lels
+        (producte vectorial nul). Quatre punts són <strong>coplanaris</strong>
+        si el producte mixt dels tres vectors que en surten és zero
+        (el paral·lelepípede s'aixafa).
+      </p>
+      <h3>Simulacions i eines</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://mathinsight.org/forming_planes" target="_blank" rel="noopener">Forming planes — Math Insight</a>
+            <span class="lang">EN</span>
+            <span class="meta">Arrossega tres punts: el pla i el vector normal (producte vectorial) s'actualitzen. Si els punts s'alineen, el pla deixa de quedar determinat.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://mathinsight.org/applet/scalar_triple_product" target="_blank" rel="noopener">Scalar triple product (applet) — Math Insight</a>
+            <span class="lang">EN</span>
+            <span class="meta">Tres vectors i el paral·lelepípede: el volum (valor absolut del producte mixt) es fa zero just quan són coplanaris. Gira la figura.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://mathinsight.org/thread/vector_algebra" target="_blank" rel="noopener">Fil de vector algebra — Math Insight</a>
+            <span class="lang">EN</span>
+            <span class="meta">Teoria curta amb applets: de vectors a rectes i plans. Bona guia per preparar la classe pas a pas.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Què observar</h3>
+      <ul class="apps-list">
+        <li><strong>Alineats:</strong> <span data-math="\overrightarrow{AB}\times\overrightarrow{AC}=\vec{0}"></span>.</li>
+        <li><strong>Coplanaris:</strong> <span data-math="(\overrightarrow{AB}\times\overrightarrow{AC})\cdot\overrightarrow{AD}=0"></span>.</li>
+        <li><strong>Tres punts no alineats</strong> determinen un pla únic; el normal és el producte vectorial de dos costats.</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="equacions">
+      <h2>3.3 Equacions de la recta i del pla</h2>
+      <p class="fenomen-intro">
+        Una recta queda determinada per un <strong>punt</strong> i un
+        <strong>vector director</strong>:
+        <span data-math="\vec{r}=\vec{r}_0+t\vec{v}"></span>
+        (forma vectorial / paramètrica). Un pla, per un punt i un
+        <strong>vector normal</strong>:
+        <span data-math="\vec{n}\cdot(\vec{r}-\vec{r}_0)=0"></span>,
+        que dóna l'equació cartesiana
+        <span data-math="ax+by+cz+d=0"></span>.
+      </p>
+      <h3>Simulacions i eines</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.geogebra.org/m/qMTBkcS8" target="_blank" rel="noopener">Lines and Planes in 3D Space — GeoGebra</a>
+            <span class="lang">EN</span>
+            <span class="meta">Recta paramètrica, pla punt-normal i forma general. Inclou paral·lelisme, intersecció i angle entre plans.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://c3d.libretexts.org/CalcPlot3D/index.html" target="_blank" rel="noopener">CalcPlot3D — punts, rectes i plans</a>
+            <span class="lang">EN</span>
+            <span class="meta">Recta: <em>Add → Space Curve r(t)</em>. Pla: <em>Implicit Surface</em> amb ax+by+cz=d, o z=f(x,y). Comprova a ull si un punt cau sobre l'objecte.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://math.libretexts.org/Bookshelves/Calculus/Map%3A_Calculus__Early_Transcendentals_(Stewart)/12%3A_Vectors_and_The_Geometry_of_Space/12.05%3A_Equations_of_Lines_and_Planes" target="_blank" rel="noopener">Equations of Lines and Planes — LibreTexts (Stewart)</a>
+            <span class="lang">EN</span>
+            <span class="meta">Teoria clara al nivell de 2n: formes vectorial, paramètrica i simètrica de la recta; pla a partir de tres punts.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Què observar</h3>
+      <ul class="apps-list">
+        <li><strong>Recta:</strong> el paràmetre t recorre tots els punts; dos directors són equivalents si són paral·lels.</li>
+        <li><strong>Pla:</strong> els coeficients (a,b,c) <em>són</em> el vector normal; canviar d desplaça el pla en paral·lel.</li>
+        <li><strong>Pas de formes:</strong> de vectorial a paramètrica (component a component) i a cartesiana (eliminant t, o amb el normal).</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="posicions">
+      <h2>34 Posicions relatives</h2>
+      <p class="fenomen-intro">
+        A l'espai, dues rectes poden ser coincidents, paral·leles, secants o
+        <strong>queixes</strong> (ni es tallen ni són paral·leles: això no existeix al pla).
+        Una recta i un pla: continguda, paral·lela o secant.
+        Dos plans: coincidents, paral·lels o secants (en una recta).
+      </p>
+      <h3>Simulacions i eines</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.geogebra.org/m/sK5GHFb5" target="_blank" rel="noopener">Line and plane — GeoGebra</a>
+            <span class="lang">EN</span>
+            <span class="meta">Mou el punt, el director de la recta i el normal del pla. Activa angle, projecció i reflexió: es veu de seguida si talla, és paral·lela o hi està continguda.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://c3d.libretexts.org/CalcPlot3D/CalcPlot3D-Help/section-30.html" target="_blank" rel="noopener">Points, Lines &amp; Planes — guia CalcPlot3D</a>
+            <span class="lang">EN</span>
+            <span class="meta">Activitat guiada: pla per tres punts i recta d'intersecció de dos plans. Perfecta per projectar i comprovar el càlcul.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Què observar</h3>
+      <ul class="apps-list">
+        <li><strong>Dues rectes:</strong> comparar directors (paral·lelisme) i comprovar si existeix un punt comú (sistema en t i s).</li>
+        <li><strong>Recta i pla:</strong> si <span data-math="\vec{v}\cdot\vec{n}=0"></span>, o bé és paral·lela o bé està continguda (cal un punt de la recta al pla).</li>
+        <li><strong>Dos plans:</strong> normals paral·lels ⇒ paral·lels o coincidents; si no, es tallen en una recta de director <span data-math="\vec{n}_1\times\vec{n}_2"></span>.</li>
+      </ul>
+    </section>
+
+    <h2 class="pack-section-title">4. Qüestions mètriques</h2>
+    <p class="part-lead">
+      Distàncies, angles i àrees: cada producte (escalar, vectorial, mixt)
+      té un significat geomètric i un grapat d'aplicacions que cal saber reconèixer.
+    </p>
+
+    <section class="fenomen" id="escalar">
+      <h2>4.1 Producte escalar i aplicacions</h2>
+      <p class="fenomen-intro">
+        <span data-math="\vec{u}\cdot\vec{v}=|\vec{u}|\,|\vec{v}|\,\cos\theta"></span>
+        mesura com d'alineats van dos vectors. D'aquí surten l'angle, l'ortogonalitat,
+        la projecció, el <strong>vector normal d'un pla</strong> i la
+        <strong>distància d'un punt a un pla</strong>.
+      </p>
+      <h3>Simulacions i eines</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://mathinsight.org/dot_product" target="_blank" rel="noopener">The dot product — Math Insight</a>
+            <span class="lang">EN</span>
+            <span class="meta">Definició geomètrica i per components, amb applets. Enllaça amb projecció i amb la fórmula de l'angle.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://mathinsight.org/distance_point_plane" target="_blank" rel="noopener">Distance from point to plane — Math Insight</a>
+            <span class="lang">EN</span>
+            <span class="meta">La distància és la projecció sobre el normal: es veu per què apareix |ax₀+by₀+cz₀+d| / √(a²+b²+c²).</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.geogebra.org/m/uzazrg4m" target="_blank" rel="noopener">Angle between line and plane — GeoGebra</a>
+            <span class="lang">EN</span>
+            <span class="meta">Mou la recta i el pla: l'angle amb el pla i l'angle amb el normal queden relacionats (són complementaris).</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.3blue1brown.com/lessons/dot-products" target="_blank" rel="noopener">Dot products and duality — 3Blue1Brown</a>
+            <span class="lang">EN</span>
+            <span class="meta">Per què el producte escalar «mesura alineació»; útil després d'haver practicat el càlcul amb components.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Aplicacions a 2n</h3>
+      <ul class="apps-list">
+        <li><strong>Angle</strong> entre dos vectors, dues rectes, dos plans, o recta i pla.</li>
+        <li><strong>Ortogonalitat:</strong> <span data-math="\vec{u}\cdot\vec{v}=0"></span>; el normal d'un pla és ortogonal a tot vector del pla.</li>
+        <li><strong>Projecció</strong> d'un vector sobre un altre (component paral·lela).</li>
+        <li><strong>Distància punt–pla:</strong> <span data-math="d=\dfrac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}"></span>.</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="vectorial">
+      <h2>4.2 Producte vectorial i aplicacions</h2>
+      <p class="fenomen-intro">
+        <span data-math="\vec{u}\times\vec{v}"></span> és perpendicular a tots dos
+        (regla de la mà dreta) i el seu mòdul és l'<strong>àrea del paral·lelogram</strong>
+        que generen. És l'eina per obtenir un normal, un director de la recta
+        d'intersecció de dos plans, i la <strong>distància d'un punt a una recta</strong>.
+      </p>
+      <h3>Simulacions i eines</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://academo.org/demos/3d-vector-plotter/" target="_blank" rel="noopener">3D Vector Plotter — Academo (producte vectorial)</a>
+            <span class="lang">EN</span>
+            <span class="meta">Activa el cross product: el vector resultat surt del pla dels altres dos. Prova vectors paral·lels: ha de donar zero.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://mathinsight.org/cross_product" target="_blank" rel="noopener">The cross product — Math Insight</a>
+            <span class="lang">EN</span>
+            <span class="meta">Definició geomètrica, fórmula amb determinant i applets. Connecta mòdul i àrea del paral·lelogram.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.3blue1brown.com/lessons/cross-products" target="_blank" rel="noopener">Cross products — 3Blue1Brown</a>
+            <span class="lang">EN</span>
+            <span class="meta">Intuïció 3D del producte vectorial i relació amb l'àrea orientada; complement al càlcul amb i, j, k.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Aplicacions a 2n</h3>
+      <ul class="apps-list">
+        <li><strong>Vector perpendicular a dos</strong> (normal del pla que determinen, o director de la intersecció de dos plans).</li>
+        <li><strong>Àrea del paral·lelogram:</strong> <span data-math="|\vec{u}\times\vec{v}|"></span>; triangle: la meitat.</li>
+        <li><strong>Distància punt–recta:</strong> <span data-math="d=\dfrac{|\overrightarrow{AP}\times\vec{v}|}{|\vec{v}|}"></span>.</li>
+        <li><strong>Paral·lelisme:</strong> <span data-math="\vec{u}\times\vec{v}=\vec{0}"></span>.</li>
+      </ul>
+    </section>
+
+    <section class="fenomen" id="mixt">
+      <h2>4.3 Producte mixt i aplicacions</h2>
+      <p class="fenomen-intro">
+        <span data-math="[\vec{u},\vec{v},\vec{w}]=(\vec{u}\times\vec{v})\cdot\vec{w}"></span>
+        és el volum amb signe del <strong>paral·lelepípede</strong>. Zero vol dir
+        coplanaris. El valor absolut dóna volums i, amb una mica més de feina,
+        la <strong>distància entre dues rectes queixes</strong>.
+      </p>
+      <h3>Simulacions i eines</h3>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://mathinsight.org/scalar_triple_product" target="_blank" rel="noopener">The scalar triple product — Math Insight</a>
+            <span class="lang">EN</span>
+            <span class="meta">Teoria + applet: volum del paral·lelepípede i signe (orientació de la terna).</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://www.geogebra.org/m/RwaJHDGN" target="_blank" rel="noopener">Volum del paral·lelepípede — GeoGebra</a>
+            <span class="lang">EN</span>
+            <span class="meta">Gira la vista 3D: tres vectors i el sòlid que generen. Connecta el nombre (producte mixt) amb el volum que es veu.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://tutorial.math.lamar.edu/Classes/CalcII/CrossProduct.aspx" target="_blank" rel="noopener">Cross Product — Paul's Online Math Notes</a>
+            <span class="lang">EN</span>
+            <span class="meta">Apunts amb exemples: producte vectorial, mixt, àrea i volum. Útil per contrastar procediments després de la simulació.</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Aplicacions a 2n</h3>
+      <ul class="apps-list">
+        <li><strong>Volum del paral·lelepípede:</strong> <span data-math="V=\left|(\vec{u}\times\vec{v})\cdot\vec{w}\right|"></span>; prisma triangular: la meitat, etc.</li>
+        <li><strong>Coplanaritat</strong> de tres vectors (o quatre punts): producte mixt nul.</li>
+        <li><strong>Distància entre rectes queixes:</strong> <span data-math="d=\dfrac{\left|(\overrightarrow{A_1A_2}\times\vec{v}_1)\cdot\vec{v}_2\right|}{|\vec{v}_1\times\vec{v}_2|}"></span> (el numerador és un producte mixt).</li>
+      </ul>
+    </section>
+
+    <section class="formula-box">
+      <h2>Model matemàtic (fórmules clau)</h2>
+      <div class="math-row">
+        <span data-math="\vec{r}=\vec{r}_0+t\vec{v}"></span>
+        <span data-math="ax+by+cz+d=0"></span>
+        <span data-math="\vec{u}\cdot\vec{v}=|\vec{u}|\,|\vec{v}|\cos\theta"></span>
+        <span data-math="|\vec{u}\times\vec{v}|=|\vec{u}|\,|\vec{v}|\sin\theta"></span>
+      </div>
+      <ul class="model-hyp">
+        <li>Recta: un punt i un vector director. Pla: un punt i un vector normal (els coeficients a, b, c).</li>
+        <li>Producte escalar: angles, ortogonalitat, projeccions i distància punt–pla.</li>
+        <li>Producte vectorial: vector perpendicular a dos, àrea del paral·lelogram i distància punt–recta.</li>
+        <li>Producte mixt: volum del paral·lelepípede, coplanaritat i distància entre rectes queixes.</li>
+        <li>Les visualitzacions 3D no substitueixen el càlcul: serveixen per formular la hipòtesi i comprovar el resultat.</li>
+      </ul>
+    </section>
+
+    <section class="concepts">
+      <h2>Conceptes clau</h2>
+      <ul>
+        <li>A l'espai cal <strong>girar la vista</strong>: un dibuix 2D amaga sovint si dues rectes es tallen o són queixes.</li>
+        <li>Cada producte respon a una pregunta: <em>alineats?</em> (escalar), <em>perpendicular i àrea?</em> (vectorial), <em>volum / coplanaris?</em> (mixt).</li>
+        <li>Les posicions relatives es decideixen amb <strong>paral·lelisme de directors o de normals</strong> i, si cal, substituint un punt a l'equació.</li>
+      </ul>
+    </section>
+
+  <footer class="site-footer">
+    <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor (Auto).</p>
+  </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script>
+    (function () {
+      const katex = window.katex;
+      document.querySelectorAll('[data-math]').forEach(el => {
+        const src = el.dataset.math || el.textContent || '';
+        if (!katex) { el.textContent = src; return; }
+        katex.render(src, el, { throwOnError: false, strict: 'ignore', displayMode: false });
+      });
+    })();
+  </script>
+</body>
+</html>
