@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cronologia dels indicis que la física clàssica no podia explicar (edat de la Terra i del Sol, espectres, èter, cos negre, radioactivitat) i com van obrir la física quàntica, la relativitat i la física nuclear.">
+  <title>Camí cap a la física moderna — Física 2n Batxillerat</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="fisica-moderna.css">
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="fisica-moderna.html" class="active">Camí a la moderna</a>
+      <a href="semivida.html">Semivida</a>
+      <a href="series.html">Sèries</a>
+      <a href="defecte-massa.html">Defecte de massa</a>
+    </nav>
+    <h1>Camí cap a la física moderna</h1>
+    <p>
+      Setze mesures que la física clàssica no podia explicar, en ordre cronològic,
+      i com van acabar obrint les tres portes que estudiem a 2n de batxillerat:
+      la física quàntica, la relativitat i la física nuclear.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box">
+      <h2>El punt de partida: la física del 1890</h2>
+      <p class="formula-note">
+        A finals del segle XIX la física semblava un edifici pràcticament acabat.
+        La mecànica de Newton, l'electromagnetisme de Maxwell i la termodinàmica
+        explicaven el moviment dels planetes, la llum, la calor i l'electricitat
+        amb una precisió excel·lent. Semblava que només quedava afinar decimals.
+      </p>
+      <blockquote class="cita">
+        «Sembla probable que la major part dels grans principis fonamentals ja
+        estan fermament establerts […]; les veritats futures de la física caldrà
+        buscar-les a la sisena xifra decimal.»
+        <cite>A. A. Michelson, 1894 (inauguració del laboratori Ryerson, Chicago)</cite>
+      </blockquote>
+      <p class="formula-note">
+        Però hi havia una llista incòmoda de mesures que no encaixaven. El 1900
+        Kelvin les va reduir a dos «núvols» que enfosquien la teoria del moviment,
+        de la calor i de la llum: el fracàs de tots els intents de detectar l'èter
+        i el repartiment de l'energia entre els graus de llibertat de la matèria.
+        Aquells dos núvols van resultar ser la relativitat i la mecànica quàntica.
+        Un tercer problema, més antic i aparentment de geologia, obriria la física
+        nuclear: <strong>ningú no sabia d'on treien l'energia la Terra i el Sol</strong>.
+      </p>
+      <p class="formula-note">
+        <em>Nota:</em> la frase «ja no queda res per descobrir a la física», que
+        sovint s'atribueix a Kelvin, no apareix en cap dels seus escrits: és
+        apòcrifa. La cita de Michelson, en canvi, és documentada, i ell mateix
+        havia fet set anys abans l'experiment que trencaria l'edifici.
+      </p>
+      <h3 style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin:0.9rem 0 0.35rem;">Com llegir la cronologia</h3>
+      <p class="formula-note">
+        Cada indici té sempre la mateixa estructura: què es va <strong>observar</strong>,
+        què <strong>predeia la física clàssica</strong> i quina és la
+        <strong>discrepància</strong> entre les dues coses, amb números. La
+        resolució queda plegada a propòsit: val la pena intentar respondre
+        «què hi falla?» abans de destapar-la.
+      </p>
+    </section>
+
+    <section class="controls-panel">
+      <h2>Filtra per branca</h2>
+      <div class="filtre-barra">
+        <span class="etiqueta">Branca:</span>
+        <button type="button" class="chip chip-tots" data-filtre="tots" aria-pressed="true">Tots</button>
+        <button type="button" class="chip chip-quantica" data-filtre="quantica" aria-pressed="false"><span aria-hidden="true">⚛️</span> Quàntica</button>
+        <button type="button" class="chip chip-relativitat" data-filtre="relativitat" aria-pressed="false"><span aria-hidden="true">🕰️</span> Relativitat</button>
+        <button type="button" class="chip chip-nuclear" data-filtre="nuclear" aria-pressed="false"><span aria-hidden="true">☢️</span> Nuclear</button>
+        <button type="button" class="btn" id="btnResolucions" style="margin-left:auto;">Desplega totes les resolucions</button>
+      </div>
+      <p class="filtre-estat" id="filtreEstat" aria-live="polite"></p>
+    </section>
+
+    <div class="cronologia" id="cronologia">
+
+      <article class="indici" data-branca="nuclear">
+        <div class="indici-any">1687</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>1. Quant temps fa que la Terra es refreda?</h3>
+            <span class="branca-tag"><span aria-hidden="true">☢️</span> Nuclear</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>A les mines la temperatura puja uns <strong>30 °C per quilòmetre</strong> de profunditat: la Terra perd calor cap a l'exterior de manera contínua. Per tant, en algun moment va estar més calenta.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Si va començar fosa i només es refreda per conducció, el temps es pot calcular. Newton va estimar als <em>Principia</em> que una esfera de ferro incandescent de la mida de la Terra tardaria unes <strong>50 000 anys</strong> a refredar-se; Buffon, escalfant esferes de ferro al laboratori i extrapolant, va publicar <strong>75 000 anys</strong> (1774).</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>De moment cap, i això és el que fa el cas interessant: el càlcul és impecable, però amaga una premissa que ningú no podia comprovar al segle XVII: <strong>que la Terra no fabrica calor pròpia</strong>. Tot l'edifici depèn d'aquesta suposició.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>La premissa era falsa. La desintegració de l'urani, el tori i el potassi-40 escalfa l'interior del planeta de manera contínua, i aquesta font no es coneixia fins al <strong>1896</strong>. Rutherford i Strutt ho van fer notar cap al 1906: la calor radiogènica canvia completament el balanç tèrmic de la Terra.</p>
+              <p>La mateixa radioactivitat va donar, a més, el rellotge per datar-la: <strong>4 550 milions d'anys</strong> (Patterson, 1956).</p>
+              <a class="enllac-sim" href="semivida.html">→ Laboratori de semivida i datació</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="nuclear">
+        <div class="indici-any">1854</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>2. D'on treu l'energia el Sol?</h3>
+            <span class="branca-tag"><span aria-hidden="true">☢️</span> Nuclear</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>El Sol emet <strong>3,83·10²⁶ W</strong> de manera constant (a la Terra n'arriben 1 361 W/m²) i, segons el registre geològic, ho ha fet sense grans canvis durant tot el temps que hi ha vida.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Només es coneixen dues reserves d'energia: la química i la gravitatòria. Helmholtz (1854) i Kelvin (1862) proposen que el Sol es contreu lentament i va convertint energia potencial en radiació: <span data-math="E\simeq\dfrac{3}{10}\dfrac{GM^2}{R}"></span>.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Cremar tot el Sol com si fos carbó donaria uns <strong>5 000 anys</strong> de llum; la contracció gravitatòria, unes <strong>desenes de milions d'anys</strong>. Els geòlegs ja demanaven centenars de milions. Falta un factor de com a mínim <strong>mil</strong>.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>Amb <span data-math="E=mc^2"></span> apareix una tercera reserva, incomparablement més gran: la <strong>fusió nuclear</strong>. Eddington la va proposar el 1920, i Bethe i von Weizsäcker en van descriure les cadenes el 1938-39.</p>
+              <p>Convertint hidrogen en heli el Sol allibera el <strong>0,7 %</strong> de la massa implicada, i això li dona uns <strong>10 000 milions d'anys</strong>. Ara mateix perd <strong>4,3·10⁹ kg de massa cada segon</strong> en forma de radiació.</p>
+              <a class="enllac-sim" href="defecte-massa.html">→ Defecte de massa i energia alliberada</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <section class="indici indici-viz" data-branca="nuclear" data-viz="sol">
+        <div class="indici-any" aria-hidden="true"></div>
+        <div class="viz-panel">
+          <h4>Prova-ho: el pressupost energètic del Sol</h4>
+          <p class="viz-intro">
+            Cada barra és la durada que tindria el Sol si visqués d'aquesta reserva
+            d'energia, dividint-la per la potència que emet. L'escala és
+            logarítmica: cada divisió és un factor 10. La línia de ratlles marca
+            l'edat real del sistema solar, 4 550 milions d'anys.
+          </p>
+          <canvas id="canvasSol" class="h280" aria-describedby="descSol"></canvas>
+          <p class="sr-only" id="descSol">
+            Diagrama de barres horitzontals en escala logarítmica amb la durada del
+            Sol segons tres mecanismes: combustió química (uns milers d'anys),
+            contracció gravitatòria (uns milions d'anys) i fusió nuclear (uns milers
+            de milions d'anys). Només la fusió supera l'edat del sistema solar.
+          </p>
+          <div class="viz-controls">
+            <div class="param">
+              <div class="param-header">
+                <label for="solFraccio">Fracció de la massa solar que arriba a fusionar-se</label>
+                <span class="param-value" id="solFraccioVal">10 %</span>
+              </div>
+              <input type="range" id="solFraccio" min="1" max="20" step="0.5" value="10">
+              <p class="param-desc">Només el nucli és prou calent i dens per fusionar hidrogen; s'estima que hi participa al voltant del 10 % de la massa.</p>
+            </div>
+          </div>
+          <p class="viz-lectura" id="solLectura"></p>
+        </div>
+      </section>
+
+      <article class="indici" data-branca="nuclear">
+        <div class="indici-any">1859</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>3. La geologia i la biologia demanen temps profund</h3>
+            <span class="branca-tag"><span aria-hidden="true">☢️</span> Nuclear</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Els processos geològics que es poden mesurar avui (sedimentació, erosió) són lentíssims, i han format sèries d'estrats de quilòmetres de gruix. Darwin estima que erosionar el Weald va costar uns <strong>300 milions d'anys</strong>, i la selecció natural necessita aquest ordre de temps per acumular canvis.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>La física del refredament concedeix, com a molt, unes <strong>desenes de milions d'anys</strong> a la Terra i al Sol.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Un factor <strong>entre 10 i 100</strong> entre el que demanen la geologia i la biologia i el que concedeix la física, amb totes dues bandes segures dels seus mètodes. Darwin va acabar retirant el càlcul del Weald de les edicions posteriors de <em>L'origen de les espècies</em> per la pressió dels físics.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>Van guanyar els geòlegs, però no perquè els físics calculessin malament: perquè els faltava física. Amb la datació radiomètrica, Holmes va publicar 1 600 milions d'anys el 1913 i Patterson va fixar <strong>4 550 ± 70 milions d'anys</strong> el 1956.</p>
+              <p>És un cas per recordar: <strong>un càlcul correcte damunt d'una premissa incompleta dona un resultat segur i equivocat</strong>.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="relativitat">
+        <div class="indici-any">1859</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>4. Els 43 segons d'arc de Mercuri</h3>
+            <span class="branca-tag"><span aria-hidden="true">🕰️</span> Relativitat</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>El periheli de Mercuri no es queda quiet: avança uns <strong>5 600 segons d'arc per segle</strong> respecte de les estrelles.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Le Verrier suma la precessió dels equinoccis (un efecte del nostre punt d'observació) i l'atracció de tots els altres planetes: en surten <strong>5 557 segons d'arc per segle</strong>.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Sobren <strong>43 segons d'arc per segle</strong>: un 0,8 % del total, però mil vegades més gran que l'error de les mesures. Le Verrier, que ja havia descobert Neptú així, va postular un planeta interior, <strong>Vulcà</strong>. Es va buscar durant mig segle i no existeix.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>El 1915 la <strong>relativitat general</strong> d'Einstein va donar exactament 43″/segle sense afegir cap planeta: prop del Sol l'espaitemps està corbat i les òrbites no es tanquen del tot. Va ser la primera predicció encertada de la teoria.</p>
+              <p>El 1919 l'expedició d'Eddington va mesurar, durant un eclipsi, la desviació de la llum de les estrelles en passar prop del Sol: <strong>1,75 segons d'arc</strong>, el doble del que dona un càlcul newtonià.</p>
+              <a class="enllac-sim" href="orbites.html">→ Laboratori d'òrbites (el model newtonià que aquí falla)</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <section class="indici indici-viz" data-branca="relativitat" data-viz="mercuri">
+        <div class="indici-any" aria-hidden="true"></div>
+        <div class="viz-panel">
+          <h4>Mira-t'ho: què vol dir que el periheli «avança»</h4>
+          <p class="viz-intro">
+            Si el Sol fos l'única massa i la gravetat fos exactament newtoniana,
+            l'el·lipse es tancaria sobre ella mateixa i el periheli (el punt més
+            proper al Sol) seria sempre el mateix. El que s'observa és que cada
+            òrbita el periheli avança una mica, i la trajectòria que en surt és
+            una roseta.
+          </p>
+          <div class="canvas-mig">
+            <canvas id="canvasMercuri" class="h320" aria-describedby="descMercuri"></canvas>
+          </div>
+          <p class="sr-only" id="descMercuri">
+            Dibuix de sis òrbites el·líptiques successives al voltant del Sol. Cada
+            el·lipse està girada seixanta graus respecte de l'anterior, de manera que
+            el conjunt forma una roseta de sis pètals. Els punts marcats són les
+            posicions del periheli, que avancen sempre en el mateix sentit, i dues
+            línies de ratlles marquen l'eix de la primera i de la segona òrbita amb
+            l'angle que ha avançat entre totes dues.
+          </p>
+          <p class="viz-lectura">
+            Al dibuix, tant l'avanç (<strong>60° per òrbita</strong>) com
+            l'excentricitat (e = 0,5) estan exagerats: amb els valors reals de Mercuri
+            (e = 0,206 i <strong>43″ per segle</strong>, és a dir 0,012° cada cent
+            anys) el dibuix seria un cercle i no s'hi veuria res. Per fer un gir
+            sencer com el de la roseta, Mercuri necessita uns
+            <strong>3 milions d'anys</strong>. Que una desviació tan petita es pogués
+            mesurar el 1859 diu molt de l'astronomia del segle XIX.
+          </p>
+        </div>
+      </section>
+
+      <article class="indici" data-branca="quantica">
+        <div class="indici-any">1859</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>5. Cada element emet només unes ratlles</h3>
+            <span class="branca-tag"><span aria-hidden="true">⚛️</span> Quàntica</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Kirchhoff i Bunsen descobreixen que la llum d'un gas incandescent no és contínua: són <strong>ratlles a freqüències fixes</strong>, sempre les mateixes per a cada element (és el mètode amb què s'ha descobert l'heli al Sol). El 1885 Balmer troba que les de l'hidrogen segueixen <span data-math="\lambda=B\,\dfrac{n^2}{n^2-4}"></span> amb <span data-math="n=3,4,5\ldots"></span></dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Una càrrega que vibra pot fer-ho a qualsevol freqüència. Un àtom escalfat hauria d'emetre un <strong>espectre continu</strong>, com el ferro roent.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>No hi ha cap raó clàssica per la qual un àtom triï unes poques freqüències i n'ignori totes les altres, ni per la qual hi aparegui una fórmula amb <strong>nombres enters</strong>. La fórmula de Balmer funciona amb quatre xifres de precisió i ningú no sap per què.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>El 1913 Bohr proposa que l'energia de l'electró a l'àtom només pot prendre valors discrets, <span data-math="E_n=-\dfrac{13{,}6}{n^2}\ \mathrm{eV}"></span>, i que la llum s'emet en saltar d'un nivell a un altre: <span data-math="hf=E_i-E_f"></span>.</p>
+              <p>Els misteriosos enters de Balmer són els <strong>nombres quàntics</strong>. Un espectre és, literalment, la llista de diferències d'energia permeses d'un àtom.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <section class="indici indici-viz" data-branca="quantica" data-viz="espectres">
+        <div class="indici-any" aria-hidden="true"></div>
+        <div class="viz-panel">
+          <h4>Prova-ho: espectres d'emissió</h4>
+          <p class="viz-intro">
+            Tria la font de llum i mira què surt per l'espectroscopi. Compara els
+            gasos entre ells i, sobretot, compara'ls amb el filament incandescent:
+            el que cal explicar no és que hi hagi llum, sinó que cada element
+            emeti <em>només</em> unes ratlles i sempre les mateixes. Els colors
+            estan calculats a partir de la longitud d'ona de cada ratlla.
+          </p>
+          <div class="chart-tabs espectre-tabs" id="espectreTabs">
+            <button type="button" class="btn active" data-espectre="hidrogen" aria-pressed="true">Hidrogen</button>
+            <button type="button" class="btn" data-espectre="heli" aria-pressed="false">Heli</button>
+            <button type="button" class="btn" data-espectre="sodi" aria-pressed="false">Sodi</button>
+            <button type="button" class="btn" data-espectre="mercuri" aria-pressed="false">Mercuri</button>
+            <button type="button" class="btn" data-espectre="neo" aria-pressed="false">Neó</button>
+            <button type="button" class="btn" data-espectre="continu" aria-pressed="false">Filament incandescent</button>
+          </div>
+          <canvas id="canvasEspectre" class="h280" aria-describedby="descEspectre"></canvas>
+          <p class="sr-only" id="descEspectre"></p>
+          <p class="viz-lectura" id="espectreLectura"></p>
+        </div>
+      </section>
+
+      <article class="indici" data-branca="nuclear">
+        <div class="indici-any">1862</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>6. Kelvin posa un límit dur a l'edat de la Terra</h3>
+            <span class="branca-tag"><span aria-hidden="true">☢️</span> Nuclear</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Es poden mesurar les dues dades que fan falta: el gradient geotèrmic (<strong>uns 36 °C/km</strong> a les mines britàniques) i la conductivitat tèrmica de les roques al laboratori.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Resolent la conducció de la calor en un sòlid semiinfinit que parteix d'una temperatura <span data-math="\Theta"></span> uniforme, l'edat surt de <span data-math="t=\dfrac{1}{\pi\kappa}\left(\dfrac{\Theta}{G}\right)^2"></span>. Kelvin obté <strong>entre 20 i 400 milions d'anys</strong> i, el 1897, estreny el marge a <strong>20-40 milions</strong>.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>L'edat real és <strong>4 550 milions d'anys</strong>: entre <strong>100 i 200 vegades</strong> més. I atenció, perquè aquí és on hi ha la lliçó: <strong>els números de Kelvin estan bé</strong>. El que està malament és el model, que ignora la calor radiogènica i la convecció del mantell.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>El 1906 Rutherford i Strutt mostren que les roques contenen prou urani i tori per aportar una part important del flux de calor: la Terra <strong>no és un cos que només es refreda</strong>, també s'escalfa des de dins.</p>
+              <p>Al llarg del segle XX s'hi afegeix que el mantell <strong>convecciona</strong>, i per tant transporta calor molt més ràpid que la conducció. Amb les premisses corregides, la contradicció desapareix.</p>
+              <a class="enllac-sim" href="series.html">→ Sèries radioactives naturals (urani i tori)</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <section class="indici indici-viz" data-branca="nuclear" data-viz="terra">
+        <div class="indici-any" aria-hidden="true"></div>
+        <div class="viz-panel">
+          <h4>Prova-ho: es pot salvar el càlcul de Kelvin?</h4>
+          <p class="viz-intro">
+            Mou la temperatura inicial i el gradient geotèrmic dins de qualsevol
+            interval defensable i mira on cau l'edat que en surt, comparada amb les
+            estimacions històriques i amb el valor real. La conclusió no és que
+            Kelvin s'equivoqués sumant: és que <em>cap</em> joc de valors raonables
+            arriba als 4 550 milions d'anys.
+          </p>
+          <canvas id="canvasTerra" class="h320" aria-describedby="descTerra"></canvas>
+          <p class="sr-only" id="descTerra">
+            Escala logarítmica de temps amb les estimacions històriques de l'edat de
+            la Terra (Ussher, Newton, Buffon, Kelvin, la demanda dels geòlegs, Holmes
+            i Patterson) i un marcador mòbil amb el resultat del model de Kelvin
+            segons els paràmetres triats.
+          </p>
+          <div class="viz-controls">
+            <div class="param">
+              <div class="param-header">
+                <label for="terraTheta">Temperatura inicial <span class="symbol">Θ</span></label>
+                <span class="param-value" id="terraThetaVal">3 900 °C</span>
+              </div>
+              <input type="range" id="terraTheta" min="1500" max="7000" step="100" value="3900">
+              <p class="param-desc">Kelvin va suposar una Terra inicialment fosa, uns 3 900 °C per damunt de la superfície actual.</p>
+            </div>
+            <div class="param">
+              <div class="param-header">
+                <label for="terraGrad">Gradient geotèrmic <span class="symbol">G</span></label>
+                <span class="param-value" id="terraGradVal">36 °C/km</span>
+              </div>
+              <input type="range" id="terraGrad" min="5" max="45" step="1" value="36">
+              <p class="param-desc">Mesurat a les mines: entre 25 i 40 °C/km. Com més suau és el gradient, més antiga surt la Terra.</p>
+            </div>
+          </div>
+          <p class="viz-lectura" id="terraLectura"></p>
+        </div>
+      </section>
+
+      <article class="indici" data-branca="relativitat">
+        <div class="indici-any">1865</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>7. La velocitat de la llum de Maxwell contra les transformacions de Galileu</h3>
+            <span class="branca-tag"><span aria-hidden="true">🕰️</span> Relativitat</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>De les seves equacions, Maxwell obté que les ones electromagnètiques viatgen a <span data-math="c=\dfrac{1}{\sqrt{\varepsilon_0\mu_0}}"></span>, és a dir <strong>3,00·10⁸ m/s</strong>, a partir de dues constants mesurades amb condensadors i bobines <em>en repòs al laboratori</em>.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Les velocitats se sumen: si persegueixes una ona, l'has de mesurar més lenta. Perquè <em>c</em> tingui sentit ha de ser la velocitat respecte d'algun medi, l'<strong>èter</strong>, i la Terra s'hi ha de moure.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>A la fórmula de Maxwell <strong>no hi surt cap observador</strong>. I si s'apliquen les transformacions de Galileu, les equacions de Maxwell canvien de forma: o l'electromagnetisme només val en un sistema privilegiat de tot l'univers, o la cinemàtica que fem servir des de fa dos segles és incorrecta.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>El 1905 Einstein tria l'opció incòmoda: les lleis de la física són les mateixes per a tots els observadors inercials i <strong>c és la mateixa per a tots ells</strong>. El que cal canviar és la cinemàtica: apareixen la dilatació del temps i la contracció de longituds.</p>
+              <p>Les equacions de Maxwell no s'han de tocar; són les transformacions de Galileu les que se substitueixen per les de Lorentz.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="relativitat">
+        <div class="indici-any">1887</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>8. Michelson i Morley no troben el vent d'èter</h3>
+            <span class="branca-tag"><span aria-hidden="true">🕰️</span> Relativitat</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Un interferòmetre amb un recorregut òptic d'<strong>11 metres</strong>, flotant sobre mercuri per poder-lo girar sense vibracions, compara el temps de viatge de la llum en dues direccions perpendiculars.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>La Terra es mou a <strong>30 km/s</strong> al voltant del Sol; en girar l'aparell, les franges d'interferència s'havien de desplaçar unes <strong>0,4 franges</strong>, deu vegades més que la sensibilitat de l'instrument.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>El desplaçament mesurat va ser <strong>inferior a 0,01 franges</strong>: quaranta vegades menys del previst i compatible amb zero. Repetit durant dècades amb precisió creixent, el resultat és sempre el mateix: <strong>no hi ha vent d'èter</strong>.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>FitzGerald i Lorentz van salvar l'èter suposant que els cossos es <em>contrauen</em> just en la mesura necessària per amagar-lo, una hipòtesi feta a mida.</p>
+              <p>Einstein va donar la volta a l'argument: si mai no es detecta, l'èter no fa cap falta. La <strong>invariància de c</strong> passa de ser un resultat estrany a ser un postulat, i la contracció de longituds passa a ser-ne una conseqüència.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <section class="indici indici-viz" data-branca="relativitat" data-viz="interferometre">
+        <div class="indici-any" aria-hidden="true"></div>
+        <div class="viz-panel">
+          <h4>L'aparell: l'interferòmetre de Michelson</h4>
+          <p class="viz-intro">
+            La idea és una cursa entre dos raigs de llum que surten del mateix lloc,
+            recorren la mateixa distància en direccions perpendiculars i es tornen a
+            ajuntar. Si la Terra es mogués dins d'un èter, un dels dos hauria de
+            guanyar, i el retard es veuria com un desplaçament de les franges
+            d'interferència en girar l'aparell 90°.
+          </p>
+          <svg class="esquema" viewBox="0 0 600 320" role="img" aria-labelledby="titolMM descMM">
+            <title id="titolMM">Esquema de l'interferòmetre de Michelson</title>
+            <desc id="descMM">
+              La llum d'una font va cap a un divisor de feix inclinat 45°, que la
+              parteix en dos raigs perpendiculars. Cada raig recorre un braç d'onze
+              metres, rebota en un mirall i torna al divisor, on els dos raigs es
+              tornen a ajuntar i van cap al detector, on formen franges d'interferència.
+            </desc>
+            <defs>
+              <marker id="fletxaRaig" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#ea580c"/>
+              </marker>
+              <marker id="fletxaGuia" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0e7490"/>
+              </marker>
+            </defs>
+
+            <circle cx="48" cy="140" r="12" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+            <text x="48" y="170" text-anchor="middle">Font de llum</text>
+
+            <line class="raig" x1="64" y1="140" x2="284" y2="140" marker-end="url(#fletxaRaig)"/>
+
+            <line class="peca" x1="270" y1="160" x2="310" y2="120" stroke="#475569"/>
+            <text x="256" y="106" text-anchor="end">divisor de feix</text>
+
+            <line class="peca" x1="255" y1="45" x2="325" y2="45"/>
+            <text x="290" y="32" text-anchor="middle" class="destaca">mirall 1</text>
+
+            <line class="peca" x1="505" y1="105" x2="505" y2="175"/>
+            <text x="516" y="144" class="destaca">mirall 2</text>
+
+            <line class="raig" x1="290" y1="130" x2="290" y2="52" marker-start="url(#fletxaRaig)" marker-end="url(#fletxaRaig)"/>
+            <text x="302" y="92">braç 1 (11 m)</text>
+
+            <line class="raig" x1="300" y1="140" x2="498" y2="140" marker-start="url(#fletxaRaig)" marker-end="url(#fletxaRaig)"/>
+            <text x="399" y="130" text-anchor="middle">braç 2 (11 m)</text>
+
+            <line class="raig" x1="290" y1="150" x2="290" y2="244" marker-end="url(#fletxaRaig)"/>
+            <rect x="270" y="248" width="40" height="20" rx="3" fill="#e2e8f0" stroke="#1a2332" stroke-width="2"/>
+            <text x="320" y="263">detector: franges d'interferència</text>
+
+            <line x1="40" y1="292" x2="118" y2="292" stroke="#0e7490" stroke-width="2" marker-end="url(#fletxaGuia)"/>
+            <text x="126" y="296">v ≈ 30 km/s: moviment de la Terra</text>
+          </svg>
+          <p class="viz-lectura">
+            Amb 11 metres de recorregut i llum de 550 nm, el desplaçament previst en
+            girar l'aparell era de <strong>0,4 franges</strong>, deu vegades la
+            sensibilitat de l'instrument. El que es va mesurar va ser
+            <strong>menys de 0,01 franges</strong>. No és que l'experiment sortís
+            malament: és que <em>no hi ha cursa</em>, els dos raigs empaten sempre.
+          </p>
+        </div>
+      </section>
+
+      <article class="indici" data-branca="quantica">
+        <div class="indici-any">1887</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>9. L'efecte fotoelèctric: la intensitat no importa</h3>
+            <span class="branca-tag"><span aria-hidden="true">⚛️</span> Quàntica</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Hertz (1887), Hallwachs i Lenard (1902) veuen que la llum arrenca electrons d'un metall, però només si la <strong>freqüència supera un llindar</strong>. L'energia cinètica màxima dels electrons creix amb la freqüència i no depèn de la intensitat; i no hi ha cap retard mesurable, ni amb llum molt feble.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Una ona reparteix l'energia per tota la superfície de manera contínua. Amb prou temps, <em>qualsevol</em> color hauria d'acumular l'energia necessària; i si augmentes la intensitat, cada electró hauria de sortir amb més energia.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Amb llum vermella intensíssima no surt <strong>cap</strong> electró; amb ultraviolada feble surten <strong>immediatament</strong>. La intensitat només canvia <em>quants</em> electrons surten, mai amb quina energia. Cap dels tres fets no té explicació ondulatòria.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>El 1905 Einstein pren els quanta de Planck seriosament: la llum arriba en paquets d'energia <span data-math="E=hf"></span> que interaccionen amb un electró <em>d'un en un</em>. D'aquí surt <span data-math="hf=W_0+E_{c,\max}"></span>, amb <span data-math="W_0"></span> el treball d'extracció del metall.</p>
+              <p>La relació és una recta de pendent <em>h</em>: Millikan la va verificar el 1916 i va mesurar així la constant de Planck amb un experiment de taula.</p>
+              <a class="enllac-sim" href="potencial-frenada.html">→ Potencial de frenada (mesurar l'energia dels electrons)</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="nuclear">
+        <div class="indici-any">1896</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>10. La radioactivitat: energia que sembla sortir del no-res</h3>
+            <span class="branca-tag"><span aria-hidden="true">☢️</span> Nuclear</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Becquerel (1896) i els Curie descobreixen sals que emeten radiació <strong>any rere any sense exhaurir-se ni refredar-se</strong>. El 1903 Curie i Laborde mesuren que un gram de radi allibera unes <strong>100 calories per hora</strong> i es manté per damunt de la temperatura ambient.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Tota energia alliberada per un cos ha de venir d'una reacció química o d'un canvi d'energia potencial, i s'ha d'acabar quan s'esgota el combustible. Res no pot emetre indefinidament sense que hi entri energia.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Cada quilogram de radi allibera en un any unes <strong>100 vegades</strong> l'energia que dona cremar un quilogram de carbó, i ho continua fent durant segles. A més, la desintegració és <strong>estadística</strong>: es pot predir quina fracció quedarà, però mai quin nucli concret es desintegrarà ni quan. La física clàssica és determinista.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>L'energia surt del <strong>nucli</strong>: els productes pesen menys que el nucli inicial i la diferència apareix com a energia, <span data-math="E=\Delta m\,c^2"></span>. Per això l'escala és milions de vegades la de la química, que només remena electrons externs.</p>
+              <p>El caràcter estadístic no és un defecte de mesura: és el primer senyal que la natura, a escala microscòpica, és <strong>probabilista</strong>. D'aquí surt <span data-math="N=N_0e^{-\lambda t}"></span>, que descriu la població però no l'individu.</p>
+              <a class="enllac-sim" href="semivida.html">→ Semivida, activitat i datació</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="quantica">
+        <div class="indici-any">1900</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>11. La catàstrofe ultraviolada</h3>
+            <span class="branca-tag"><span aria-hidden="true">⚛️</span> Quàntica</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>L'espectre d'un cos negre (un forn, un filament, un estel) té sempre la mateixa forma: puja, fa un <strong>màxim</strong> i cau ràpidament cap a les longituds d'ona curtes, amb <span data-math="\lambda_{\max}T=2{,}90\cdot10^{-3}\ \mathrm{m\,K}"></span>.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Repartint l'energia per igual entre tots els modes de vibració de la cavitat, Rayleigh i Jeans obtenen <span data-math="B_\lambda=\dfrac{2ckT}{\lambda^4}"></span>: una funció que <strong>creix sense límit</strong> quan <span data-math="\lambda\to0"></span>.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>No és un desacord del 10 %: a 200 nm i 5 000 K la fórmula clàssica dona unes <strong>100 000 vegades</strong> més radiació que la mesurada, i la potència total que prediu és <strong>infinita</strong>. Tot forn hauria de ser una bomba d'ultraviolat i qualsevol cavitat, un abisme d'energia.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>El desembre de 1900 Planck troba la corba correcta suposant que els oscil·ladors de les parets només poden intercanviar energia en <strong>múltiples enters</strong> d'un valor mínim: <span data-math="E=nhf"></span>, amb <span data-math="h=6{,}626\cdot10^{-34}\ \mathrm{J\,s}"></span>.</p>
+              <p>Els modes d'alta freqüència queden pràcticament apagats perquè el seu «paquet» mínim és massa car, i la catàstrofe desapareix. Planck ho considerava un truc de càlcul; va resultar ser el primer maó de la quàntica.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <section class="indici indici-viz" data-branca="quantica" data-viz="cosnegre">
+        <div class="indici-any" aria-hidden="true"></div>
+        <div class="viz-panel">
+          <h4>Prova-ho: Rayleigh-Jeans contra Planck</h4>
+          <p class="viz-intro">
+            La corba clàssica s'acosta a la real només a l'infraroig llunyà, molt
+            més enllà de la dreta del gràfic: és allà on es va comprovar primer i
+            on semblava correcta. Cap a l'ultraviolat, en canvi, se'n va cap amunt
+            sense límit i se surt del gràfic. L'eix horitzontal s'ajusta a la
+            temperatura perquè el màxim de Planck quedi sempre a la vista.
+          </p>
+          <canvas id="canvasCosNegre" class="h320" aria-describedby="descCosNegre"></canvas>
+          <p class="sr-only" id="descCosNegre">
+            Gràfic de la radiància espectral en funció de la longitud d'ona, normalitzada
+            al màxim de la llei de Planck. La corba de Planck puja, fa un màxim i cau cap
+            a l'ultraviolat; la corba clàssica de Rayleigh-Jeans baixa cap a la dreta i
+            creix sense límit cap a l'esquerra, sortint del gràfic per la part superior.
+          </p>
+          <div class="viz-controls">
+            <div class="param">
+              <div class="param-header">
+                <label for="cnTemp">Temperatura del cos negre <span class="symbol">T</span></label>
+                <span class="param-value" id="cnTempVal">5 000 K</span>
+              </div>
+              <input type="range" id="cnTemp" min="2000" max="8000" step="100" value="5000">
+              <p class="param-desc">2 000 K, un filament d'incandescència; 5 800 K, la superfície del Sol.</p>
+            </div>
+            <div class="param">
+              <div class="param-header">
+                <label for="cnLambda">On mirem <span class="symbol">λ</span></label>
+                <span class="param-value" id="cnLambdaVal">200 nm</span>
+              </div>
+              <input type="range" id="cnLambda" min="50" max="2000" step="10" value="200">
+              <p class="param-desc">Longitud d'ona on es compara el que prediu cada llei.</p>
+            </div>
+          </div>
+          <p class="viz-lectura" id="cnLectura"></p>
+        </div>
+      </section>
+
+      <article class="indici" data-branca="relativitat">
+        <div class="indici-any">1901</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>12. Els electrons ràpids es resisteixen a accelerar</h3>
+            <span class="branca-tag"><span aria-hidden="true">🕰️</span> Relativitat</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Kaufmann mesura la desviació dels electrons emesos pel radi, que arriben a <strong>0,95c</strong>, en camps elèctrics i magnètics creuats. Bucherer ho refina els anys següents.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Amb <span data-math="F=ma"></span> i massa constant, la desviació depèn de la velocitat d'una manera ben determinada, i l'energia cinètica és <span data-math="E_c=\tfrac{1}{2}mv^2"></span>: <strong>no hi ha cap límit de velocitat</strong>, només cal continuar accelerant.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Els electrons ràpids es desvien <strong>menys</strong> del previst, com si la relació càrrega/massa disminuís amb la velocitat. I per molta energia que se'ls doni, la velocitat s'atura contra un mur: <strong>mai no arriba a c</strong>.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>No és la massa la que canvia, és la dinàmica. Amb la relativitat, <span data-math="E=\gamma mc^2"></span> i <span data-math="E_c=(\gamma-1)mc^2"></span>, amb <span data-math="\gamma=\dfrac{1}{\sqrt{1-v^2/c^2}}"></span>. Quan <span data-math="v\to c"></span>, <span data-math="\gamma\to\infty"></span>: caldria energia infinita.</p>
+              <p>El 1962 Bertozzi ho va mesurar directament: electrons amb 15 MeV d'energia cinètica, gairebé <strong>seixanta vegades</strong> el que la mecànica de Newton necessitaria per arribar a <em>c</em>, viatjaven a 0,9995c.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <section class="indici indici-viz" data-branca="relativitat" data-viz="relativista">
+        <div class="indici-any" aria-hidden="true"></div>
+        <div class="viz-panel">
+          <h4>Prova-ho: accelera un electró i mesura'n la velocitat</h4>
+          <p class="viz-intro">
+            Accelerem un electró amb una diferència de potencial, com entre les
+            plaques d'un condensador: <strong>controlem ΔV</strong> i
+            <strong>mesurem la velocitat</strong>. Al principi les dues prediccions
+            coincideixen i la velocitat creix de pressa; a partir d'uns centenars de
+            quilovolts, cada volt que afegim fa guanyar cada cop menys velocitat.
+            Per a Newton això no passa mai: la seva corba travessa <em>c</em> com si
+            no hi fos.
+          </p>
+          <canvas id="canvasRelativista" class="h320" aria-describedby="descRelativista"></canvas>
+          <p class="sr-only" id="descRelativista">
+            Gràfic de la velocitat d'un electró en funció de la diferència de potencial
+            que l'accelera. La corba newtoniana creix sense límit i travessa la
+            velocitat de la llum; la corba relativista s'hi acosta cada cop més a poc a
+            poc i no hi arriba mai.
+          </p>
+          <div class="viz-controls">
+            <div class="param">
+              <div class="param-header">
+                <label for="relVolt">Diferència de potencial <span class="symbol">ΔV</span></label>
+                <span class="param-value" id="relVoltVal">500 kV</span>
+              </div>
+              <input type="range" id="relVolt" min="20" max="1500" step="10" value="500">
+              <p class="param-desc">Un tub de raigs X de dentista treballa a uns 70 kV; un accelerador lineal de radioteràpia, a diversos megavolts.</p>
+            </div>
+          </div>
+          <p class="viz-lectura" id="relLectura"></p>
+        </div>
+      </section>
+
+      <article class="indici" data-branca="quantica">
+        <div class="indici-any">1911</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>13. L'àtom de Rutherford no hauria de durar ni un instant</h3>
+            <span class="branca-tag"><span aria-hidden="true">⚛️</span> Quàntica</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>La dispersió de partícules α en làmines d'or (Geiger i Marsden, 1909) obliga a un àtom gairebé buit, amb tota la càrrega positiva i la massa en un nucli <strong>desenes de milers de vegades</strong> més petit que l'àtom, i els electrons al voltant.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Segons Maxwell, <strong>tota càrrega accelerada radia</strong>. Un electró en òrbita té acceleració centrípeta, per tant hauria de perdre energia contínuament, emetent un espectre continu de freqüència creixent, i caure al nucli en uns <strong>10⁻¹¹ segons</strong>.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>La discrepància no és de grau, és absoluta: la teoria dona <strong>10⁻¹¹ s</strong> de vida i l'observació diu que els àtoms són estables des de fa <strong>13 000 milions d'anys</strong>. I quan emeten, emeten ratlles, no un continu.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>Bohr (1913) ho tracta com un postulat: hi ha òrbites <strong>estacionàries</strong> en què l'electró, simplement, no radia. És insatisfactori però quadra amb els espectres i uneix aquest indici amb el número 5.</p>
+              <p>La resposta de debò arriba el 1926 amb Schrödinger: l'electró <strong>no orbita</strong>. El seu estat és una funció d'ona i el que té sentit és la probabilitat de trobar-lo en cada regió, l'orbital. Un estat estacionari no radia perquè no hi ha res que giri.</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="nuclear">
+        <div class="indici-any">1919</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>14. Els isòtops, el neutró i la massa que falta</h3>
+            <span class="branca-tag"><span aria-hidden="true">☢️</span> Nuclear</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Amb l'espectrògraf de masses, Aston veu que un mateix element té àtoms de masses diferents (els <strong>isòtops</strong>) i que les masses no són múltiples exactes de la de l'hidrogen: l'heli-4 pesa <strong>4,0026 u</strong>, mentre que quatre àtoms d'hidrogen pesen <strong>4,0313 u</strong>.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>La massa es conserva i és additiva: un conjunt ha de pesar la suma de les parts. I si el nucli només tingués protons, la repulsió elèctrica el faria esclatar.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Falta un <strong>0,71 %</strong> de la massa (0,0287 u). No hi ha cap mecanisme clàssic que faci desaparèixer massa. I a més els nuclis pesen aproximadament el doble del que correspondria a la seva càrrega: hi ha alguna cosa <em>neutra</em> a dins.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>La massa que falta és l'<strong>energia d'enllaç</strong>: <span data-math="E=\Delta m\,c^2"></span> dona 26,7 MeV per cada nucli d'heli format, que és exactament l'energia que caldria per tornar a separar-lo. La massa d'un sistema lligat és <em>menor</em> que la de les seves peces.</p>
+              <p>La partícula neutra la va identificar Chadwick el <strong>1932</strong>: el <strong>neutró</strong>. Amb ell s'entenen els isòtops (mateix Z, diferent N) i queda plantejada la pregunta de quina força manté unit el nucli.</p>
+              <a class="enllac-sim" href="defecte-massa.html">→ Defecte de massa i energia d'enllaç</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="quantica">
+        <div class="indici-any">1922</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>15. La llum empeny i la matèria difracta</h3>
+            <span class="branca-tag"><span aria-hidden="true">⚛️</span> Quàntica</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Compton (1922) dispersa raigs X amb grafit i troba que surten amb <strong>longitud d'ona més gran</strong>, i que l'augment depèn de l'angle: <span data-math="\Delta\lambda=\dfrac{h}{m_ec}(1-\cos\theta)"></span>. Cinc anys després, Davisson i Germer i G. P. Thomson fan passar <strong>electrons</strong> per un cristall i obtenen anells de difracció.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Una ona dispersada per una càrrega la fa vibrar i reemet <strong>a la mateixa freqüència</strong>. I una partícula amb massa segueix una trajectòria: no pot produir franges d'interferència.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>La dispersió dels raigs X només s'explica com un <strong>xoc elàstic entre dues partícules</strong>, amb conservació de l'energia i de la quantitat de moviment, amb <span data-math="p=\dfrac{h}{\lambda}"></span> per al fotó. I els electrons produeixen patrons d'interferència idèntics als d'una ona de <span data-math="\lambda=\dfrac{h}{p}"></span>. Cap dels dos objectes no és només ona ni només partícula.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>De Broglie (1924) havia proposat justament <span data-math="\lambda=h/p"></span> per a la matèria, i l'experiment li va donar la raó. La <strong>dualitat ona-corpuscle</strong> deixa de ser una raresa de la llum i passa a ser general.</p>
+              <p>El preu és el <strong>principi d'indeterminació</strong> de Heisenberg (1927), <span data-math="\Delta x\,\Delta p\ge\dfrac{\hbar}{2}"></span>: si un objecte és una ona, no té sentit demanar-li posició i velocitat exactes alhora.</p>
+              <a class="enllac-sim" href="interferencia-young.html">→ Interferència de Young (el patró que fan també els electrons)</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="indici" data-branca="nuclear">
+        <div class="indici-any">1938</div>
+        <div class="indici-cos">
+          <div class="indici-cap">
+            <h3>16. Fissió i fusió: el cercle es tanca</h3>
+            <span class="branca-tag"><span aria-hidden="true">☢️</span> Nuclear</span>
+          </div>
+          <dl class="anatomia">
+            <div>
+              <dt>Observació</dt>
+              <dd>Hahn i Strassmann (desembre de 1938) troben <strong>bari</strong> després d'irradiar urani amb neutrons. Meitner i Frisch ho interpreten el gener de 1939: el nucli s'ha <strong>partit</strong>, alliberant uns <strong>200 MeV</strong>. Els mateixos anys, Bethe i von Weizsäcker descriuen les cadenes de fusió que alimenten els estels.</dd>
+            </div>
+            <div>
+              <dt>Predicció clàssica</dt>
+              <dd>Cap: la física de 1890 no tenia ni el concepte de nucli, ni una energia per unitat de massa d'aquest ordre, ni cap manera de convertir massa en energia.</dd>
+            </div>
+            <div class="fila-disc">
+              <dt>Discrepància</dt>
+              <dd>Aquí, per fi, els comptes quadren: <strong>la fusió dona al Sol uns 10 000 milions d'anys</strong> de vida i <strong>la calor radiogènica manté la Terra calenta</strong>. Els indicis 1, 2, 3, 6 i 10, que semblaven problemes de geologia i d'astronomia, tenien tots la mateixa resposta, escrita a la corba d'energia d'enllaç.</dd>
+            </div>
+          </dl>
+          <details class="resolucio">
+            <summary>Com es va resoldre</summary>
+            <div class="resolucio-cos">
+              <p>L'energia d'enllaç per nucleó té un màxim cap al ferro (A ≈ 56). Per això <strong>fusionar</strong> nuclis lleugers allibera energia i <strong>trencar</strong> nuclis molt pesants també: totes dues coses acosten el sistema al màxim de la corba.</p>
+              <p>Amb això, la pregunta de 1687 sobre una Terra que es refreda queda resolta 250 anys més tard, i el trencaclosques energètic del segle XIX es converteix en el tema de física nuclear que estudiem a batxillerat.</p>
+              <a class="enllac-sim" href="defecte-massa.html">→ Fissió i fusió pas a pas</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+    </div>
+
+    <section class="formula-box">
+      <h2>On desembocava cada indici</h2>
+      <p class="formula-note">
+        Les tres branques no van néixer ordenades ni separades: el 1900 hi havia
+        problemes oberts de totes tres a la vegada, i sovint la mateixa idea nova
+        (<em>h</em>, <span data-math="E=mc^2"></span>) resolia indicis de branques diferents.
+      </p>
+      <div class="convergencia">
+        <div class="branca-col" data-branca="quantica">
+          <h3><span aria-hidden="true">⚛️</span> Física quàntica</h3>
+          <p class="idea">A escala atòmica l'energia s'intercanvia en paquets d'<span data-math="hf"></span>, i els objectes no són ni ones ni partícules.</p>
+          <ul>
+            <li>Espectres de ratlles i fórmula de Balmer (5)</li>
+            <li>Catàstrofe ultraviolada (11)</li>
+            <li>Efecte fotoelèctric (9)</li>
+            <li>Inestabilitat de l'àtom de Rutherford (13)</li>
+            <li>Compton i difracció d'electrons (15)</li>
+          </ul>
+          <div class="sims">
+            <a href="potencial-frenada.html">Potencial de frenada</a>
+            <a href="interferencia-young.html">Young</a>
+          </div>
+        </div>
+        <div class="branca-col" data-branca="relativitat">
+          <h3><span aria-hidden="true">🕰️</span> Relativitat</h3>
+          <p class="idea">No hi ha espai ni temps absoluts; <em>c</em> és la mateixa per a tothom i la massa és una forma d'energia.</p>
+          <ul>
+            <li>La <em>c</em> de Maxwell contra Galileu (7)</li>
+            <li>Absència de vent d'èter (8)</li>
+            <li>Els 43″/segle de Mercuri (4)</li>
+            <li>Els electrons ràpids de Kaufmann (12)</li>
+          </ul>
+          <div class="sims">
+            <a href="orbites.html">Laboratori d'òrbites</a>
+          </div>
+        </div>
+        <div class="branca-col" data-branca="nuclear">
+          <h3><span aria-hidden="true">☢️</span> Física nuclear</h3>
+          <p class="idea">Dins del nucli hi ha una reserva d'energia milions de vegades més gran que la química, i les desintegracions són estadístiques.</p>
+          <ul>
+            <li>La Terra que es refreda (1) i el límit de Kelvin (6)</li>
+            <li>L'energia del Sol (2)</li>
+            <li>El temps profund de la geologia (3)</li>
+            <li>Radioactivitat i llei estadística (10)</li>
+            <li>Isòtops, neutró i defecte de massa (14)</li>
+            <li>Fissió i fusió (16)</li>
+          </ul>
+          <div class="sims">
+            <a href="semivida.html">Semivida</a>
+            <a href="series.html">Sèries</a>
+            <a href="defecte-massa.html">Defecte de massa</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <details class="concepts">
+      <summary style="cursor:pointer;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);font-weight:600;">Conceptes clau</summary>
+      <ul style="margin-top:0.75rem;">
+        <li>Aquests indicis van formar part del <strong>conjunt de problemes experimentals i teòrics</strong> que van fer insostenible la visió clàssica de l'espai, el temps i la llum. Cap d'ells, tot sol, no va tombar la física clàssica: va ser el fet que s'acumulessin i que cap retoc del model vell no els resolgués.</li>
+        <li><strong>Un càlcul correcte pot donar un resultat fals</strong> si les premisses són incompletes. Kelvin no es va equivocar resolent la conducció de la calor: es va equivocar suposant que la Terra no té cap font pròpia d'energia.</li>
+        <li><strong>Les discrepàncies que compten són quantitatives.</strong> No «no ho entenem», sinó 43 segons d'arc per segle, 0,4 franges contra 0,01, un factor 10⁵ a l'ultraviolat, un 0,71 % de massa que falta.</li>
+        <li><strong>La física clàssica no és falsa: té un domini.</strong> Val quan <span data-math="v\ll c"></span> i quan les accions implicades són molt més grans que <em>h</em>. Fora d'aquest domini cal relativitat o quàntica, i totes dues han de reproduir la física clàssica al límit (principi de correspondència).</li>
+        <li><strong>Dues constants noves</strong> ordenen tota la física moderna: <span data-math="h=6{,}626\cdot10^{-34}\ \mathrm{J\,s}"></span>, que marca què és prou petit per necessitar la quàntica, i <span data-math="c=3{,}00\cdot10^{8}\ \mathrm{m/s}"></span>, que marca què és prou ràpid per necessitar la relativitat. La segona, a través de <span data-math="E=mc^2"></span>, també fixa quanta energia hi ha amagada dins de la massa.</li>
+        <li><strong>Les tres branques s'entrellacen.</strong> L'energia del Sol necessita alhora relativitat (<span data-math="E=mc^2"></span>), quàntica (l'efecte túnel perquè els protons es fusionin) i física nuclear.</li>
+        <li><strong>La natura microscòpica és probabilista.</strong> La llei de desintegració prediu la població, no l'individu; això, que semblava una limitació tècnica, és una propietat de fons.</li>
+      </ul>
+    </details>
+
+    <section class="recursos">
+      <h2>Per anar més enllà</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://prezi.com/sbr8hlkveduq/introduccion-a-la-fisica-moderna/" target="_blank" rel="noopener">Introducción a la física moderna — M. Dolores de Lama</a>
+            <span class="lang">ES</span>
+            <span class="meta">La presentació que ha inspirat l'esquema d'indicis d'aquesta pàgina; bon repàs visual de la crisi de la física clàssica.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/blackbody-spectrum" target="_blank" rel="noopener">Espectro del cuerpo negro — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">Universitat de Colorado. Mou la temperatura i compara la corba amb la llei clàssica: la catàstrofe ultraviolada, en directe.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/es/simulations/photoelectric" target="_blank" rel="noopener">Efecto fotoeléctrico — PhET</a>
+            <span class="lang">ES</span>
+            <span class="meta">Canvia la intensitat i la freqüència i comprova per què la interpretació ondulatòria no s'aguanta.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://pubs.usgs.gov/gip/geotime/age.html" target="_blank" rel="noopener">The Age of the Earth — U.S. Geological Survey</a>
+            <span class="lang">EN</span>
+            <span class="meta">Com s'arriba als 4 550 milions d'anys amb la datació radiomètrica, explicat pel servei geològic dels EUA.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://history.aip.org/exhibits/einstein/" target="_blank" rel="noopener">Einstein: Image and Impact — American Institute of Physics</a>
+            <span class="lang">EN</span>
+            <span class="meta">Exposició històrica de l'AIP sobre els articles de 1905 i el context dels problemes oberts que resolien.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i el model Claude Opus 5.</p>
+    </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="../js/utilitats.js"></script>
+  <script src="fisica-moderna.js"></script>
+</body>
+</html>

@@ -43,6 +43,7 @@ escola/
 └── fisica/                 # portada + simuladors (fitxers plans)
     ├── index.html          # portada de física (agrupada per seccions)
     ├── recursos.html       # biblioteca curada d'enllaços (teoria, PAU, sims…)
+    ├── fisica-moderna.html (+ css/js)   # cronologia d'indicis: entrada al bloc modern
     ├── semivida.html · series.html · defecte-massa.html (+ css/js)  # física moderna
     ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
     ├── induccio.html · potencial-frenada.html (+ css/js)        # electromagnetisme
@@ -167,8 +168,8 @@ escola/
 - La segona línia indica **amb quina eina i model** s'ha fet realment cada
   pàgina (transparència MIAE): la majoria, amb Cursor i Claude Opus 4.8 (High);
   el laboratori d'òrbites i diverses pàgines posteriors, amb ChatGPT (GPT-5.6
-  Thinking) i Cursor; les integracions en mode Auto ho indiquen amb
-  «Cursor (Auto)».
+  Thinking) i Cursor; la cronologia d'indicis de física moderna, amb Cursor i
+  Claude Opus 5; les integracions en mode Auto ho indiquen amb «Cursor (Auto)».
 - Els enllaços del peu són **externs** (Creative Commons, marc MIAE, GitHub),
   així que el bloc és idèntic a qualsevol profunditat de carpeta.
 - L'enllaç al **repositori de GitHub** només va a `index.html` (portada global),

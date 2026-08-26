@@ -1,0 +1,422 @@
+/* Estils propis de la cronologia d'indicis. La resta (targetes, canvas,
+   controls, recursos, peu) ve de css/comunes.css. */
+
+.cita {
+  border-left: 3px solid var(--accent);
+  padding: 0.35rem 0 0.35rem 1rem;
+  font-size: 0.92rem;
+  color: var(--text);
+  font-style: italic;
+  margin: 0.75rem 0;
+  max-width: 60rem;
+}
+
+.cita cite {
+  display: block;
+  margin-top: 0.3rem;
+  font-style: normal;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Barra de filtres */
+
+.filtre-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.filtre-barra .etiqueta {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-right: 0.2rem;
+}
+
+.chip {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.chip:hover { background: var(--bg); }
+
+.chip[aria-pressed="true"] {
+  font-weight: 700;
+  background: #eef2ff;
+  border-color: var(--accent);
+  color: #3730a3;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.18);
+}
+
+.chip-quantica[aria-pressed="true"] {
+  background: var(--c-quantica-bg);
+  border-color: var(--c-quantica);
+  color: var(--c-quantica);
+}
+
+.chip-relativitat[aria-pressed="true"] {
+  background: var(--c-relativitat-bg);
+  border-color: var(--c-relativitat);
+  color: var(--c-relativitat);
+}
+
+.chip-nuclear[aria-pressed="true"] {
+  background: var(--c-nuclear-bg);
+  border-color: var(--c-nuclear);
+  color: var(--c-nuclear);
+}
+
+.filtre-estat {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+}
+
+.filtre-estat strong { color: var(--text); }
+
+/* Colors de branca */
+
+:root {
+  --c-quantica: #6d28d9;
+  --c-quantica-bg: #f5f3ff;
+  --c-relativitat: #0e7490;
+  --c-relativitat-bg: #ecfeff;
+  --c-nuclear: #c2410c;
+  --c-nuclear-bg: #fff7ed;
+}
+
+/* Cronologia */
+
+.cronologia {
+  display: flex;
+  flex-direction: column;
+}
+
+.indici {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  padding-bottom: 0.9rem;
+  --branca: var(--accent);
+  --branca-bg: #eef2ff;
+}
+
+/* Cal ser explícit: el display de la regla anterior guanyaria a [hidden] */
+.indici[hidden] { display: none; }
+
+.indici[data-branca="quantica"] { --branca: var(--c-quantica); --branca-bg: var(--c-quantica-bg); }
+.indici[data-branca="relativitat"] { --branca: var(--c-relativitat); --branca-bg: var(--c-relativitat-bg); }
+.indici[data-branca="nuclear"] { --branca: var(--c-nuclear); --branca-bg: var(--c-nuclear-bg); }
+
+.indici-any {
+  position: relative;
+  align-self: stretch;
+  border-right: 2px solid var(--border);
+  padding: 0.85rem 0.9rem 0 0;
+  text-align: right;
+  font-family: Consolas, monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.indici-any::after {
+  content: "";
+  position: absolute;
+  right: -7px;
+  top: 1rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--branca);
+}
+
+.indici-cos {
+  margin-left: 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--branca);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.85rem 1.1rem 0.95rem;
+}
+
+.indici-cap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.indici-cap h3 {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.branca-tag {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--branca);
+  background: var(--branca-bg);
+  border: 1px solid var(--branca);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  white-space: nowrap;
+}
+
+/* Anatomia de cada indici: observació, predicció clàssica, discrepància */
+
+.anatomia { margin-top: 0.6rem; }
+
+.anatomia > div {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 0 0.9rem;
+  padding: 0.4rem 0;
+  border-top: 1px dashed var(--border);
+}
+
+.anatomia dt {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  padding-top: 0.15rem;
+}
+
+.anatomia dd {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.anatomia dd strong { color: var(--text); }
+
+.anatomia .fila-disc dt { color: var(--branca); }
+.anatomia .fila-disc dd { color: var(--text); }
+
+/* Bloc de resolució, plegable per poder treballar la hipòtesi a classe */
+
+.resolucio {
+  margin-top: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--branca-bg);
+}
+
+.resolucio > summary {
+  cursor: pointer;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--branca);
+  list-style: none;
+}
+
+.resolucio > summary::-webkit-details-marker { display: none; }
+
+.resolucio > summary::before {
+  content: "▸ ";
+  font-size: 0.8rem;
+}
+
+.resolucio[open] > summary::before { content: "▾ "; }
+
+.resolucio > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.resolucio-cos {
+  padding: 0 0.75rem 0.7rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.resolucio-cos p { margin-bottom: 0.4rem; }
+.resolucio-cos p:last-child { margin-bottom: 0; }
+.resolucio-cos strong { color: var(--text); }
+
+.enllac-sim {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.enllac-sim:hover { text-decoration: underline; }
+
+/* Blocs de visualització intercalats a la cronologia */
+
+.indici-viz .indici-any { color: transparent; }
+.indici-viz .indici-any::after { display: none; }
+
+.viz-panel {
+  margin-left: 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--branca);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.9rem 1.1rem 1rem;
+}
+
+.viz-panel > h4 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--branca);
+  margin-bottom: 0.3rem;
+}
+
+.viz-intro {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  max-width: 56rem;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 0.85rem;
+}
+
+.viz-controls .param { flex: 1 1 14rem; margin-bottom: 0; }
+
+.viz-lectura {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.viz-lectura strong { color: var(--text); }
+
+/* Canvas quadrat o esquema: no ha d'omplir tota l'amplada */
+.canvas-mig { max-width: 480px; margin: 0 auto; }
+
+.esquema {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  background: #fafbfc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.esquema text {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 12px;
+  fill: #5a6b7d;
+}
+
+.esquema .destaca { fill: #1a2332; font-weight: 600; }
+.esquema .raig { stroke: #ea580c; stroke-width: 2; fill: none; }
+.esquema .peca { stroke: #1a2332; stroke-width: 3; fill: none; }
+.esquema .guia { stroke: #94a3b8; stroke-width: 1; stroke-dasharray: 4 3; fill: none; }
+
+/* Selector d'espectres */
+
+.espectre-tabs { margin-bottom: 0.85rem; }
+
+/* Mapa de convergència */
+
+.convergencia {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.branca-col {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--branca);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem 1rem;
+  background: var(--bg);
+}
+
+.branca-col[data-branca="quantica"] { --branca: var(--c-quantica); }
+.branca-col[data-branca="relativitat"] { --branca: var(--c-relativitat); }
+.branca-col[data-branca="nuclear"] { --branca: var(--c-nuclear); }
+
+.branca-col h3 {
+  font-size: 0.95rem;
+  color: var(--branca);
+  margin-bottom: 0.15rem;
+}
+
+.branca-col .idea {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.branca-col ul {
+  list-style: none;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.branca-col li {
+  padding-left: 1rem;
+  position: relative;
+  margin-bottom: 0.25rem;
+}
+
+.branca-col li::before {
+  content: "·";
+  position: absolute;
+  left: 0.25rem;
+  color: var(--branca);
+  font-weight: 700;
+}
+
+.branca-col .sims {
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.branca-col .sims a {
+  font-size: 0.78rem;
+  text-decoration: none;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+}
+
+.branca-col .sims a:hover { border-color: var(--accent); }
+
+@media (max-width: 900px) {
+  .convergencia { grid-template-columns: 1fr; }
+  .anatomia > div { grid-template-columns: 1fr; gap: 0.1rem; }
+  .indici { grid-template-columns: 3.2rem minmax(0, 1fr); }
+  .indici-any { padding-right: 0.6rem; font-size: 0.78rem; }
+  .indici-cos, .viz-panel { margin-left: 0.8rem; }
+}
