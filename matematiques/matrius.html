@@ -22,21 +22,12 @@
     <h1>Laboratori de Matrius</h1>
     <p>
       Introdueix dues matrius (fins a 4×4) i calcula determinants, inverses, potències i productes.
-      Cada operació mostra el desenvolupament pas a pas. Pots escriure decimals (amb punt) i fraccions (p. ex. 1/2).
+      Cada operació mostra el desenvolupament pas a pas. Pots escriure decimals (amb punt) i fraccions (p. ex. 1/2),
+      i també carregar el resultat d'un càlcul com a nova matriu A o B per encadenar operacions.
     </p>
   </header>
 
   <main>
-    <section class="formula-box">
-      <h2>Fórmules de referència</h2>
-      <p class="formula">det₂ = a·d − b·c &nbsp;·&nbsp; A⁻¹ = (1/det)·adj(A) &nbsp;·&nbsp; (A·B)ᵢⱼ = Σₖ aᵢₖ·bₖⱼ</p>
-      <p class="formula-note">
-        Els determinants 2×2 i 3×3 es poden calcular per la <strong>regla de Sarrus</strong> (diagonals);
-        el d'ordre 4 es desenvolupa pels cofactors d'una fila. Només les matrius quadrades amb
-        determinant ≠ 0 tenen inversa. La potència Aⁿ només té sentit si A és quadrada.
-      </p>
-    </section>
-
     <div class="two-col">
       <section class="controls-panel">
         <h2>Matriu A</h2>
@@ -82,6 +73,31 @@
         </div>
       </section>
     </div>
+
+    <section class="presets">
+      <h2>Potències notables: matrius per explorar Aⁿ</h2>
+      <p class="formula-note" style="text-align:left;">
+        Matrius d'aspecte inofensiu però amb potències molt especials. Carrega-les a
+        <strong>A</strong> i ves calculant A², A³, A⁴… fins que descobreixis el patró:
+        és el que et demanaran quan hagis de trobar Aⁿ o A¹⁰⁰ sense fer cent productes.
+      </p>
+      <div class="preset-buttons" id="powPresets">
+        <button class="btn" data-preset="intercanvi">Intercanvi de files</button>
+        <button class="btn" data-preset="gir90">Gir de 90°</button>
+        <button class="btn" data-preset="gir120">Gir de 120°</button>
+        <button class="btn" data-preset="gir60">Gir de 60°</button>
+        <button class="btn" data-preset="permutacio">Permutació cíclica 3×3</button>
+        <button class="btn" data-preset="triangular2">Triangular 2×2</button>
+        <button class="btn" data-preset="triangular3">Triangular 3×3</button>
+        <button class="btn" data-preset="desplacament">Desplaçament 3×3</button>
+        <button class="btn" data-preset="projeccio">Projecció</button>
+        <button class="btn" data-preset="fibonacci">Fibonacci</button>
+      </div>
+      <p class="formula-note" style="text-align:left;" id="presetHint" aria-live="polite">
+        Tria un exemple: es carregarà a la matriu A amb la seva dimensió, i aquí et
+        quedarà la pista de què has de mirar.
+      </p>
+    </section>
 
     <section class="controls-panel">
       <h2>Operacions</h2>
@@ -134,6 +150,21 @@
           Tria una operació per veure el resultat i el seu desenvolupament pas a pas.
         </p>
       </div>
+      <div class="mat-toolbar" id="loadBar" hidden>
+        <span class="formula-note" style="margin:0;align-self:center;">Encadena càlculs:</span>
+        <button class="btn" data-load="A">→ Carrega el resultat a A</button>
+        <button class="btn" data-load="B">→ Carrega el resultat a B</button>
+      </div>
+    </section>
+
+    <section class="formula-box">
+      <h2>Fórmules de referència</h2>
+      <p class="formula">det₂ = a·d − b·c &nbsp;·&nbsp; A⁻¹ = (1/det)·adj(A) &nbsp;·&nbsp; (A·B)ᵢⱼ = Σₖ aᵢₖ·bₖⱼ</p>
+      <p class="formula-note">
+        Els determinants 2×2 i 3×3 es poden calcular per la <strong>regla de Sarrus</strong> (diagonals);
+        el d'ordre 4 es desenvolupa pels cofactors d'una fila. Només les matrius quadrades amb
+        determinant ≠ 0 tenen inversa. La potència Aⁿ només té sentit si A és quadrada.
+      </p>
     </section>
 
     <section class="concepts">
@@ -146,12 +177,14 @@
         <li><strong>Matriu inversa:</strong> A⁻¹ = (1/det A)·adj(A). Només existeix si det A ≠ 0 (matriu regular).</li>
         <li><strong>Producte:</strong> Aₘₓₙ · Bₙₓₚ és possible només si les columnes de A coincideixen amb les files de B.</li>
         <li><strong>Potència:</strong> Aⁿ = A·A·…·A (n cops). A⁰ = I i, si A és regular, A⁻ⁿ = (A⁻¹)ⁿ.</li>
+        <li><strong>Potències cícliques:</strong> si Aᵏ = I, les potències es repeteixen amb període k i Aⁿ només depèn del residu de dividir n entre k. Així es calcula A¹⁰⁰ sense fer cent productes.</li>
+        <li><strong>Casos especials:</strong> una matriu és <strong>nilpotent</strong> si Aᵏ = 0 (a partir d'aquí totes les potències són nul·les) i <strong>idempotent</strong> si A² = A (i doncs Aⁿ = A).</li>
         <li><strong>No commutativa:</strong> en general A·B ≠ B·A. Comprova-ho amb els botons A × B i B × A.</li>
       </ul>
     </section>
   <footer class="site-footer">
     <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
-    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i el model Claude Opus 4.8 (High).</p>
+    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i el model Claude Opus 4.8 (High); les potències notables i l'encadenament de resultats, amb Cursor i Claude Opus 5.</p>
   </footer>
   </main>
 
@@ -159,6 +192,51 @@
     const DEFAULTS = {
       A: [[2, 1, 3], [1, 0, 2], [4, 1, 8]],
       B: [[1, 2, 0], [0, 1, 3], [2, 0, 1]]
+    };
+
+    // Matrius amb potències notables. Les pistes conviden a explorar
+    // sense donar el resultat: el patró surt sol quan s'hi arriba calculant.
+    const POW_PRESETS = {
+      intercanvi: {
+        M: [[0, 1], [1, 0]],
+        pista: 'Aquesta matriu intercanvia les dues files. Calcula A² i A³: quantes potències calen per tornar a la identitat?'
+      },
+      gir90: {
+        M: [[0, -1], [1, 0]],
+        pista: 'És la matriu del gir de 90° en el pla. Si repeteixes el gir, quan tornaràs al punt de partida? Comprova-ho amb A², A³ i A⁴, i fixa\'t en el signe a mig camí.'
+      },
+      gir120: {
+        M: [[0, -1], [1, -1]],
+        pista: 'Gir de 120°. No ho sembla gens, però el cicle és molt curt: prova A², A³ i A⁴.'
+      },
+      gir60: {
+        M: [[1, -1], [1, 0]],
+        pista: 'Gir de 60°. Compta quants girs de 60° fan una volta sencera i comprova què surt a la meitat del recorregut.'
+      },
+      permutacio: {
+        M: [[0, 1, 0], [0, 0, 1], [1, 0, 0]],
+        pista: 'Cada potència desplaça les files un lloc. Quantes en calen per recuperar l\'ordre inicial?'
+      },
+      triangular2: {
+        M: [[1, 1], [0, 1]],
+        pista: 'Aquí no hi ha cicle: el patró és una fórmula. Calcula A², A³ i A⁴ i mira només l\'element de dalt a la dreta.'
+      },
+      triangular3: {
+        M: [[1, 1, 1], [0, 1, 1], [0, 0, 1]],
+        pista: 'Calcula unes quantes potències i mira el vèrtex de dalt a la dreta: 1, 3, 6, 10… Reconeixes la successió? I la resta d\'elements?'
+      },
+      desplacament: {
+        M: [[0, 1, 0], [0, 0, 1], [0, 0, 0]],
+        pista: 'Cada potència empeny els uns una diagonal cap a la dreta. Quantes potències aguanta abans de desaparèixer del tot?'
+      },
+      projeccio: {
+        M: [[2, -1], [2, -1]],
+        pista: 'Calcula A² i para\'t a pensar: val la pena calcular-ne cap més?'
+      },
+      fibonacci: {
+        M: [[1, 1], [1, 0]],
+        pista: 'Calcula A², A³, A⁴, A⁵… i llegeix els nombres que van sortint. Et sonen d\'alguna cosa?'
+      }
     };
 
     // ---------- Number helpers ----------
@@ -185,6 +263,17 @@
 
     // wrap negatives in parentheses inside expressions
     function paren(x) { return x < 0 ? '(' + fmt(x) + ')' : fmt(x); }
+
+    // valor per escriure dins d'una casella: enter, fracció exacta o decimal
+    function toEntry(x) {
+      if (!isFinite(x)) return '0';
+      if (Math.abs(x - Math.round(x)) < 1e-9) return String(Math.round(x));
+      for (let d = 2; d <= 100; d++) {
+        const n = x * d;
+        if (Math.abs(n - Math.round(n)) < 1e-9) return Math.round(n) + '/' + d;
+      }
+      return String(Math.round(x * 1e6) / 1e6);
+    }
 
     // ---------- Matrix maths ----------
     function transpose(M) { return M[0].map((_, j) => M.map(row => row[j])); }
@@ -242,6 +331,65 @@
     }
 
     function isSquare(M) { return M.length === M[0].length; }
+
+    function sameDim(X, Y) { return X.length === Y.length && X[0].length === Y[0].length; }
+
+    function matEq(X, Y) {
+      return sameDim(X, Y) &&
+        X.every((row, i) => row.every((v, j) => Math.abs(v - Y[i][j]) < 1e-9));
+    }
+
+    function addSub(X, Y, sym) {
+      return X.map((row, i) => row.map((v, j) => sym === '+' ? v + Y[i][j] : v - Y[i][j]));
+    }
+
+    // Aⁿ per a n enter (negatiu → potència de la inversa); null si no es pot
+    function matPow(M, p) {
+      if (!isSquare(M)) return null;
+      const n = M.length;
+      if (p === 0) return identity(n);
+      let base = M;
+      if (p < 0) {
+        if (Math.abs(det(M)) < 1e-12) return null;
+        base = inverse(M);
+      }
+      let R = base;
+      for (let i = 2; i <= Math.abs(p); i++) R = mul(R, base);
+      return R;
+    }
+
+    // λ si M = λ·I, o null
+    function scalarOfI(M) {
+      const n = M.length, l = M[0][0];
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          if (Math.abs(M[i][j] - (i === j ? l : 0)) > 1e-9) return null;
+        }
+      }
+      return l;
+    }
+
+    // Busca el patró de les potències: cicle (Aᵏ = I), nilpotència (Aᵏ = 0)
+    // o repetició (Aᵏ = A). Retorna null si no en troba cap fins a k = 12.
+    function detectPattern(M) {
+      if (!isSquare(M)) return null;
+      const n = M.length;
+      const I = identity(n);
+      const Z = M.map(row => row.map(() => 0));
+      let mig = null;
+      let R = I;
+      for (let k = 1; k <= 12; k++) {
+        R = mul(R, M);
+        if (matEq(R, I)) return { tipus: 'cicle', k, mig };
+        if (matEq(R, Z)) return { tipus: 'nul', k };
+        if (k > 1 && matEq(R, M)) return { tipus: 'repeteix', k };
+        if (!mig && k > 1) {
+          const l = scalarOfI(R);
+          if (l !== null && Math.abs(l - 1) > 1e-9) mig = { k, l };
+        }
+      }
+      return null;
+    }
 
     // ---------- Rendering ----------
     function matHTML(M, extra = '') {
@@ -399,6 +547,51 @@
       return html;
     }
 
+    function exemplesCicle(name, k, ns) {
+      return ns.map(n => {
+        const q = Math.floor(n / k), r = n % k;
+        const potK = `(${name}<sup>${k}</sup>)<sup>${q}</sup>`;
+        if (r === 0) return `${name}<sup>${n}</sup> = ${potK} = I`;
+        return `${name}<sup>${n}</sup> = ${potK}·${name}<sup>${r}</sup> = ${name}<sup>${r}</sup>`;
+      }).join(' &nbsp;&nbsp; ');
+    }
+
+    // Nota final del patró. Només es mostra si l'exponent calculat ja hi ha arribat:
+    // així l'alumne el descobreix ell mateix i la nota només el formalitza.
+    function patternNoteHTML(M, name, p) {
+      const pat = detectPattern(M);
+      if (!pat || p < pat.k) return '';
+      const head = `<div class="method-title">El patró de les potències</div>`;
+      if (pat.tipus === 'cicle') {
+        if (pat.k === 1) {
+          return head + `<div class="step">${name} és la identitat: totes les seves potències són I.</div>`;
+        }
+        const l = pat.mig ? pat.mig.l : 0;
+        const escalar = Math.abs(l + 1) < 1e-9 ? '−I' : `${fmt(l)}·I`;
+        const mig = pat.mig
+          ? ` Pel camí, ${name}<sup>${pat.mig.k}</sup> = ${escalar}.`
+          : '';
+        return head +
+          `<div class="step"><strong>${name}<sup>${pat.k}</sup> = I</strong>: les potències es repeteixen ` +
+          `en un <strong>cicle de ${pat.k}</strong>.${mig} Per tant ${name}<sup>n</sup> només depèn del ` +
+          `residu de dividir n entre ${pat.k}, i qualsevol exponent gran es redueix a ${name}<sup>0</sup> … ${name}<sup>${pat.k - 1}</sup>.</div>` +
+          `<div class="step eq">${exemplesCicle(name, pat.k, [100, 2026])}</div>`;
+      }
+      if (pat.tipus === 'nul') {
+        return head +
+          `<div class="step"><strong>${name}<sup>${pat.k}</sup> = 0</strong>: la matriu és <strong>nilpotent</strong>. ` +
+          `A partir d'aquí totes les potències són la matriu nul·la, o sigui ${name}<sup>n</sup> = 0 per a tot n ≥ ${pat.k}.</div>`;
+      }
+      if (pat.k === 2) {
+        return head +
+          `<div class="step"><strong>${name}² = ${name}</strong>: la matriu és <strong>idempotent</strong>, ` +
+          `i per tant ${name}<sup>n</sup> = ${name} per a qualsevol n ≥ 1.</div>`;
+      }
+      return head +
+        `<div class="step"><strong>${name}<sup>${pat.k}</sup> = ${name}</strong>: a partir de ${name} les ` +
+        `potències es repeteixen en cicles de ${pat.k - 1}.</div>`;
+    }
+
     function mulStepsHTML(X, Y, nx, ny) {
       if (X[0].length !== Y.length) {
         return `<div class="step msg-error">No es pot multiplicar ${nx} × ${ny}: ` +
@@ -417,7 +610,7 @@
       if (X.length !== Y.length || X[0].length !== Y[0].length) {
         return `<div class="step msg-error">Per sumar o restar, les dues matrius han de tenir la mateixa dimensió.</div>`;
       }
-      const R = X.map((row, i) => row.map((v, j) => sym === '+' ? v + Y[i][j] : v - Y[i][j]));
+      const R = addSub(X, Y, sym);
       return `<div class="step-label">Se sumen o resten element a element.</div>` +
         `<div class="step eq flow">${matHTML(X, 'matriu--inline')} ${sym} ${matHTML(Y, 'matriu--inline')} = ${matHTML(R, 'matriu--result')}</div>`;
     }
@@ -475,10 +668,25 @@
       });
     }
 
+    // Escriu una matriu concreta dins d'una de les caselles d'entrada
+    function loadIntoMatrix(name, M) {
+      document.getElementById(name + '-rows').value = M.length;
+      document.getElementById(name + '-cols').value = M[0].length;
+      buildGrid(name, false);
+      document.getElementById(name + '-grid').querySelectorAll('input').forEach(inp => {
+        const [i, j] = inp.dataset.key.split('-').map(Number);
+        inp.value = toEntry(M[i][j]);
+      });
+    }
+
     // ---------- Result output ----------
-    function setResult(title, body) {
+    let lastResult = null;
+
+    function setResult(title, body, M) {
       document.getElementById('resultat').innerHTML =
         `<div class="result-title">${title}</div>${body}`;
+      lastResult = (M && M.length && M[0] && M[0].length) ? M : null;
+      document.getElementById('loadBar').hidden = !lastResult;
     }
 
     function needSquare(M, name) {
@@ -491,19 +699,51 @@
       return true;
     }
 
+    function opDet(name) {
+      const M = readMatrix(name);
+      if (needSquare(M, name)) setResult(`Determinant de ${name}`, detStepsHTML(M, name), null);
+    }
+
+    function opInv(name) {
+      const M = readMatrix(name);
+      if (!needSquare(M, name)) return;
+      const regular = Math.abs(det(M)) > 1e-12;
+      setResult(`Inversa de ${name}`, inverseStepsHTML(M, name), regular ? inverse(M) : null);
+    }
+
+    function opPow(name) {
+      const M = readMatrix(name);
+      if (!needSquare(M, name)) return;
+      const p = parseInt(document.getElementById('exp').value, 10) || 0;
+      setResult(`Potència ${name}<sup>${p}</sup>`,
+        powerStepsHTML(M, name, p) + (p >= 1 ? patternNoteHTML(M, name, p) : ''),
+        matPow(M, p));
+    }
+
+    function opMul(nx, ny) {
+      const X = readMatrix(nx), Y = readMatrix(ny);
+      const possible = X[0].length === Y.length;
+      setResult(`Producte ${nx} × ${ny}`, mulStepsHTML(X, Y, nx, ny), possible ? mul(X, Y) : null);
+    }
+
+    function opAdd(sym, title) {
+      const X = readMatrix('A'), Y = readMatrix('B');
+      setResult(title, addStepsHTML(X, Y, sym), sameDim(X, Y) ? addSub(X, Y, sym) : null);
+    }
+
     const OPS = {
-      detA: () => { const M = readMatrix('A'); if (needSquare(M, 'A')) setResult('Determinant de A', detStepsHTML(M, 'A')); },
-      detB: () => { const M = readMatrix('B'); if (needSquare(M, 'B')) setResult('Determinant de B', detStepsHTML(M, 'B')); },
-      invA: () => { const M = readMatrix('A'); if (needSquare(M, 'A')) setResult('Inversa de A', inverseStepsHTML(M, 'A')); },
-      invB: () => { const M = readMatrix('B'); if (needSquare(M, 'B')) setResult('Inversa de B', inverseStepsHTML(M, 'B')); },
-      powA: () => { const M = readMatrix('A'); if (needSquare(M, 'A')) { const p = parseInt(document.getElementById('exp').value, 10) || 0; setResult(`Potència A<sup>${p}</sup>`, powerStepsHTML(M, 'A', p)); } },
-      powB: () => { const M = readMatrix('B'); if (needSquare(M, 'B')) { const p = parseInt(document.getElementById('exp').value, 10) || 0; setResult(`Potència B<sup>${p}</sup>`, powerStepsHTML(M, 'B', p)); } },
-      mulAB: () => setResult('Producte A × B', mulStepsHTML(readMatrix('A'), readMatrix('B'), 'A', 'B')),
-      mulBA: () => setResult('Producte B × A', mulStepsHTML(readMatrix('B'), readMatrix('A'), 'B', 'A')),
-      addAB: () => setResult('Suma A + B', addStepsHTML(readMatrix('A'), readMatrix('B'), '+')),
-      subAB: () => setResult('Resta A − B', addStepsHTML(readMatrix('A'), readMatrix('B'), '−')),
-      transA: () => setResult('Transposada Aᵀ', transStepsHTML(readMatrix('A'), 'A')),
-      transB: () => setResult('Transposada Bᵀ', transStepsHTML(readMatrix('B'), 'B'))
+      detA: () => opDet('A'),
+      detB: () => opDet('B'),
+      invA: () => opInv('A'),
+      invB: () => opInv('B'),
+      powA: () => opPow('A'),
+      powB: () => opPow('B'),
+      mulAB: () => opMul('A', 'B'),
+      mulBA: () => opMul('B', 'A'),
+      addAB: () => opAdd('+', 'Suma A + B'),
+      subAB: () => opAdd('−', 'Resta A − B'),
+      transA: () => setResult('Transposada Aᵀ', transStepsHTML(readMatrix('A'), 'A'), transpose(readMatrix('A'))),
+      transB: () => setResult('Transposada Bᵀ', transStepsHTML(readMatrix('B'), 'B'), transpose(readMatrix('B')))
     };
 
     // ---------- Wiring ----------
@@ -521,6 +761,33 @@
       btn.addEventListener('click', () => {
         const [name, kind] = btn.dataset.fill.split(':');
         fillMatrix(name, kind);
+      });
+    });
+
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const preset = POW_PRESETS[btn.dataset.preset];
+        loadIntoMatrix('A', preset.M);
+        document.getElementById('exp').value = 2;
+        document.getElementById('presetHint').innerHTML =
+          `<strong>${btn.textContent}:</strong> ${preset.pista}`;
+        setResult('Matriu carregada a A',
+          `<div class="step">${matHTML(preset.M, 'matriu--result')}</div>` +
+          `<div class="step msg-ok">Fes servir el botó Aⁿ, pujant l'exponent d'un en un, per anar veient les potències.</div>`,
+          null);
+      });
+    });
+
+    document.querySelectorAll('[data-load]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!lastResult) return;
+        const name = btn.dataset.load;
+        const M = lastResult;
+        loadIntoMatrix(name, M);
+        setResult(`Resultat carregat a ${name}`,
+          `<div class="step">${matHTML(M, 'matriu--result')}</div>` +
+          `<div class="step msg-ok">La matriu ${name} ja és aquest resultat: tria una operació nova per continuar la cadena.</div>`,
+          M);
       });
     });
   </script>
