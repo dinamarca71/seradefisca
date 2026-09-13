@@ -801,6 +801,38 @@ header.header-mat {
 
 .pack-card.soon .tag { color: var(--muted); }
 
+/* Imatge de la portada global, sota els enllaços de matèria */
+.portada-visual {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: #0b1220;
+}
+
+.portada-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.portada-visual figcaption {
+  padding: 0.55rem 0.9rem 0.7rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.portada-visual figcaption a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.portada-visual figcaption a:hover { text-decoration: underline; }
+
 /* Peu de pàgina: crèdits, llicència i ús d'IA */
 .site-footer {
   padding: 1rem 1.25rem;
