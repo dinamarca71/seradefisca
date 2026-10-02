@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ampliació fora del temari: introducció a la física de partícules i al Model Estàndard per a 2n de Batxillerat.">
+  <title>Física de partícules i Model Estàndard — Física 2n Batxillerat</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="particules.css">
+</head>
+<body>
+  <header class="header-mod">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="semivida.html">Semivida</a>
+      <a href="defecte-massa.html">Defecte de massa</a>
+      <a href="particules.html" class="active">Ampliació: partícules</a>
+    </nav>
+    <h1>Més enllà del nucli: física de partícules i Model Estàndard</h1>
+    <p>
+      Ampliació fora del temari oficial. Continuem la física nuclear un pas més avall:
+      de què estan fets els protons i els neutrons, quines són les peces
+      elementals de la matèria i com sabem que ho són.
+    </p>
+  </header>
+
+  <main>
+    <nav class="annex-index" aria-label="Índex de l'annex">
+      <a href="#pregunta">1. La pregunta</a>
+      <a href="#teoria">2. Una teoria, no un catàleg</a>
+      <a href="#taula">3. La taula</a>
+      <a href="#fermions-bosons">4. Fermions i bosons</a>
+      <a href="#hadrons">5. Hadrons</a>
+      <a href="#interaccions">6. Interaccions</a>
+      <a href="#beta">7. La β⁻ amb quarks</a>
+      <a href="#antimateria">8. Antimatèria</a>
+      <a href="#limits">9. Preguntes obertes</a>
+    </nav>
+
+    <!-- 1 -->
+    <section class="lectura" id="pregunta">
+      <p class="eyebrow">1 · La pregunta</p>
+      <h2>Fins on podem dividir la matèria?</h2>
+      <p>
+        Al tema de nuclear hem vist que l’àtom té un nucli i que el nucli està format per protons
+        i neutrons. La pregunta és natural: <strong>si els protons i els neutrons estan fets
+        d’altres partícules, fins on podem continuar dividint la matèria? I com sabem que hem
+        arribat a una partícula elemental?</strong>
+      </p>
+
+      <figure class="escala-fig">
+        <svg viewBox="0 0 960 230" role="img" aria-labelledby="escalaTitol escalaDesc">
+          <title id="escalaTitol">De l’àtom al quark</title>
+          <desc id="escalaDesc">Quatre panells successius: un àtom d’uns 10⁻¹⁰ m amb un nucli minúscul al centre;
+            un nucli d’uns 10⁻¹⁴ m format per protons i neutrons; un protó d’uns 10⁻¹⁵ m amb tres quarks, u, u i d,
+            units per gluons; i un quark, del qual no s’ha observat cap estructura fins a 10⁻¹⁸ m.</desc>
+          <g class="panell">
+            <rect x="8" y="8" width="214" height="170" rx="12"/>
+            <ellipse class="orbita" cx="115" cy="93" rx="80" ry="34"/>
+            <ellipse class="orbita" cx="115" cy="93" rx="80" ry="34" transform="rotate(60 115 93)"/>
+            <ellipse class="orbita" cx="115" cy="93" rx="80" ry="34" transform="rotate(-60 115 93)"/>
+            <circle class="nucli-punt" cx="115" cy="93" r="3.5"/>
+            <circle class="electro" cx="195" cy="93" r="5"/>
+            <circle class="electro" cx="75" cy="24" r="5"/>
+            <circle class="electro" cx="75" cy="162" r="5"/>
+            <text class="et-petita" x="200" y="80">e⁻</text>
+          </g>
+          <g class="panell">
+            <rect x="253" y="8" width="214" height="170" rx="12"/>
+            <g id="nucliDibuix"></g>
+          </g>
+          <g class="panell">
+            <rect x="498" y="8" width="214" height="170" rx="12"/>
+            <circle class="proto-gran" cx="605" cy="93" r="72"/>
+            <line class="gluo" x1="605" y1="55" x2="572" y2="118"/>
+            <line class="gluo" x1="605" y1="55" x2="638" y2="118"/>
+            <line class="gluo" x1="572" y1="118" x2="638" y2="118"/>
+            <circle class="quark-u" cx="605" cy="55" r="15"/>
+            <circle class="quark-u" cx="572" cy="118" r="15"/>
+            <circle class="quark-d" cx="638" cy="118" r="15"/>
+            <text class="et-quark" x="605" y="60">u</text>
+            <text class="et-quark" x="572" y="123">u</text>
+            <text class="et-quark" x="638" y="123">d</text>
+            <text class="et-petita" x="648" y="88">g</text>
+          </g>
+          <g class="panell">
+            <rect x="743" y="8" width="210" height="170" rx="12"/>
+            <circle class="limit" cx="848" cy="93" r="40"/>
+            <circle class="quark-u" cx="848" cy="93" r="4"/>
+            <text class="et-limit" x="848" y="50">?</text>
+          </g>
+          <g class="zoom">
+            <text x="237" y="88">×10⁴</text>
+            <text x="482" y="88">×10</text>
+            <text x="727" y="88">×10³</text>
+            <text x="237" y="106">→</text>
+            <text x="482" y="106">→</text>
+            <text x="727" y="106">→</text>
+          </g>
+          <g class="peus">
+            <text x="115" y="200">Àtom</text>
+            <text x="360" y="200">Nucli</text>
+            <text x="605" y="200">Protó (uud)</text>
+            <text x="848" y="200">Quark</text>
+            <text class="mida" x="115" y="220">~10⁻¹⁰ m</text>
+            <text class="mida" x="360" y="220">~10⁻¹⁴ m</text>
+            <text class="mida" x="605" y="220">~10⁻¹⁵ m</text>
+            <text class="mida" x="848" y="220">&lt; 10⁻¹⁸ m: sense estructura</text>
+          </g>
+        </svg>
+        <figcaption>
+          Cada panell és un zoom del central de l’anterior. Els dibuixos no són a escala:
+          si l’àtom fos un camp de futbol, el nucli seria una formiga al centre.
+          Els «colors» dels quarks són convencionals; la lletra n’indica el tipus.
+        </figcaption>
+      </figure>
+
+      <h3>Com «mirem» tan petit?</h3>
+      <p>
+        Igual que Rutherford: llançant projectils i observant com surten desviats. Però per
+        distingir detalls d’una mida <span data-math="d"></span> cal una sonda amb una longitud
+        d’ona de De Broglie més petita que <span data-math="d"></span>, és a dir, amb molta
+        energia:
+      </p>
+      <div class="formula-pas">
+        <span data-math="\lambda=\dfrac{h}{p}\lesssim d\quad\Longrightarrow\quad E\approx pc\gtrsim\dfrac{hc}{d},\qquad hc=1240\ \mathrm{MeV\cdot fm}"></span>
+      </div>
+      <div class="info-grid escales-sonda">
+        <div class="info-card">
+          <span>Per veure dins d’un protó (d ≈ 1 fm = 10⁻¹⁵ m)</span>
+          <strong>E ≳ 1,24 GeV</strong>
+          <small>El 1968, a SLAC (Califòrnia), electrons de 20 GeV van revelar tres «grumolls» puntuals dins del protó: els quarks.</small>
+        </div>
+        <div class="info-card">
+          <span>Per buscar estructura dins d’un quark (d ≈ 10⁻¹⁸ m)</span>
+          <strong>E ≳ 1,24 TeV</strong>
+          <small>És l’escala del LHC del CERN. Fins ara, cap estructura: per això diem que el quark és elemental.</small>
+        </div>
+      </div>
+      <p class="idea-clau">
+        <strong>Idea clau.</strong> «Elemental» és una afirmació experimental i provisional:
+        vol dir que, fins a l’energia més alta que hem assolit, no hi hem vist cap estructura interna.
+      </p>
+    </section>
+
+    <!-- 2 -->
+    <section class="lectura" id="teoria">
+      <p class="eyebrow">2 · Ordre al zoo de partícules</p>
+      <h2>El Model Estàndard és una teoria, no un catàleg</h2>
+      <p>
+        Entre 1930 i 1960, als raigs còsmics i als primers acceleradors van aparèixer desenes de
+        partícules noves: muons, pions, kaons, partícules Λ, Σ, Δ… Era un autèntic «zoo». Com
+        havia passat amb els elements químics abans de Mendeléiev, calia trobar-hi un ordre. El 1964,
+        Gell-Mann i Zweig van proposar que la majoria d’aquelles partícules no eren elementals, sinó
+        combinacions d’uns pocs constituents: els <strong>quarks</strong>.
+      </p>
+      <p>
+        El <strong>Model Estàndard</strong> no és una col·lecció de partícules descobertes en un
+        accelerador. És una <strong>teoria</strong> que explica, amb un conjunt relativament petit
+        d’elements, una quantitat extraordinària de fenòmens: des de l’estabilitat dels àtoms fins a
+        la radioactivitat o les col·lisions del LHC. I ha fet prediccions que s’han confirmat
+        després: el quark c, els bosons W i Z, el quark t o el bosó de Higgs.
+      </p>
+      <div class="avis-calma">
+        <p>
+          <strong>No ens atabalem.</strong> La 2a i la 3a generació de la taula són còpies més pesades
+          i inestables de la 1a. Només apareixen en col·lisions d’alta energia (acceleradors, raigs
+          còsmics) i en els primers instants després del Big Bang.
+        </p>
+        <p>
+          Tota la matèria ordinària estable que ens envolta es pot construir amb
+          <strong>quatre partícules</strong> de la 1a generació (i les seves antipartícules):
+        </p>
+        <ul class="quatre">
+          <li><span data-math="u"></span> quark up</li>
+          <li><span data-math="d"></span> quark down</li>
+          <li><span data-math="e^-"></span> electró</li>
+          <li><span data-math="\nu_e"></span> neutrí electrònic</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="lectura" id="taula">
+      <p class="eyebrow">3 · Interactiu</p>
+      <h2>La taula del Model Estàndard</h2>
+      <p class="hint">
+        Fes clic (o tabula i prem Retorn) sobre una partícula per veure’n les propietats.
+        La 1a generació, la de la matèria ordinària, està marcada amb una vora gruixuda.
+      </p>
+      <div class="sm-layout">
+        <div class="sm-grid" id="smGrid" role="group" aria-label="Partícules elementals del Model Estàndard"></div>
+        <div class="sm-detall" id="smDetall" aria-live="polite"></div>
+      </div>
+      <p class="hint">
+        Masses aproximades en unitats d’energia (<span data-math="1\ \mathrm{GeV}/c^2\approx 1{,}07\ \mathrm{u}"></span>).
+        Cada fermió té una <strong>antipartícula</strong> amb la mateixa massa i càrrega oposada,
+        que no surt a la taula.
+      </p>
+    </section>
+
+    <!-- 4 -->
+    <section class="lectura" id="fermions-bosons">
+      <p class="eyebrow">4 · Dues grans famílies</p>
+      <h2>Fermions i bosons</h2>
+      <p>
+        La primera gran distinció entre partícules és el seu comportament col·lectiu, que depèn
+        de l’<strong>espín</strong> (un moment angular intrínsec, quantitzat en unitats de
+        <span data-math="\hbar"></span>). La mecànica estadística només en distingeix dues famílies:
+      </p>
+      <div class="dues-col">
+        <article class="familia fermio">
+          <h3>Fermions: la matèria</h3>
+          <ul>
+            <li>Espín <strong>semienter</strong> (<span data-math="\tfrac12,\ \tfrac32,\dots"></span>).</li>
+            <li>Compleixen el <strong>principi d’exclusió de Pauli</strong>: dos fermions idèntics no poden ocupar el mateix estat quàntic. Segueixen l’estadística de Fermi–Dirac.</li>
+            <li>Per això els electrons s’organitzen en capes (la taula periòdica) i la matèria «ocupa espai» i no es col·lapsa.</li>
+            <li>Elementals: els <strong>quarks</strong> i els <strong>leptons</strong>. Compostos: protons i neutrons.</li>
+          </ul>
+        </article>
+        <article class="familia boso">
+          <h3>Bosons: les interaccions</h3>
+          <ul>
+            <li>Espín <strong>enter</strong> (<span data-math="0,\ 1,\ 2,\dots"></span>).</li>
+            <li>No compleixen l’exclusió: molts bosons poden ocupar el mateix estat (estadística de Bose–Einstein). Així funcionen un làser o un condensat de Bose–Einstein.</li>
+            <li>Els bosons d’espín 1 són els <strong>portadors de les interaccions</strong>: gluons, fotó, W i Z.</li>
+            <li>El <strong>bosó de Higgs</strong> (espín 0) no porta cap força: és l’excitació del camp que dona massa a les partícules elementals.</li>
+          </ul>
+        </article>
+      </div>
+      <p class="idea-clau">
+        <strong>Idea clau.</strong> Fermions = «maons» de la matèria; bosons = «missatgers» de les
+        interaccions entre els maons.
+      </p>
+    </section>
+
+    <!-- 5 -->
+    <section class="lectura" id="hadrons">
+      <p class="eyebrow">5 · Interactiu</p>
+      <h2>Hadrons: com es combinen els quarks</h2>
+      <p>
+        Els quarks no es poden trobar sols a la naturalesa: és el <strong>confinament de color</strong>.
+        A més de càrrega elèctrica, els quarks tenen una «càrrega de color» (n’hi ha tres tipus,
+        anomenats per conveni vermell, verd i blau), i només poden existir combinacions globalment
+        «blanques». Hi ha dues maneres simples d’aconseguir-ho, i els resultats s’anomenen
+        <strong>hadrons</strong>:
+      </p>
+      <div class="dues-col">
+        <div class="familia fermio">
+          <h3>Barions: 3 quarks (qqq)</h3>
+          <p>Un de cada color. Espín semienter: són fermions. Exemples: protó (uud) i neutró (udd).</p>
+        </div>
+        <div class="familia boso">
+          <h3>Mesons: quark + antiquark (q q̄)</h3>
+          <p>Un color i el seu anticolor. Espín enter: són bosons. Exemple: pió <span data-math="\pi^+ = u\bar d"></span>.</p>
+        </div>
+      </div>
+
+      <div class="builder" id="builder">
+        <div class="builder-controls">
+          <h3>Constructor d’hadrons</h3>
+          <p class="hint">Afegeix fins a tres quarks o antiquarks. L’ordre no importa.</p>
+          <div class="quark-buttons" role="group" aria-label="Afegeix un quark o antiquark">
+            <button type="button" class="quark-btn q-u" data-q="u" aria-label="Afegeix un quark u">u <small>+2/3</small></button>
+            <button type="button" class="quark-btn q-d" data-q="d" aria-label="Afegeix un quark d">d <small>−1/3</small></button>
+            <button type="button" class="quark-btn q-u anti" data-q="ub" aria-label="Afegeix un antiquark u">ū <small>−2/3</small></button>
+            <button type="button" class="quark-btn q-d anti" data-q="db" aria-label="Afegeix un antiquark d">d̄ <small>+1/3</small></button>
+          </div>
+          <div class="controls-row builder-actions">
+            <button type="button" class="btn" id="btnTreu">Treu l’últim</button>
+            <button type="button" class="btn" id="btnBuida">Buida</button>
+          </div>
+          <div class="reptes">
+            <strong>Reptes</strong>
+            <ol>
+              <li>Construeix el protó i el neutró.</li>
+              <li>Quines dues combinacions de tres quarks tenen càrrega +2 e i −1 e? Existeixen?</li>
+              <li>Fes un pió π⁺ i la seva antipartícula.</li>
+              <li>Prova uu o un quark sol. Què passa?</li>
+            </ol>
+          </div>
+        </div>
+        <div class="builder-result">
+          <div class="slots" id="slots" aria-label="Quarks escollits"></div>
+          <div class="formula-pas" id="chargeSteps" aria-live="polite"></div>
+          <div id="hadronInfo" class="hadron-info" aria-live="polite"></div>
+        </div>
+      </div>
+      <p class="idea-clau">
+        <strong>Idea clau.</strong> Els quarks tenen càrrega fraccionària, però com que sempre van
+        en combinacions confinades, <strong>tota partícula lliure té càrrega entera</strong>.
+      </p>
+    </section>
+
+    <!-- 6 -->
+    <section class="lectura" id="interaccions">
+      <p class="eyebrow">6 · Les forces</p>
+      <h2>Les quatre interaccions fonamentals</h2>
+      <p>
+        En el Model Estàndard una interacció es descriu com un <strong>intercanvi de bosons</strong>
+        entre partícules que tenen la «càrrega» corresponent.
+      </p>
+      <div class="taula-wrap">
+        <table class="interaccions">
+          <thead>
+            <tr>
+              <th scope="col">Interacció</th>
+              <th scope="col">Què fa</th>
+              <th scope="col">Bosó intercanviat</th>
+              <th scope="col">Qui la sent</th>
+              <th scope="col">Abast</th>
+              <th scope="col">Intensitat relativa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Nuclear forta</th>
+              <td>Manté units els quarks dins dels hadrons; el seu efecte residual uneix els nucleons al nucli.</td>
+              <td>gluons (g), 8 tipus</td>
+              <td>càrrega de color (quarks i gluons)</td>
+              <td>~10⁻¹⁵ m</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <th scope="row">Electromagnètica</th>
+              <td>Uneix electrons i nucli; química, llum, forces de contacte.</td>
+              <td>fotó (γ)</td>
+              <td>càrrega elèctrica</td>
+              <td>infinit (1/r²)</td>
+              <td>≈ 1/137</td>
+            </tr>
+            <tr>
+              <th scope="row">Nuclear feble</th>
+              <td>Canvia el «sabor» de quarks i leptons: radioactivitat β, fusió al Sol.</td>
+              <td>W⁺, W⁻, Z⁰</td>
+              <td>càrrega feble (tots els fermions)</td>
+              <td>~10⁻¹⁸ m</td>
+              <td>≈ 10⁻⁶</td>
+            </tr>
+            <tr>
+              <th scope="row">Gravitatòria</th>
+              <td>Atractiva entre masses; domina a gran escala (astres, galàxies).</td>
+              <td>gravitó <em>(hipotètic, fora del Model Estàndard)</em></td>
+              <td>massa–energia</td>
+              <td>infinit (1/r²)</td>
+              <td>≈ 10⁻³⁸</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hint">
+        Les intensitats són ordres de magnitud orientatius, per a dos protons a ~1 fm; en realitat
+        depenen de l’energia de la col·lisió.
+      </p>
+      <div class="teaching-note">
+        <p>
+          <strong>I la força nuclear del tema de nuclear?</strong> Els gluons uneixen els quarks
+          <em>dins</em> de cada nucleó. El que manté units protons i neutrons al nucli és la
+          <strong>força forta residual</strong>: el «sobrant» de la interacció de color entre
+          nucleons globalment blancs, semblant a com molècules neutres s’atrauen per forces de
+          Van der Waals. Per això té un abast tan curt (~1 fm) i per això el nucli té una energia
+          d’enllaç tan gran comparada amb la química.
+        </p>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="lectura" id="beta">
+      <p class="eyebrow">7 · Connexió amb el tema de nuclear</p>
+      <h2>La desintegració β⁻ vista amb quarks</h2>
+      <p>
+        Al tema de nuclear escrivim la desintegració β⁻ com un canvi en el nucli. Amb el Model
+        Estàndard podem fer zoom fins a veure què passa realment:
+      </p>
+      <ol class="nivells">
+        <li>
+          <span class="nivell-et">Nucli</span>
+          <span data-math="{}^{14}_{\ 6}\mathrm{C}\ \longrightarrow\ {}^{14}_{\ 7}\mathrm{N}+e^-+\bar\nu_e"></span>
+          <span class="nivell-nota">Datació amb carboni-14 (<a href="semivida.html">semivida</a>)</span>
+        </li>
+        <li>
+          <span class="nivell-et">Nucleó</span>
+          <span data-math="n\ \longrightarrow\ p+e^-+\bar\nu_e"></span>
+          <span class="nivell-nota">Un neutró es converteix en protó</span>
+        </li>
+        <li>
+          <span class="nivell-et">Quark</span>
+          <span data-math="udd\ \longrightarrow\ uud:\qquad d\ \longrightarrow\ u+W^-,\qquad W^-\ \longrightarrow\ e^-+\bar\nu_e"></span>
+          <span class="nivell-nota">La interacció feble canvia el sabor d’un quark</span>
+        </li>
+      </ol>
+
+      <div class="beta-layout">
+        <div>
+          <h3>Comprovació: què es conserva?</h3>
+          <table class="conserva">
+            <thead>
+              <tr>
+                <th scope="col">Magnitud</th>
+                <th scope="col"><span data-math="n"></span></th>
+                <th scope="col" aria-label="dona">→</th>
+                <th scope="col"><span data-math="p"></span></th>
+                <th scope="col"><span data-math="e^-"></span></th>
+                <th scope="col"><span data-math="\bar\nu_e"></span></th>
+                <th scope="col">Balanç</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Càrrega <span data-math="Q"></span> (e)</th>
+                <td>0</td><td></td><td>+1</td><td>−1</td><td>0</td>
+                <td class="ok">0 = 0 ✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Nombre bariònic <span data-math="B"></span></th>
+                <td>1</td><td></td><td>1</td><td>0</td><td>0</td>
+                <td class="ok">1 = 1 ✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Nombre leptònic <span data-math="L"></span></th>
+                <td>0</td><td></td><td>0</td><td>+1</td><td>−1</td>
+                <td class="ok">0 = 0 ✓</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="hint">
+            Cada quark té <span data-math="B=\tfrac13"></span>, de manera que un barió té
+            <span data-math="B=1"></span>. Els leptons tenen <span data-math="L=+1"></span>
+            i els antileptons <span data-math="L=-1"></span>: l’antineutrí compensa
+            el leptó que apareix.
+          </p>
+        </div>
+        <div class="calculation-local">
+          <h3>Balanç d’energia del neutró lliure</h3>
+          <div class="formula-pas"><span data-math="E_\mathrm{allib}=\left(m_n-m_p-m_e\right)c^2"></span></div>
+          <div class="formula-pas"><span data-math="E_\mathrm{allib}=(939{,}565-938{,}272-0{,}511)\ \mathrm{MeV}"></span></div>
+          <div class="formula-pas resultat"><span data-math="E_\mathrm{allib}=0{,}782\ \mathrm{MeV}"></span></div>
+          <p class="hint">
+            Masses dels nucleons lliures i de l’electró, no d’àtoms neutres: aquí no cal
+            la correcció dels electrons atòmics.
+          </p>
+        </div>
+      </div>
+
+      <div class="teaching-note">
+        <p>
+          <strong>Per què és «feble»?</strong> El bosó W té una massa de
+          80,4 GeV/c², unes 10⁵ vegades més que l’energia disponible (0,782 MeV). No pot aparèixer
+          com a partícula real: és un bosó <em>virtual</em> que només pot existir un temps de
+          l’ordre de <span data-math="\Delta t\sim\hbar/(m_Wc^2)\approx 8\cdot10^{-27}\ \mathrm{s}"></span>,
+          i en aquest temps només recorre uns 10⁻¹⁸ m. Per això la interacció és tan poc probable i té tan poc abast.
+        </p>
+        <p>
+          <strong>I el neutrí?</strong> El 1930 Pauli el va proposar perquè l’electró emès sortia amb
+          un espectre continu d’energies: sense una tercera partícula invisible, no es conservava
+          l’energia. Es va detectar el 1956 al costat d’un reactor nuclear.
+        </p>
+        <p>
+          <strong>I la β⁺?</strong> Dins d’alguns nuclis passa el procés invers,
+          <span data-math="u\to d+W^+"></span> i <span data-math="W^+\to e^++\nu_e"></span>.
+          Un protó lliure no ho pot fer, perquè té menys massa que el neutró. El positró que surt
+          és <strong>antimatèria</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="lectura" id="antimateria">
+      <p class="eyebrow">8 · Connexió amb E = mc² · Interactiu</p>
+      <h2>Antimatèria: quan la massa es converteix tota en energia</h2>
+      <p>
+        El 1928 Dirac va escriure una equació per a l’electró que admetia una solució «estranya»:
+        una partícula amb la mateixa massa i càrrega oposada. El 1932 Anderson va trobar aquest
+        <strong>positró</strong> (<span data-math="e^+"></span>) als raigs còsmics. Avui sabem que
+        cada partícula té la seva antipartícula. Quan una partícula i la seva antipartícula es
+        troben, s’<strong>aniquilen</strong>: tota la seva massa es transforma en energia,
+        normalment en forma de fotons.
+      </p>
+      <p>
+        No és ciència-ficció: la <strong>tomografia per emissió de positrons (PET)</strong> dels
+        hospitals fa servir un emissor β⁺ (com el ¹⁸F). Cada positró s’atura en pocs mil·límetres,
+        s’aniquila amb un electró del cos i emet dos fotons de 511 keV en sentits oposats, que un
+        anell de detectors registra alhora.
+      </p>
+
+      <div class="aniq-layout">
+        <div class="aniq-controls">
+          <h3>Calculadora d’aniquilació <span data-math="e^-+e^+\to 2\gamma"></span></h3>
+          <div class="param">
+            <div class="param-header">
+              <label for="ecSlider">Energia cinètica de cada partícula, <span data-math="E_\mathrm{c}"></span></label>
+              <span class="param-value" id="ecVal"></span>
+            </div>
+            <input type="range" id="ecSlider" min="0" max="5" step="0.01" value="0">
+            <p class="param-desc">De 0 (positró aturat, com a la PET) fins a 5 MeV.</p>
+          </div>
+          <div class="preset-buttons" role="group" aria-label="Escenaris">
+            <button type="button" class="btn" data-ec="0">En repòs (PET)</button>
+            <button type="button" class="btn" data-ec="0.511">E<sub>c</sub> = m<sub>e</sub>c²</button>
+            <button type="button" class="btn" data-ec="2">2 MeV</button>
+            <button type="button" class="btn" data-ec="5">5 MeV</button>
+          </div>
+          <figure class="aniq-fig">
+            <svg viewBox="0 0 520 170" role="img" aria-labelledby="aniqTitol aniqDesc">
+              <title id="aniqTitol">Esquema de l’aniquilació</title>
+              <desc id="aniqDesc">Abans: un electró i un positró s’apropen amb velocitats oposades.
+                Després: dos fotons surten en sentits oposats. Com més energia, més curta és la longitud d’ona dibuixada.</desc>
+              <text class="aniq-tit" x="125" y="22">Abans</text>
+              <text class="aniq-tit" x="395" y="22">Després</text>
+              <line class="sep" x1="260" y1="12" x2="260" y2="160"/>
+              <line class="fletxa" id="arrowE" x1="45" y1="85" x2="100" y2="85" marker-end="url(#cap)"/>
+              <line class="fletxa" id="arrowP" x1="205" y1="85" x2="150" y2="85" marker-end="url(#cap)"/>
+              <circle class="electro" cx="35" cy="85" r="11"/>
+              <circle class="positro" cx="215" cy="85" r="11"/>
+              <text class="et-carrega" x="35" y="90">−</text>
+              <text class="et-carrega" x="215" y="90">+</text>
+              <text class="et-petita" x="35" y="118">e⁻</text>
+              <text class="et-petita" x="215" y="118">e⁺</text>
+              <path class="foto" id="photonL" d=""/>
+              <path class="foto" id="photonR" d=""/>
+              <circle class="flash" cx="395" cy="85" r="7"/>
+              <text class="et-petita" x="290" y="125">γ</text>
+              <text class="et-petita" x="500" y="125">γ</text>
+              <text class="aniq-peu" x="395" y="155" id="aniqPeu"></text>
+              <defs>
+                <marker id="cap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" class="punta"/>
+                </marker>
+              </defs>
+            </svg>
+            <figcaption>Esquema no a escala: la longitud de les fletxes i la longitud d’ona dibuixada només indiquen la tendència.</figcaption>
+          </figure>
+        </div>
+        <div class="aniq-results">
+          <div class="metrics" id="aniqMetrics" aria-live="polite"></div>
+          <div class="calculation-local" id="aniqSteps"></div>
+          <details class="model-details">
+            <summary>Model físic i hipòtesis</summary>
+            <ul class="model-hyp">
+              <li>Sistema aïllat: l’electró i el positró xoquen amb la mateixa energia cinètica i moments iguals i oposats, de manera que el moment total és zero.</li>
+              <li>Per conservar el moment, els fotons no poden ser un de sol: en surten dos d’iguals en sentits oposats.</li>
+              <li>L’energia de cada partícula és la relativista, <span data-math="E=m_ec^2+E_\mathrm{c}"></span>, i la velocitat surt de <span data-math="\gamma=1+E_\mathrm{c}/(m_ec^2)"></span>. Amb uns quants MeV, els electrons ja van gairebé a <span data-math="c"></span>.</li>
+              <li>Negligim l’energia d’enllaç del positroni (6,8 eV) i les aniquilacions en tres fotons, molt menys freqüents.</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+      <p class="idea-clau">
+        <strong>Idea clau.</strong> En l’aniquilació, el 100 % de la massa es converteix en energia.
+        En la fissió, només un 0,1 % aproximadament (ho has vist a <a href="defecte-massa.html">defecte de massa</a>).
+      </p>
+    </section>
+
+    <!-- 9 -->
+    <section class="lectura" id="limits">
+      <p class="eyebrow">9 · Preguntes obertes</p>
+      <h2>Els límits del Model Estàndard</h2>
+      <p>
+        El Model Estàndard és una de les teories més ben contrastades de la història, però sabem
+        que no és la teoria definitiva. Encara queden grans preguntes obertes:
+      </p>
+      <div class="obertes">
+        <article>
+          <h3>Per què hi ha més matèria que antimatèria?</h3>
+          <p>Les lleis físiques creen matèria i antimatèria a parts iguals, però l’Univers observable és gairebé tot matèria.</p>
+        </article>
+        <article>
+          <h3>Què és la matèria fosca?</h3>
+          <p>Les galàxies giren com si tinguessin unes cinc vegades més massa de la que veiem, i cap partícula coneguda ho explica.</p>
+        </article>
+        <article>
+          <h3>Com hi incorporem la gravetat?</h3>
+          <p>La relativitat general i la física quàntica funcionen extraordinàriament bé, però encara no tenim cap teoria quàntica de la gravetat verificada.</p>
+        </article>
+        <article>
+          <h3>Els quarks són realment elementals?</h3>
+          <p>Fins ara no s’hi ha vist estructura interna, però els experiments continuen buscant constituents més fonamentals.</p>
+        </article>
+      </div>
+      <p class="hint">
+        Un altre forat: el Model Estàndard original suposava que els neutrins no tenien massa, però
+        s’ha observat que canvien de tipus en viatjar (oscil·lacions, Premi Nobel 2015), i això
+        només és possible si en tenen.
+      </p>
+    </section>
+
+    <details class="concepts">
+      <summary>Conceptes clau i errors habituals</summary>
+      <ul>
+        <li>Una partícula és <strong>elemental</strong> si no s’hi ha observat estructura interna; és una afirmació experimental i provisional.</li>
+        <li>La matèria ordinària està feta de <strong>u, d i e⁻</strong>; el <strong>νₑ</strong> apareix en els processos febles. La 2a i la 3a generació són còpies inestables i més pesades.</li>
+        <li><strong>Fermions</strong> (espín semienter, exclusió de <strong>Pauli</strong>): quarks i leptons. <strong>Bosons</strong> (espín enter): portadors de les interaccions i el Higgs.</li>
+        <li>Els quarks estan <strong>confinats</strong>: només els veiem dins d’hadrons, en barions (qqq) o mesons (q q̄). Tota partícula lliure té càrrega entera.</li>
+        <li>Error habitual: «el π⁺ és ud». No: és <strong>u d̄</strong>, un quark i un antiquark, i per això la càrrega és <span data-math="+\tfrac23+\tfrac13=+1"></span>.</li>
+        <li>Els gluons uneixen els quarks; el nucli el manté la <strong>força forta residual</strong> entre nucleons.</li>
+        <li>En la <strong>desintegració β⁻</strong>, un quark d es converteix en u emetent un W⁻ virtual, que dona l’electró i l’antineutrí. Es conserven Q, B i L.</li>
+        <li>El Higgs dona massa a les partícules elementals, però la massa dels quarks és només un 1 % de la del protó; la resta és energia dels quarks i gluons confinats (<span data-math="E=mc^2"></span>).</li>
+        <li>En l’<strong>aniquilació</strong> la massa es converteix tota en energia: amb un electró i un positró en repòs surten dos fotons de 0,511 MeV.</li>
+      </ul>
+    </details>
+
+    <section class="recursos">
+      <h2>Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.youtube.com/watch?v=cMeMd7t3XRM" target="_blank" rel="noopener">El Modelo estándar, y las partículas elementales — ScienceClic</a>
+            <span class="lang">ES</span>
+            <span class="meta">Animació clara i ben ordenada de tota la taula; molt bona com a primer vídeo.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.youtube.com/watch?v=wZCWNLLpmZQ" target="_blank" rel="noopener">El bosón de Higgs (por fin) explicado a fondo — QuantumFracture</a>
+            <span class="lang">ES</span>
+            <span class="meta">Què és el camp de Higgs i com dona massa, sense fórmules i sense simplificacions enganyoses.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🎬</span>
+          <div class="cos">
+            <a href="https://www.youtube.com/watch?v=X9otDixAtFw" target="_blank" rel="noopener">What Is Something? — Kurzgesagt</a>
+            <span class="lang">EN</span>
+            <span class="meta">D’on surt la massa de la matèria: per què el protó pesa molt més que els seus quarks.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://serviparticules.ub.edu/recorregut/modelestandard.html" target="_blank" rel="noopener">El recorregut per la física de partícules — ServiPartícules (UB)</a>
+            <span class="lang">CA</span>
+            <span class="meta">Explicacions en català de la Universitat de Barcelona, al nivell d’aquest annex.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://particleadventure.org/" target="_blank" rel="noopener">The Particle Adventure — Lawrence Berkeley National Laboratory</a>
+            <span class="lang">EN · ES</span>
+            <span class="meta">Recorregut interactiu clàssic pel Model Estàndard, amb versió en castellà.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://www.cpepphysics.org/" target="_blank" rel="noopener">Contemporary Physics Education Project (CPEP)</a>
+            <span class="lang">EN</span>
+            <span class="meta">Els pòsters oficials del Model Estàndard i de física nuclear, descarregables per a l’aula.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://serviparticules.ub.edu/en/node/856" target="_blank" rel="noopener">Masterclass de Física Nuclear — ICCUB (UB)</a>
+            <span class="lang">CA</span>
+            <span class="meta">Proposta per a l’alumnat: una jornada a la UB analitzant dades reals amb investigadors.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i Claude Opus 5.5, a partir d’un resum inicial del professor.</p>
+    </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="particules.js"></script>
+</body>
+</html>

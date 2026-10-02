@@ -1,0 +1,636 @@
+/* Estils específics de l'annex de física de partícules.
+   Capçalera, navegació, recursos, conceptes i peu viuen a css/comunes.css. */
+:root {
+  --quark: #6d28d9;
+  --quark-bg: #f3efff;
+  --lepto: #047857;
+  --lepto-bg: #ecfdf5;
+  --boso: #b45309;
+  --boso-bg: #fff7ed;
+  --higgs: #9f1239;
+  --higgs-bg: #fff1f2;
+  --anti: #475569;
+}
+
+main {
+  max-width: 1180px;
+}
+
+.annex-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+}
+
+.annex-index a {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.annex-index a:hover,
+.annex-index a:focus-visible { border-color: var(--accent); }
+
+.lectura {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.5rem;
+  scroll-margin-top: 1rem;
+}
+
+.lectura h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.6rem;
+}
+
+.lectura h3 {
+  font-size: 1rem;
+  margin: 1rem 0 0.4rem;
+}
+
+.lectura > p,
+.lectura .familia p {
+  max-width: 78ch;
+  margin-bottom: 0.6rem;
+}
+
+.lectura a { color: var(--accent); }
+
+.eyebrow {
+  margin-bottom: 0.2rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.lectura > .hint { margin-top: 0.5rem; }
+
+.idea-clau {
+  margin-top: 1rem;
+  padding: 0.6rem 0.9rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: #eef2ff;
+  font-size: 0.92rem;
+}
+
+.teaching-note {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--boso);
+  border-radius: 8px;
+  background: var(--boso-bg);
+  font-size: 0.9rem;
+}
+
+.teaching-note p { margin-bottom: 0.5rem; }
+.teaching-note p:last-child { margin-bottom: 0; }
+
+.formula-pas {
+  margin: 0.5rem 0;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid #d6e4f2;
+  border-radius: 8px;
+  background: #f4f8fc;
+  overflow-x: auto;
+}
+
+.formula-pas > div + div { margin-top: 0.45rem; }
+
+.formula-pas.resultat {
+  border-color: #c7d2fe;
+  background: #eef2ff;
+  font-weight: 700;
+}
+
+/* 1 · Esquema d'escales */
+.escala-fig { margin: 0.75rem 0 0.5rem; }
+.escala-fig svg { display: block; width: 100%; height: auto; }
+
+.escala-fig figcaption,
+.aniq-fig figcaption {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.panell rect { fill: #f8fafc; stroke: var(--border); stroke-width: 1.5; }
+.orbita { fill: none; stroke: #93c5fd; stroke-width: 1.2; }
+.nucli-punt { fill: #dc2626; }
+.electro { fill: #2563eb; }
+.positro { fill: #dc2626; }
+.proto { fill: #dc2626; stroke: #fff; stroke-width: 1.5; }
+.neutro { fill: #94a3b8; stroke: #fff; stroke-width: 1.5; }
+.proto-gran { fill: #fee2e2; stroke: #dc2626; stroke-width: 1.5; }
+.gluo { stroke: var(--boso); stroke-width: 2; stroke-dasharray: 4 3; }
+.quark-u { fill: var(--quark); }
+.quark-d { fill: #0e7490; }
+.limit { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5 4; }
+
+.et-quark,
+.et-nucleo,
+.et-carrega {
+  fill: #fff;
+  font: 700 15px "Segoe UI", sans-serif;
+  text-anchor: middle;
+}
+
+.et-nucleo { font-size: 12px; }
+.et-petita { fill: var(--text); font: 600 13px "Segoe UI", sans-serif; text-anchor: middle; }
+.et-limit { fill: var(--muted); font: 700 22px "Segoe UI", sans-serif; text-anchor: middle; }
+.zoom text { fill: var(--accent); font: 700 14px "Segoe UI", sans-serif; text-anchor: middle; }
+.peus text { fill: var(--text); font: 700 15px "Segoe UI", sans-serif; text-anchor: middle; }
+.peus .mida { fill: var(--muted); font: 600 12.5px Consolas, monospace; }
+
+.escales-sonda {
+  padding: 0;
+  margin-top: 0.5rem;
+  border: 0;
+  box-shadow: none;
+}
+
+.escales-sonda strong {
+  display: block;
+  margin: 0.15rem 0 0.3rem;
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+.escales-sonda small {
+  display: block;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* 2 */
+.avis-calma {
+  margin-top: 0.75rem;
+  padding: 0.8rem 1rem;
+  border: 1px dashed var(--lepto);
+  border-radius: 10px;
+  background: var(--lepto-bg);
+  font-size: 0.92rem;
+}
+
+.avis-calma p { margin-bottom: 0.5rem; }
+
+.quatre {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.quatre li {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.quatre li .katex { display: block; font-size: 1.35em; }
+
+/* 3 · Taula del Model Estàndard */
+.sm-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(250px, 1fr);
+  gap: 1rem;
+  align-items: start;
+  margin-top: 0.75rem;
+}
+
+.sm-grid {
+  display: grid;
+  grid-template-columns: 1.6rem repeat(5, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.sm-head {
+  align-self: end;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.sm-head.gen1 { color: var(--text); }
+
+.sm-row-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sm-row-label.quark { color: var(--quark); background: var(--quark-bg); }
+.sm-row-label.lepto { color: var(--lepto); background: var(--lepto-bg); }
+.sm-row-label.boso { color: var(--boso); background: var(--boso-bg); }
+
+.particula {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05rem;
+  min-height: 4.6rem;
+  padding: 0.35rem 0.2rem;
+  border: 1px solid;
+  border-radius: 9px;
+  font: inherit;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.particula .sym { font-size: 1.25rem; line-height: 1.3; }
+.particula .nom { font-size: 0.7rem; font-weight: 600; }
+.particula .massa { color: var(--muted); font-size: 0.64rem; font-family: Consolas, monospace; }
+
+.particula.quark { border-color: #c4b5fd; background: var(--quark-bg); }
+.particula.lepto { border-color: #a7f3d0; background: var(--lepto-bg); }
+.particula.boso { border-color: #fed7aa; background: var(--boso-bg); }
+.particula.higgs { border-color: #fecdd3; background: var(--higgs-bg); }
+
+.particula.gen1 { border-width: 3px; }
+
+.particula:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+.particula:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.particula[aria-pressed="true"] {
+  box-shadow: 0 0 0 3px var(--text);
+}
+
+.sm-detall {
+  min-height: 15rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: 0.88rem;
+}
+
+.sm-detall .cap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.sm-detall .cap .katex { font-size: 2rem; }
+.sm-detall .cap h3 { margin: 0; font-size: 1.05rem; }
+.sm-detall .cap small { display: block; color: var(--muted); font-size: 0.78rem; }
+
+.propietats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.75rem;
+  margin: 0.4rem 0 0.6rem;
+}
+
+.propietats dt { color: var(--muted); }
+.propietats dd { font-weight: 600; }
+
+/* 4 · Fermions i bosons */
+.dues-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.familia {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border-top: 4px solid;
+  font-size: 0.9rem;
+}
+
+.familia h3 { margin-top: 0; }
+.familia ul { padding-left: 1.1rem; }
+.familia li { margin-bottom: 0.35rem; }
+.familia.fermio { border-color: var(--quark); background: var(--quark-bg); }
+.familia.boso { border-color: var(--boso); background: var(--boso-bg); }
+
+/* 5 · Constructor d'hadrons */
+.builder {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fbfcfe;
+}
+
+.builder-controls h3 { margin-top: 0; }
+
+.quark-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 4.4rem));
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.quark-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.4rem 0.2rem;
+  border: 2px solid;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  justify-content: center;
+  background: #fff;
+  font: 700 1.3rem "Cambria Math", "Times New Roman", serif;
+  cursor: pointer;
+}
+
+.quark-btn small { font: 600 0.68rem "Segoe UI", sans-serif; color: var(--muted); }
+.quark-btn.q-u { border-color: var(--quark); color: var(--quark); }
+.quark-btn.q-d { border-color: #0e7490; color: #0e7490; }
+.quark-btn.anti { border-style: dashed; }
+.quark-btn:hover:not(:disabled) { background: var(--bg); }
+.quark-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.quark-btn:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.builder-actions { margin-top: 0.6rem; padding-top: 0.6rem; }
+
+.reptes {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.reptes strong { color: var(--text); }
+.reptes ol { padding-left: 1.2rem; margin-top: 0.25rem; }
+
+.slots {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 4.5rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.slot {
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border: 2px dashed var(--border);
+  border-radius: 50%;
+  color: var(--muted);
+  font: 700 1.35rem "Cambria Math", "Times New Roman", serif;
+}
+
+.slot.ple { border-style: solid; color: #fff; }
+.slot.ple.q-u { background: var(--quark); border-color: var(--quark); }
+.slot.ple.q-d { background: #0e7490; border-color: #0e7490; }
+.slot.ple.anti { background: #fff; border-style: dashed; }
+.slot.ple.anti.q-u { color: var(--quark); }
+.slot.ple.anti.q-d { color: #0e7490; }
+
+.hadron-info {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 0.88rem;
+}
+
+.hadron-info h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+.hadron-info.valid { border-left: 5px solid var(--lepto); }
+.hadron-info.invalid { border-left: 5px solid #b91c1c; }
+.hadron-info .estat { font-weight: 700; }
+.hadron-info.valid .estat { color: var(--lepto); }
+.hadron-info.invalid .estat { color: #b91c1c; }
+.hadron-info .propietats { font-size: 0.84rem; }
+
+/* 6 · Interaccions */
+.taula-wrap { overflow-x: auto; margin-top: 0.5rem; }
+
+.interaccions,
+.conserva {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.interaccions th,
+.interaccions td,
+.conserva th,
+.conserva td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.interaccions thead th,
+.conserva thead th {
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.interaccions td:last-child,
+.interaccions td:nth-child(5) {
+  font-family: Consolas, monospace;
+  white-space: nowrap;
+}
+
+/* 7 · Beta */
+.nivells {
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+  margin: 0.75rem 0;
+}
+
+.nivells li {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 14rem);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #f8fafc;
+  overflow-x: auto;
+}
+
+.nivells li:last-child { border-color: var(--quark); background: var(--quark-bg); }
+
+.nivell-et {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nivell-nota { color: var(--muted); font-size: 0.8rem; }
+
+.beta-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.conserva td { text-align: center; font-family: Consolas, monospace; }
+.conserva td.ok { color: var(--lepto); font-weight: 700; white-space: nowrap; }
+.conserva thead th:not(:first-child) { text-align: center; }
+
+.calculation-local {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #d7e2ec;
+  border-radius: 10px;
+  background: #f6f9fc;
+}
+
+.calculation-local h3 { margin-top: 0.2rem; }
+.calculation-local .formula-pas { background: var(--surface); }
+
+/* 8 · Aniquilació */
+.aniq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fbfcfe;
+}
+
+.aniq-controls h3 { margin-top: 0; }
+.aniq-controls .param { margin-top: 0.6rem; }
+.aniq-controls .param-header label { font-weight: 600; }
+.aniq-controls .param-value { font-size: 0.9rem; color: var(--text); font-weight: 700; }
+.aniq-controls .preset-buttons { margin-top: 0.4rem; }
+.preset-buttons .btn[aria-pressed="true"] { border-color: var(--accent); background: #eef2ff; font-weight: 600; }
+
+.aniq-fig { margin-top: 0.8rem; }
+
+.aniq-fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.aniq-tit { fill: var(--muted); font: 700 13px "Segoe UI", sans-serif; text-anchor: middle; }
+.aniq-peu { fill: var(--text); font: 600 12.5px Consolas, monospace; text-anchor: middle; }
+.sep { stroke: var(--border); stroke-dasharray: 4 4; }
+.fletxa { stroke: var(--text); stroke-width: 2; }
+.punta { fill: var(--text); }
+.foto { fill: none; stroke: #ca8a04; stroke-width: 2.2; }
+.flash { fill: #fde047; stroke: #ca8a04; stroke-width: 1.5; }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.metric {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+}
+
+.metric b { display: block; color: var(--muted); font-size: 0.72rem; font-weight: 700; }
+.metric > span { display: block; color: var(--accent); font: 800 1rem/1.35 Consolas, monospace; }
+
+.aniq-results .calculation-local { margin-top: 0.75rem; }
+
+.model-details { margin-top: 0.75rem; font-size: 0.88rem; }
+.model-details summary { cursor: pointer; font-weight: 700; }
+
+/* 9 · Preguntes obertes */
+.obertes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.obertes article {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--higgs);
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: 0.88rem;
+}
+
+.obertes h3 { margin: 0 0 0.3rem; font-size: 0.95rem; }
+
+details.concepts summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+details.concepts[open] summary { margin-bottom: 0.5rem; }
+
+@media (max-width: 900px) {
+  .sm-layout,
+  .builder,
+  .beta-layout,
+  .aniq-layout,
+  .dues-col { grid-template-columns: 1fr; }
+
+  .nivells li { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+
+@media (max-width: 620px) {
+  .lectura { padding: 1rem; }
+  .quatre,
+  .obertes,
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .obertes { grid-template-columns: 1fr; }
+  .particula .nom { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particula { transition: none; }
+  .particula:hover { transform: none; }
+}
