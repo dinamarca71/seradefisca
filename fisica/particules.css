@@ -12,63 +12,9 @@
   --anti: #475569;
 }
 
-main {
-  max-width: 1180px;
-}
-
-.annex-index {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  font-size: 0.82rem;
-}
-
-.annex-index a {
-  padding: 0.25rem 0.65rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.annex-index a:hover,
-.annex-index a:focus-visible { border-color: var(--accent); }
-
-.lectura {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.25rem 1.5rem;
-  scroll-margin-top: 1rem;
-}
-
-.lectura h2 {
-  font-size: 1.3rem;
-  margin-bottom: 0.6rem;
-}
-
-.lectura h3 {
-  font-size: 1rem;
-  margin: 1rem 0 0.4rem;
-}
-
-.lectura > p,
 .lectura .familia p {
   max-width: 78ch;
   margin-bottom: 0.6rem;
-}
-
-.lectura a { color: var(--accent); }
-
-.eyebrow {
-  margin-bottom: 0.2rem;
-  color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
 }
 
 .hint {
@@ -77,15 +23,6 @@ main {
 }
 
 .lectura > .hint { margin-top: 0.5rem; }
-
-.idea-clau {
-  margin-top: 1rem;
-  padding: 0.6rem 0.9rem;
-  border-left: 4px solid var(--accent);
-  border-radius: 8px;
-  background: #eef2ff;
-  font-size: 0.92rem;
-}
 
 .teaching-note {
   margin-top: 1rem;
@@ -98,23 +35,6 @@ main {
 
 .teaching-note p { margin-bottom: 0.5rem; }
 .teaching-note p:last-child { margin-bottom: 0; }
-
-.formula-pas {
-  margin: 0.5rem 0;
-  padding: 0.55rem 0.8rem;
-  border: 1px solid #d6e4f2;
-  border-radius: 8px;
-  background: #f4f8fc;
-  overflow-x: auto;
-}
-
-.formula-pas > div + div { margin-top: 0.45rem; }
-
-.formula-pas.resultat {
-  border-color: #c7d2fe;
-  background: #eef2ff;
-  font-weight: 700;
-}
 
 /* 1 · Esquema d'escales */
 .escala-fig { margin: 0.75rem 0 0.5rem; }
@@ -622,7 +542,6 @@ details.concepts[open] summary { margin-bottom: 0.5rem; }
 }
 
 @media (max-width: 620px) {
-  .lectura { padding: 1rem; }
   .quatre,
   .obertes,
   .metrics { grid-template-columns: 1fr 1fr; }

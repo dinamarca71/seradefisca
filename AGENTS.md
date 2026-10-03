@@ -46,6 +46,7 @@ escola/
     ├── fisica-moderna.html (+ css/js)   # cronologia d'indicis: entrada al bloc modern
     ├── semivida.html · series.html · defecte-massa.html (+ css/js)  # física moderna
     ├── orbites.html (+ orbites.css · orbites.js)               # camp gravitatori
+    ├── orbites-elliptiques.html (+ css/js)  # el·lipse, E i L, maniobres de Hohmann
     ├── induccio.html · potencial-frenada.html (+ css/js)        # electromagnetisme
     ├── mhs.html (+ mhs.css · mhs.js) · pendul.html             # MHS / oscil·lacions
     ├── superposicio.html (+ css/js) · ones-estacionaries.html ·
@@ -62,7 +63,9 @@ La portada de física té una secció **«Ampliacions (fora del temari)»** per 
 annexos d'aprofundiment (avui, `particules.html`). Són pàgines de lectura guiada
 amb pocs interactius, però segueixen les mateixes convencions (estils, KaTeX,
 rigor, conceptes clau, recursos i peu); la `pack-card` porta l'etiqueta
-«Ampliació».
+«Ampliació». Els estils de lectura guiada (`main.main-lectura`, `.lectura`,
+`.lectura-index`, `.eyebrow`, `.idea-clau`, `.formula-pas`) són a
+`comunes.css` i també els fa servir `orbites-elliptiques.html`.
 ## Convencions
 
 - **Idioma**: tots els textos visibles, títols i comentaris nous, en **català**.
@@ -176,7 +179,7 @@ rigor, conceptes clau, recursos i peu); la `pack-card` porta l'etiqueta
   pàgina (transparència MIAE): la majoria, amb Cursor i Claude Opus 4.8 (High);
   el laboratori d'òrbites i diverses pàgines posteriors, amb ChatGPT (GPT-5.6
   Thinking) i Cursor; la cronologia d'indicis de física moderna, amb Cursor i
-  Claude Opus 5; l'annex de partícules, amb Cursor i Claude Opus 5.5; les
+  Claude Opus 5; l'annex de partícules i les òrbites el·líptiques, amb Cursor i Claude Opus 5.5; les
   integracions en mode Auto ho indiquen amb «Cursor (Auto)».
 - Els enllaços del peu són **externs** (Creative Commons, marc MIAE, GitHub),
   així que el bloc és idèntic a qualsevol profunditat de carpeta.

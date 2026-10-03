@@ -1,0 +1,317 @@
+/* Estils específics de la pàgina d'òrbites el·líptiques.
+   Seccions de lectura, índex, fórmules i peu viuen a css/comunes.css. */
+:root {
+  --cos: #d97706;
+  --focus-buit: #64748b;
+  --elipse: #0e7490;
+  --r1: #2563eb;
+  --r2: #c2410c;
+  --vel: #2563eb;
+  --dv: #dc2626;
+  --cinetica: #2563eb;
+  --potencial: #b45309;
+  --mecanica: #047857;
+  --area-a: rgba(14, 116, 144, 0.22);
+  --area-b: rgba(14, 116, 144, 0.08);
+}
+
+.hint { color: var(--muted); font-size: 0.82rem; }
+.lectura > .hint { margin-top: 0.5rem; }
+
+.dues-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* 1 · El·lipse */
+.glossari {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 0.45rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.glossari dt { font-size: 1.05rem; text-align: center; }
+
+.relacions .formula-pas { text-align: center; }
+
+.explorador,
+.sim-orbita,
+.hohmann {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fbfcfe;
+}
+
+.explorador { grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.45fr); }
+.explorador h3,
+.sim-controls h3,
+.hoh-controls h3 { margin-top: 0; }
+
+.explorador .param,
+.sim-controls .param,
+.hoh-controls .param { margin-top: 0.7rem; }
+
+.preset-buttons .btn { padding: 0.3rem 0.65rem; font-size: 0.8rem; }
+.preset-buttons .btn[aria-pressed="true"] { border-color: var(--accent); background: #eef2ff; font-weight: 600; }
+
+.btn:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.explorador-fig,
+.barres-fig { margin: 0; }
+
+.explorador-fig svg,
+.sim-visual > svg,
+.hoh-visual svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.explorador-fig figcaption {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.valors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+}
+
+.valor {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 0.78rem;
+}
+
+.valor > b { display: block; color: var(--muted); font-weight: 600; }
+.valor > span { font: 700 0.9rem/1.35 Consolas, monospace; color: var(--text); }
+.valor.destaca { border-color: #c7d2fe; background: #eef2ff; }
+.valor.destaca > span { color: var(--accent); }
+
+/* Elements dels SVG */
+.sv-elipse { fill: none; stroke: var(--elipse); stroke-width: 2.5; }
+.sv-eix { stroke: #94a3b8; stroke-width: 1; stroke-dasharray: 5 4; }
+.sv-cota { stroke: var(--text); stroke-width: 1.4; }
+.sv-cota-a { stroke: var(--accent); stroke-width: 2; }
+.sv-cota-b { stroke: #7c3aed; stroke-width: 2; }
+.sv-cota-c { stroke: #be123c; stroke-width: 2; }
+.sv-pita { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.sv-r1 { stroke: var(--r1); stroke-width: 2; }
+.sv-r2 { stroke: var(--r2); stroke-width: 2; stroke-dasharray: 7 4; }
+.sv-cos { fill: var(--cos); stroke: #92400e; stroke-width: 1.2; }
+.sv-terra { fill: #bfdbfe; stroke: #1d4ed8; stroke-width: 1.2; }
+.sv-buit { fill: #fff; stroke: var(--focus-buit); stroke-width: 1.8; }
+.sv-centre { fill: var(--text); }
+.sv-punt { fill: #fff; stroke: var(--text); stroke-width: 2; }
+.sv-nau { fill: var(--text); stroke: #fff; stroke-width: 1.5; }
+.sv-text { fill: var(--text); font: 600 12.5px "Segoe UI", sans-serif; }
+.sv-text.petit { font-size: 11px; fill: var(--muted); }
+.sv-text.mig { text-anchor: middle; }
+.sv-text.a { fill: var(--accent); font-weight: 700; }
+.sv-text.b { fill: #7c3aed; font-weight: 700; }
+.sv-text.c { fill: #be123c; font-weight: 700; }
+.sv-text.r1 { fill: var(--r1); font-weight: 700; }
+.sv-text.r2 { fill: var(--r2); font-weight: 700; }
+.sv-vel { stroke: var(--vel); stroke-width: 2.4; }
+.sv-vel-abans { stroke: #94a3b8; stroke-width: 2.4; stroke-dasharray: 5 3; }
+.sv-dv { stroke: var(--dv); stroke-width: 3; }
+.sv-area-a { fill: var(--area-a); stroke: none; }
+.sv-area-b { fill: var(--area-b); stroke: none; }
+.sv-orb-ini { fill: none; stroke: var(--r1); stroke-width: 2; }
+.sv-orb-fin { fill: none; stroke: var(--r2); stroke-width: 2; }
+.sv-orb-trans { fill: none; stroke: var(--elipse); stroke-width: 2.2; }
+.sv-tenue { opacity: 0.35; }
+.sv-guio { stroke-dasharray: 6 5; }
+.sv-barra-c { fill: var(--cinetica); }
+.sv-barra-p { fill: var(--potencial); }
+.sv-barra-m { fill: var(--mecanica); }
+.sv-zero { stroke: var(--text); stroke-width: 1.2; }
+
+/* 2 · Conservació */
+.llei {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border-top: 4px solid;
+  font-size: 0.9rem;
+}
+
+.llei h3 { margin-top: 0; }
+.llei.energia { border-color: var(--mecanica); background: #ecfdf5; }
+.llei.moment { border-color: #7c3aed; background: #f5f3ff; }
+.llei .formula-pas { background: var(--surface); text-align: center; }
+
+.derivacio {
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.derivacio li {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #f8fafc;
+  overflow-x: auto;
+}
+
+.pas-et {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.resultats-clau { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.resultats-clau .formula-pas { text-align: center; margin: 0; }
+.resultats-clau small { display: block; margin-top: 0.3rem; color: var(--muted); font-size: 0.76rem; font-weight: 400; }
+
+.sim-orbita { grid-template-columns: minmax(250px, 0.75fr) minmax(0, 1.5fr); }
+.sim-visual { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(200px, 0.75fr); gap: 0.75rem; align-items: start; }
+.sim-lectura .valors { grid-template-columns: 1fr; margin-top: 0; }
+.barres-fig svg { display: block; width: 100%; height: auto; margin-top: 0.5rem; }
+
+.check { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; color: var(--muted); }
+.check input { accent-color: var(--accent); }
+
+.model-details { margin-top: 0.75rem; font-size: 0.88rem; }
+.model-details summary { cursor: pointer; font-weight: 700; }
+
+/* 3 · Hohmann */
+.hohmann { grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.4fr); }
+
+.cos-central {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.6rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.86rem;
+}
+
+.cos-central legend { padding: 0 0.3rem; color: var(--muted); font-size: 0.76rem; }
+.cos-central input { accent-color: var(--accent); }
+
+.fases {
+  margin: 0.8rem 0 0;
+  padding-left: 1.4rem;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.fases li { padding: 0.15rem 0.35rem; border-radius: 6px; }
+.fases li.fet { color: var(--text); }
+.fases li.actual { color: var(--text); background: #eef2ff; font-weight: 700; }
+
+.hoh-missatge {
+  min-height: 4.2rem;
+  margin-top: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: #f8fafc;
+  font-size: 0.9rem;
+}
+
+.hoh-dades {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.taula-dades {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.taula-dades th,
+.taula-dades td {
+  padding: 0.38rem 0.55rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.taula-dades td:last-child {
+  text-align: right;
+  font-family: Consolas, monospace;
+  white-space: nowrap;
+}
+
+.taula-dades tr.dv td { color: var(--dv); font-weight: 700; }
+.taula-dades tr.total td { background: #fef2f2; font-weight: 800; }
+.taula-dades tr.actiu td { background: #eef2ff; }
+
+.calcul-local {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #d7e2ec;
+  border-radius: 10px;
+  background: #f6f9fc;
+}
+
+.calcul-local h3 { margin-top: 0.2rem; }
+.calcul-local .formula-pas { background: var(--surface); }
+.calcul-local .formula-pas.actiu { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+
+/* 4 · Paradoxes */
+.paradoxes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.paradoxes article {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--dv);
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: 0.9rem;
+}
+
+.paradoxes h3 { margin: 0 0 0.35rem; }
+
+details.concepts summary { cursor: pointer; font-weight: 700; }
+details.concepts[open] summary { margin-bottom: 0.5rem; }
+
+@media (max-width: 1000px) {
+  .sim-orbita,
+  .sim-visual { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+  .dues-col,
+  .explorador,
+  .hohmann,
+  .hoh-dades,
+  .resultats-clau,
+  .paradoxes { grid-template-columns: 1fr; }
+
+  .derivacio li { grid-template-columns: 1fr; gap: 0.25rem; }
+}

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Òrbites el·líptiques: geometria de l'el·lipse, conservació de l'energia i del moment angular, i maniobres orbitals amb Δv (transferència de Hohmann).">
+  <title>Òrbites el·líptiques i maniobres — Física 2n Batxillerat</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="orbites-elliptiques.css">
+</head>
+<body>
+  <header class="header-grav">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="orbites.html">Laboratori d’òrbites</a>
+      <a href="orbites-elliptiques.html" class="active">Òrbites el·líptiques</a>
+    </nav>
+    <h1>Òrbites el·líptiques: geometria, conservació i maniobres</h1>
+    <p>
+      Les òrbites circulars són un cas particular. Aquí veurem com és una el·lipse, per què
+      l’energia mecànica i el moment angular en determinen la forma i com es passa d’una òrbita
+      a una altra amb impulsos de motor, sovint de manera poc intuïtiva.
+    </p>
+  </header>
+
+  <main class="main-lectura">
+    <nav class="lectura-index" aria-label="Índex de la pàgina">
+      <a href="#elipse">1. L’el·lipse</a>
+      <a href="#conservacio">2. Què es conserva</a>
+      <a href="#maniobres">3. Canviar d’òrbita</a>
+      <a href="#paradoxes">4. Quatre paradoxes</a>
+    </nav>
+
+    <!-- 1 -->
+    <section class="lectura" id="elipse">
+      <p class="eyebrow">1 · Repàs matemàtic · Interactiu</p>
+      <h2>La geometria de l’el·lipse</h2>
+      <p>
+        Una el·lipse és el conjunt de punts del pla tals que la <strong>suma de distàncies a dos
+        punts fixos</strong>, els <strong>focus</strong>, és constant i igual a <span data-math="2a"></span>.
+        És el mètode del jardiner: dos claus, una corda i un llapis que la manté tibant.
+        La primera llei de Kepler diu que els planetes descriuen el·lipses amb el Sol en
+        <strong>un</strong> dels focus. L’altre focus és buit: no hi ha res.
+      </p>
+
+      <div class="dues-col parametres">
+        <dl class="glossari">
+          <dt><span data-math="a"></span></dt><dd><strong>Semieix major</strong>: la meitat de l’eix llarg. Fixa la mida (i, com veurem, l’energia i el període).</dd>
+          <dt><span data-math="b"></span></dt><dd><strong>Semieix menor</strong>: la meitat de l’eix curt.</dd>
+          <dt><span data-math="c"></span></dt><dd><strong>Semidistància focal</strong>: distància del centre a cada focus.</dd>
+          <dt><span data-math="e"></span></dt><dd><strong>Excentricitat</strong>, <span data-math="e=c/a"></span>: 0 per a una circumferència, a prop d’1 per a una el·lipse molt allargada.</dd>
+          <dt><span data-math="r_\mathrm{p},\ r_\mathrm{a}"></span></dt><dd>Distàncies mínima i màxima al focus ocupat: <strong>periapsi</strong> i <strong>apoapsi</strong> (periheli i afeli al voltant del Sol; perigeu i apogeu al voltant de la Terra).</dd>
+        </dl>
+        <div class="relacions">
+          <div class="formula-pas"><span data-math="b^2+c^2=a^2\qquad b=a\sqrt{1-e^2}"></span></div>
+          <div class="formula-pas"><span data-math="r_\mathrm{p}=a-c=a(1-e)\qquad r_\mathrm{a}=a+c=a(1+e)"></span></div>
+          <div class="formula-pas"><span data-math="a=\dfrac{r_\mathrm{p}+r_\mathrm{a}}{2}\qquad e=\dfrac{r_\mathrm{a}-r_\mathrm{p}}{r_\mathrm{a}+r_\mathrm{p}}"></span></div>
+          <div class="formula-pas"><span data-math="r(\theta)=\dfrac{a\,(1-e^2)}{1+e\cos\theta}"></span></div>
+          <p class="hint">
+            La primera relació és Pitàgores: des d’un extrem de l’eix menor, la distància a cada
+            focus és exactament <span data-math="a"></span>. L’última és l’equació polar respecte del
+            focus ocupat; <span data-math="\theta"></span> és l’angle mesurat des de la periapsi.
+          </p>
+        </div>
+      </div>
+
+      <div class="explorador">
+        <div class="explorador-controls">
+          <h3>Explorador de l’el·lipse</h3>
+          <div class="preset-buttons" id="elPresets" role="group" aria-label="Exemples d’òrbites"></div>
+          <div class="param">
+            <div class="param-header">
+              <label for="elE">Excentricitat <span data-math="e"></span></label>
+              <span class="param-value" id="elEVal"></span>
+            </div>
+            <input type="range" id="elE" min="0" max="0.97" step="0.001" value="0.6">
+          </div>
+          <div class="param">
+            <div class="param-header">
+              <label for="elTheta">Posició del punt P, <span data-math="\theta"></span></label>
+              <span class="param-value" id="elThetaVal"></span>
+            </div>
+            <input type="range" id="elTheta" min="0" max="360" step="1" value="60">
+            <p class="param-desc">Angle des de la periapsi, mesurat al focus ocupat.</p>
+          </div>
+          <div class="valors" id="elValors" aria-live="polite"></div>
+        </div>
+        <figure class="explorador-fig">
+          <svg id="elSvg" viewBox="0 0 640 360" role="img" aria-labelledby="elTitol elDesc">
+            <title id="elTitol">El·lipse amb els seus paràmetres</title>
+            <desc id="elDesc">El·lipse amb el centre, els dos focus (un d’ocupat i un de buit), el semieix major a,
+              el semieix menor b, la semidistància focal c, la periapsi, l’apoapsi i un punt P unit amb els dos focus.</desc>
+          </svg>
+          <figcaption id="elCaption"></figcaption>
+        </figure>
+      </div>
+      <p class="idea-clau">
+        <strong>Idea clau.</strong> Les òrbites dels planetes són gairebé circumferències: per a la
+        Terra, <span data-math="b/a=0{,}99986"></span>. El que sí es nota és que el Sol no és al
+        centre: el focus està desplaçat <span data-math="c=0{,}0167\ \mathrm{UA}"></span>, uns 2,5 milions de km.
+        L’excentricitat mesura sobretot aquest desplaçament (<span data-math="c=ae"></span>);
+        l’aplatament creix molt més lentament (<span data-math="b/a\approx1-e^2/2"></span>).
+      </p>
+    </section>
+
+    <!-- 2 -->
+    <section class="lectura" id="conservacio">
+      <p class="eyebrow">2 · Física · Interactiu</p>
+      <h2>Què es conserva en una òrbita el·líptica?</h2>
+      <p>
+        Al llarg d’una òrbita el·líptica la distància <span data-math="r"></span> i la velocitat
+        <span data-math="v"></span> canvien contínuament. Però la força gravitatòria té dues propietats
+        que fan que dues magnituds es mantinguin constants:
+      </p>
+      <div class="dues-col">
+        <article class="llei energia">
+          <h3>És conservativa → es conserva l’energia mecànica</h3>
+          <div class="formula-pas"><span data-math="E_m=\tfrac12 mv^2-\dfrac{GMm}{r}=\text{constant}"></span></div>
+          <p>Quan el satèl·lit s’apropa al planeta, l’energia potencial disminueix i la cinètica augmenta: va més de pressa a la periapsi.</p>
+        </article>
+        <article class="llei moment">
+          <h3>És central → es conserva el moment angular</h3>
+          <div class="formula-pas"><span data-math="\vec L=m\,\vec r\times\vec v,\qquad L=m\,r\,v\sin\varphi=\text{constant}"></span></div>
+          <p>És la <strong>segona llei de Kepler</strong>: el radi vector escombra àrees iguals en temps iguals, perquè <span data-math="\mathrm{d}A/\mathrm{d}t=L/2m"></span>.</p>
+        </article>
+      </div>
+
+      <h3>Dues equacions, dues incògnites: les velocitats a la periapsi i a l’apoapsi</h3>
+      <p>
+        A la periapsi i a l’apoapsi la velocitat és perpendicular al radi (<span data-math="\sin\varphi=1"></span>).
+        Si coneixem <span data-math="r_\mathrm{p}"></span> i <span data-math="r_\mathrm{a}"></span>, les dues lleis
+        de conservació ens donen <span data-math="v_\mathrm{p}"></span> i <span data-math="v_\mathrm{a}"></span>:
+      </p>
+      <ol class="derivacio">
+        <li>
+          <span class="pas-et">Moment angular</span>
+          <span data-math="m\,r_\mathrm{p}v_\mathrm{p}=m\,r_\mathrm{a}v_\mathrm{a}\ \Longrightarrow\ v_\mathrm{a}=v_\mathrm{p}\,\dfrac{r_\mathrm{p}}{r_\mathrm{a}}"></span>
+        </li>
+        <li>
+          <span class="pas-et">Energia</span>
+          <span data-math="\tfrac12 v_\mathrm{p}^2-\dfrac{GM}{r_\mathrm{p}}=\tfrac12 v_\mathrm{a}^2-\dfrac{GM}{r_\mathrm{a}}"></span>
+        </li>
+        <li>
+          <span class="pas-et">Substituïm</span>
+          <span data-math="\tfrac12 v_\mathrm{p}^2\left(1-\dfrac{r_\mathrm{p}^2}{r_\mathrm{a}^2}\right)=GM\left(\dfrac{1}{r_\mathrm{p}}-\dfrac{1}{r_\mathrm{a}}\right)\ \Longrightarrow\ v_\mathrm{p}^2=\dfrac{2GM\,r_\mathrm{a}}{r_\mathrm{p}(r_\mathrm{p}+r_\mathrm{a})}=\dfrac{GM}{a}\,\dfrac{r_\mathrm{a}}{r_\mathrm{p}}"></span>
+        </li>
+        <li>
+          <span class="pas-et">Energia total</span>
+          <span data-math="\dfrac{E_m}{m}=\tfrac12 v_\mathrm{p}^2-\dfrac{GM}{r_\mathrm{p}}=\dfrac{GM}{r_\mathrm{p}}\,\dfrac{r_\mathrm{a}-2a}{2a}=-\dfrac{GM}{2a}"></span>
+        </li>
+      </ol>
+      <div class="dues-col resultats-clau">
+        <div class="formula-pas resultat"><span data-math="E_m=-\dfrac{GMm}{2a}"></span><small>L’energia només depèn del semieix major, no de l’excentricitat.</small></div>
+        <div class="formula-pas resultat"><span data-math="v^2=GM\left(\dfrac{2}{r}-\dfrac{1}{a}\right)"></span><small>Equació <em>vis-viva</em>: la velocitat a qualsevol distància r.</small></div>
+        <div class="formula-pas resultat"><span data-math="T=2\pi\sqrt{\dfrac{a^3}{GM}}"></span><small>Tercera llei de Kepler: també hi entra només <span data-math="a"></span>.</small></div>
+      </div>
+      <p class="hint">
+        Per a una circumferència, <span data-math="r=a"></span> i la vis-viva dona la velocitat orbital que ja coneixeu,
+        <span data-math="v=\sqrt{GM/r}"></span>, i <span data-math="E_m=-GMm/2r"></span>.
+      </p>
+
+      <div class="sim-orbita">
+        <div class="sim-controls">
+          <h3>Satèl·lit en òrbita el·líptica al voltant de la Terra</h3>
+          <div class="preset-buttons" id="orbPresets" role="group" aria-label="Òrbites reals"></div>
+          <div class="param">
+            <div class="param-header">
+              <label for="orbHp">Altura del perigeu <span data-math="h_\mathrm{p}"></span></label>
+              <span class="param-value" id="orbHpVal"></span>
+            </div>
+            <input type="range" id="orbHp" min="200" max="40000" step="10" value="600">
+          </div>
+          <div class="param">
+            <div class="param-header">
+              <label for="orbHa">Altura de l’apogeu <span data-math="h_\mathrm{a}"></span></label>
+              <span class="param-value" id="orbHaVal"></span>
+            </div>
+            <input type="range" id="orbHa" min="200" max="100000" step="10" value="39700">
+            <p class="param-desc">Si l’apogeu queda per sota del perigeu, l’òrbita es fa circular.</p>
+          </div>
+          <div class="controls-row">
+            <button type="button" class="btn btn-primary" id="orbPlay">▶ Reprodueix</button>
+            <button type="button" class="btn" id="orbReset">↺ Reinicia</button>
+            <label class="check"><input type="checkbox" id="orbAreas" checked> Àrees en temps iguals</label>
+          </div>
+          <div class="valors" id="orbFixos"></div>
+        </div>
+        <div class="sim-visual">
+          <svg id="orbSvg" viewBox="0 0 520 380" role="img" aria-labelledby="orbTitol orbDesc">
+            <title id="orbTitol">Òrbita del satèl·lit</title>
+            <desc id="orbDesc">La Terra a escala en un focus de l’òrbita, el satèl·lit amb el seu vector velocitat
+              i, opcionalment, dotze sectors escombrats en intervals de temps iguals.</desc>
+          </svg>
+          <div class="sim-lectura">
+            <div class="valors" id="orbVius" aria-live="off"></div>
+            <figure class="barres-fig">
+              <svg id="orbBarres" viewBox="0 0 240 200" role="img" aria-labelledby="barresTitol">
+                <title id="barresTitol">Energies per unitat de massa: cinètica, potencial i mecànica</title>
+              </svg>
+            </figure>
+          </div>
+        </div>
+      </div>
+      <details class="model-details">
+        <summary>Model físic de la simulació</summary>
+        <ul class="model-hyp">
+          <li>Dos cossos amb <span data-math="M\gg m"></span>: la Terra queda fixa en un focus. Sense atmosfera, sense la Lluna ni el Sol, i amb la Terra esfèrica.</li>
+          <li>Les energies i el moment angular es donen <strong>per unitat de massa</strong> (MJ/kg i m²/s), perquè la massa del satèl·lit no canvia la trajectòria.</li>
+          <li>La posició es calcula amb la solució exacta del problema de Kepler (equació de Kepler resolta pel mètode de Newton), no amb un integrador pas a pas. Per això <span data-math="E_m"></span> i <span data-math="L"></span> es conserven fins a l’error d’arrodoniment de l’ordinador.</li>
+          <li>Les distàncies són a escala. El temps no: tota òrbita es reprodueix en uns 12 s, i el comptador mostra el temps real.</li>
+        </ul>
+      </details>
+      <p class="idea-clau">
+        <strong>Idea clau.</strong> L’energia i el moment angular no són dues dades més de l’òrbita:
+        la <strong>determinen</strong>. <span data-math="E_m"></span> fixa el semieix major, i
+        <span data-math="L"></span>, un cop fixat <span data-math="a"></span>, fixa l’excentricitat. Per això, per
+        canviar d’òrbita cal canviar <span data-math="E_m"></span> o <span data-math="L"></span> amb un motor.
+      </p>
+    </section>
+
+    <!-- 3 -->
+    <section class="lectura" id="maniobres">
+      <p class="eyebrow">3 · Aplicació · Interactiu</p>
+      <h2>Canviar d’òrbita: impulsos i Δv</h2>
+      <p>
+        Una nau canvia d’òrbita encenent el motor uns minuts, molt poc temps comparat amb el període.
+        Ho podem tractar com un <strong>impuls instantani</strong>: la posició no canvia, però la velocitat
+        canvia en un <span data-math="\Delta v"></span>. El <span data-math="\Delta v"></span> és la «moneda» dels
+        viatges espacials: el combustible necessari creix exponencialment amb ell.
+      </p>
+      <p>
+        Si l’impuls és tangencial i cap endavant, el punt on s’encén el motor passa a ser la
+        <strong>periapsi</strong> de la nova òrbita, i el punt oposat s’allunya. Si és cap enrere
+        (frenant), passa a ser l’<strong>apoapsi</strong>, i el punt oposat s’apropa.
+      </p>
+      <p>
+        La <strong>transferència de Hohmann</strong> (1925) aprofita aquesta idea per anar d’una òrbita
+        circular <span data-math="r_1"></span> a una altra <span data-math="r_2"></span> amb dos impulsos, fent
+        servir com a pont mitja el·lipse tangent a totes dues, amb <span data-math="a_\mathrm{t}=(r_1+r_2)/2"></span>.
+      </p>
+
+      <div class="hohmann">
+        <div class="hoh-controls">
+          <h3>Simulador de transferència de Hohmann</h3>
+          <div class="preset-buttons" id="hohPresets" role="group" aria-label="Maniobres reals"></div>
+          <fieldset class="cos-central">
+            <legend>Cos central</legend>
+            <label><input type="radio" name="hohCos" value="terra" checked> Terra</label>
+            <label><input type="radio" name="hohCos" value="sol"> Sol</label>
+          </fieldset>
+          <div class="param">
+            <div class="param-header">
+              <label for="hohR1" id="hohR1Label">Òrbita inicial</label>
+              <span class="param-value" id="hohR1Val"></span>
+            </div>
+            <input type="range" id="hohR1" min="0" max="1000" step="1" value="0">
+          </div>
+          <div class="param">
+            <div class="param-header">
+              <label for="hohR2" id="hohR2Label">Òrbita final</label>
+              <span class="param-value" id="hohR2Val"></span>
+            </div>
+            <input type="range" id="hohR2" min="0" max="1000" step="1" value="0">
+            <p class="param-desc" id="hohRangDesc"></p>
+          </div>
+          <ol class="fases" id="hohFases">
+            <li>Òrbita circular inicial</li>
+            <li>Primer impuls, <span data-math="\Delta v_1"></span></li>
+            <li>Mitja el·lipse de transferència</li>
+            <li>Segon impuls, <span data-math="\Delta v_2"></span></li>
+            <li>Òrbita circular final</li>
+          </ol>
+          <div class="controls-row">
+            <button type="button" class="btn" id="hohPrev">◀ Anterior</button>
+            <button type="button" class="btn btn-primary" id="hohNext">Següent pas ▶</button>
+            <button type="button" class="btn" id="hohReset">↺ Reinicia</button>
+          </div>
+        </div>
+        <div class="hoh-visual">
+          <svg id="hohSvg" viewBox="0 0 520 420" role="img" aria-labelledby="hohTitol hohDesc">
+            <title id="hohTitol">Transferència de Hohmann</title>
+            <desc id="hohDesc">L’òrbita circular inicial, l’òrbita circular final, l’el·lipse de transferència
+              tangent a totes dues i la nau, amb els vectors velocitat abans i després de cada impuls.</desc>
+          </svg>
+          <p class="hoh-missatge" id="hohMissatge" aria-live="polite"></p>
+          <p class="hint" id="hohTemps"></p>
+        </div>
+      </div>
+
+      <div class="hoh-dades">
+        <div>
+          <h3>Resultats</h3>
+          <table class="taula-dades" id="hohTaula"></table>
+        </div>
+        <div class="calcul-local">
+          <h3>Desenvolupament</h3>
+          <div id="hohPassos"></div>
+        </div>
+      </div>
+
+      <details class="model-details">
+        <summary>Model físic i limitacions</summary>
+        <ul class="model-hyp">
+          <li>Impulsos instantanis i tangencials; òrbites circulars i coplanàries; només actua el cos central.</li>
+          <li>Al cas «fins a la distància de la Lluna» no hi comptem la gravetat de la Lluna: només és una comparació de distàncies.</li>
+          <li>Als casos Terra–Mart i Terra–Venus només calculem la part <strong>heliocèntrica</strong>. Una missió real també ha d’escapar de la Terra, ser capturada pel planeta i esperar que els planetes estiguin ben alineats (finestra de llançament).</li>
+          <li>Les distàncies són a escala. Cada fase es reprodueix al seu ritme perquè es pugui seguir; el temps real de la transferència és al text de sota el dibuix.</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- 4 -->
+    <section class="lectura" id="paradoxes">
+      <p class="eyebrow">4 · Poc intuïtiu</p>
+      <h2>Quatre paradoxes de la mecànica orbital</h2>
+      <div class="paradoxes">
+        <article>
+          <h3>1. Per pujar acceleres… i arribes més lent</h3>
+          <p>
+            De 300 km fins a l’òrbita geoestacionària calen dos impulsos <em>cap endavant</em>
+            (3,90 km/s en total), però la velocitat final és de 3,07 km/s, molt menys que els 7,73 km/s
+            inicials. L’energia que ha aportat el motor (i molta de la cinètica) s’ha convertit en potencial:
+            <span data-math="E_m/m"></span> passa de −29,9 a −4,73 MJ/kg.
+          </p>
+        </article>
+        <article>
+          <h3>2. El fregament fa anar més de pressa</h3>
+          <p>
+            En una òrbita circular, <span data-math="E_c=-E_m"></span> i <span data-math="E_p=2E_m"></span>.
+            Quan el fregament amb l’atmosfera treu energia a l’ISS, <span data-math="E_m"></span> es fa més negativa:
+            l’estació baixa i la seva energia cinètica <strong>augmenta</strong>. Perd el doble d’energia
+            potencial del que guanya en cinètica.
+          </p>
+        </article>
+        <article>
+          <h3>3. Per atrapar qui va davant, frena</h3>
+          <p>
+            Si acceleres, puges a una òrbita més gran i més lenta, i et quedes enrere. Per avançar cal
+            frenar: a 420 km (T = 92,8 min), un impuls de −10 m/s fa baixar el perigeu fins a 385 km i escurça
+            cada volta uns 22 s. En un dia et poses uns 2 600 km per davant. Després, un altre impuls
+            de +10 m/s al mateix punt et torna a l’òrbita inicial.
+          </p>
+        </article>
+        <article>
+          <h3>4. Millor encendre el motor a prop del planeta</h3>
+          <p>
+            L’energia que aporta un impuls depèn de la velocitat que ja portes:
+            <span data-math="\Delta\!\left(\tfrac12v^2\right)=v\,\Delta v+\tfrac12\Delta v^2"></span>. Els mateixos 100 m/s
+            aporten 1,02 MJ/kg al perigeu de l’el·lipse de transferència de la paradoxa 1 (10,2 km/s) i només
+            0,166 MJ/kg al seu apogeu (1,61 km/s): sis vegades menys. És l’<strong>efecte Oberth</strong>.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <details class="concepts">
+      <summary>Conceptes clau i errors habituals</summary>
+      <ul>
+        <li>En una el·lipse, <span data-math="r_1+r_2=2a"></span>, amb <span data-math="b^2+c^2=a^2"></span> i <span data-math="e=c/a"></span>. El cos central és en un focus, <strong>no al centre</strong>.</li>
+        <li><span data-math="r_\mathrm{p}=a(1-e)"></span>, <span data-math="r_\mathrm{a}=a(1+e)"></span> i <span data-math="a=(r_\mathrm{p}+r_\mathrm{a})/2"></span>.</li>
+        <li>Es conserven <span data-math="E_m"></span> (força conservativa) i <span data-math="L"></span> (força central). A la periapsi i a l’apoapsi, <span data-math="r_\mathrm{p}v_\mathrm{p}=r_\mathrm{a}v_\mathrm{a}"></span>.</li>
+        <li><span data-math="E_m=-GMm/2a"></span> i <span data-math="T^2=4\pi^2a^3/GM"></span>: l’energia i el període només depenen del semieix major.</li>
+        <li>Error habitual: aplicar <span data-math="v=\sqrt{GM/r}"></span> en una el·lipse. Només val per a òrbites circulars; en general cal la vis-viva, <span data-math="v^2=GM(2/r-1/a)"></span>.</li>
+        <li>Un impuls tangencial cap endavant converteix aquell punt en la periapsi de la nova òrbita; cap enrere, en l’apoapsi.</li>
+        <li>Hohmann: <span data-math="\Delta v_1=v_\mathrm{t1}-v_1"></span> i <span data-math="\Delta v_2=v_2-v_\mathrm{t2}"></span>. El viatge dura mig període de l’el·lipse de transferència.</li>
+        <li>Una òrbita més alta té <strong>més</strong> energia mecànica però <strong>menys</strong> velocitat.</li>
+      </ul>
+    </details>
+
+    <section class="recursos">
+      <h2>Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/ca/simulations/keplers-laws" target="_blank" rel="noopener">Lleis de Kepler — PhET (Universitat de Colorado)</a>
+            <span class="lang">CA</span>
+            <span class="meta">Simulació traduïda al català: focus, eixos, àrees escombrades i període. Complementa el primer bloc.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Lleis_de_Kepler" target="_blank" rel="noopener">Lleis de Kepler — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">Enunciats, context històric i deducció a partir de la gravitació de Newton.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/%C3%92rbita_de_transfer%C3%A8ncia_de_Hohmann" target="_blank" rel="noopener">Òrbita de Hohmann — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">La maniobra de la secció 3, amb el càlcul dels dos impulsos i exemples.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://science.nasa.gov/learn/basics-of-space-flight/chapter4-1/" target="_blank" rel="noopener">Basics of Space Flight: Trajectories — NASA</a>
+            <span class="lang">EN</span>
+            <span class="meta">Com planifica la NASA els viatges interplanetaris: Hohmann, finestres de llançament i assistències gravitatòries.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📊</span>
+          <div class="cos">
+            <a href="https://www.esa.int/Enabling_Support/Space_Transportation/Types_of_orbits" target="_blank" rel="noopener">Types of orbits — ESA</a>
+            <span class="lang">EN</span>
+            <span class="meta">Òrbites baixes, geoestacionàries, de transferència (GTO) i altres, amb esquemes i usos reals.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i Claude Opus 5.5.</p>
+    </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="orbites-elliptiques.js"></script>
+</body>
+</html>
