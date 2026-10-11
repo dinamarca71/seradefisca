@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vectors: components ⇄ mòdul i angle — Física (repàs)</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="vectors.css">
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="vectors.html" class="active">Vectors al pla</a>
+    </nav>
+    <h1>Vectors al pla: components ⇄ mòdul i angle</h1>
+    <p>
+      Repàs per a 1r i 2n de Batxillerat. Un mateix vector es pot escriure de dues maneres. Aquí aprendràs a
+      passar d’una a l’altra en qualsevol quadrant fent servir només la trigonometria d’angles aguts.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box intro-vec">
+      <h2>Dues maneres de donar el mateix vector</h2>
+      <div class="intro-grid">
+        <div>
+          <p class="intro-et">Per components</p>
+          <div data-math="\vec v = (v_x;\ v_y)"></div>
+          <p class="hint">Quant avança en horitzontal i en vertical, amb signe.</p>
+        </div>
+        <div class="intro-fletxa" aria-hidden="true">⇄</div>
+        <div>
+          <p class="intro-et">Per mòdul i angle</p>
+          <div data-math="|\vec v|\quad \text{i}\quad \theta"></div>
+          <p class="hint">Quant mesura i cap on apunta.</p>
+        </div>
+        <p class="intro-conveni">
+          L’angle <strong>θ</strong> es mesura <strong>sempre des del semieix +x</strong> i
+          <strong>en sentit antihorari</strong> (contrari a les agulles del rellotge), de 0° a 360°.
+          La clau per als quadrants difícils és el <strong>triangle de suport</strong>: un triangle
+          rectangle amb un angle agut <strong>α</strong>, que sí que sabeu resoldre.
+        </p>
+      </div>
+    </section>
+
+    <div class="vec-lab">
+      <section class="controls-panel" aria-labelledby="titolControls">
+        <h2 id="titolControls">Què vols calcular?</h2>
+        <div class="modes" role="group" aria-label="Sentit del càlcul">
+          <button type="button" class="btn" id="modeComp" aria-pressed="true">Components → mòdul i angle</button>
+          <button type="button" class="btn" id="modePolar" aria-pressed="false">Mòdul i angle → components</button>
+        </div>
+        <p class="hint">En canviar de sentit el vector es manté: veuràs el camí invers.</p>
+
+        <h3 class="sub">Exemples</h3>
+        <div class="preset-buttons" id="vecPresets"></div>
+
+        <h3 class="sub">Dades</h3>
+        <div id="grupComp">
+          <div class="param">
+            <div class="param-header">
+              <label for="nVx">Component horitzontal <i>v</i><sub>x</sub></label>
+              <input type="number" class="num-in" id="nVx" min="-10" max="10" step="0.1" aria-describedby="rangComp">
+            </div>
+            <input type="range" id="sVx" min="-10" max="10" step="0.5" aria-label="Component horitzontal (lliscador)">
+          </div>
+          <div class="param">
+            <div class="param-header">
+              <label for="nVy">Component vertical <i>v</i><sub>y</sub></label>
+              <input type="number" class="num-in" id="nVy" min="-10" max="10" step="0.1" aria-describedby="rangComp">
+            </div>
+            <input type="range" id="sVy" min="-10" max="10" step="0.5" aria-label="Component vertical (lliscador)">
+          </div>
+          <p class="param-desc" id="rangComp">De −10 a 10. També pots arrossegar la punta del vector al dibuix.</p>
+        </div>
+        <div id="grupPolar" hidden>
+          <div class="param">
+            <div class="param-header">
+              <label for="nM">Mòdul |<i>v</i>|</label>
+              <input type="number" class="num-in" id="nM" min="0" max="10" step="0.1">
+            </div>
+            <input type="range" id="sM" min="0" max="10" step="0.5" aria-label="Mòdul (lliscador)">
+          </div>
+          <div class="param">
+            <div class="param-header">
+              <label for="nTh">Angle θ (°)</label>
+              <input type="number" class="num-in" id="nTh" min="0" max="360" step="0.1">
+            </div>
+            <input type="range" id="sTh" min="0" max="360" step="1" aria-label="Angle θ en graus (lliscador)">
+          </div>
+          <p class="param-desc">Mou l’angle a poc a poc i observa com α creix i decreix en cada quadrant.</p>
+        </div>
+
+        <div class="resultat-vec" id="vecResultat" aria-live="polite"></div>
+        <p class="hint">Els components no porten unitats perquè l’eina és general: poden ser newtons, m/s, metres…</p>
+      </section>
+
+      <section class="canvas-section" aria-labelledby="titolDibuix">
+        <div class="canvas-header"><h2 id="titolDibuix">Dibuix</h2></div>
+        <svg id="vecSvg" class="vsv" viewBox="0 0 460 460" role="img" aria-labelledby="vecSvgTitol vecDesc">
+          <title id="vecSvgTitol">Pla cartesià amb el vector, els seus components i el triangle de suport</title>
+        </svg>
+        <p class="llegenda">
+          <span><b class="mostra m-v"></b> vector</span>
+          <span><b class="mostra m-x"></b> <i>v</i><sub>x</sub></span>
+          <span><b class="mostra m-y"></b> <i>v</i><sub>y</sub> (discontinu)</span>
+          <span><b class="mostra m-a"></b> α, angle del triangle</span>
+          <span><b class="mostra m-t"></b> θ, des de +x</span>
+        </p>
+        <p class="sr-only" id="vecDesc" aria-live="polite"></p>
+      </section>
+
+      <section class="controls-panel pasos" aria-labelledby="titolPasos">
+        <h2 id="titolPasos">Pas a pas</h2>
+        <div id="vecPasos"></div>
+      </section>
+    </div>
+
+    <section class="controls-panel repte" id="repte" aria-labelledby="titolRepte">
+      <h2 id="titolRepte">Mode repte: practica</h2>
+      <div class="repte-barra">
+        <label for="repTipus">Tipus de repte</label>
+        <select id="repTipus">
+          <option value="mix">Barrejats</option>
+          <option value="comp">Components → mòdul i angle</option>
+          <option value="polar">Mòdul i angle → components</option>
+        </select>
+        <button type="button" class="btn btn-primary" id="repNou">Nou repte</button>
+        <label class="check"><input type="checkbox" id="repEsbos" checked> Mostra l’esbós</label>
+        <span class="marcador" id="repMarcador" aria-live="polite"></span>
+      </div>
+
+      <div class="repte-grid">
+        <div>
+          <p class="repte-enunciat" id="repEnunciat"></p>
+          <form id="repForm" class="resposta" autocomplete="off">
+            <label><span id="repALab"></span> <input type="text" inputmode="decimal" id="repA"></label>
+            <label><span id="repBLab"></span> <input type="text" inputmode="decimal" id="repB"></label>
+            <div class="resposta-botons">
+              <button type="submit" class="btn btn-primary" id="repComprova">Comprova</button>
+              <button type="button" class="btn" id="repSolucio">Mostra la solució</button>
+            </div>
+          </form>
+          <p class="hint">Dona els resultats amb dos decimals (els angles, amb un). Pots escriure la coma decimal.</p>
+          <ul class="feedback" id="repFeedback" aria-live="polite"></ul>
+        </div>
+        <div class="repte-esbos" id="repEsbosCaixa">
+          <svg id="repSvg" class="vsv" viewBox="0 0 460 460" role="img" aria-label="Esbós del vector del repte"></svg>
+        </div>
+        <div class="pasos repte-pasos" id="repPasos"></div>
+      </div>
+    </section>
+
+    <details class="concepts">
+      <summary>Conceptes clau i errors habituals</summary>
+      <ul>
+        <li><strong>El mateix vector, dues descripcions:</strong> components (<i>v</i><sub>x</sub>; <i>v</i><sub>y</sub>) o mòdul i angle (|<i>v</i>|; θ). Fem servir el punt i coma per separar perquè la coma ja és el separador decimal.</li>
+        <li><strong>Conveni de l’angle:</strong> θ es mesura des del semieix +x, en sentit antihorari, entre 0° i 360°.</li>
+        <li><strong>Mòdul:</strong> Pitàgores, <span data-math="|\vec v|=\sqrt{v_x^2+v_y^2}"></span>. Sempre és positiu.</li>
+        <li><strong>Triangle de suport:</strong> catets |<i>v</i><sub>x</sub>| i |<i>v</i><sub>y</sub>|, hipotenusa |<i>v</i>|. El seu angle agut α és el que surt de la calculadora sense problemes.</li>
+        <li><strong>Error habitual:</strong> copiar directament el resultat de tan⁻¹(<i>v</i><sub>y</sub>/<i>v</i><sub>x</sub>). La calculadora només dona angles entre −90° i 90°; cal mirar el quadrant.</li>
+        <li><strong>Error habitual:</strong> calculadora en radiants (RAD). Per treballar en graus, ha de dir DEG.</li>
+        <li><strong>Error habitual:</strong> sumar els components per trobar el mòdul. Els components són perpendiculars: cal Pitàgores.</li>
+      </ul>
+      <table class="taula-quad">
+        <caption>Resum dels quatre quadrants</caption>
+        <thead>
+          <tr><th scope="col">Quadrant</th><th scope="col">Signes</th><th scope="col">θ a partir d’α</th><th scope="col">α a partir de θ</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">1r (0°–90°)</th><td><i>v</i><sub>x</sub> &gt; 0, <i>v</i><sub>y</sub> &gt; 0</td><td>θ = α</td><td>α = θ</td></tr>
+          <tr><th scope="row">2n (90°–180°)</th><td><i>v</i><sub>x</sub> &lt; 0, <i>v</i><sub>y</sub> &gt; 0</td><td>θ = 180° − α</td><td>α = 180° − θ</td></tr>
+          <tr><th scope="row">3r (180°–270°)</th><td><i>v</i><sub>x</sub> &lt; 0, <i>v</i><sub>y</sub> &lt; 0</td><td>θ = 180° + α</td><td>α = θ − 180°</td></tr>
+          <tr><th scope="row">4t (270°–360°)</th><td><i>v</i><sub>x</sub> &gt; 0, <i>v</i><sub>y</sub> &lt; 0</td><td>θ = 360° − α</td><td>α = 360° − θ</td></tr>
+        </tbody>
+      </table>
+      <p class="hint">No cal aprendre la taula de memòria: fent el dibuix i el triangle, cada fórmula es dedueix sola.</p>
+    </details>
+
+    <section class="recursos" aria-labelledby="titolRecursos">
+      <h2 id="titolRecursos">Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/ca/simulations/vector-addition" target="_blank" rel="noopener">Suma de vectors — PhET (Universitat de Colorado)</a><span class="lang">CA</span>
+            <span class="meta">Simulació en català: arrossega vectors i en veu els components, el mòdul i l’angle alhora.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://www.mathsisfun.com/polar-cartesian-coordinates.html" target="_blank" rel="noopener">Polar and Cartesian Coordinates — Math is Fun</a><span class="lang">EN</span>
+            <span class="meta">Explicació molt visual de la conversió, amb el problema dels quadrants i la calculadora.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Coordenades_polars" target="_blank" rel="noopener">Coordenades polars — Viquipèdia</a><span class="lang">CA</span>
+            <span class="meta">Per a qui vulgui anar més enllà: la mateixa idea aplicada a punts del pla.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+  <footer class="site-footer">
+    <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i Claude Opus 5.5.</p>
+  </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="vectors.js"></script>
+</body>
+</html>

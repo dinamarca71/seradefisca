@@ -51,6 +51,7 @@ escola/
     ├── mhs.html (+ mhs.css · mhs.js) · pendul.html             # MHS / oscil·lacions
     ├── superposicio.html (+ css/js) · ones-estacionaries.html ·
     │   interferencia-young.html · fenomens-ondulatoris.html    # ones
+    ├── vectors.html (+ css/js)  # repàs: components ⇄ mòdul i angle, amb mode repte
     ├── particules.html (+ css/js)       # ampliació fora del temari: Model Estàndard
     └── img/
         ├── series/             # diagrames Wikimedia (sèries radioactives)
@@ -58,6 +59,11 @@ escola/
 ```
 
 `cel-torrevicente/` és una guia familiar independent (eclipsi 2026); no forma part dels simuladors de batxillerat ni cal que segueixi el patró pedagògic de la resta.
+
+La portada de física té també una secció **«Repàs (eines de base)»** amb eines
+de cursos anteriors o de 1r que fan falta a 2n (avui, `vectors.html`). La
+`pack-card` porta l'etiqueta «Repàs», i les pàgines segueixen les mateixes
+convencions que la resta.
 
 La portada de física té una secció **«Ampliacions (fora del temari)»** per a
 annexos d'aprofundiment (avui, `particules.html`). Són pàgines de lectura guiada
@@ -179,7 +185,7 @@ rigor, conceptes clau, recursos i peu); la `pack-card` porta l'etiqueta
   pàgina (transparència MIAE): la majoria, amb Cursor i Claude Opus 4.8 (High);
   el laboratori d'òrbites i diverses pàgines posteriors, amb ChatGPT (GPT-5.6
   Thinking) i Cursor; la cronologia d'indicis de física moderna, amb Cursor i
-  Claude Opus 5; l'annex de partícules i les òrbites el·líptiques, amb Cursor i Claude Opus 5.5; les
+  Claude Opus 5; l'annex de partícules, les òrbites el·líptiques i els vectors de 1r, amb Cursor i Claude Opus 5.5; les
   integracions en mode Auto ho indiquen amb «Cursor (Auto)».
 - Els enllaços del peu són **externs** (Creative Commons, marc MIAE, GitHub),
   així que el bloc és idèntic a qualsevol profunditat de carpeta.
