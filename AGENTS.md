@@ -52,6 +52,8 @@ escola/
     ├── superposicio.html (+ css/js) · ones-estacionaries.html ·
     │   interferencia-young.html · fenomens-ondulatoris.html    # ones
     ├── vectors.html (+ css/js)  # repàs: components ⇄ mòdul i angle, amb mode repte
+    ├── de-broglie.html (+ css/js)       # ampliació: ones de matèria i pont amb Bohr
+    ├── relativitat.html (+ css/js)      # ampliació: una sessió de relativitat especial
     ├── particules.html (+ css/js)       # ampliació fora del temari: Model Estàndard
     └── img/
         ├── series/             # diagrames Wikimedia (sèries radioactives)
@@ -66,12 +68,14 @@ de cursos anteriors o de 1r que fan falta a 2n (avui, `vectors.html`). La
 convencions que la resta.
 
 La portada de física té una secció **«Ampliacions (fora del temari)»** per a
-annexos d'aprofundiment (avui, `particules.html`). Són pàgines de lectura guiada
-amb pocs interactius, però segueixen les mateixes convencions (estils, KaTeX,
-rigor, conceptes clau, recursos i peu); la `pack-card` porta l'etiqueta
-«Ampliació». Els estils de lectura guiada (`main.main-lectura`, `.lectura`,
-`.lectura-index`, `.eyebrow`, `.idea-clau`, `.formula-pas`) són a
-`comunes.css` i també els fa servir `orbites-elliptiques.html`.
+annexos d'aprofundiment (avui, `de-broglie.html`, `relativitat.html` i
+`particules.html`). Són
+pàgines de lectura guiada amb pocs interactius, però segueixen les mateixes
+convencions (estils, KaTeX, rigor, conceptes clau, recursos i peu); la
+`pack-card` porta l'etiqueta «Ampliació». Els estils de lectura guiada
+(`main.main-lectura`, `.lectura`, `.lectura-index`, `.eyebrow`, `.idea-clau`,
+`.formula-pas`) són a `comunes.css` i també els fa servir
+`orbites-elliptiques.html`.
 ## Convencions
 
 - **Idioma**: tots els textos visibles, títols i comentaris nous, en **català**.
@@ -185,7 +189,8 @@ rigor, conceptes clau, recursos i peu); la `pack-card` porta l'etiqueta
   pàgina (transparència MIAE): la majoria, amb Cursor i Claude Opus 4.8 (High);
   el laboratori d'òrbites i diverses pàgines posteriors, amb ChatGPT (GPT-5.6
   Thinking) i Cursor; la cronologia d'indicis de física moderna, amb Cursor i
-  Claude Opus 5; l'annex de partícules, les òrbites el·líptiques i els vectors de 1r, amb Cursor i Claude Opus 5.5; les
+  Claude Opus 5; l'annex de partícules, les òrbites el·líptiques i els vectors de 1r, amb Cursor i Claude Opus 5.5;
+les ampliacions de De Broglie i de relativitat especial, amb Cursor (Auto) a partir d'un esborrany amb ChatGPT; les
   integracions en mode Auto ho indiquen amb «Cursor (Auto)».
 - Els enllaços del peu són **externs** (Creative Commons, marc MIAE, GitHub),
   així que el bloc és idèntic a qualsevol profunditat de carpeta.

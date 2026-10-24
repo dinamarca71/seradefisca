@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ampliació d’una sessió: relativitat especial des dels postulats d’Einstein, amb el rellotge de llum i el factor de Lorentz.">
+  <title>Relativitat especial: quan el temps deixa de ser absolut — Física 2n Batxillerat</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="relativitat.css">
+</head>
+<body>
+  <header class="header-mod">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="de-broglie.html">De Broglie</a>
+      <a href="relativitat.html" class="active">Ampliació: relativitat</a>
+    </nav>
+    <h1>Relativitat especial: quan el temps deixa de ser absolut</h1>
+    <p>
+      Ampliació per a una sessió. Partim de la composició de velocitats de Galileu,
+      que ja coneixeu, i d’una sola idea nova: la llum va sempre a la mateixa velocitat.
+      Amb un rellotge imaginari i Pitàgores en traiem la dilatació del temps.
+    </p>
+  </header>
+
+  <main class="main-lectura">
+    <nav class="lectura-index" aria-label="Índex de la pàgina">
+      <a href="#problema">1. El problema</a>
+      <a href="#postulats">2. Els postulats</a>
+      <a href="#rellotge">3. Rellotge de llum</a>
+      <a href="#exemple">4. Un exemple</a>
+      <a href="#longitud">5. Les longituds</a>
+      <a href="#muons">6. Els muons</a>
+      <a href="#energia">7. Energia</a>
+      <a href="#historia">8. Cronologia</a>
+      <a href="#practica">9. Preguntes</a>
+    </nav>
+
+    <section class="lectura" id="problema">
+      <p class="eyebrow">1 · El que ja sabeu</p>
+      <h2>Galileu funciona… fins que hi posem llum</h2>
+      <p>
+        Per a Galileu i Newton, el temps és el mateix per a tothom. Si un tren va a
+        100 km/h i hi camineu a 5 km/h cap endavant, des de l’andana aneu a 105 km/h.
+        Les velocitats se sumen.
+      </p>
+      <div class="idea-clau">
+        <strong>Feu una predicció.</strong> El tren passa a velocitat <span data-math="v"></span>
+        i algú hi encén una llanterna cap endavant. L’observador de l’andana mesurarà
+        <span data-math="c+v"></span>?
+      </div>
+      <p>
+        L’electromagnetisme (Maxwell) diu que les ones de llum es propaguen a una
+        velocitat fixa, <span data-math="c"></span>. Els experiments, com el de Michelson
+        i Morley, no van trobar que la Terra «sumés» la seva velocitat a la de la llum.
+        La resposta de la relativitat especial és que l’observador de l’andana també
+        mesura <span data-math="c"></span>, no <span data-math="c+v"></span>.
+      </p>
+      <p>
+        Si la llum no es deixa sumar com un vianant, alguna altra cosa ha de canviar:
+        les mesures de temps i de distància.
+      </p>
+    </section>
+
+    <section class="lectura" id="postulats">
+      <p class="eyebrow">2 · Einstein, 1905</p>
+      <h2>Dos postulats, i prou</h2>
+      <p>
+        Einstein no comença amb una llista de fórmules. Comença amb dues idees que
+        pren com a punt de partida (postulats):
+      </p>
+      <div class="dues-col">
+        <div class="fact">
+          <b>1. Relativitat</b>
+          Les lleis de la física tenen la mateixa forma en tots els sistemes inercials
+          (que es mouen a velocitat constant, sense accelerar).
+        </div>
+        <div class="fact">
+          <b>2. La llum</b>
+          La velocitat de la llum en el buit és la mateixa per a tots els observadors
+          inercials, independentment de com es mogui la font.
+        </div>
+      </div>
+      <p>
+        Els rellotges funcionen bé. El que canvia és l’interval de temps que obté
+        cada observador quan compara els seus registres.
+      </p>
+    </section>
+
+    <section class="lectura" id="rellotge">
+      <p class="eyebrow">3 · La deducció · Interactiu</p>
+      <h2>Un rellotge de llum i Pitàgores</h2>
+      <p>
+        Imaginem un rellotge fet de dos miralls, separats una distància vertical
+        <span data-math="L"></span>. Un pols de llum puja de l’inferior al superior:
+        això és «un tic».
+      </p>
+      <p>
+        Per a qui viatja amb el rellotge, la llum puja en vertical i el tic dura
+        <span data-math="\Delta t_0=L/c"></span>. Aquest interval,
+        mesurat al lloc on passen els dos esdeveniments (sortida i arribada del pols
+        al mateix rellotge), s’anomena <strong>temps propi</strong>.
+      </p>
+      <p>
+        Des de l’andana el rellotge es desplaça. En el temps <span data-math="\Delta t"></span>
+        que triga el tic, el mirall inferior avança <span data-math="v\Delta t"></span>.
+        La llum, que continua anant a <span data-math="c"></span>, ha de fer la diagonal.
+      </p>
+
+      <div class="rellotge-lab">
+        <div>
+          <div class="preset-buttons" id="relPresets" role="group" aria-label="Velocitats d’exemple"></div>
+          <div class="param">
+            <div class="param-header">
+              <label for="relBeta">Velocitat del rellotge, v/c</label>
+              <span class="param-value" id="relBetaVal">0,60</span>
+            </div>
+            <input type="range" id="relBeta" min="0" max="0.99" step="0.01" value="0.6">
+          </div>
+          <p class="hint">El tren i l’avió queden tan a prop de zero que el lliscador no els distingeix: feu servir el botó.</p>
+          <div class="rellotge-resultat" id="relResultat" aria-live="polite"></div>
+        </div>
+        <div>
+          <svg id="relSvg" viewBox="0 0 640 280" role="img" aria-labelledby="relTitol relDesc">
+            <title id="relTitol">Rellotge de llum en repòs i en moviment</title>
+            <desc id="relDesc"></desc>
+          </svg>
+          <p class="hint">Esquema. La forma del triangle és la correcta; si la diagonal és molt llarga, el dibuix es redueix perquè hi càpiga.</p>
+        </div>
+      </div>
+
+      <h3>D’on surt la fórmula</h3>
+      <ol class="derivacio">
+        <li>
+          <span class="pas-et">Pitàgores, des de l’andana</span>
+          <div class="formula-pas"><div data-math="(c\Delta t)^2=L^2+(v\Delta t)^2"></div></div>
+          <p>La hipotenusa és el camí de la llum; el catet vertical és <span data-math="L"></span> i l’horitzontal, el desplaçament del rellotge.</p>
+        </li>
+        <li>
+          <span class="pas-et">El temps propi</span>
+          <div class="formula-pas"><div data-math="L=c\,\Delta t_0"></div></div>
+          <p>Per a qui va amb el rellotge, el pols només puja la distància <span data-math="L"></span> a velocitat <span data-math="c"></span>.</p>
+        </li>
+        <li>
+          <span class="pas-et">Aïllem Δt</span>
+          <div class="formula-pas">
+            <div data-math="c^2\Delta t^2-v^2\Delta t^2=c^2\Delta t_0^2"></div>
+            <div data-math="\Delta t^2\left(1-\dfrac{v^2}{c^2}\right)=\Delta t_0^2"></div>
+          </div>
+        </li>
+        <li>
+          <span class="pas-et">El factor de Lorentz</span>
+          <div class="formula-pas resultat">
+            <div data-math="\Delta t=\gamma\,\Delta t_0\qquad\gamma=\dfrac{1}{\sqrt{1-v^2/c^2}}"></div>
+          </div>
+          <p>
+            Com que <span data-math="v&lt;c"></span>, el denominador és més petit que 1 i
+            <span data-math="\gamma\ge 1"></span>. L’andana mesura un interval més llarg
+            que el temps propi: <span data-math="\Delta t\ge\Delta t_0"></span>.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="lectura" id="exemple">
+      <p class="eyebrow">4 · Un número per recordar-ho</p>
+      <h2>Una nau a 0,6 c</h2>
+      <p>
+        A bord, entre dos esdeveniments que passen al mateix punt de la nau, el rellotge
+        marca 10 anys. La nau va a velocitat constant <span data-math="0{,}6\,c"></span>
+        respecte de la Terra.
+      </p>
+      <div class="formula-pas">
+        <div data-math="\gamma=\dfrac{1}{\sqrt{1-0{,}6^2}}=\dfrac{1}{\sqrt{0{,}64}}=\dfrac{1}{0{,}8}=1{,}25"></div>
+        <div data-math="\Delta t=1{,}25\times 10\ \mathrm{anys}=12{,}5\ \mathrm{anys}"></div>
+      </div>
+      <p>
+        A la Terra passen 12,5 anys. La diferència queda després d’haver tingut en compte
+        el temps que la llum triga a arribar-nos: és una diferència entre les mesures,
+        no un retard del senyal.
+      </p>
+      <div class="idea-clau">
+        En un tren o un avió, <span data-math="v"></span> és minúscula al costat de
+        <span data-math="c"></span> i <span data-math="\gamma"></span> val 1 a tots els
+        efectes pràctics. Per això la física de Galileu continua sent la bona eina
+        del dia a dia. Proveu el botó «Avió» a l’interactiu.
+      </div>
+    </section>
+
+    <section class="lectura" id="longitud">
+      <p class="eyebrow">5 · La parella de la dilatació</p>
+      <h2>Les longituds també depenen de qui mesura</h2>
+      <p>
+        Mesurar la llargada d’una nau en moviment vol dir anotar on són la proa i la popa
+        <strong>en el mateix instant</strong> del nostre rellotge. Com que la simultaneïtat
+        també depèn de l’observador, la longitud en la direcció del moviment canvia.
+      </p>
+      <p>
+        El resultat, company del que acabem de deduir per al temps, és:
+      </p>
+      <div class="formula-pas resultat">
+        <div data-math="L=\dfrac{L_0}{\gamma}=L_0\sqrt{1-\dfrac{v^2}{c^2}}"></div>
+      </div>
+      <p>
+        <span data-math="L_0"></span> és la <strong>longitud pròpia</strong>: la que es mesura
+        en el sistema on la nau està en repòs. Una nau de 100 m a
+        <span data-math="0{,}8\,c"></span> (<span data-math="\gamma=5/3\approx 1{,}67"></span>)
+        mesura 60 m des de la Terra.
+      </p>
+      <p class="hint">
+        A bord, la nau continua mesurant 100 m. La relació és entre dues mesures, no una
+        força que aixafi el fuselatge.
+      </p>
+    </section>
+
+    <section class="lectura" id="muons">
+      <p class="eyebrow">6 · Una prova real</p>
+      <h2>Muons que arriben a terra</h2>
+      <p>
+        Els raigs còsmics creen muons a l’atmosfera. En repòs, la vida mitjana d’un muó
+        és d’uns 2,2 μs. A <span data-math="0{,}998\,c"></span>, en aquest temps només
+        recorreria uns 660 m. Molt pocs haurien d’arribar a la superfície… i, en canvi,
+        n’arriben.
+      </p>
+      <div class="formula-pas">
+        <div data-math="\gamma\simeq 15{,}8\qquad \tau\simeq 15{,}8\times 2{,}2\ \mu\mathrm{s}\simeq 35\ \mu\mathrm{s}"></div>
+      </div>
+      <p>
+        Des de la Terra, el rellotge intern del muó (temps propi) va més a poc a poc que
+        els nostres: en una vida mitjana recorre uns 10 km i en queden prou per detectar-los.
+        Des del muó, el seu rellotge és normal i és l’atmosfera la que està contreta
+        en la direcció del moviment. Les dues descripcions encaixen.
+      </p>
+      <p class="hint">
+        La vida mitjana és un valor estadístic: cada muó es desintegra en un instant
+        diferent, i no neixen tots a la mateixa altura.
+      </p>
+    </section>
+
+    <section class="lectura" id="energia">
+      <p class="eyebrow">7 · Una fórmula, un límit</p>
+      <h2>Energia, massa i per què no s’arriba a c</h2>
+      <p>
+        El mateix factor <span data-math="\gamma"></span> apareix a l’energia. Einstein
+        va obtenir que una partícula en repòs ja té energia pel fet de tenir massa:
+      </p>
+      <div class="formula-pas resultat">
+        <div data-math="E_0=mc^2"></div>
+      </div>
+      <p>
+        Si es mou, l’energia total és <span data-math="E=\gamma mc^2"></span> i l’energia
+        cinètica és el que hi hem afegit:
+        <span data-math="E_c=(\gamma-1)mc^2"></span>.
+        Quan <span data-math="v"></span> és petita, això es redueix al
+        <span data-math="\tfrac12 mv^2"></span> que ja coneixeu.
+      </p>
+      <p>
+        A mesura que <span data-math="v"></span> s’acosta a <span data-math="c"></span>,
+        <span data-math="\gamma"></span> creix sense límit. Caldria una energia infinita
+        per arribar a <span data-math="c"></span>. Per això una partícula amb massa no
+        hi arriba. La llum sí que va a <span data-math="c"></span>: no té massa, i la
+        seva energia i la seva quantitat de moviment compleixen
+        <span data-math="E=pc"></span> (el pont amb De Broglie).
+      </p>
+      <details>
+        <summary>Si en un llibre veieu «massa relativista»</summary>
+        <p>
+          Durant uns anys es va escriure <span data-math="m_\mathrm{rel}=\gamma m"></span>
+          i es deia que «la massa creix». Avui es deixa la massa <span data-math="m"></span>
+          fixa (la de repòs) i es diu que el que creix és l’energia i la quantitat de moviment.
+          Les dues maneres donen els mateixos càlculs; el llenguatge actual evita fer pensar
+          que l’objecte es fa més pesant a bord.
+        </p>
+      </details>
+    </section>
+
+    <section class="lectura" id="historia">
+      <p class="eyebrow">8 · Context</p>
+      <h2>Quatre passes fins al 1905</h2>
+      <div class="timeline">
+        <p><strong>1865 · Maxwell</strong> — L’electromagnetisme prediu ones a la velocitat de la llum.</p>
+        <p><strong>1887 · Michelson i Morley</strong> — No detecten el vent d’èter que la suma clàssica de velocitats feia esperar.</p>
+        <p><strong>1890–1904 · Lorentz</strong> — Troba les transformacions que després portaran el seu nom.</p>
+        <p><strong>1905 · Einstein</strong> — Construeix la teoria a partir dels dos postulats.</p>
+        <p><strong>1908 · Minkowski</strong> — La llegeix com un espaitemps de quatre dimensions.</p>
+        <p><strong>1915 · Einstein</strong> — Tanca la relativitat general: la gravetat com a curvatura de l’espaitemps. </p>
+      </div>
+      <p class="hint">
+        Tot el que hem treballat és relativitat especial, sense gravetat. La general és el capítol següent de la història, deu anys més tard.
+      </p>
+    </section>
+
+    <section class="lectura" id="practica">
+      <p class="eyebrow">9 · Comprova que ho has entès</p>
+      <h2>Preguntes ràpides</h2>
+      <details>
+        <summary>1. Una nau va a 0,8 c. Quant val γ?</summary>
+        <p><span data-math="\gamma=1/\sqrt{1-0{,}8^2}=1/\sqrt{0{,}36}=1/0{,}6=5/3\approx 1{,}67"></span>.</p>
+      </details>
+      <details>
+        <summary>2. A bord passen 3 h entre dos esdeveniments al mateix punt de la nau, a 0,8 c. Quant de temps mesura la Terra?</summary>
+        <p><span data-math="\Delta t=\gamma\Delta t_0=(5/3)\times 3\ \mathrm{h}=5\ \mathrm{h}"></span>.</p>
+      </details>
+      <details>
+        <summary>3. Per què un avió no ens serveix per «notar» la dilatació del temps?</summary>
+        <p>Perquè <span data-math="v\ll c"></span> i <span data-math="\gamma"></span> és 1 fins a moltíssims decimals. L’efecte hi és, però és inapreciable sense rellotges atòmics.</p>
+      </details>
+      <details>
+        <summary>4. La nau es deforma de debò quan diem que mesura menys metres?</summary>
+        <p>A bord continua igual. La longitud més curta és la que obté un observador per a qui la nau es mou, en mesurar els dos extrems alhora en el seu sistema.</p>
+      </details>
+    </section>
+
+    <details class="concepts">
+      <summary>Conceptes clau</summary>
+      <ul>
+        <li><strong>Postulats:</strong> lleis iguals en tots els sistemes inercials; <span data-math="c"></span> igual per a tots.</li>
+        <li><strong>Temps propi</strong> <span data-math="\Delta t_0"></span>: el que mesura el rellotge present en els dos esdeveniments.</li>
+        <li><strong>Dilatació:</strong> <span data-math="\Delta t=\gamma\Delta t_0"></span>, amb <span data-math="\gamma=1/\sqrt{1-v^2/c^2}\ge 1"></span>. Surt del rellotge de llum i de Pitàgores.</li>
+        <li><strong>Longitud:</strong> <span data-math="L=L_0/\gamma"></span> en la direcció del moviment. Companya de la dilatació; cal la simultaneïtat.</li>
+        <li><strong>Energia:</strong> <span data-math="E_0=mc^2"></span> i <span data-math="E=\gamma mc^2"></span>. Una massa no arriba a <span data-math="c"></span> amb energia finita.</li>
+      </ul>
+    </details>
+
+    <section class="recursos" aria-labelledby="titolRecursos">
+      <h2 id="titolRecursos">Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://www.einstein-online.info/en/spotlight/light-clocks/" target="_blank" rel="noopener">Light clocks — Einstein Online (Institut Max Planck)</a>
+            <span class="lang">EN</span>
+            <span class="meta">El mateix rellotge de llum, explicat amb cura i sense fórmules de més.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Relativitat_especial" target="_blank" rel="noopener">Relativitat especial — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">Visió general en català: postulats, conseqüències i límits de la teoria.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Dilataci%C3%B3_del_temps" target="_blank" rel="noopener">Dilatació del temps — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">El factor γ, el temps propi i l’exemple dels muons còsmics.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor (Auto), a partir d’un esborrany inicial elaborat amb ChatGPT.</p>
+    </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="relativitat.js"></script>
+</body>
+</html>

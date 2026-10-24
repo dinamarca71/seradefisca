@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ampliació: hipòtesi de De Broglie, ona associada a la matèria, pont amb el model de Bohr i difracció d’electrons.">
+  <title>De Broglie: quan la matèria es comporta com una ona — Física 2n Batxillerat</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="de-broglie.css">
+</head>
+<body>
+  <header class="header-mod">
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="fisica-moderna.html">Física moderna</a>
+      <a href="de-broglie.html" class="active">Ampliació: De Broglie</a>
+      <a href="relativitat.html">Relativitat</a>
+    </nav>
+    <h1>De Broglie: quan la matèria es comporta com una ona</h1>
+    <p>
+      Ampliació per a una sessió. Partim del que ja sabeu (Planck i l’efecte fotoelèctric)
+      i arribem a una hipòtesi atrevida: també els electrons tenen longitud d’ona.
+      Això ajuda a entendre la quantització de Bohr i es confirma amb la difracció.
+    </p>
+  </header>
+
+  <main class="main-lectura">
+    <nav class="lectura-index" aria-label="Índex de la pàgina">
+      <a href="#paradoxa">1. La paradoxa</a>
+      <a href="#foton">2. Del fotó a λ = h/p</a>
+      <a href="#hipotesi">3. La hipòtesi</a>
+      <a href="#escala">4. Escales</a>
+      <a href="#bohr">5. Pont amb Bohr</a>
+      <a href="#difraccio">6. La confirmació</a>
+      <a href="#historia">7. Cronologia</a>
+      <a href="#practica">8. Preguntes</a>
+    </nav>
+
+    <section class="lectura" id="paradoxa">
+      <p class="eyebrow">1 · La paradoxa de la llum</p>
+      <h2>Ones, partícules… i una pregunta nova</h2>
+      <p>
+        Al segle XIX, la interferència i la difracció van consolidar la idea que la llum
+        és una <strong>ona</strong>. L’efecte fotoelèctric, però, obliga a acceptar que
+        la llum també intercanvia energia en paquets individuals: els <strong>fotons</strong>.
+      </p>
+      <p>
+        Una mateixa realitat física manifesta propietats que la física clàssica atribuïa
+        a dos models diferents. Això obre una pregunta natural:
+      </p>
+      <div class="idea-clau">
+        Si la llum (ona) pot transferir energia com una partícula, podria un electró
+        (partícula) presentar interferència o difracció com una ona?
+      </div>
+    </section>
+
+    <section class="lectura" id="foton">
+      <p class="eyebrow">2 · Una relació que ja coneixem per als fotons</p>
+      <h2>De l’energia del fotó a λ = h/p</h2>
+      <p>
+        Planck i Einstein donen l’energia d’un fotó. I, per a una partícula sense massa
+        en repòs com el fotó, la relativitat especial estableix que
+        <span data-math="E=pc"></span>.
+      </p>
+      <div class="formula-pas">
+        <div data-math="E=hf=\dfrac{hc}{\lambda}"></div>
+        <div data-math="E=pc"></div>
+      </div>
+      <p>Igualant les dues expressions:</p>
+      <div class="formula-pas resultat">
+        <div data-math="\lambda=\dfrac{h}{p}"></div>
+      </div>
+      <p>
+        La longitud d’ona queda relacionada amb una magnitud pròpia de les partícules:
+        la <strong>quantitat de moviment</strong> <span data-math="p"></span>.
+        Aquesta relació és vàlida per al fotó <em>abans</em> de la hipòtesi de De Broglie.
+      </p>
+      <p class="hint">
+        La relació <span data-math="E=pc"></span> no surt de la mecànica de Newton: és un
+        resultat relativista. Aquí l’adoptem com a pont; no cal derivar-la ara.
+      </p>
+    </section>
+
+    <section class="lectura" id="hipotesi">
+      <p class="eyebrow">3 · Louis de Broglie, 1924</p>
+      <h2>La hipòtesi: tota matèria té un comportament ondulatori</h2>
+      <p>
+        Louis de Broglie va proposar una generalització radical:
+        <strong>tota partícula material està associada a un comportament ondulatori</strong>.
+        La mateixa relació entre longitud d’ona i quantitat de moviment s’aplicaria a
+        electrons, protons i fins i tot objectes macroscòpics.
+      </p>
+      <div class="formula-pas resultat">
+        <div data-math="\lambda=\dfrac{h}{p}\qquad\text{(si }v\ll c:\ p\simeq mv\text{)}"></div>
+      </div>
+      <p>
+        Era una <strong>hipòtesi física</strong>, no una demostració matemàtica per a tota
+        la matèria. El seu valor era que feia prediccions comprovables: si els electrons
+        tenen longitud d’ona, haurien de difractar-se.
+      </p>
+      <div class="dues-col">
+        <div class="fact">
+          <b>p gran</b>
+          <span data-math="\lambda"></span> petita. El comportament ondulatori és més difícil d’observar.
+        </div>
+        <div class="fact">
+          <b>p petita</b>
+          <span data-math="\lambda"></span> més gran. La difracció pot aparèixer a escales més accessibles.
+        </div>
+      </div>
+    </section>
+
+    <section class="lectura" id="escala">
+      <p class="eyebrow">4 · Ordres de magnitud</p>
+      <h2>Per què no observem ones en una pilota?</h2>
+      <p>
+        La constant de Planck és extraordinàriament petita. Per això, les longituds d’ona
+        associades als objectes corrents són pràcticament indetectables.
+      </p>
+      <table class="taula-escala">
+        <caption class="sr-only">Longituds d’ona de De Broglie d’exemple</caption>
+        <thead>
+          <tr><th scope="col">Objecte</th><th scope="col">Condicions</th><th scope="col">λ ≈</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pilota</td><td>1 kg · 1 m/s</td><td>6,63·10⁻³⁴ m</td></tr>
+          <tr><td>Electró</td><td>10⁶ m/s</td><td>7,3·10⁻¹⁰ m</td></tr>
+        </tbody>
+      </table>
+      <p>
+        La segona longitud és comparable a distàncies entre àtoms. Un cristall pot actuar
+        com una xarxa de difracció per als electrons.
+      </p>
+      <div class="idea-clau">
+        <strong>Raona abans de calcular.</strong> En un mateix cristall, què afavoreix
+        longituds d’ona d’electrons més grans: accelerar-los més o accelerar-los menys?
+      </div>
+    </section>
+
+    <section class="lectura" id="bohr">
+      <p class="eyebrow">5 · Un pont conceptual · Interactiu</p>
+      <h2>Per què això ajuda a entendre Bohr?</h2>
+      <p>
+        Bohr (1913) havia imposat que només alguns valors del moment angular fossin
+        permesos, sense una justificació completa. De Broglie va aportar una lectura
+        suggestiva: en un model semiclassic, només serien possibles les òrbites on
+        l’ona associada <strong>es tanqués sobre si mateixa</strong> (com una ona estacionària
+        en un anell).
+      </p>
+      <div class="formula-pas">
+        <div data-math="2\pi r=n\lambda\qquad(n=1,2,3,\dots)"></div>
+      </div>
+
+      <h3>Explorador: ona tancada al voltant de l’òrbita</h3>
+      <p class="hint">
+        Mou el nombre sencer <span data-math="n"></span>. Quan l’ona encaixa exactament,
+        la circumferència conté un nombre enter de longituds d’ona. Si no encaixa, la
+        fase no coincideix en tornar al punt de partida (idea d’interferència destructiva).
+      </p>
+
+      <div class="bohr-lab">
+        <div class="bohr-controls">
+          <div class="param">
+            <div class="param-header">
+              <label for="bohrN">Nombre d’ones a l’òrbita, n</label>
+              <span class="param-value" id="bohrNVal">3</span>
+            </div>
+            <input type="range" id="bohrN" min="1" max="6" step="1" value="3">
+          </div>
+          <label class="check">
+            <input type="checkbox" id="bohrDesencaix">
+            Mostra un cas que <strong>no</strong> tanca (n no enter)
+          </label>
+          <div class="bohr-resultat" id="bohrResult" aria-live="polite"></div>
+          <div class="formula-pas" id="bohrPasos"></div>
+        </div>
+        <div class="bohr-canvas">
+          <svg id="bohrSvg" viewBox="0 0 420 320" role="img" aria-labelledby="bohrTitol bohrDesc">
+            <title id="bohrTitol">Ona de De Broglie al voltant d’una òrbita circular</title>
+            <desc id="bohrDesc"></desc>
+          </svg>
+          <p class="hint">Esquema didàctic semiclassic. Els electrons en un àtom no recorren òrbites planetàries definides.</p>
+        </div>
+      </div>
+
+      <p>
+        Substituint <span data-math="\lambda=h/p=h/(mv)"></span> a la condició d’ona tancada:
+      </p>
+      <div class="formula-pas">
+        <div data-math="2\pi r=n\dfrac{h}{mv}"></div>
+        <div data-math="\Longrightarrow\quad mvr=n\dfrac{h}{2\pi}=n\hbar"></div>
+      </div>
+      <div class="formula-pas resultat">
+        <div data-math="L=mvr=n\hbar"></div>
+      </div>
+      <p>
+        Així apareix la condició que Bohr havia postulat. És un <strong>pont conceptual</strong>,
+        no una demostració del model quàntic actual.
+      </p>
+    </section>
+
+    <section class="lectura" id="difraccio">
+      <p class="eyebrow">6 · La prova experimental</p>
+      <h2>Els electrons es difracten (1927)</h2>
+      <p>
+        Clinton Davisson i Lester Germer van observar difracció d’electrons en un cristall
+        de níquel. De manera independent, George Paget Thomson va obtenir patrons de
+        difracció fent passar electrons per làmines primes.
+      </p>
+
+      <figure class="diagram">
+        <svg viewBox="0 0 640 240" role="img" aria-labelledby="difTitol difDesc">
+          <title id="difTitol">Difracció d’electrons</title>
+          <desc id="difDesc">Feix d’electrons que travessa una làmina fina i produeix anells de difracció en un detector.</desc>
+          <defs>
+            <marker id="ar" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0 0 L6 3 L0 6" fill="none" stroke="#2563eb"/>
+            </marker>
+          </defs>
+          <rect x="36" y="87" width="90" height="66" rx="10" class="caixa"/>
+          <text x="81" y="112" text-anchor="middle" class="et">Feix</text>
+          <text x="81" y="131" text-anchor="middle" class="et">d’electrons</text>
+          <line x1="126" y1="120" x2="282" y2="120" class="fletxa" marker-end="url(#ar)"/>
+          <rect x="299" y="38" width="9" height="164" rx="4" class="lamina"/>
+          <text x="303" y="22" text-anchor="middle" class="et-lamina">Làmina</text>
+          <line x1="310" y1="120" x2="485" y2="49" class="raig"/>
+          <line x1="310" y1="120" x2="485" y2="190" class="raig"/>
+          <line x1="310" y1="120" x2="485" y2="120" class="raig"/>
+          <rect x="494" y="24" width="90" height="195" rx="10" class="detector"/>
+          <ellipse cx="539" cy="122" rx="17" ry="37" class="anell-a"/>
+          <ellipse cx="539" cy="122" rx="30" ry="66" class="anell-b"/>
+          <circle cx="539" cy="122" r="4" class="punt"/>
+          <text x="539" y="237" text-anchor="middle" class="et-peu">Detector</text>
+        </svg>
+        <figcaption>
+          Esquema idealitzat de la difracció d’electrons en una làmina policristal·lina:
+          els anells corresponen a màxims d’intensitat.
+        </figcaption>
+      </figure>
+
+      <p>
+        La distribució dels electrons revela una estructura ondulatòria. Tanmateix, cada
+        electró és detectat en un impacte localitzat. No cal imaginar-lo com una boleta
+        que literalment es transforma en una ona clàssica.
+      </p>
+      <div class="idea-clau">
+        Primer ve la hipòtesi (1924) i el pont amb Bohr; després, l’experiment (1927)
+        confirma que la matèria pot difractar-se. L’ordre històric no sempre coincideix
+        amb l’ordre didàctic: aquí preferim entendre <em>per què importa</em> abans de
+        veure la prova.
+      </div>
+    </section>
+
+    <section class="lectura" id="historia">
+      <p class="eyebrow">7 · Context Històric</p>
+      <h2>De Bohr a Schrödinger: una dècada de revolució</h2>
+      <div class="timeline">
+        <p><strong>1913 · Niels Bohr</strong> — Nivells d’energia i òrbites permeses, sense justificar completament la quantització.</p>
+        <p><strong>1916 · Arnold Sommerfeld</strong> — Amplia el model amb òrbites el·líptiques i altres condicions.</p>
+        <p><strong>1924 · Louis de Broglie</strong> — Hipòtesi de les ones associades a la matèria (tesi doctoral).</p>
+        <p><strong>1925 · Werner Heisenberg</strong> — Mecànica matricial, una via diferent cap a la nova teoria.</p>
+        <p><strong>1926 · Erwin Schrödinger i Max Born</strong> — Mecànica ondulatòria; Born proposa la interpretació probabilística.</p>
+        <p><strong>1927 · Davisson–Germer i G. P. Thomson</strong> — Difracció d’electrons: confirmació experimental.</p>
+      </div>
+      <p class="hint">
+        Anècdota: J. J. Thomson va identificar l’electró (1897); el seu fill G. P. Thomson
+        en va demostrar la difracció (1937, Nobel compartit amb Davisson).
+      </p>
+    </section>
+
+    <section class="lectura" id="practica">
+      <p class="eyebrow">8 · Comprova que ho has entès</p>
+      <h2>Preguntes ràpides</h2>
+      <details>
+        <summary>1. Un protó i un electró tenen la mateixa quantitat de moviment. Quin té la longitud d’ona més gran?</summary>
+        <p>La mateixa: <span data-math="\lambda=h/p"></span> depèn de <span data-math="p"></span>, no directament de la massa.</p>
+      </details>
+      <details>
+        <summary>2. Per què una xarxa cristal·lina permet observar difracció d’electrons?</summary>
+        <p>Perquè la separació entre àtoms és comparable a la longitud d’ona de De Broglie d’electrons amb energies adequades.</p>
+      </details>
+      <details>
+        <summary>3. Quina idea és la hipòtesi de 1924 i quin experiment la confirma?</summary>
+        <p>De Broglie postula propietats ondulatòries de la matèria; la difracció d’electrons (1927) en dona confirmació.</p>
+      </details>
+      <details>
+        <summary>4. Quina condició connecta l’ona de De Broglie amb el postulat de Bohr del moment angular?</summary>
+        <p>Que a l’òrbita hi càpiguen un nombre enter de longituds d’ona: <span data-math="2\pi r=n\lambda"></span>, d’on surt <span data-math="mvr=n\hbar"></span>.</p>
+      </details>
+    </section>
+
+    <details class="concepts">
+      <summary>Conceptes clau</summary>
+      <ul>
+        <li><strong>Dualitat ona–partícula:</strong> la llum i també la matèria presenten aspectes ondulatoris i corpusculars, segons l’experiment.</li>
+        <li><strong>De Broglie:</strong> <span data-math="\lambda=h/p"></span>. Per a <span data-math="v\ll c"></span>, <span data-math="p\simeq mv"></span>.</li>
+        <li><strong>Escales:</strong> h és tan petita que als objectes macroscòpics λ és inobservable.</li>
+        <li><strong>Pont amb Bohr:</strong> ona tancada <span data-math="2\pi r=n\lambda"></span> → <span data-math="L=n\hbar"></span>. Model semiclassic, no mecànica quàntica moderna.</li>
+        <li><strong>Confirmació:</strong> difracció d’electrons (Davisson–Germer, G. P. Thomson, 1927).</li>
+      </ul>
+    </details>
+
+    <section class="recursos" aria-labelledby="titolRecursos">
+      <h2 id="titolRecursos">Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://www.nobelprize.org/prizes/physics/1929/broglie/facts/" target="_blank" rel="noopener">Nobel Prize — Louis de Broglie</a>
+            <span class="lang">EN</span>
+            <span class="meta">Context biogràfic i la idea de les ones de matèria.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://www.nobelprize.org/prizes/physics/1937/summary/" target="_blank" rel="noopener">Nobel Prize — Difracció d’electrons (1937)</a>
+            <span class="lang">EN</span>
+            <span class="meta">Confirmació experimental: Davisson i G. P. Thomson.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/ca/simulations/quantum-wave-interference" target="_blank" rel="noopener">PhET — Interferència quàntica</a>
+            <span class="lang">CA</span>
+            <span class="meta">Simulació complementària per veure patrons d’interferència amb partícules (requereix connexió).</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://ca.wikipedia.org/wiki/Hip%C3%B2tesi_de_De_Broglie" target="_blank" rel="noopener">Hipòtesi de De Broglie — Viquipèdia</a>
+            <span class="lang">CA</span>
+            <span class="meta">Resum en català de la hipòtesi i el context històric.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor (Auto), a partir d’un esborrany inicial elaborat amb ChatGPT.</p>
+    </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="de-broglie.js"></script>
+</body>
+</html>

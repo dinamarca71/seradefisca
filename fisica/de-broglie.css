@@ -1,0 +1,204 @@
+/* Estils específics de l'ampliació De Broglie.
+   Capçalera, lectura, recursos i peu viuen a css/comunes.css. */
+
+.hint {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 0.45rem;
+}
+
+.dues-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 0.85rem 0;
+}
+
+.fact {
+  background: #f4f8fc;
+  border: 1px solid #d6e4f2;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+.fact b {
+  display: block;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.taula-escala {
+  width: 100%;
+  max-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 0.75rem 0;
+}
+
+.taula-escala th,
+.taula-escala td {
+  text-align: left;
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.taula-escala th { background: var(--bg); }
+
+.timeline {
+  border-left: 3px solid #c7d2fe;
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+}
+
+.timeline p {
+  position: relative;
+  margin: 0 0 0.85rem;
+  max-width: 78ch;
+}
+
+.timeline p::before {
+  content: "";
+  position: absolute;
+  left: -1.22rem;
+  top: 0.55rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.diagram {
+  margin: 1rem 0;
+  padding: 0.85rem;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+}
+
+.diagram figcaption {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 0.45rem;
+}
+
+.diagram .caixa { fill: #eff6ff; stroke: #2563eb; }
+.diagram .et { fill: var(--text); font: 600 13px "Segoe UI", sans-serif; }
+.diagram .et-lamina { fill: #c2410c; font: 600 13px "Segoe UI", sans-serif; }
+.diagram .et-peu { fill: var(--muted); font: 600 13px "Segoe UI", sans-serif; }
+.diagram .fletxa { stroke: #2563eb; stroke-width: 3; fill: none; }
+.diagram .lamina { fill: #fb923c; }
+.diagram .raig { stroke: #2563eb; stroke-dasharray: 5 6; fill: none; }
+.diagram .detector { fill: #f1f5f9; stroke: #94a3b8; }
+.diagram .anell-a { fill: none; stroke: #2563eb; stroke-width: 3; }
+.diagram .anell-b { fill: none; stroke: #ea580c; stroke-width: 3; }
+.diagram .punt { fill: var(--text); }
+
+/* Laboratori Bohr */
+.bohr-lab {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 1.25rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  align-items: start;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  margin: 0.75rem 0;
+  cursor: pointer;
+}
+
+.check input { accent-color: var(--accent); margin-top: 0.2rem; }
+
+.bohr-resultat {
+  margin: 0.5rem 0 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  border: 1px solid #c7d2fe;
+  background: #eef2ff;
+}
+
+.bohr-resultat.ko {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+#bohrSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fafbfc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.bohr-orbita { fill: none; stroke: #cbd5e1; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.bohr-nucli { fill: #ea580c; }
+.bohr-ona { fill: none; stroke: #2563eb; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.bohr-ona.ko { stroke: #dc2626; }
+.bohr-marca { fill: #2563eb; }
+.bohr-marca.ko { fill: #dc2626; }
+.bohr-et {
+  fill: var(--text);
+  font: 600 14px "Segoe UI", sans-serif;
+}
+.bohr-et-muted {
+  fill: var(--muted);
+  font: 12px "Segoe UI", sans-serif;
+}
+
+.lectura details {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  margin: 0.55rem 0;
+  background: var(--bg);
+}
+
+.lectura details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.lectura details[open] summary { margin-bottom: 0.4rem; }
+.lectura details p { margin: 0.35rem 0 0; max-width: 78ch; }
+
+details.concepts {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+}
+
+details.concepts summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+details.concepts[open] summary { margin-bottom: 0.55rem; }
+
+@media (max-width: 900px) {
+  .bohr-lab { grid-template-columns: 1fr; }
+  .dues-col { grid-template-columns: 1fr; }
+}
