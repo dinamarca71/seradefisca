@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Introducció física a la derivada (pendent de x(t) i v(t)) i a la integral (àrea sota v(t)) per a 1r de Batxillerat.">
+  <title>Derivada i integral des del moviment — Física (repàs)</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../css/comunes.css">
+  <link rel="stylesheet" href="derivada-integral.css">
+</head>
+<body>
+  <header>
+    <nav class="nav-pack">
+      <a href="index.html" class="nav-all">← Física</a>
+      <a href="vectors.html">Vectors</a>
+      <a href="derivada-integral.html" class="active">Derivada i integral</a>
+      <a href="../matematiques/derivades.html">Derivades (mates)</a>
+    </nav>
+    <h1>Derivada i integral des del moviment</h1>
+    <p>
+      Introducció per a 1r de Batxillerat. Abans de fer-ho a matemàtiques, mirem-ho amb ulls de física:
+      la <strong>velocitat</strong> és el pendent de la gràfica de posició, i la <strong>posició</strong>
+      s’obté acumulant l’àrea sota la gràfica de velocitat.
+    </p>
+  </header>
+
+  <main>
+    <section class="formula-box intro-di">
+      <h2>Dues preguntes, dues eines</h2>
+      <div class="intro-grid">
+        <div class="intro-idea">
+          <p class="intro-et">Derivada · <em>com de pressa canvia?</em></p>
+          <div data-math="v=\dfrac{\Delta x}{\Delta t}\quad\text{amb }\Delta t\text{ molt petit}"></div>
+          <p class="hint">És el <strong>pendent</strong> de la gràfica en un instant.</p>
+        </div>
+        <div class="intro-idea">
+          <p class="intro-et">Integral · <em>quant s’ha acumulat?</em></p>
+          <div data-math="\Delta x\approx v_1\Delta t+v_2\Delta t+v_3\Delta t+\cdots"></div>
+          <p class="hint">És l’<strong>àrea</strong> sota la gràfica fins a un instant.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="di-lab">
+      <section class="controls-panel" aria-labelledby="titolControls">
+        <h2 id="titolControls">Què vols veure?</h2>
+        <div class="modes" role="group" aria-label="Eina">
+          <button type="button" class="btn" id="modeDeriv" aria-pressed="true">Derivada: el pendent</button>
+          <button type="button" class="btn" id="modeInteg" aria-pressed="false">Integral: l’àrea</button>
+        </div>
+
+        <div id="grupCadena">
+          <h3 class="sub">De quina gràfica partim?</h3>
+          <div class="modes modes-fila" role="group" aria-label="Gràfica de partida">
+            <button type="button" class="btn" id="cadXV" aria-pressed="true">Posició → velocitat</button>
+            <button type="button" class="btn" id="cadVA" aria-pressed="false">Velocitat → acceleració</button>
+          </div>
+        </div>
+
+        <h3 class="sub">Exemples</h3>
+        <div class="preset-buttons" id="diPresets" role="group" aria-label="Moviments d’exemple"></div>
+        <p class="mov-desc" id="movDesc"></p>
+
+        <div class="param">
+          <div class="param-header">
+            <label for="sT">Instant <i>t</i></label>
+            <span class="param-value" id="sTVal"></span>
+          </div>
+          <input type="range" id="sT" min="0" max="1000" step="1" value="0">
+          <p class="param-desc">També pots fer clic o arrossegar sobre les gràfiques.</p>
+        </div>
+
+        <div id="grupDeriv">
+          <div class="param">
+            <div class="param-header">
+              <label for="sDt">Interval Δ<i>t</i></label>
+              <span class="param-value" id="sDtVal"></span>
+            </div>
+            <input type="range" id="sDt" min="0" max="100" step="1" value="70">
+            <div class="mini-botons">
+              <button type="button" class="btn btn-mini" id="dtDiv">Δt ÷ 10</button>
+              <button type="button" class="btn btn-mini" id="dtMul">Δt × 10</button>
+            </div>
+          </div>
+          <label class="check"><input type="checkbox" id="chkTangent" checked> Mostra la recta tangent</label>
+        </div>
+
+        <div id="grupInteg" hidden>
+          <div class="param">
+            <div class="param-header">
+              <label for="sN">Nombre de rectangles <i>N</i></label>
+              <span class="param-value" id="sNVal"></span>
+            </div>
+            <input type="range" id="sN" min="1" max="60" step="1" value="6">
+          </div>
+          <label class="check"><input type="checkbox" id="chkRect" checked> Mostra els rectangles</label>
+        </div>
+
+        <label class="check"><input type="checkbox" id="chkSencera"> Mostra la gràfica de sota sencera</label>
+
+        <div class="controls-row">
+          <button type="button" class="btn btn-primary" id="btnPlay">▶ Recorre</button>
+          <button type="button" class="btn" id="btnReset">↺ Reinicia</button>
+        </div>
+      </section>
+
+      <section class="canvas-section" aria-labelledby="titolGrafics">
+        <div class="canvas-header">
+          <h2 id="titolGrafics">El mòbil i les gràfiques</h2>
+        </div>
+        <canvas id="cvStrip" class="cv-strip" aria-hidden="true"></canvas>
+        <p class="strip-nota" id="stripNota"></p>
+        <p class="graf-titol" id="titolTop"></p>
+        <canvas id="cvTop" class="cv-graf"></canvas>
+        <p class="graf-titol" id="titolBot"></p>
+        <canvas id="cvBot" class="cv-graf"></canvas>
+        <p class="llegenda" id="llegenda"></p>
+        <p class="sr-only" id="diDesc" aria-live="polite"></p>
+      </section>
+
+      <section class="controls-panel pasos" aria-labelledby="titolPasos">
+        <h2 id="titolPasos">Pas a pas</h2>
+        <div id="diPasos"></div>
+      </section>
+    </div>
+
+    <details class="concepts">
+      <summary>Model físic: què hem simplificat</summary>
+      <ul class="model-hyp">
+        <li>Cada moviment és en línia recta i es descriu amb una sola coordenada (<i>x</i>, o <i>y</i> per a la pilota).</li>
+        <li>El cotxe té tres trams amb acceleració constant (2 m/s², 0 i −2 m/s²). Als canvis de tram l’acceleració salta de cop: a la realitat el canvi dura una mica.</li>
+        <li>La pilota no nota el fregament de l’aire (<i>g</i> = 9,8 m/s²). La molla és ideal (MHS sense esmorteïment).</li>
+        <li>El pendent de la tangent i l’àrea exacta es calculen amb les funcions exactes del moviment. Els rectangles fan servir la velocitat a l’<strong>inici</strong> de cada interval.</li>
+        <li>A la tira del mòbil, l’eix de la pilota (vertical) s’ha dibuixat horitzontal perquè hi càpiga.</li>
+      </ul>
+    </details>
+
+    <details class="concepts">
+      <summary>Conceptes clau</summary>
+      <ul>
+        <li><strong>Velocitat mitjana:</strong> <span data-math="v_m=\Delta x/\Delta t"></span> és el pendent de la recta <strong>secant</strong> entre dos punts de la gràfica <i>x</i>(<i>t</i>).</li>
+        <li><strong>Velocitat instantània:</strong> el valor al qual s’acosta <span data-math="v_m"></span> quan Δ<i>t</i> es fa molt petit. És el pendent de la recta <strong>tangent</strong>. A matemàtiques es diu <strong>derivada</strong>: <span data-math="v=\dfrac{dx}{dt}"></span>.</li>
+        <li><strong>El mateix amb l’acceleració:</strong> <span data-math="a=\dfrac{dv}{dt}"></span> és el pendent de la gràfica <i>v</i>(<i>t</i>).</li>
+        <li><strong>Llegir el pendent:</strong> positiu, la magnitud creix; negatiu, decreix; zero, en aquell instant no canvia (per exemple, la pilota al punt més alt té <i>v</i> = 0).</li>
+        <li><strong>Desplaçament:</strong> en un interval curt, <span data-math="\Delta x\approx v\,\Delta t"></span> (un rectangle). Sumant-los s’obté l’<strong>àrea sota</strong> <i>v</i>(<i>t</i>), que és el desplaçament. A matemàtiques es diu <strong>integral</strong>.</li>
+        <li><strong>Àrea amb signe:</strong> si <i>v</i> &lt; 0, l’àrea queda sota l’eix i compta negativa: el mòbil torna enrere. Per això el desplaçament no sempre coincideix amb la distància recorreguda.</li>
+        <li><strong>Són operacions inverses:</strong> de <i>x</i>(<i>t</i>) a <i>v</i>(<i>t</i>) amb el pendent; de <i>v</i>(<i>t</i>) a <i>x</i>(<i>t</i>) amb l’àrea.</li>
+      </ul>
+    </details>
+
+    <section class="recursos" aria-labelledby="titolRecursos">
+      <h2 id="titolRecursos">Per saber-ne més (fonts destacades)</h2>
+      <ul class="recursos-list">
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">🧪</span>
+          <div class="cos">
+            <a href="https://phet.colorado.edu/ca/simulations/calculus-grapher" target="_blank" rel="noopener">Gràfiques de càlcul — PhET (Universitat de Colorado)</a>
+            <span class="lang">CA</span>
+            <span class="meta">Dibuixa una funció a mà i en veus la derivada i la integral alhora. Molt bo per jugar-hi després.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://www.mathsisfun.com/calculus/derivatives-introduction.html" target="_blank" rel="noopener">Introduction to Derivatives — Math is Fun</a>
+            <span class="lang">EN</span>
+            <span class="meta">La secant que es fa tangent, explicada amb dibuixos i molt poques fórmules.</span>
+          </div>
+        </li>
+        <li class="recurs">
+          <span class="ic" aria-hidden="true">📄</span>
+          <div class="cos">
+            <a href="https://www.mathsisfun.com/calculus/integration-introduction.html" target="_blank" rel="noopener">Introduction to Integration — Math is Fun</a>
+            <span class="lang">EN</span>
+            <span class="meta">L’àrea sota la corba com a suma de rectangles cada cop més estrets.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor i Claude Opus 5.5.</p>
+    </footer>
+  </main>
+
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="../js/utilitats.js"></script>
+  <script src="derivada-integral.js"></script>
+</body>
+</html>

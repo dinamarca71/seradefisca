@@ -1,0 +1,114 @@
+.hint { font-size: 0.8rem; color: var(--muted); margin-top: 0.35rem; }
+
+/* Introducció */
+.intro-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+  text-align: center;
+}
+.intro-idea { padding: 0.4rem 0.6rem; border-radius: 8px; background: var(--bg); overflow-x: auto; }
+.intro-et { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+.intro-idea [data-math] { font-size: 1.05rem; }
+
+/* Laboratori */
+.di-lab {
+  display: grid;
+  grid-template-columns: 265px minmax(0, 1fr) 330px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.modes { display: grid; gap: 0.4rem; }
+.modes .btn { text-align: left; font-size: 0.85rem; }
+.modes .btn[aria-pressed="true"],
+.preset-buttons .btn[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.sub {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0.9rem 0 0.4rem;
+}
+
+.mov-desc {
+  margin: 0.6rem 0 0.9rem;
+  padding: 0.5rem 0.7rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  background: #eef2ff;
+  font-size: 0.82rem;
+}
+
+.mini-botons { display: flex; gap: 0.4rem; margin-top: 0.4rem; }
+.btn-mini { padding: 0.2rem 0.55rem; font-size: 0.78rem; }
+
+.check { display: flex; align-items: center; gap: 0.4rem; margin: 0.35rem 0; font-size: 0.85rem; cursor: pointer; }
+.check input { accent-color: var(--accent); }
+
+/* Gràfiques */
+.cv-strip, .cv-graf {
+  display: block;
+  width: 100%;
+  background: #fafbfc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  touch-action: none;
+  user-select: none;
+}
+.cv-strip { height: 74px; }
+.cv-graf { height: 235px; cursor: crosshair; }
+.strip-nota { font-size: 0.76rem; color: var(--muted); margin: 0.25rem 0 0.5rem; }
+.graf-titol { font-size: 0.85rem; font-weight: 700; margin: 0.6rem 0 0.25rem; }
+
+.llegenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.llegenda span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.mostra { display: inline-block; width: 18px; height: 0; border-top: 3px solid; }
+.mostra-area { display: inline-block; width: 16px; height: 11px; border: 1px solid #9a3412; }
+.m-pos { background: rgba(234, 88, 12, 0.25); }
+.m-neg {
+  background: repeating-linear-gradient(45deg, rgba(220, 38, 38, 0.45) 0 2px, transparent 2px 5px);
+  border-color: #b91c1c;
+}
+
+/* Pas a pas */
+.llista-pasos { list-style: none; padding: 0; margin: 0; }
+.llista-pasos li + li { margin-top: 0.8rem; }
+.pas-et { display: block; font-size: 0.8rem; font-weight: 800; color: var(--accent); }
+.llista-pasos p { font-size: 0.84rem; color: var(--muted); }
+.llista-pasos .formula-pas { margin: 0.3rem 0; overflow-x: auto; }
+.llista-pasos .formula-pas .katex { font-size: 1.05em; }
+.pas-ok .formula-pas { border-color: #bbf7d0; background: #f0fdf4; }
+.interpreta { margin-top: 0.3rem; color: var(--text) !important; }
+
+.taula-conv { width: 100%; margin-top: 0.35rem; border-collapse: collapse; font-size: 0.82rem; }
+.taula-conv th, .taula-conv td { padding: 0.25rem 0.5rem; border: 1px solid var(--border); text-align: right; }
+.taula-conv thead th { background: var(--bg); }
+.taula-conv td { font-family: Consolas, monospace; }
+.taula-conv tr.actual td { background: #eef2ff; font-weight: 700; }
+.taula-conv tr.exacte td { background: #f0fdf4; font-weight: 700; }
+
+/* Conceptes clau */
+details.concepts summary { cursor: pointer; font-weight: 700; font-size: 0.95rem; }
+details.concepts[open] summary { margin-bottom: 0.6rem; }
+
+@media (max-width: 1200px) {
+  .di-lab { grid-template-columns: 265px minmax(0, 1fr); }
+  .di-lab .pasos { grid-column: 1 / -1; }
+}
+
+@media (max-width: 760px) {
+  .di-lab, .intro-grid { grid-template-columns: 1fr; }
+}

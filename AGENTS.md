@@ -52,6 +52,7 @@ escola/
     ├── superposicio.html (+ css/js) · ones-estacionaries.html ·
     │   interferencia-young.html · fenomens-ondulatoris.html    # ones
     ├── vectors.html (+ css/js)  # repàs: components ⇄ mòdul i angle, amb mode repte
+    ├── derivada-integral.html (+ css/js)  # 1r: pendent de x(t) i v(t), àrea sota v(t)
     ├── de-broglie.html (+ css/js)       # ampliació: ones de matèria i pont amb Bohr
     ├── relativitat.html (+ css/js)      # ampliació: una sessió de relativitat especial
     ├── particules.html (+ css/js)       # ampliació fora del temari: Model Estàndard
@@ -63,9 +64,10 @@ escola/
 `cel-torrevicente/` és una guia familiar independent (eclipsi 2026); no forma part dels simuladors de batxillerat ni cal que segueixi el patró pedagògic de la resta.
 
 La portada de física té també una secció **«Repàs (eines de base)»** amb eines
-de cursos anteriors o de 1r que fan falta a 2n (avui, `vectors.html`). La
-`pack-card` porta l'etiqueta «Repàs», i les pàgines segueixen les mateixes
-convencions que la resta.
+de cursos anteriors o de 1r que fan falta a 2n (avui, `vectors.html` i
+`derivada-integral.html`, que també s'enllaça des de l'apartat d'Anàlisi de la
+portada de matemàtiques). La `pack-card` porta l'etiqueta «Repàs», i les
+pàgines segueixen les mateixes convencions que la resta.
 
 La portada de física té una secció **«Ampliacions (fora del temari)»** per a
 annexos d'aprofundiment (avui, `de-broglie.html`, `relativitat.html` i
@@ -189,7 +191,7 @@ convencions (estils, KaTeX, rigor, conceptes clau, recursos i peu); la
   pàgina (transparència MIAE): la majoria, amb Cursor i Claude Opus 4.8 (High);
   el laboratori d'òrbites i diverses pàgines posteriors, amb ChatGPT (GPT-5.6
   Thinking) i Cursor; la cronologia d'indicis de física moderna, amb Cursor i
-  Claude Opus 5; l'annex de partícules, les òrbites el·líptiques i els vectors de 1r, amb Cursor i Claude Opus 5.5;
+  Claude Opus 5; l'annex de partícules, les òrbites el·líptiques, els vectors i la derivada i integral de 1r, amb Cursor i Claude Opus 5.5;
 les ampliacions de De Broglie i de relativitat especial, amb Cursor (Auto) a partir d'un esborrany amb ChatGPT; les
   integracions en mode Auto ho indiquen amb «Cursor (Auto)».
 - Els enllaços del peu són **externs** (Creative Commons, marc MIAE, GitHub),
