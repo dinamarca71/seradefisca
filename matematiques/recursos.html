@@ -3,299 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Recursos web de matemàtiques per a batxillerat.">
+  <meta name="description" content="Apunts, teoria i exercicis de matemàtiques per a batxillerat.">
   <title>Recursos de matemàtiques — Serà de Física</title>
   <link rel="icon" href="../favicon.png" type="image/png">
   <link rel="stylesheet" href="../css/comunes.css">
-  <link rel="stylesheet" href="../css/recursos-matematiques.css">
+  <link rel="stylesheet" href="../css/recursos.css">
 </head>
-<body class="math-resources-page">
-<header class="resources-hero">
-  <div class="resources-hero__inner">
-    <a class="back-link" href="index.html">← Matemàtiques</a>
-    <h1>Recursos de matemàtiques</h1>
-    <p class="hero-note">Selecció curada de webs útils per a batxillerat — no és un inventari exhaustiu.</p>
-  </div>
+<body>
+<header>
+  <nav class="nav-pack" aria-label="Navegació">
+    <a href="../index.html">← Inici</a>
+    <a href="index.html">← Matemàtiques</a>
+    <a href="../fisica/recursos.html">Recursos de física</a>
+  </nav>
+  <h1>Recursos de matemàtiques</h1>
+  <p>Apunts i exercicis per consultar durant el curs.</p>
 </header>
-<main class="resources-main">
-  <nav class="category-nav" aria-label="Categories de recursos">
-    <a href="#destacats">Destacats</a>
+<main class="reference-page">
+  <nav class="reference-nav" aria-label="Apartats">
     <a href="#teoria">Teoria i apunts</a>
-    <a href="#pau">PAU</a>
-    <a href="#visualitzacio">Visualització</a>
-    <a href="#problemes">Problemes</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#ampliacio">Ampliació</a>
+    <a href="#pau">Exercicis i PAU</a>
+    <a href="#altres">Altres recursos</a>
   </nav>
 
-  <!--
-    ==============================================================
-    PLANTILLA — RECURS NOU
-    1. Copia el bloc article dins del div.resource-grid de la secció.
-    2. Canvia el comentari RECURS, el títol (i el href), la descripció i les etiquetes.
-    3. Classes opcionals a l'article:
-       · resource-card--featured  (destacat)
-       · resource-card--official  (font oficial PAU)
-    ==============================================================
-
-      [comentari HTML] RECURS: Nom del recurs [fi comentari]
-      <article class="resource-card">
-        <h3>
-          <a href="https://exemple.cat" target="_blank" rel="noopener noreferrer">
-            Nom del recurs <span class="external" aria-hidden="true">↗</span>
-          </a>
-        </h3>
-        <p>Descripció breu: què conté i per a què pot ser útil.</p>
-        <ul class="resource-meta" aria-label="Característiques">
-          <li>2n Batx</li>
-          <li>Català</li>
-        </ul>
-      </article>
-
-    NOVA SECCIÓ (si cal): copia una section.resource-section
-    existent, canvia id i títol, i afegeix un enllaç a category-nav.
-  -->
-
-  
-    <section class="resource-section" id="destacats">
-      <h2 class="section-title">Recursos destacats</h2>
-      <div class="resource-grid">
-        
-        <!-- RECURS: Apuntes Marea Verde -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://www.apuntesmareaverde.org.es/" target="_blank" rel="noopener noreferrer">Apuntes Marea Verde <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Llibres oberts organitzats per cursos i unitats, amb explicacions, exemples i molts exercicis.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Castellà</li><li>PDF</li></ul>
-          
-        </article>
-        <!-- RECURS: Mathigon -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://mathigon.org/" target="_blank" rel="noopener noreferrer">Mathigon <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Lliçons interactives i activitats visuals molt cuidades sobre geometria, patrons, probabilitat i raonament.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Interactiu</li><li>Multilingüe</li><li>Visual</li></ul>
-          
-        </article>
-        <!-- RECURS: Desmos -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://www.desmos.com/calculator?lang=ca" target="_blank" rel="noopener noreferrer">Desmos <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Calculadora gràfica excel·lent per explorar funcions, transformacions, regressions i models.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Batxillerat</li><li>Multilingüe</li><li>Interactiu</li></ul>
-          
-        </article>
-        <!-- RECURS: Khan Academy -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://es.khanacademy.org/math" target="_blank" rel="noopener noreferrer">Khan Academy <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Cursos estructurats, vídeos breus i exercicis autocorrectius des dels fonaments fins al càlcul i l&#x27;estadística.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Castellà</li><li>Pràctica guiada</li></ul>
-          
-        </article>
-      </div>
-    </section>
-    <section class="resource-section" id="teoria">
-      <h2 class="section-title">Teoria i apunts</h2>
-      <div class="resource-grid">
-        
-        <!-- RECURS: TooMates -->
-        <article class="resource-card">
-          <h3><a href="https://www.toomates.net/" target="_blank" rel="noopener noreferrer">TooMates <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Teoria, exemples i molts exercicis resolts. Un dels recursos clàssics més complets en castellà.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Castellà</li><li>Exercicis resolts</li></ul>
-          
-        </article>
-        <!-- RECURS: Paul&#x27;s Online Math Notes -->
-        <article class="resource-card">
-          <h3><a href="https://tutorial.math.lamar.edu/" target="_blank" rel="noopener noreferrer">Paul&#x27;s Online Math Notes <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Apunts molt ben estructurats d&#x27;àlgebra, precàlcul i càlcul, amb exemples treballats i formularis.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Batx i universitat</li><li>Anglès</li><li>Càlcul</li></ul>
-          
-        </article>
-        <!-- RECURS: Mathematics LibreTexts -->
-        <article class="resource-card">
-          <h3><a href="https://math.libretexts.org/" target="_blank" rel="noopener noreferrer">Mathematics LibreTexts <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Gran biblioteca oberta, des de continguts escolars fins a manuals universitaris.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Batx i universitat</li><li>Anglès</li><li>Llicència oberta</li></ul>
-          
-        </article>
-        <!-- RECURS: Vitutor -->
-        <article class="resource-card">
-          <h3><a href="https://www.vitutor.com/" target="_blank" rel="noopener noreferrer">Vitutor <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Resums breus, exemples i exercicis de molts blocs d&#x27;ESO i batxillerat.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Castellà</li><li>Consulta ràpida</li></ul>
-          
-        </article>
-        <!-- RECURS: Proyecto Descartes -->
-        <article class="resource-card">
-          <h3><a href="https://proyectodescartes.org/" target="_blank" rel="noopener noreferrer">Proyecto Descartes <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Unitats interactives, llibres digitals i activitats per gairebé tots els blocs del currículum.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Castellà</li><li>Interactiu</li></ul>
-          
-        </article>
-      </div>
-    </section>
-    <section class="resource-section" id="pau">
-      <h2 class="section-title">PAU de Matemàtiques</h2>
-      <div class="resource-grid">
-        
-        <!-- RECURS: Matemàtiques a les PAU -->
-        <article class="resource-card resource-card--official">
-          <h3><a href="https://universitats.gencat.cat/ca/pau/materies-pau/matematiques/" target="_blank" rel="noopener noreferrer">Matemàtiques a les PAU <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Informació oficial sobre estructura, orientacions i criteris de la matèria.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>2n Batx</li><li>Català</li><li>Generalitat</li></ul>
-          
-        </article>
-        <!-- RECURS: Models d&#x27;examen d&#x27;anys anteriors -->
-        <article class="resource-card resource-card--official">
-          <h3><a href="https://universitats.gencat.cat/ca/pau/models-examen-anys-anteriors/" target="_blank" rel="noopener noreferrer">Models d&#x27;examen d&#x27;anys anteriors <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Enunciats i pautes de correcció oficials de convocatòries anteriors.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>PAU</li><li>Català</li><li>Solucions</li></ul>
-          
-        </article>
-        <!-- RECURS: Selecat -->
-        <article class="resource-card">
-          <h3><a href="https://www.selecat.cat/" target="_blank" rel="noopener noreferrer">Selecat <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Exàmens de selectivitat de Catalunya classificats per matèria i convocatòria.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>PAU</li><li>Català</li><li>Arxiu històric</li></ul>
-          
-        </article>
-      </div>
-    </section>
-    <section class="resource-section" id="visualitzacio">
-      <h2 class="section-title">Visualització i eines interactives</h2>
-      <div class="resource-grid">
-        
-        <!-- RECURS: GeoGebra -->
-        <article class="resource-card">
-          <h3><a href="https://www.geogebra.org/" target="_blank" rel="noopener noreferrer">GeoGebra <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Entorn complet de geometria, àlgebra, funcions, estadística i càlcul, amb activitats compartides.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Interactiu</li><li>Multilingüe</li><li>Comunitat docent</li></ul>
-          
-        </article>
-        <!-- RECURS: NRICH -->
-        <article class="resource-card">
-          <h3><a href="https://nrich.maths.org/" target="_blank" rel="noopener noreferrer">NRICH <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Investigacions i activitats que fomenten argumentació, generalització i resolució de problemes.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Secundària</li><li>Anglès</li><li>Investigació</li></ul>
-          
-        </article>
-        <!-- RECURS: Visual Patterns -->
-        <article class="resource-card">
-          <h3><a href="https://www.visualpatterns.org/" target="_blank" rel="noopener noreferrer">Visual Patterns <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Centenars de successions presentades com a patrons geomètrics per treballar expressions generals.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Àlgebra</li><li>Anglès</li><li>Visual</li></ul>
-          
-        </article>
-        <!-- RECURS: Experiencing Maths -->
-        <article class="resource-card">
-          <h3><a href="https://www.experiencingmaths.org/" target="_blank" rel="noopener noreferrer">Experiencing Maths <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Exposició virtual amb activitats sobre geometria, simetria, formes i modelització.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Visual</li><li>Multilingüe</li><li>Divulgació</li></ul>
-          
-        </article>
-      </div>
-    </section>
-    <section class="resource-section" id="problemes">
-      <h2 class="section-title">Problemes i reptes</h2>
-      <div class="resource-grid">
-        
-        <!-- RECURS: Proves Cangur -->
-        <article class="resource-card">
-          <h3><a href="https://cangur.org/" target="_blank" rel="noopener noreferrer">Proves Cangur <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Enunciats i solucions de les proves de la Societat Catalana de Matemàtiques.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Secundària</li><li>Català</li><li>Reptes</li></ul>
-          
-        </article>
-        <!-- RECURS: Cut the Knot -->
-        <article class="resource-card">
-          <h3><a href="https://www.cut-the-knot.org/" target="_blank" rel="noopener noreferrer">Cut the Knot <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Immensa col·lecció de problemes, demostracions visuals i recreacions matemàtiques.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Ampliació</li><li>Anglès</li><li>Demostracions</li></ul>
-          
-        </article>
-        <!-- RECURS: Project Euler -->
-        <article class="resource-card">
-          <h3><a href="https://projecteuler.net/" target="_blank" rel="noopener noreferrer">Project Euler <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Problemes pensats per resoldre amb raonament i programació; ideal per connectar amb Python.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Programació</li><li>Anglès</li><li>Reptes</li></ul>
-          
-        </article>
-        <!-- RECURS: ThatQuiz -->
-        <article class="resource-card">
-          <h3><a href="https://www.thatquiz.org/ca/" target="_blank" rel="noopener noreferrer">ThatQuiz <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Exercicis autocorrectius de càlcul, àlgebra, geometria, gràfics i estadística.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Multilingüe</li><li>Autocorrecció</li></ul>
-          
-        </article>
-        <!-- RECURS: Exploding Dots -->
-        <article class="resource-card">
-          <h3><a href="https://www.globalmathproject.org/exploding-dots/" target="_blank" rel="noopener noreferrer">Exploding Dots <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Exploració visual de sistemes de numeració, polinomis i divisió a partir d&#x27;una representació comuna.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Àlgebra</li><li>Anglès</li><li>Visual</li></ul>
-          
-        </article>
-      </div>
-    </section>
-    <section class="resource-section" id="videos">
-      <h2 class="section-title">Vídeos i classes</h2>
-      <div class="resource-grid">
-        
-        <!-- RECURS: Unicoos -->
-        <article class="resource-card">
-          <h3><a href="https://www.youtube.com/@unicoos" target="_blank" rel="noopener noreferrer">Unicoos <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Vídeos de resolució d&#x27;exercicis de matemàtiques, física i química, classificats per temes.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Castellà</li><li>Procediments</li></ul>
-          
-        </article>
-        <!-- RECURS: julioprofe -->
-        <article class="resource-card">
-          <h3><a href="https://julioprofe.net/" target="_blank" rel="noopener noreferrer">julioprofe <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Biblioteca extensa de vídeos, especialment útil per revisar procediments algebraics i de càlcul.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>ESO i Batx</li><li>Castellà</li><li>Exercicis</li></ul>
-          
-        </article>
-        <!-- RECURS: 3Blue1Brown -->
-        <article class="resource-card">
-          <h3><a href="https://www.youtube.com/@3blue1brown" target="_blank" rel="noopener noreferrer">3Blue1Brown <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Visualitzacions extraordinàries d&#x27;àlgebra lineal, càlcul, probabilitat i altres idees avançades.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Batx i universitat</li><li>Anglès</li><li>Visual</li></ul>
-          
-        </article>
-      </div>
-    </section>
-    <section class="resource-section" id="ampliacio">
-      <h2 class="section-title">Referència i ampliació</h2>
-      <div class="resource-grid">
-        
-        <!-- RECURS: Wolfram MathWorld -->
-        <article class="resource-card">
-          <h3><a href="https://mathworld.wolfram.com/" target="_blank" rel="noopener noreferrer">Wolfram MathWorld <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Definicions, fórmules, gràfics, propietats i bibliografia. Més adequada per ampliar que per començar.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Avançat</li><li>Anglès</li><li>Referència</li></ul>
-          
-        </article>
-        <!-- RECURS: Wolfram Demonstrations Project -->
-        <article class="resource-card">
-          <h3><a href="https://demonstrations.wolfram.com/" target="_blank" rel="noopener noreferrer">Wolfram Demonstrations Project <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Milers de demostracions interactives de matemàtiques, ciència i tecnologia.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Interactiu</li><li>Anglès</li><li>Ampliació</li></ul>
-          
-        </article>
-        <!-- RECURS: MacTutor History of Mathematics -->
-        <article class="resource-card">
-          <h3><a href="https://mathshistory.st-andrews.ac.uk/" target="_blank" rel="noopener noreferrer">MacTutor History of Mathematics <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>Gran arxiu de biografies, història de conceptes i cronologies matemàtiques.</p>
-          <ul class="resource-meta" aria-label="Característiques"><li>Història</li><li>Anglès</li><li>Biografies</li></ul>
-          
-        </article>
-      </div>
-    </section>
-
-  <aside class="maintenance-note">
-    <p>Si algun enllaç falla, avisa'm a oscarvila a gmail punt com.</p>
-  </aside>
-
+  <!-- Per afegir un recurs, copia un bloc li i canvia l’enllaç, el nom,
+       l’idioma i la descripció. Per treure’l, elimina tot el bloc li. -->
+  <section id="teoria">
+    <h2>Teoria i apunts</h2>
+    <ul class="reference-list">
+      <li>
+        <a href="https://www.danipartal.net/matematicas2bachillerato.html" target="_blank" rel="noopener">Daniel Partal — Matemàtiques II</a> <span class="reference-language">Castellà</span>
+        <p>Resums de teoria i exercicis de segon, organitzats per temes.</p>
+      </li>
+      <li>
+        <a href="https://www.matematicasonline.es/" target="_blank" rel="noopener">Matemáticas Online</a> <span class="reference-language">Castellà</span>
+        <p>Apunts, exercicis resolts i vídeos de batxillerat.</p>
+      </li>
+      <li>
+        <a href="https://www.apuntesmareaverde.org.es/" target="_blank" rel="noopener">Apuntes Marea Verde</a> <span class="reference-language">Castellà</span>
+        <p>Llibres oberts organitzats per cursos i unitats, amb explicacions, exemples i molts exercicis.</p>
+      </li>
+      <li>
+        <a href="https://es.khanacademy.org/math" target="_blank" rel="noopener">Khan Academy</a> <span class="reference-language">Castellà</span>
+        <p>Cursos estructurats, vídeos breus i exercicis autocorrectius des dels fonaments fins al càlcul i l&#x27;estadística.</p>
+      </li>
+      <li>
+        <a href="https://www.toomates.net/" target="_blank" rel="noopener">TooMates</a> <span class="reference-language">Català</span>
+        <p>Llibres i reculls d’exercicis de matemàtiques, organitzats per temes i nivells.</p>
+      </li>
+      <li>
+        <a href="https://tutorial.math.lamar.edu/" target="_blank" rel="noopener">Paul&#x27;s Online Math Notes</a> <span class="reference-language">Anglès</span>
+        <p>Apunts molt ben estructurats d&#x27;àlgebra, precàlcul i càlcul, amb exemples treballats i formularis.</p>
+      </li>
+      <li>
+        <a href="https://math.libretexts.org/" target="_blank" rel="noopener">Mathematics LibreTexts</a> <span class="reference-language">Anglès</span>
+        <p>Gran biblioteca oberta, des de continguts escolars fins a manuals universitaris.</p>
+      </li>
+      <li>
+        <a href="https://proyectodescartes.org/" target="_blank" rel="noopener">Proyecto Descartes</a> <span class="reference-language">Castellà</span>
+        <p>Unitats interactives, llibres digitals i activitats per gairebé tots els blocs del currículum.</p>
+      </li>
+    </ul>
+  </section>
+  <section id="pau">
+    <h2>Exercicis i PAU</h2>
+    <ul class="reference-list">
+      <li>
+        <a href="https://universitats.gencat.cat/ca/pau/materies-pau/matematiques/" target="_blank" rel="noopener">Matemàtiques a les PAU</a> <span class="reference-language">Català</span>
+        <p>Informació oficial sobre estructura, orientacions i criteris de la matèria.</p>
+      </li>
+      <li>
+        <a href="https://universitats.gencat.cat/ca/pau/models-examen-anys-anteriors/" target="_blank" rel="noopener">Models d&#x27;examen d&#x27;anys anteriors</a> <span class="reference-language">Català</span>
+        <p>Enunciats i pautes de correcció oficials de convocatòries anteriors.</p>
+      </li>
+      <li>
+        <a href="https://www.selecat.cat/" target="_blank" rel="noopener">Selecat</a> <span class="reference-language">Català</span>
+        <p>Exàmens de selectivitat de Catalunya classificats per matèria i convocatòria.</p>
+      </li>
+    </ul>
+  </section>
+  <details id="altres">
+    <summary>Eines, vídeos i ampliacions</summary>
+    <ul class="reference-list">
+      <li>
+        <a href="https://mathigon.org/" target="_blank" rel="noopener">Mathigon</a> <span class="reference-language">Multilingüe</span>
+        <p>Lliçons interactives i activitats visuals molt cuidades sobre geometria, patrons, probabilitat i raonament.</p>
+      </li>
+      <li>
+        <a href="https://www.desmos.com/calculator?lang=ca" target="_blank" rel="noopener">Desmos</a> <span class="reference-language">Multilingüe</span>
+        <p>Calculadora gràfica excel·lent per explorar funcions, transformacions, regressions i models.</p>
+      </li>
+      <li>
+        <a href="https://www.geogebra.org/" target="_blank" rel="noopener">GeoGebra</a> <span class="reference-language">Multilingüe</span>
+        <p>Entorn complet de geometria, àlgebra, funcions, estadística i càlcul, amb activitats compartides.</p>
+      </li>
+      <li>
+        <a href="https://nrich.maths.org/" target="_blank" rel="noopener">NRICH</a> <span class="reference-language">Anglès</span>
+        <p>Investigacions i activitats que fomenten argumentació, generalització i resolució de problemes.</p>
+      </li>
+      <li>
+        <a href="https://www.visualpatterns.org/" target="_blank" rel="noopener">Visual Patterns</a> <span class="reference-language">Anglès</span>
+        <p>Centenars de successions presentades com a patrons geomètrics per treballar expressions generals.</p>
+      </li>
+      <li>
+        <a href="https://www.experiencingmaths.org/" target="_blank" rel="noopener">Experiencing Maths</a> <span class="reference-language">Multilingüe</span>
+        <p>Exposició virtual amb activitats sobre geometria, simetria, formes i modelització.</p>
+      </li>
+      <li>
+        <a href="https://cangur.org/" target="_blank" rel="noopener">Proves Cangur</a> <span class="reference-language">Català</span>
+        <p>Enunciats i solucions de les proves de la Societat Catalana de Matemàtiques.</p>
+      </li>
+      <li>
+        <a href="https://www.cut-the-knot.org/" target="_blank" rel="noopener">Cut the Knot</a> <span class="reference-language">Anglès</span>
+        <p>Immensa col·lecció de problemes, demostracions visuals i recreacions matemàtiques.</p>
+      </li>
+      <li>
+        <a href="https://projecteuler.net/" target="_blank" rel="noopener">Project Euler</a> <span class="reference-language">Anglès</span>
+        <p>Problemes pensats per resoldre amb raonament i programació; ideal per connectar amb Python.</p>
+      </li>
+      <li>
+        <a href="https://www.thatquiz.org/ca/" target="_blank" rel="noopener">ThatQuiz</a> <span class="reference-language">Multilingüe</span>
+        <p>Exercicis autocorrectius de càlcul, àlgebra, geometria, gràfics i estadística.</p>
+      </li>
+      <li>
+        <a href="https://www.globalmathproject.org/exploding-dots/" target="_blank" rel="noopener">Exploding Dots</a> <span class="reference-language">Anglès</span>
+        <p>Exploració visual de sistemes de numeració, polinomis i divisió a partir d&#x27;una representació comuna.</p>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@unicoos" target="_blank" rel="noopener">Unicoos</a> <span class="reference-language">Castellà</span>
+        <p>Vídeos de resolució d&#x27;exercicis de matemàtiques, física i química, classificats per temes.</p>
+      </li>
+      <li>
+        <a href="https://julioprofe.net/" target="_blank" rel="noopener">julioprofe</a> <span class="reference-language">Castellà</span>
+        <p>Biblioteca extensa de vídeos, especialment útil per revisar procediments algebraics i de càlcul.</p>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@3blue1brown" target="_blank" rel="noopener">3Blue1Brown</a> <span class="reference-language">Anglès</span>
+        <p>Visualitzacions extraordinàries d&#x27;àlgebra lineal, càlcul, probabilitat i altres idees avançades.</p>
+      </li>
+      <li>
+        <a href="https://mathworld.wolfram.com/" target="_blank" rel="noopener">Wolfram MathWorld</a> <span class="reference-language">Anglès</span>
+        <p>Definicions, fórmules, gràfics, propietats i bibliografia. Més adequada per ampliar que per començar.</p>
+      </li>
+      <li>
+        <a href="https://demonstrations.wolfram.com/" target="_blank" rel="noopener">Wolfram Demonstrations Project</a> <span class="reference-language">Anglès</span>
+        <p>Milers de demostracions interactives de matemàtiques, ciència i tecnologia.</p>
+      </li>
+      <li>
+        <a href="https://mathshistory.st-andrews.ac.uk/" target="_blank" rel="noopener">MacTutor History of Mathematics</a> <span class="reference-language">Anglès</span>
+        <p>Gran arxiu de biografies, història de conceptes i cronologies matemàtiques.</p>
+      </li>
+    </ul>
+  </details>
+  <p class="reference-contact">Si algun enllaç falla, avisa'm a oscarvila a gmail punt com.</p>
   <footer class="site-footer">
     <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
-    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor (Auto).</p>
+    <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor (Auto). Revisió amb Codex (GPT-6 Astra).</p>
   </footer>
 </main>
 </body>

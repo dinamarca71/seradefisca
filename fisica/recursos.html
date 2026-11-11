@@ -3,525 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Selecció de recursos web de física per a batxillerat: teoria, problemes, PAU, simulacions i divulgació.">
+  <meta name="description" content="Apunts, teoria i exercicis de física per a batxillerat.">
   <title>Recursos de física — Serà de Física</title>
-
   <link rel="icon" href="../favicon.png" type="image/png">
-  <!-- Estils generals del projecte -->
   <link rel="stylesheet" href="../css/comunes.css">
-
-  <!-- Estils específics d'aquesta pàgina -->
   <link rel="stylesheet" href="../css/recursos.css">
 </head>
+<body>
+<header>
+  <nav class="nav-pack" aria-label="Navegació">
+    <a href="../index.html">← Inici</a>
+    <a href="index.html">← Física</a>
+    <a href="../matematiques/recursos.html">Recursos de matemàtiques</a>
+  </nav>
+  <h1>Recursos de física</h1>
+  <p>Apunts i exercicis per consultar durant el curs.</p>
+</header>
+<main class="reference-page">
+  <nav class="reference-nav" aria-label="Apartats">
+    <a href="#teoria">Teoria i apunts</a>
+    <a href="#pau">Exercicis i PAU</a>
+    <a href="#altres">Altres recursos</a>
+  </nav>
 
-<body class="resources-page">
-
-  <header class="resources-hero">
-    <div class="resources-hero__inner">
-      <a class="back-link" href="index.html" aria-label="Tornar a la pàgina de Física">
-        ← Física
-      </a>
-
-      <h1>Recursos de física</h1>
-      <p class="hero-note">Selecció curada de webs útils per a batxillerat — no és un inventari exhaustiu.</p>
-    </div>
-  </header>
-
-  <main class="resources-main">
-
-    <nav class="category-nav" aria-label="Categories de recursos">
-      <a href="#destacats">Destacats</a>
-      <a href="#teoria">Teoria i apunts</a>
-      <a href="#problemes">Problemes</a>
-      <a href="#pau">PAU</a>
-      <a href="#simulacions">Simulacions</a>
-      <a href="#videos">Vídeos</a>
-      <a href="#classics">Clàssics</a>
-    </nav>
-
-    <!--
-      ==============================================================
-      PLANTILLA — RECURS NOU
-      1. Copia el bloc article dins del div.resource-grid de la secció.
-      2. Canvia el comentari RECURS, el títol (i el href), la descripció i les etiquetes.
-      3. Classes opcionals a l'article:
-         · resource-card--featured  (destacat)
-         · resource-card--official  (font oficial PAU)
-         · resource-card--classic   (recurs històric)
-      ==============================================================
-
-        [comentari HTML] RECURS: Nom del recurs [fi comentari]
-        <article class="resource-card">
-          <h3>
-            <a href="https://exemple.cat" target="_blank" rel="noopener noreferrer">
-              Nom del recurs <span class="external" aria-hidden="true">↗</span>
-            </a>
-          </h3>
-          <p>Descripció breu: què conté i per a què pot ser útil.</p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>2n Batx</li>
-            <li>Català</li>
-          </ul>
-        </article>
-
-      NOVA SECCIÓ (si cal): copia una section.resource-section
-      existent, canvia id i títol, i afegeix un enllaç a category-nav.
-    -->
-
-
-    <!-- ============================================================
-         RECURSOS DESTACATS
-         ============================================================ -->
-    <section class="resource-section" id="destacats">
-      <h2 class="section-title">Recursos destacats</h2>
-
-      <div class="resource-grid">
-
-        <!-- RECURS: Física en Context -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://projectes.xtec.cat/fisicaencontext/" target="_blank" rel="noopener noreferrer">Física en Context <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Materials de física de batxillerat construïts a partir de situacions
-            contextualitzades. Especialment interessant per plantejar activitats
-            competencials i connectar els models físics amb fenòmens reals.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Batxillerat</li>
-            <li>Català</li>
-            <li>Activitats</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Física de Niobio -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://niobio.github.io/fisica/" target="_blank" rel="noopener noreferrer">Física de Niobio <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Teoria, formularis i problemes resolts, ordenats per cursos i
-            blocs temàtics. És un dels recursos més directes per repassar un
-            concepte o veure una resolució completa.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>ESO i Batx</li>
-            <li>Castellà</li>
-            <li>Problemes resolts</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: FiQuiPedia -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://www.fiquipedia.es/" target="_blank" rel="noopener noreferrer">FiQuiPedia <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Gran recopilació d'apunts, qüestions, exercicis, exàmens i materials
-            de física i química. La quantitat de contingut és enorme, però està
-            prou ben organitzada per localitzar recursos concrets.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>ESO i Batx</li>
-            <li>Castellà</li>
-            <li>PAU</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: PhET -->
-        <article class="resource-card resource-card--featured">
-          <h3><a href="https://phet.colorado.edu/ca/simulations/filter?subjects=physics&type=html" target="_blank" rel="noopener noreferrer">PhET Interactive Simulations <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Simulacions interactives molt cuidades sobre mecànica, ones,
-            electricitat, magnetisme, física moderna i molts altres temes.
-            Moltes activitats estan traduïdes al català.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Interactiu</li>
-            <li>Multilingüe</li>
-            <li>HTML5</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         TEORIA I APUNTS
-         ============================================================ -->
-    <section class="resource-section" id="teoria">
-      <h2 class="section-title">Teoria i apunts</h2>
-
-      <div class="resource-grid">
-
-        <!-- RECURS: Presentacions Lurdes Morral -->
-        <article class="resource-card">
-          <h3><a href="https://www.slideshare.net/lumorral/presentations" target="_blank" rel="noopener noreferrer">Presentacions de Lurdes Morral <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Presentacions visuals i sintètiques de cinemàtica, dinàmica, camps,
-            ones i física moderna. Útils per obtenir una visió global abans
-            d'entrar en els detalls.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>2n Batx</li>
-            <li>Català</li>
-            <li>Resums visuals</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Apunts José Escudero -->
-        <article class="resource-card">
-          <h3><a href="https://yoquieroaprobar.es/_pdf/56025.pdf" target="_blank" rel="noopener noreferrer">Apunts de José Escudero <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Dossier extens de teoria i exemples de física de 2n de batxillerat.
-            El currículum no coincideix exactament amb el català, però és una
-            bona font de consulta i ampliació.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>2n Batx</li>
-            <li>Castellà</li>
-            <li>PDF extens</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: FisQuiWeb -->
-        <article class="resource-card">
-          <h3><a href="https://fisquiweb.es/" target="_blank" rel="noopener noreferrer">FisQuiWeb <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Portal molt ampli amb teoria, pràctiques, animacions, exercicis i
-            propostes didàctiques. L'estructura és una mica densa, però conté
-            materials molt treballats.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>ESO i Batx</li>
-            <li>Castellà</li>
-            <li>Molt complet</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Física con ordenador -->
-        <article class="resource-card">
-          <h3><a href="https://www.sc.ehu.es/sbweb/fisica/" target="_blank" rel="noopener noreferrer">Física con ordenador <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            El projecte d'Ángel Franco combina explicacions detallades,
-            deduccions, exemples i simulacions. Manté una estètica clàssica,
-            però continua sent una obra de referència.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Batx i universitat</li>
-            <li>Castellà</li>
-            <li>Simulacions</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Physics Classroom -->
-        <article class="resource-card">
-          <h3><a href="https://www.physicsclassroom.com/" target="_blank" rel="noopener noreferrer">The Physics Classroom <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Explicacions graduals, diagrames, preguntes conceptuals i activitats
-            interactives. Especialment útil per mecànica, ones, electricitat i
-            òptica.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Secundària</li>
-            <li>Anglès</li>
-            <li>Conceptual</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         PROBLEMES I EXERCICIS
-         ============================================================ -->
-    <section class="resource-section" id="problemes">
-      <h2 class="section-title">Problemes i exercicis resolts</h2>
-
-      <div class="resource-grid">
-
-        <!-- RECURS: FisLab -->
-        <article class="resource-card">
-          <h3><a href="https://fislab.wordpress.com/" target="_blank" rel="noopener noreferrer">FisLab — Tavi Casellas <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Materials de física en català, dossiers d'exercicis i simulacions.
-            És una font especialment valuosa per la proximitat amb el currículum
-            de batxillerat de Catalunya.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Batxillerat</li>
-            <li>Català</li>
-            <li>Exercicis</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: UdG problemes -->
-        <article class="resource-card">
-          <h3><a href="https://www.udg.edu/ca/" target="_blank" rel="noopener noreferrer">Reculls de física de la UdG <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Col·leccions extenses de problemes. Alguns continguts superen el
-            currículum de batxillerat o corresponen a programes antics, però
-            poden ser útils per ampliar i seleccionar exercicis.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Batx i universitat</li>
-            <li>Català</li>
-            <li>Ampliació</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Yo quiero aprobar -->
-        <article class="resource-card">
-          <h3><a href="https://yoquieroaprobar.es/" target="_blank" rel="noopener noreferrer">Yo quiero aprobar <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Repositori molt gran de dossiers, exàmens i exercicis aportats per
-            docents. La qualitat és irregular, però permet trobar col·leccions
-            específiques de pràctica.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>ESO i Batx</li>
-            <li>Castellà</li>
-            <li>PDF</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         PAU
-         ============================================================ -->
-    <section class="resource-section" id="pau">
-      <h2 class="section-title">PAU de Física</h2>
-
-      <div class="resource-grid">
-
-        <!-- RECURS: PAU oficial -->
-        <article class="resource-card resource-card--official">
-          <h3><a href="https://universitats.gencat.cat/ca/pau/materies-pau/fisica/" target="_blank" rel="noopener noreferrer">Física a les PAU de Catalunya <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Informació actualitzada sobre l'estructura de la prova, els blocs de
-            contingut, els criteris generals i les orientacions de la matèria.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>2n Batx</li>
-            <li>Català</li>
-            <li>Generalitat</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Models oficials -->
-        <article class="resource-card resource-card--official">
-          <h3><a href="https://universitats.gencat.cat/ca/pau/models-examen-anys-anteriors/" target="_blank" rel="noopener noreferrer">Models d'examen d'anys anteriors <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Enunciats i pautes de correcció de convocatòries anteriors. És la
-            font principal per preparar l'estil, el nivell i els criteris reals
-            de correcció de la prova.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>PAU</li>
-            <li>Català</li>
-            <li>Solucions</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Selecat -->
-        <article class="resource-card">
-          <h3><a href="https://www.selecat.cat/" target="_blank" rel="noopener noreferrer">Selecat <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Recopilació d'exàmens de selectivitat de Catalunya, organitzats per
-            matèria i convocatòria. Pràctic per localitzar ràpidament proves
-            antigues i pautes.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>PAU</li>
-            <li>Català</li>
-            <li>Arxiu històric</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Exàmens Selectivitat -->
-        <article class="resource-card">
-          <h3><a href="https://examenselectivitat.cat/selectivitat/F%C3%ADsica" target="_blank" rel="noopener noreferrer">Exàmens Selectivitat <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Cercador i recopilació d'exercicis de Física de les PAU. Pot ser
-            útil per practicar per blocs temàtics, sempre contrastant les pautes
-            amb la font oficial.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>PAU</li>
-            <li>Per temes</li>
-            <li>Pràctica</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         SIMULACIONS
-         ============================================================ -->
-    <section class="resource-section" id="simulacions">
-      <h2 class="section-title">Simulacions interactives</h2>
-
-      <div class="resource-grid">
-
-        <!-- RECURS: Falstad -->
-        <article class="resource-card">
-          <h3><a href="https://www.falstad.com/mathphysics.html" target="_blank" rel="noopener noreferrer">Falstad Physics Applets <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Simulacions ràpides i molt visuals de camps, ones, oscil·ladors,
-            circuits, electricitat i magnetisme. Especialment potent per
-            experimentar lliurement.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Interactiu</li>
-            <li>Anglès</li>
-            <li>Sense registre</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Walter Fendt -->
-        <article class="resource-card">
-          <h3><a href="https://www.walter-fendt.de/html5/phen/" target="_blank" rel="noopener noreferrer">Walter Fendt <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Col·lecció clàssica de simulacions senzilles i molt centrades en un
-            fenomen concret. Ideal per introduir conceptes sense massa elements
-            accessoris.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Interactiu</li>
-            <li>Multilingüe</li>
-            <li>HTML5</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Proyecto Newton -->
-        <article class="resource-card">
-          <h3><a href="https://proyectodescartes.org/newton/" target="_blank" rel="noopener noreferrer">Proyecto Newton <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Unitats didàctiques, escenes interactives i activitats de física.
-            És un projecte veterà i extens; convé seleccionar les unitats que
-            encaixen millor amb cada tema.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>ESO i Batx</li>
-            <li>Castellà</li>
-            <li>Projecte educatiu</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: GeoGebra Física -->
-        <article class="resource-card">
-          <h3><a href="https://www.geogebra.org/search/f%C3%ADsica" target="_blank" rel="noopener noreferrer">GeoGebra — recursos de física <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Milers de construccions interactives creades per docents. La
-            qualitat és variable, però permet trobar visualitzacions molt bones
-            de vectors, moviments, ones, camps i òptica.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Interactiu</li>
-            <li>Multilingüe</li>
-            <li>Comunitat docent</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         VÍDEOS I DIVULGACIÓ
-         ============================================================ -->
-    <section class="resource-section" id="videos">
-      <h2 class="section-title">Vídeos i divulgació</h2>
-
-      <div class="resource-grid">
-
-        <!-- RECURS: QuantumFracture -->
-        <article class="resource-card">
-          <h3><a href="https://www.youtube.com/@QuantumFracture" target="_blank" rel="noopener noreferrer">QuantumFracture <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Vídeos d'animació sobre física moderna, relativitat, quàntica,
-            partícules i cosmologia. Molt útil per introduir preguntes i donar
-            context als models.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Vídeo</li>
-            <li>Castellà</li>
-            <li>Física moderna</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: MinutePhysics -->
-        <article class="resource-card">
-          <h3><a href="https://www.youtube.com/@minutephysics" target="_blank" rel="noopener noreferrer">MinutePhysics <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Explicacions breus, visuals i conceptuals sobre fenòmens físics.
-            És especialment útil per generar debat o iniciar una seqüència
-            didàctica.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Vídeo</li>
-            <li>Anglès</li>
-            <li>Conceptual</li>
-          </ul>
-        </article>
-
-        <!-- RECURS: Veritasium -->
-        <article class="resource-card">
-          <h3><a href="https://www.youtube.com/@veritasium" target="_blank" rel="noopener noreferrer">Veritasium <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Vídeos basats en experiments, paradoxes i idees contraintuïtives.
-            No tots encaixen directament amb el temari, però alguns són
-            excel·lents per qüestionar idees prèvies.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Vídeo</li>
-            <li>Anglès</li>
-            <li>Experiments</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-         RECURSOS CLÀSSICS
-         ============================================================ -->
-    <section class="resource-section" id="classics">
-      <h2 class="section-title">Recursos clàssics</h2>
-
-      <div class="resource-grid">
-
-        <!-- RECURS: Catfísica -->
-        <article class="resource-card resource-card--classic">
-          <h3><a href="https://www.catfisica.com/" target="_blank" rel="noopener noreferrer">Catfísica <span class="external" aria-hidden="true">↗</span></a></h3>
-          <p>
-            Un dels primers grans portals de recursos de física en català i un
-            referent per a molts docents. Conservem l'enllaç pel seu valor
-            històric, tot i que una part important dels materials depenia de
-            Flash i pot no funcionar als navegadors actuals.
-          </p>
-          <ul class="resource-meta" aria-label="Característiques">
-            <li>Català</li>
-            <li>Històric</li>
-            <li>Pot requerir Flash</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-
-    <aside class="maintenance-note">
-      <p>Si algun enllaç falla, avisa'm a oscarvila a gmail punt com.</p>
-    </aside>
-
-    <footer class="site-footer">
+  <!-- Per afegir un recurs, copia un bloc li i canvia l’enllaç, el nom,
+       l’idioma i la descripció. Per treure’l, elimina tot el bloc li. -->
+  <section id="teoria">
+    <h2>Teoria i apunts</h2>
+    <ul class="reference-list">
+      <li>
+        <a href="https://niobio.github.io/fisica/" target="_blank" rel="noopener">Física de Niobio</a> <span class="reference-language">Català</span>
+        <p>Teoria i problemes per unitats de primer i segon de batxillerat.</p>
+      </li>
+      <li>
+        <a href="https://www.profesorjrc.es/" target="_blank" rel="noopener">Professor JRC</a> <span class="reference-language">Castellà</span>
+        <p>Apunts i exercicis de Jorge Rojo Carrascosa, amb un apartat de Física de segon.</p>
+      </li>
+      <li>
+        <a href="https://projectes.xtec.cat/fisicaencontext/" target="_blank" rel="noopener">Física en Context</a> <span class="reference-language">Català</span>
+        <p>Materials de física de batxillerat construïts a partir de situacions contextualitzades. Especialment interessant per plantejar activitats competencials i connectar els models físics amb fenòmens reals.</p>
+      </li>
+      <li>
+        <a href="https://www.fiquipedia.es/" target="_blank" rel="noopener">FiQuiPedia</a> <span class="reference-language">Castellà</span>
+        <p>Gran recopilació d'apunts, qüestions, exercicis, exàmens i materials de física i química. La quantitat de contingut és enorme, però està prou ben organitzada per localitzar recursos concrets.</p>
+      </li>
+      <li>
+        <a href="https://www.slideshare.net/lumorral/presentations" target="_blank" rel="noopener">Presentacions de Lurdes Morral</a> <span class="reference-language">Català</span>
+        <p>Presentacions visuals i sintètiques de cinemàtica, dinàmica, camps, ones i física moderna. Útils per obtenir una visió global abans d'entrar en els detalls.</p>
+      </li>
+      <li>
+        <a href="https://yoquieroaprobar.es/_pdf/56025.pdf" target="_blank" rel="noopener">Apunts de José Escudero</a> <span class="reference-language">Castellà</span>
+        <p>PDF de teoria i exemples del curs 2013–14, orientat al programa d’Andalusia.</p>
+      </li>
+      <li>
+        <a href="https://fisquiweb.es/" target="_blank" rel="noopener">FisQuiWeb</a> <span class="reference-language">Castellà</span>
+        <p>Portal molt ampli amb teoria, pràctiques, animacions, exercicis i propostes didàctiques. L'estructura és una mica densa, però conté materials molt treballats.</p>
+      </li>
+      <li>
+        <a href="https://www.sc.ehu.es/sbweb/fisica/" target="_blank" rel="noopener">Física con ordenador</a> <span class="reference-language">Castellà</span>
+        <p>El projecte d'Ángel Franco combina explicacions detallades, deduccions, exemples i simulacions. Manté una estètica clàssica, però continua sent una obra de referència.</p>
+      </li>
+      <li>
+        <a href="https://www.physicsclassroom.com/" target="_blank" rel="noopener">The Physics Classroom</a> <span class="reference-language">Anglès</span>
+        <p>Explicacions graduals, diagrames, preguntes conceptuals i activitats interactives. Especialment útil per mecànica, ones, electricitat i òptica.</p>
+      </li>
+    </ul>
+  </section>
+  <section id="pau">
+    <h2>Exercicis i PAU</h2>
+    <ul class="reference-list">
+      <li>
+        <a href="https://fislab.wordpress.com/" target="_blank" rel="noopener">FisLab — Tavi Casellas</a> <span class="reference-language">Català</span>
+        <p>Materials de física en català, dossiers d'exercicis i simulacions. És una font especialment valuosa per la proximitat amb el currículum de batxillerat de Catalunya.</p>
+      </li>
+      <li>
+        <a href="https://yoquieroaprobar.es/" target="_blank" rel="noopener">Yo quiero aprobar</a> <span class="reference-language">Castellà</span>
+        <p>Repositori molt gran de dossiers, exàmens i exercicis aportats per docents. La qualitat és irregular, però permet trobar col·leccions específiques de pràctica.</p>
+      </li>
+      <li>
+        <a href="https://universitats.gencat.cat/ca/pau/materies-pau/fisica/" target="_blank" rel="noopener">Física a les PAU de Catalunya</a> <span class="reference-language">Català</span>
+        <p>Informació actualitzada sobre l'estructura de la prova, els blocs de contingut, els criteris generals i les orientacions de la matèria.</p>
+      </li>
+      <li>
+        <a href="https://universitats.gencat.cat/ca/pau/models-examen-anys-anteriors/" target="_blank" rel="noopener">Models d'examen d'anys anteriors</a> <span class="reference-language">Català</span>
+        <p>Enunciats i pautes de correcció de convocatòries anteriors. És la font principal per preparar l'estil, el nivell i els criteris reals de correcció de la prova.</p>
+      </li>
+      <li>
+        <a href="https://www.selecat.cat/" target="_blank" rel="noopener">Selecat</a> <span class="reference-language">Català</span>
+        <p>Recopilació d'exàmens de selectivitat de Catalunya, organitzats per matèria i convocatòria. Pràctic per localitzar ràpidament proves antigues i pautes.</p>
+      </li>
+      <li>
+        <a href="https://examenselectivitat.cat/selectivitat/F%C3%ADsica" target="_blank" rel="noopener">Exàmens Selectivitat</a> <span class="reference-language">Català</span>
+        <p>Cercador i recopilació d'exercicis de Física de les PAU. Pot ser útil per practicar per blocs temàtics, sempre contrastant les pautes amb la font oficial.</p>
+      </li>
+    </ul>
+  </section>
+  <details id="altres">
+    <summary>Eines, vídeos i ampliacions</summary>
+    <ul class="reference-list">
+      <li>
+        <a href="https://phet.colorado.edu/ca/simulations/filter?subjects=physics&type=html" target="_blank" rel="noopener">PhET Interactive Simulations</a> <span class="reference-language">Multilingüe</span>
+        <p>Simulacions interactives molt cuidades sobre mecànica, ones, electricitat, magnetisme, física moderna i molts altres temes. Moltes activitats estan traduïdes al català.</p>
+      </li>
+      <li>
+        <a href="https://www.falstad.com/mathphysics.html" target="_blank" rel="noopener">Falstad Physics Applets</a> <span class="reference-language">Anglès</span>
+        <p>Simulacions ràpides i molt visuals de camps, ones, oscil·ladors, circuits, electricitat i magnetisme. Especialment potent per experimentar lliurement.</p>
+      </li>
+      <li>
+        <a href="https://www.walter-fendt.de/html5/phen/" target="_blank" rel="noopener">Walter Fendt</a> <span class="reference-language">Multilingüe</span>
+        <p>Col·lecció clàssica de simulacions senzilles i molt centrades en un fenomen concret. Ideal per introduir conceptes sense massa elements accessoris.</p>
+      </li>
+      <li>
+        <a href="https://proyectodescartes.org/newton/" target="_blank" rel="noopener">Proyecto Newton</a> <span class="reference-language">Castellà</span>
+        <p>Unitats didàctiques, escenes interactives i activitats de física. És un projecte veterà i extens; convé seleccionar les unitats que encaixen millor amb cada tema.</p>
+      </li>
+      <li>
+        <a href="https://www.geogebra.org/search/f%C3%ADsica" target="_blank" rel="noopener">GeoGebra — recursos de física</a> <span class="reference-language">Multilingüe</span>
+        <p>Milers de construccions interactives creades per docents. La qualitat és variable, però permet trobar visualitzacions molt bones de vectors, moviments, ones, camps i òptica.</p>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@QuantumFracture" target="_blank" rel="noopener">QuantumFracture</a> <span class="reference-language">Castellà</span>
+        <p>Vídeos d'animació sobre física moderna, relativitat, quàntica, partícules i cosmologia. Molt útil per introduir preguntes i donar context als models.</p>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@minutephysics" target="_blank" rel="noopener">MinutePhysics</a> <span class="reference-language">Anglès</span>
+        <p>Explicacions breus, visuals i conceptuals sobre fenòmens físics. És especialment útil per generar debat o iniciar una seqüència didàctica.</p>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@veritasium" target="_blank" rel="noopener">Veritasium</a> <span class="reference-language">Anglès</span>
+        <p>Vídeos basats en experiments, paradoxes i idees contraintuïtives. No tots encaixen directament amb el temari, però alguns són excel·lents per qüestionar idees prèvies.</p>
+      </li>
+      <li>
+        <a href="https://www.catfisica.com/" target="_blank" rel="noopener">Catfísica</a> <span class="reference-language">Català</span>
+        <p>Un dels primers grans portals de recursos de física en català i un referent per a molts docents. Conservem l'enllaç pel seu valor històric, tot i que una part important dels materials depenia de Flash i pot no funcionar als navegadors actuals.</p>
+      </li>
+    </ul>
+  </details>
+  <p class="reference-contact">Si algun enllaç falla, avisa'm a oscarvila a gmail punt com.</p>
+  <footer class="site-footer">
       <p>© 2026 Òscar V. · Continguts sota <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">llicència CC BY 4.0</a>.</p>
-      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor (Auto).</p>
+      <p>Elaborat amb intel·ligència artificial — <strong>Nivell 4: cocreació humà-IA</strong> segons el <a href="https://educacion.bilateria.org/marco-para-la-integracion-de-la-ia-generativa-en-las-tareas-educativas-v-2-revisada" target="_blank" rel="noopener">marc MIAE de Juan José de Haro</a>. Fet amb Cursor (Auto). Revisió amb Codex (GPT-6 Astra).</p>
     </footer>
-
-  </main>
+</main>
 </body>
 </html>
